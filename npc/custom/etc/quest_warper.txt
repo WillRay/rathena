@@ -1380,6 +1380,20 @@ function	script	QWS_Darray	{
 
 	QWS_Make_Dungeon_Menu 21;
 
+//----------------RACHEL SANCTUARY
+	setarray @pDmenuitems$[@Di], "Rachel Sanctuary";
+	setarray @pDprice[@Di], $QW_BW_PRICE;
+	setarray @pDfee$[@Di], "$QW_BW_FEE";
+	setarray @DLevels[@Di], 5;
+
+	setarray @DGat$[@Dref], "ra_san01", "ra_san02", "ra_san03", "ra_san04", "ra_san05";
+	setarray @DLevelName$[@Dref], "North Area", "West Area", "East Area", "South Area", "Central Area 2";
+	setarray @DXcoords[@Dref], 139, 231, 119, 119, 150;
+	setarray @DYcoords[@Dref], 135, 276, 283, 108, 11;
+	setarray @DDepth[@Dref], 0, 1, 1, 1, 2;
+
+	QWS_Make_Dungeon_Menu 29;
+
 //----------------SPHINX
 	setarray @pDmenuitems$[@Di], "Sphinx Dungeon";
 	setarray @pDprice[@Di], $QW_BW_PRICE;
@@ -1712,4 +1726,5 @@ xmas_dun02,124,131,3	script	Kafra Adventurer#25	900,{ callfunc "QWS_Dungeon_Warp
 um_dun02,44,28,3	script	Kafra Adventurer#26	900,{ callfunc "QWS_Dungeon_Warpra",27,"Umbala Dungeon"; close; }
 tur_dun02,162,23,3	script	Kafra Adventurer#27	900,{ callfunc "QWS_Dungeon_Warpra",26,"Turtle Island Dungeon"; close; }
 prt_maze02,102,69,4	script	Kafra Adventurer#28	900,{ callfunc "QWS_Dungeon_Warpra",13,"Hidden Dungeon"; close; }
-ice_dun02,150,153,4	script	Kafra Adventurer#28	900,{ callfunc "QWS_Dungeon_Warpra",28,"Ice Dungeon"; close; }
+ice_dun02,150,153,4	script	Kafra Adventurer#29	900,{ callfunc "QWS_Dungeon_Warpra",28,"Ice Dungeon"; close; }
+ra_san02,208,274,4	script	Kafra Adventurer#30	900,{ callfunc "QWS_Dungeon_Warpra",29,"Rachel Sanctuary"; close; }
