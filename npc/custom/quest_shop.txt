@@ -1,0 +1,338 @@
+//===== rAthena Script =======================================
+//= Euphy's Quest Shop
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.6
+//===== Compatible With: =====================================
+//= rAthena SVN r16862+
+//===== Description: =========================================
+//= A dynamic quest shop based on Lunar's, with easier config.
+//= Includes support for multiple shops & cashpoints.
+//= Item Preview script by ToastOfDoom.
+//============================================================
+
+// Shop NPCs -- supplying no argument displays entire menu.
+//	callfunc "qshop"{,<shop ID>{,<shop ID>{,...}}};
+//============================================================
+prontera,182,214,4	script	Rare Hat Merchant#1	408,{ callfunc "qshop"; }
+
+
+// Script Core
+//============================================================
+-	script	quest_shop	-1,{ 
+function Add; function Chk; function Slot; function A_An;
+OnInit:
+	freeloop(1);
+
+// -----------------------------------------------------------
+//  Basic shop settings.
+// -----------------------------------------------------------
+
+	set .Announce,0;	// Announce quest completion? (1: yes / 0: no)
+	set .ShowSlot,1;	// Show item slots? (2: all equipment / 1: if slots > 0 / 0: never)
+	set .ShowID,0;  	// Show item IDs? (1: yes / 0: no)
+	set .ShowZeny,0;	// Show Zeny cost, if any? (1: yes / 0: no)
+	set .MaxStack,100;	// Max number of quest items purchased at one time.
+
+// -----------------------------------------------------------
+//  Points variable -- optional quest requirement.
+//	setarray .Points$[0],"<variable name>","<display name>";
+// -----------------------------------------------------------
+
+	setarray .Points$[0],"#CASHPOINTS","Cash Points";
+
+// -----------------------------------------------------------
+//  Shop IDs -- to add shops, copy dummy data at bottom of file.
+//	setarray .Shops$[1],"<Shop 1>","<Shop 2>"{,...};
+// -----------------------------------------------------------
+
+	setarray .Shops$[1],"TIer 1 Headgear", "Tier 2 Headgear";//, "Tier 3 Headgear", "Tier 4 Headgear";//,"Weapons","Other";
+
+// -----------------------------------------------------------
+//  Quest items -- do NOT use a reward item more than once!
+//	Add(<shop ID>,<reward ID>,<reward amount>,
+//	    <Zeny cost>,<point cost>,
+//	    <required item ID>,<required item amount>{,...});
+// -----------------------------------------------------------
+
+
+
+
+// 1 Stat = 25 items
+	Add(1,5207,1,0,0,922,25); // Gold_Spirit_Chain (+1 LUK, +5% Holiy resist)
+	Add(1,5076,1,0,0,911,25); // Fur_Hat (+1 LUK)
+	Add(1,5382,1,0,0,907,25); // Bell_Ribbon (+1 VIT, Level 1 Angelus)
+	Add(1,2296,1,0,0,1055,25); // Binoculars (+1 DEX)
+	Add(1,5236,1,0,0,911,25); // Blue_Fur_Hat (+1 LUK)
+	Add(1,5235,1,0,0,911,25); // Brown_Fur_Hat (+1 LUK)
+	Add(1,5026,1,0,0,7031,25); // Hat_Of_Cook (+1 DEX)
+	Add(1,2249,1,0,0,7006,25); // Coronet (+1 INT)
+	Add(1,2273,1,0,0,7312,25); // Doctor_Cap (+1 INT)
+	Add(1,5198,1,0,0,959,25); // Drooping_Bunny (+1 Dex, +2 Flee)
+	Add(1,5146,1,0,0,964,25); // Elephant_Hat (+1 VIT)
+	Add(1,5018,1,0,0,1031,25); // Feather_Bonnet (+1 AGI)
+	Add(1,5071,1,0,0,7030,25); // Indian_Headband (+1 DEX)
+	Add(1,5141,1,0,0,915,25); // Marionette_Doll (+1 STR)
+	Add(1,5370,1,0,0,1057,25); // Orchid_Hairbad (+1 INT)
+	Add(1,5060,1,0,0,1028,25); // Party_Hat (+1 LUK)
+	Add(1,5237,1,0,0,911,25); // Pink_Fur_Hat (+1 LUK)
+	Add(1,2280,1,0,0,1019,25); // Sakkat (+1 AGI)
+	Add(1,5078,1,0,0,961,25); // Sea_Otter_Cap (+1 VIT)
+	Add(1,5062,1,0,0,1012,25); // Straw_Hat (+1 AGI)
+	Add(1,5067,1,0,0,926,25); // Sombrero (+1 AGI)
+	Add(1,5287,1,0,0,901,25); // Vacation_Hat (+1 VIT)
+
+// N+1 Stat = 1 hard item
+// Tertiary Stat = +10 items
+	Add(2,5137,1,0,0,5321,1,512,50); // Alice_Doll (+1 STR, +10% Demi Damage)
+	Add(2,5464,1,0,0,2273,1,1036,50); // Zaha_Doll_Hat (+2 Int, Level 3 Mag)
+	Add(2,5129,1,0,0,5062,1,7054,50); // Bird_Nest (+2 AGI, -10% Damage from Brute)
+	Add(2,5183,1,0,0,2296,1,7012,50); // Bird_Nest_Hat (+1 Dex, +1 AGI, +10% Stun Resist)
+	Add(2,5213,1,0,0,5067,1,956,50); // Black_Bunny_Band (+2 AGI +3 MDEF)
+	Add(2,5241,1,0,0,2252,1,7001,50); // Blue_Wizardry_Hat (+2 INT, +150 SP)
+	Add(2,5240,1,0,0,2252,1,7001,50); // Gray_Wizardry_Hat (+2 INT, +150 SP)
+	Add(2,2214,1,0,0,5235,1,7194,50); // Bunny_Band (+2 LUK)
+	Add(2,5260,1,0,0,5198,1,7318,50); // Cookie_Hat (+1 Agi, +5 PDodge, +5% Crit Damage)
+	Add(2,5081,1,0,0,2249,1,7203,50); // Mistress_Crown (+2 Int, +100 SP)
+	Add(2,5038,1,0,0,5141,1,958,50); // Deviruchi_Cap (+1 STR, +1 INT)
+	Add(2,5252,1,0,0,2280,1,1036,50); // Drooping_Nine_Tail (+1 AGI, +1 CRIT, Gloria chance on receive hit)
+	Add(2,5216,1,0,0,2255,1,7194,50); // Satanic_Chain_ (+1 STR, +1 AGI, +3 Flee, -3% Demon DMG)
+	Add(2,5222,1,0,0,5071,1,7561,50); // Fish_On_Head_ (+1 Agi, +1 Dex)
+	Add(2,5437,1,0,0,5370,1,1035,50); // Flower_Of_Fairy (+1 INT, +1 MDEF)
+	Add(2,5334,1,0,0,5237,1,1063,50); // Angeling_Wanna_Fly (+2 LUK. +2 MDEF)
+	Add(2,5666,1,0,0,2273,1,1045,50); // Golden_Crown (+1 INT, +1 DEX, +1 LUK)
+	Add(2,5179,1,0,0,2249,1,1936,50); // Gold_Tiara (+2 INT)
+	Add(2,5262,1,0,0,5141,1,1060,50); // Gold_Tiara_ (+2 STR, Swordsman and Dex < 55 = DEX += Job Level/7)
+	Add(2,5239,1,0,0,2252,1,7001,50); // White_Wizardry_Hat (+2 INT, +150 SP)
+	Add(2,5139,1,0,0,5026,1,7205,50); // Hibiscus (+1 Dex, +1 INT, +5 MDEF)
+	Add(2,5069,1,0,0,5067,1,1944,50); // Mask_of_Fox (+1 AGI, +1 LUK)
+	Add(2,5555,1,0,0,5018,1,937,50); // Leaf_Cat_Hat (+2 AGI, Cast 3 Heal when receive damage)
+	Add(2,5027,1,0,0,2252,1,7001,50); // Wizardry_Hat (+2 INT, +150 SP)
+	Add(2,5031,1,0,0,5026,1,7155,50); // Mine_Helm (+2 DEX)
+	Add(2,5073,1,0,0,2296,1,7155,50); // Cap_Of_Concentration (+2 DEX)
+	Add(2,5182,1,0,0,5018,1,7097,50); // Puppy_Hat (+1 AGI, 1% Autocast Gloria on attack, 77 AGI = 3% Gloria chance)
+	Add(2,5238,1,0,0,2252,1,7001,50); // Red_Wizardry_Hat (+2 INT, +150 SP)
+	Add(2,5572,1,0,0,5287,1,7197,50); // Savage_Baby_Hat (+2 VIT)
+	Add(2,5535,1,0,0,5078,1,7115,50); // Side_Cap (+1 VIt, +1 Dex, +3 MDEF, +3% DMG to Demi, -5% DMG from Demi)
+	Add(2,5149,1,0,0,5370,1,7205,50); // Silver_Tiara_ (+2 INT Increases MATK, Dec SP consumption, or Max SP based on job level (mage, aco, archer))
+	Add(2,5103,1,0,0,5062,1,7565,50); // Sunflower_Hairpin (+2 AGI, +5% Crit Rate)
+	Add(2,5544,1,0,0,1097,1,2273,50); // Time_Keeper_Hat (+2 INT, +100 SP)
+	Add(2,5493,1,0,0,2296,1,7205,50); // Ulle_Cap_I (+2 Dex, +1 AGI, 70 Dex = -10% SP Cost)
+	Add(2,5285,1,0,0,5018,1,7155,50); // Vane_Hairpin (+2 Agi)
+	Add(2,5284,1,0,0,5198,1,1097,50); // Water_Lily_Crown (+1 Dex, +1 AGI, +3 MDEF, +5% HP recovery, +3% SP Recovery)
+	Add(2,5579,1,0,0,2280,1,7157,50); // Wanderer's_Sakkat (+2 AGI)
+	Add(2,5411,1,0,0,2296,1,7003,50); // White_Snake_Hat (+2 DEX)
+	Add(2,5455,1,0,0,5370,1,1061,50); // Geographer_Band_ (+1 Int, Chance to cast 5 Heal when attacking or attacked)
+	Add(2,5242,1,0,0,2252,1,7001,50); // Yellow_Wizardry_Hat (+2 INT, +150 SP)
+	
+
+	Add(3,5436,1,0,0); // Bride's_Corolla (+3 LUK, +2 MDEF)
+	Add(3,18613,1,0,0); // Black_Musang_Hat (+2 INT, +2 DEX, +1 AGI)
+	Add(3,5567,1,0,0); // Bright_Fury (+1 STR, +7 = +10 Crit, +10 Hit, +30 ATK chance on hit)
+	Add(3,5378,1,0,0); // Rabbit_Ear_Hat (+3 AGI, Cast 5 Agi Up chance on receive hit)
+	Add(3,5254,1,0,0); // Deviling_Hat (+2 ATK/MATK, +2% Exp, +7 = +1% Exp)
+	Add(3,5211,1,0,0); // Dress_Hat (+7 MDEF, +2% ATK/MATK, +5% Heal, +7 = +1% ATK/MTK, +1% Heal, +1 STR, +1 Int)
+	Add(3, 5364,1,0,0); // Dark_Snake_Lord_Hat (+1 STR, +1 INT, +1 AGI)
+	Add(3,5508,1,0,0); // Shark_Hat (+1 STR, +2 AGI, +1 MDEF, +5% DMG to Water, -10% Damage to Water)
+	Add(3,5503,1,0,0,5045,1,7219,100); // Rabbit_Magic_Hat (+2 Dex, +2 AGI, +1 MDEF, +50 SP, Autocast bolts on receive hit)
+	Add(3,5685,1,0,0); // Green_Bunny_Hairband (+2 STR, +1 INT, +1 Dex, +9 = +2% ATK/MATK, +10 = +2% ATK/MATK)
+	Add(3,5570,1,0,0); // Gemini_Crown (+2 AGI, +2 ATK, +5 MDEF, +7 = +1 Def, +15 ATK, +10 Flee, +5% Wind Resist)
+	Add(3,5569,1,0,0); // Gemini_Diadem (+2 Agi, +2% MATK, +7 = +7 MDEF, +8% ATK, +5% Wind Resist)
+	Add(3,5537,1,0,0); // Quati_Hat (+3 AGI)
+	Add(3,5226,1,0,0,2259,1); // Mini_Propeller_ (+2 Agi, +1 Dex, +10 Flee, Reduce cast time by refine rate)
+	Add(3,5557,1,0,0); // Wild_Rose_Hat (+3 AGI)
+	Add(3,5546,1,0,0); // Aries_Crown (+2 Vit, -5% fire dmg, +7 = +1 Def, +1 Vit)
+	Add(3,5545,1,0,0); // Aries_Diadem (+2 Vit, -5% fire dmg, +7 = +1 Def, +1 Vit)
+	Add(3,5396,1,0,0); // Jasper_Crest (+3 Dex, +1 VIT)
+	Add(3,5409,1,0,0); // Purple Cowboy Hat (+2 INT, +2 VIT, SP + 50)
+	Add(3,5277,1,0,0); // Yellow_Bandana (+2 LUK, +2 VIT, -10% Long Range DMG reduction)
+	Add(3,5278,1,0,0); // Yellow_Ribbon  (+2 LUK, +2 VIT, -10% Long Range DMG reduction)
+	Add(3,5581,1,0,0); // Cancer_Diadem (+2 int, +5% water resist, +7 = +1 MDEF, +2% MATK, +3% heal and recovery items)
+	Add(3,5372,1,0,0); // Drooping_White_Kitty (+1 INT, +3% MATK, -3% after cast delay, +3% SP, +3 MDEF)
+	Add(3,5253,1,0,0); // Lif_Doll_Hat (+1 INT, +1 Def and +1 MDEF per refine)
+	Add(3,5515,1,0,0); // Pisces_Crown (+2 INT, +5 MDEF, +5% water resist, +7 = +1 DEF, +2% MATK)
+	Add(3,5514,1,0,0); // Pisces_Diadem (+2 INT, +5 MDEF, +5% water resist, +7 = +1 DEF, +2% MATK)
+	Add(3,5324,1,0,0); // Little_Angel_Doll (+3 DEX, Autocast L3 grand cross)
+	Add(3,5293,1,0,0); // Ramen_Hat (+4 DEX)
+	Add(3,5550,1,0,0); // Taurus_Crown (+2 Dex, -2% Skill delay, +5% earth resist, +7 = +1 DEX, +1% MATK)
+	Add(3,5549,1,0,0); // Taurus_Diadem (+2 Dex, -2% Skill delay, +5% earth resist, +7 = +1 DEX, +1% MATK)
+	Add(3,5185,1,0,0); // Laurel_Wreath (+3 LUK, +4 MDEF, +5% blind and curse resist)
+	Add(3,5255,1,0,0); // Triple_Poring_Hat (+3 Luk, 2% autocast greed when attacking)
+
+	Add(4,5269,1,0,0); // Flying_Angel_ (+1 AGI, +1 INT, +3% ASPD, +25% Movement Speed)
+	Add(4,5826,1,0,0); // Valkyrie_Helmet (+2 Str, +2 Agi, +2 Int, +2 Dex, +5 MDEF)
+	Add(4,5456,1,0,0); // Vacation_Hat_ (+5 VIT, +20% HP regen, +15% SP Regen)
+	Add(4,5810,1,0,0); // Ph.D_Hat_V (+5 INt, +3 VIT, +3 DEX)
+	Add(4,5283,1,0,0); // Chick_Hat (+2 LUK, +50 HP/SP, L2 DB ATTACK)
+	Add(4,5144 ,1,0,0); // Gambler_Hat (+5 LUK)
+	Add(4,5527,1,0,0); // Lunatic_Hat (+5 LUK, +2 MDEF, +5 PDodge, Rainbow Carrot drop chance)
+	Add(4,18612,1,0,0); // White_Musang_Hat (+2 STR, +2 VIT, +1 LUK)
+
+	//Add(1,5022,1,0,0,7086,1,969,10,999,40,1003,50,984,2);
+	//Add(1,5032,1,0,0,1059,250,2221,1,2227,1,7063,600);
+	//Add(1,5252,1,0,0,980,3,976,5,1059,50,1022,50);
+
+ 
+
+	//Add(2,1224,1,0,0,7297,30,969,10,999,50,714,10);
+	//Add(2,1225,1,0,0,7292,30,969,10,999,50,714,10);
+
+	//Add(3,531,1,3,0,512,1,713,1);
+	//Add(3,532,1,3,0,513,1,713,1);
+	//Add(3,533,1,3,0,514,1,713,1);
+	//Add(3,534,1,3,0,515,1,713,1);
+
+// -----------------------------------------------------------
+
+	freeloop(0);
+	npctalk "Please select one item at a time!";
+	set .menu$,"";
+	for(set .@i,1; .@i<=getarraysize(.Shops$); set .@i,.@i+1) {
+		set .menu$, .menu$+.Shops$[.@i]+":";
+		npcshopdelitem "qshop"+.@i,909;
+	}
+	end;
+
+OnMenu:
+	set .@size, getarraysize(@i);
+	if (!.@size) set .@i, select(.menu$);
+	else if (.@size == 1) set .@i, @i[0];
+	else {
+		for(set .@j,0; .@j<.@size; set .@j,.@j+1)
+			set .@menu$, .@menu$+.Shops$[@i[.@j]]+":";
+		set .@i, @i[select(.@menu$)-1];
+	}
+	deletearray @i[0],getarraysize(@i);
+	if (.Shops$[.@i] == "") {
+		message strcharinfo(0),"An error has occurred.";
+		end;
+	}
+
+	dispbottom "Select one item at a time.";
+	callshop "qshop"+.@i,1;
+	npcshopattach "qshop"+.@i;
+	end;
+
+OnBuyItem:
+	// .@q[] : RewardID, BoughtAmt, RewardAmt, BaseAmt, ReqZeny, ReqPts, { ReqItem, ReqAmt, ... }
+	setarray .@q[0],@bought_nameid[0],((@bought_quantity[0] > .MaxStack)?.MaxStack:@bought_quantity[0]);
+	copyarray .@q[3],getd(".q_"+.@q[0]+"[0]"),getarraysize(getd(".q_"+.@q[0]));
+	set .@q[2],.@q[1]*.@q[3];
+	if (!.@q[2] || .@q[2] > 30000) {
+		message strcharinfo(0),"You can't purchase that many "+getitemname(.@q[0])+".";
+		end;
+	}
+	mes "[Quest Shop]";
+	mes "Reward: ^0055FF"+((.@q[2] > 1)?.@q[2]+"x ":"")+Slot(.@q[0])+"^000000";
+	mes "Requirements:";
+	if (.@q[4]) mes " > "+Chk(Zeny,.@q[4]*.@q[1])+(.@q[4]*.@q[1])+" Zeny^000000";
+	if (.@q[5]) mes " > "+Chk(getd(.Points$[0]),.@q[5]*.@q[1])+(.@q[5]*.@q[1])+" "+.Points$[1]+" ("+getd(.Points$[0])+"/"+(.@q[5]*.@q[1])+")^000000";
+	if (.@q[6]) for(set .@i,6; .@i<getarraysize(.@q); set .@i,.@i+2)
+		mes " > "+Chk(countitem(.@q[.@i]),.@q[.@i+1]*.@q[1])+((.ShowID)?"{"+.@q[.@i]+"} ":"")+Slot(.@q[.@i])+" ("+countitem(.@q[.@i])+"/"+(.@q[.@i+1]*.@q[1])+")^000000";
+	next;
+	setarray @qe[1], getiteminfo(.@q[0],5), getiteminfo(.@q[0],11);
+	if (((@qe[1] & 1) || (@qe[1] & 256) || (@qe[1] & 512)) && @qe[2] > 0)
+		set .@preview,1;
+	addtimer 1000, strnpcinfo(0)+"::OnEnd";
+	while(1) {
+		switch(select("Purchase ^0055FF"+getitemname(.@q[0])+"^000000:"+((.@preview && !@qe[6])?"Preview...":"")+":^777777Cancel^000000")) {
+		case 1:
+			if (@qe[0]) { 
+				mes "[Quest Shop]";
+				mes "You're missing one or more quest requirements.";
+				close;
+			}
+			if (!checkweight(.@q[0],.@q[2])) {
+				mes "[Quest Shop]";
+				mes "^FF0000You need "+(((.@q[2]*getiteminfo(.@q[0],6))+Weight-MaxWeight)/10)+" additional weight capacity to complete this trade.^000000";
+				close;
+			}
+			if (.@q[4]) set Zeny, Zeny-(.@q[4]*.@q[1]);
+			if (.@q[5]) setd .Points$[0], getd(.Points$[0])-(.@q[5]*.@q[1]);
+			if (.@q[6]) for(set .@i,6; .@i<getarraysize(.@q); set .@i,.@i+2)
+				delitem .@q[.@i],.@q[.@i+1]*.@q[1];
+			getitem .@q[0],.@q[2];
+			if (.Announce) announce strcharinfo(0)+" has created "+((.@q[2] > 1)?.@q[2]+"x "+getitemname(.@q[0]):A_An(getitemname(.@q[0])))+"!",0;
+			specialeffect2 699;
+			close;
+		case 2:
+			setarray @qe[3], getlook(LOOK_HEAD_BOTTOM), getlook(LOOK_HEAD_TOP), getlook(LOOK_HEAD_MID), 1;
+			if (@qe[1] & 1) changelook LOOK_HEAD_BOTTOM, @qe[2];
+			if (@qe[1] & 256) changelook LOOK_HEAD_TOP, @qe[2];
+			if (@qe[1] & 512) changelook LOOK_HEAD_MID, @qe[2];
+			break;
+		case 3:
+			close;
+		}
+	}
+
+OnEnd:
+	if (@qe[6]) {
+		changelook LOOK_HEAD_BOTTOM, @qe[3];
+		changelook LOOK_HEAD_TOP, @qe[4];
+		changelook LOOK_HEAD_MID, @qe[5];
+	}
+	deletearray @qe[0],7;
+	end;
+
+function Add {
+	if (getitemname(getarg(1)) == "null") {
+		debugmes "Quest reward #"+getarg(1)+" invalid (skipped).";
+		return;
+	}
+	setarray .@j[0],getarg(2),getarg(3),getarg(4);
+	for(set .@i,5; .@i<getargcount(); set .@i,.@i+2) {
+		if (getitemname(getarg(.@i)) == "null") {
+			debugmes "Quest requirement #"+getarg(.@i)+" invalid (skipped).";
+			return;
+		} else
+			setarray .@j[.@i-2],getarg(.@i),getarg(.@i+1);
+	}
+	copyarray getd(".q_"+getarg(1)+"[0]"),.@j[0],getarraysize(.@j);
+	npcshopadditem "qshop"+getarg(0),getarg(1),((.ShowZeny)?getarg(3):0);
+	return;
+}
+
+function Chk {
+	if (getarg(0) < getarg(1)) {
+		set @qe[0],1;
+		return "^FF0000";
+	} else
+		return "^00FF00";
+}
+
+function Slot {
+	set .@s$,getitemname(getarg(0));
+	switch(.ShowSlot) {
+		case 1: if (!getitemslots(getarg(0))) return .@s$;
+		case 2: if (getiteminfo(getarg(0),2) == 4 || getiteminfo(getarg(0),2) == 5) return .@s$+" ["+getitemslots(getarg(0))+"]";
+		default: return .@s$;
+	}
+}
+
+function A_An {
+	setarray .@A$[0],"a","e","i","o","u";
+	set .@B$, "_"+getarg(0);
+	for(set .@i,0; .@i<5; set .@i,.@i+1)
+		if (compare(.@B$,"_"+.@A$[.@i])) return "an "+getarg(0);
+	return "a "+getarg(0);
+}
+}
+
+function	script	qshop	{
+	deletearray @i[0],getarraysize(@i);
+	for(set .@i,0; .@i<getargcount(); set .@i,.@i+1)
+		set @i[.@i],getarg(.@i);
+	doevent "quest_shop::OnMenu";
+	end;
+}
+
+
+// Dummy shop data -- copy as needed.
+//============================================================
+-	shop	qshop1	-1,909:-1
+-	shop	qshop2	-1,909:-1
+-	shop	qshop3	-1,909:-1
+-	shop	qshop4	-1,909:-1
+-	shop	qshop5	-1,909:-1
