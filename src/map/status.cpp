@@ -4562,8 +4562,8 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	if((skill=pc_checkskill(sd,CR_TRUST))>0)
 		sd->indexed_bonus.subele[ELE_HOLY] += skill*5;
 	if((skill=pc_checkskill(sd,BS_SKINTEMPER))>0) {
-		sd->indexed_bonus.subele[ELE_NEUTRAL] += skill;
-		sd->indexed_bonus.subele[ELE_FIRE] += skill*5;
+		sd->indexed_bonus.subele[ELE_NEUTRAL] += skill*4;
+		sd->indexed_bonus.subele[ELE_FIRE] += skill*6;
 	}
 	if((skill=pc_checkskill(sd,SA_DRAGONOLOGY))>0) {
 		uint8 dragon_matk = skill * 2;
