@@ -19066,6 +19066,8 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 				req.zeny -= req.zeny*20/100;
 #else
 				req.zeny -= req.zeny*10/100;
+			if (pc_checkskill(sd, MC_DISCOUNT)>0)
+				req.zeny -= req.zeny * pc_checkskill(sd, MC_DISCOUNT) * 5 / 100;
 #endif
 			break;
 		case AL_HOLYLIGHT:

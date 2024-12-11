@@ -62,7 +62,7 @@ alberta,83,96,5	script	Necko	98,7,7,{
 			mes "Kyukwakakakakakakakakakaka!";
 			close;
 		}
-		else if ((countitem(722) > 6) && (countitem(532) > 0) && (countitem(921) > 49) && (JobLevel >= 15 || (BaseJob == Job_Blacksmith || BaseJob == Job_Alchemist))) {
+		else if ((countitem(532) > 0) && (countitem(921) > 49) && (JobLevel >= 15 || (BaseJob == Job_Blacksmith || BaseJob == Job_Alchemist))) {
 			mes "[Necko]";
 			mes "Oh! You!";
 			mes "You are qualified to learn how to shout!";
@@ -76,7 +76,6 @@ alberta,83,96,5	script	Necko	98,7,7,{
 				mes "That's the spirit!";
 				mes "Here we go!";
 				next;
-				delitem 722,7; //Scarlet_Jewel
 				delitem 532,1; //Banana_Juice
 				delitem 921,50; //Mushroom_Spore
 				skill "MC_LOUD",1,SKILL_PERM;
@@ -157,7 +156,7 @@ alberta,83,96,5	script	Necko	98,7,7,{
 		mes "There are some things needed to do so.";
 		next;
 		mes "[Necko]";
-		mes "7 Pearls, 1 bottle of Banana Juice,";
+		mes "1 bottle of Banana Juice,";
 		mes "and 50 mushroom spores!";
 		mes "Then I'll scorch your vocal chord!";
 		next;
@@ -221,7 +220,7 @@ alberta,119,221,6	script	Charlron	107,{
 					mes "I will change your cart.";
 					next;
 					delitem 1019,50; //Wooden_Block
-					delitem 998,10; //Iron
+					delitem 998,15; //Iron
 					delitem 919,20; //Animal's_Skin
 					skill "MC_CHANGECART",1,SKILL_PERM;
 					mes "[Charlron]";
@@ -252,7 +251,7 @@ alberta,119,221,6	script	Charlron	107,{
 				next;
 				mes "[Charlron]";
 				mes "50 Trunks.";
-				mes "10 Iron.";
+				mes "15 Iron.";
 				mes "20 Animal Skins.";
 				mes "I need at least these things";
 				mes "to change your cart.";
@@ -286,7 +285,7 @@ alberta,119,221,6	script	Charlron	107,{
 				mes "But, since it's the first time";
 				mes "you need to prepare some materials.";
 				mes "50 Trunks!";
-				mes "10 Iron!";
+				mes "15 Iron!";
 				mes "20 Animal skins!";
 				mes "-bring these please!";
 				next;
@@ -348,7 +347,7 @@ alberta,119,221,6	script	Charlron	107,{
 			mes "Here! Hurry!";
 			close;
 		}
-		else if (JobLevel >= 35 || (BaseJob == Job_Blacksmith || BaseJob == Job_Alchemist)) {
+		else if (JobLevel >= 15 || (BaseJob == Job_Blacksmith || BaseJob == Job_Alchemist)) {
 			mes "[Gershaun]";
 			mes "Ooh. You have a firm body";
 			mes "for a merchant. You must be";
@@ -372,7 +371,7 @@ alberta,119,221,6	script	Charlron	107,{
 						mes "eagerly swing their carts!";
 						next;
 						delitem 533,2; //Grape_Juice
-						delitem 998,20; //Iron
+						delitem 998,15; //Iron
 						delitem 938,30; //Sticky_Mucus
 						delitem 601,20; //Wing_Of_Fly
 						delitem 962,5; //Tentacle
@@ -410,7 +409,7 @@ alberta,119,221,6	script	Charlron	107,{
 						mes "The items I need are..";
 						next;
 						mes "[Gershaun]";
-						mes "First I need 20 Irons to make the cart";
+						mes "First I need 15 Irons to make the cart";
 						mes "durable. Then 30 Sticky Mucus to absorb";
 						mes "the shock.";
 						mes "And about 20 Fly Wings and 5 Tentacles?";
@@ -482,7 +481,7 @@ alberta,119,221,6	script	Charlron	107,{
 						mes "The items I need are..";
 						next;
 						mes "[Gershaun]";
-						mes "First I need 20 Irons to make the cart";
+						mes "First I need 15 Irons to make the cart";
 						mes "durable. Then 30 Sticky Mucus to absorb";
 						mes "the shock.";
 						mes "And about 20 Fly Wings and 5 Tentacles?";
@@ -517,7 +516,7 @@ alberta,119,221,6	script	Charlron	107,{
 						mes "eagerly swing their carts!";
 						next;
 						delitem 533,2; //Grape_Juice
-						delitem 998,23; //Iron
+						delitem 998,15; //Iron
 						delitem 938,32; //Sticky_Mucus
 						delitem 601,23; //Wing_Of_Fly
 						delitem 962,6; //Tentacle
@@ -555,7 +554,7 @@ alberta,119,221,6	script	Charlron	107,{
 						mes "The items I need are..";
 						next;
 						mes "[Gershaun]";
-						mes "First I need 20 Irons to make the cart";
+						mes "First I need 15 Irons to make the cart";
 						mes "durable. Then 30 Sticky Mucus to absorb";
 						mes "the shock.";
 						mes "And about 20 Fly Wings and 5 Tentacles?";
