@@ -1,0 +1,1705 @@
+Header:
+  Type: ITEM_DB
+  Version: 3
+Body:
+- Id: 1101
+  Name: Sword
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1102
+  Name: Sword
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1104
+  Name: Falchion
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1105
+  Name: Falchion
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1107
+  Name: Blade
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1108
+  Name: Blade
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1110
+  Name: Rapier
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1111
+  Name: Rapier
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1113
+  Name: Scimitar
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1114
+  Name: Scimitar
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1115
+  Name: Scimitar
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1116
+  Name: Katana
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1117
+  Name: Katana
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1119
+  Name: Tsurugi
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1120
+  Name: Tsurugi
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1122
+  Name: Ring Pommel Saber
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1123
+  Name: Haedonggum
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1125
+  Name: Ring Pommel Saber
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1126
+  Name: Saber
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1127
+  Name: Saber
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1128
+  Name: Haedonggum
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1146
+  Name: Town Sword
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1147
+  Name: Town Sword
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1148
+  Name: Star Dust Blade
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1149
+  Name: Flamberge
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1151
+  Name: Slayer
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1152
+  Name: Slayer
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1154
+  Name: Bastard Sword
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1155
+  Name: Bastard Sword
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1157
+  Name: Two-Handed Sword
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1158
+  Name: Two-Handed Sword
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1160
+  Name: Broad Sword
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1162
+  Name: Broad Sword
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1171
+  Name: Zweihander
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1172
+  Name: Claymore
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1175
+  Name: Atlas Weapon
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1176
+  Name: Muscle Cutter
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1178
+  Name: Schweizersabel
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1179
+  Name: Executioner
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1180
+  Name: Dragon Slayer
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1181
+  Name: Tae Goo Lyeon
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1182
+  Name: Bloody Eater
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1185
+  Name: Violet Fear
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1186
+  Name: Death Guidance
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1188
+  Name: Veteran Sword
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1189
+  Name: Krasnaya
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1201
+  Name: Knife
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1202
+  Name: Knife
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1204
+  Name: Cutter
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1205
+  Name: Cutter
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1207
+  Name: Main Gauche
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1208
+  Name: Main Gauche
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1210
+  Name: Dirk
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1211
+  Name: Dirk
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1213
+  Name: Dagger
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1214
+  Name: Dagger
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1216
+  Name: Stiletto
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1217
+  Name: Stiletto
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1219
+  Name: Gladius
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1220
+  Name: Gladius
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1222
+  Name: Damascus
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1226
+  Name: Damascus
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1245
+  Name: Cinquedea
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1246
+  Name: Cinquedea
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1250
+  Name: Jur
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1251
+  Name: Jur
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1252
+  Name: Katar
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1253
+  Name: Katar
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1255
+  Name: Jamadhar
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1264
+  Name: Specialty Jur
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1266
+  Name: Infiltrator
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1268
+  Name: Wild Beast Claw
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1270
+  Name: Drill Katar
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1271
+  Name: Blood Tears
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1275
+  Name: Katar of Frozen Icicle
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1276
+  Name: Katar of Quaking
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1277
+  Name: Katar of Raging Blaze
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1278
+  Name: Katar of Piercing Wind
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1284
+  Name: Krishna
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1285
+  Name: Chakram
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1301
+  Name: Axe
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1302
+  Name: Axe
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1306
+  Name: War Axe
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1309
+  Name: Orcish Axe
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1311
+  Name: Vecer Axe
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1351
+  Name: Battle Axe
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1352
+  Name: Battle Axe
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1354
+  Name: Hammer
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1355
+  Name: Hammer
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1357
+  Name: Buster
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1358
+  Name: Buster
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1360
+  Name: Two-Handed Axe
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1361
+  Name: Two-Handed Axe
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1371
+  Name: Doom Slayer
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1375
+  Name: Berdysz
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1376
+  Name: Heart Breaker
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1377
+  Name: Hurricane's Fury
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1381
+  Name: Novice Battle Axe
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1384
+  Name: Veteran Axe
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1387
+  Name: Giant Axe
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1401
+  Name: Javelin
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1402
+  Name: Javelin
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1404
+  Name: Spear
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1405
+  Name: Spear
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1407
+  Name: Pike
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1408
+  Name: Pike
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1417
+  Name: Pole Axe
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1418
+  Name: Gungnir
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1420
+  Name: Long Horn
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1421
+  Name: Battle Hook
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1422
+  Name: Hunting Spear
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1428
+  Name: Long Horn
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1429
+  Name: Hunting Spear
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1451
+  Name: Guisarme
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1452
+  Name: Guisarme
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1454
+  Name: Glaive
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1455
+  Name: Glaive
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1457
+  Name: Partizan
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1458
+  Name: Partizan
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1460
+  Name: Trident
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1461
+  Name: Trident
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1463
+  Name: Halberd
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1464
+  Name: Halberd
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1476
+  Name: Crescent Scythe
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1479
+  Name: Spectral Spear
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1480
+  Name: Gae Bolg
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1481
+  Name: Zephyrus
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1483
+  Name: Ivory Lance
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1484
+  Name: Cardo
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1485
+  Name: Battle Fork
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1501
+  Name: Club
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1502
+  Name: Club
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1504
+  Name: Mace
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1505
+  Name: Mace
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1507
+  Name: Smasher
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1508
+  Name: Smasher
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1509
+  Name: Smasher
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1510
+  Name: Flail
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1511
+  Name: Flail
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1512
+  Name: Flail
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1513
+  Name: Morning Star
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1514
+  Name: Morning Star
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1515
+  Name: Morning Star
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1517
+  Name: Sword Mace
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1518
+  Name: Sword Mace
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1519
+  Name: Chain
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1520
+  Name: Chain
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1521
+  Name: Chain
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1524
+  Name: Golden Mace
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1532
+  Name: Stunner
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1535
+  Name: Hollgrehenn's Hammer
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1538
+  Name: Spike
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1539
+  Name: Golden Mace
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1540
+  Name: Grand Cross
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1544
+  Name: Lunakaligo
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1545
+  Name: Novice Mace
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1548
+  Name: Veteran Hammer
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1550
+  Name: Book
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1551
+  Name: Bible
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1552
+  Name: Tablet
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1558
+  Name: Girl's Diary
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1560
+  Name: Sage's Diary
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1561
+  Name: Hardcover Book
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1562
+  Name: Battlefield Textbook
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1563
+  Name: Sage's Diary
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1564
+  Name: Encyclopedia
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1565
+  Name: Ledger of Death
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1568
+  Name: Book of Billows
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1569
+  Name: Book of Mother Earth
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1570
+  Name: Book of Blazing Sun
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1571
+  Name: Book of Gust of Wind
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1572
+  Name: Principles of Magic
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1573
+  Name: Ancient Magic
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1579
+  Name: Book of the Dead
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1581
+  Name: Diary Of Great Sage
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1582
+  Name: Diary Of Great Sage
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1601
+  Name: Rod
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1602
+  Name: Rod
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1604
+  Name: Wand
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1605
+  Name: Wand
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1607
+  Name: Staff
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1608
+  Name: Staff
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1610
+  Name: Arc Wand
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1611
+  Name: Arc Wand
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1618
+  Name: Survivor's Rod
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1620
+  Name: Survivor's Rod
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1621
+  Name: Hypnotist's Staff
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1622
+  Name: Hypnotist's Staff
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1624
+  Name: Lich's Bone Wand
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1629
+  Name: Gentleman's Staff
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1631
+  Name: Holy Stick
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1639
+  Name: Novice Rod
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1645
+  Name: Lich's Bone Wand
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1646
+  Name: La'cryma Stick
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1647
+  Name: Croce Staff
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1701
+  Name: Bow
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1702
+  Name: Bow
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1704
+  Name: Composite Bow
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1705
+  Name: Composite Bow
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1707
+  Name: Great Bow
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1708
+  Name: Great Bow
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1710
+  Name: Crossbow
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1711
+  Name: Crossbow
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1713
+  Name: Arbalest
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1714
+  Name: Gakkung Bow
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1715
+  Name: Arbalest
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1716
+  Name: Gakkung Bow
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1721
+  Name: Repeating Crossbow
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1723
+  Name: Luna Bow
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1725
+  Name: Minstrel Bow
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1726
+  Name: Hunter Bow
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1727
+  Name: Ballista
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1730
+  Name: Burning Bow
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1731
+  Name: Frozen Bow
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1732
+  Name: Earth Bow
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1733
+  Name: Gust Bow
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1736
+  Name: Double Bound
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1737
+  Name: Ixion Wings
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1740
+  Name: Nepenthes Bow
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1741
+  Name: Cursed Lyre
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1742
+  Name: Novice Composite Bow
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1745
+  Name: Falken Blitz
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1801
+  Name: Waghnak
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1802
+  Name: Waghnak
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1803
+  Name: Knuckle Dusters
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1804
+  Name: Knuckle Dusters
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1805
+  Name: Studded Knuckles
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1806
+  Name: Studded Knuckles
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1808
+  Name: Fist
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1809
+  Name: Claw
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1810
+  Name: Claw
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1811
+  Name: Finger
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1812
+  Name: Finger
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1815
+  Name: Hatii Claw
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1816
+  Name: Berserk
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1818
+  Name: Magma Fist
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1819
+  Name: Icicle Fist
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1820
+  Name: Electric Fist
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1821
+  Name: Seismic Fist
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1822
+  Name: Combo Battle Glove
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1825
+  Name: Horn of Hillslion
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1901
+  Name: Violin
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1902
+  Name: Violin
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1903
+  Name: Mandolin
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1904
+  Name: Mandolin
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1905
+  Name: Lute
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1906
+  Name: Lute
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1908
+  Name: Guitar
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1909
+  Name: Harp
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1910
+  Name: Harp
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1911
+  Name: Gumoongoh
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1912
+  Name: Gumoongoh
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1919
+  Name: Bass Guitar
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1922
+  Name: Oriental Lute
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1925
+  Name: Cello
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1926
+  Name: Harp of Nepenthes
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1950
+  Name: Rope
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1951
+  Name: Rope
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 1952
+  Name: Whip
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1953
+  Name: Whip
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1954
+  Name: Wire Whip
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1955
+  Name: Wire Whip
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 1957
+  Name: Rante Whip
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1958
+  Name: Tail Whip
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1959
+  Name: Tail Whip
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1960
+  Name: Whip
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1961
+  Name: Whip
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 1972
+  Name: Electric Eel
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1973
+  Name: Sea Witch's Foot
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1976
+  Name: Queen's Whip
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1979
+  Name: Stem of Nepenthes
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 1980
+  Name: Whip of Balance
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 2000
+  Name: Staff of Destruction
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 2003
+  Name: Staff of Destruction
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 2005
+  Name: Dea Staff
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 13003
+  Name: Cowardice Blade
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 13004
+  Name: Cowardice Blade
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 13005
+  Name: Angelic Wing Dagger
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 13008
+  Name: Jitte
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 13010
+  Name: Asura
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 13011
+  Name: Asura
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 13012
+  Name: Murasame
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 13013
+  Name: Murasame
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 13015
+  Name: Hakujin
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 13016
+  Name: Poison Knife
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 13017
+  Name: Ice Pick
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 13018
+  Name: Sucsamad
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 13019
+  Name: Ginnungagap
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 13027
+  Name: Scalpel
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 13028
+  Name: Tooth Blade
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 13030
+  Name: Dragon Killer
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 13031
+  Name: Swordbreaker
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 13032
+  Name: Mailbreaker
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 13033
+  Name: Assassin Dagger
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 13034
+  Name: Desert Twilight
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 13035
+  Name: Sandstorm
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 13038
+  Name: Dagger of Hunter
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 13039
+  Name: Ivory Knife
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 13040
+  Name: Novice Cutter
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 13041
+  Name: Novice Main Gauche
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 13046
+  Name: Krierg
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 13047
+  Name: Weihna
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 13100
+  Name: Six Shooter
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 13101
+  Name: Six Shooter
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 13102
+  Name: Crimson Bolt
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 13103
+  Name: Crimson Bolt
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 13104
+  Name: Garrison
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 13105
+  Name: Garrison
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 13107
+  Name: Wasteland's Outlaw
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 13150
+  Name: Branch
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 13151
+  Name: Cyclone
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 13152
+  Name: Cyclone
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 13153
+  Name: Dusk
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 13154
+  Name: Rolling Stone
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 13155
+  Name: Black Rose
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 13157
+  Name: Drifter
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 13159
+  Name: Butcher
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 13161
+  Name: Destroyer
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 13162
+  Name: Inferno
+  Type: Weapon
+  Slots: 2
+  WeaponLevel: 2
+- Id: 13164
+  Name: Long Barrel
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 13166
+  Name: Jungle Carbine
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 13168
+  Name: Thunder P
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 13169
+  Name: Thunder P
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 13170
+  Name: Lever Action Rifle
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 13301
+  Name: Huuma Giant Wheel Shuriken
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 13302
+  Name: Huuma Giant Wheel Shuriken
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 13304
+  Name: Huuma Calm Mind
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 13400
+  Name: Cutlus
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 13404
+  Name: Platinum Shotel
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 13405
+  Name: Curved Sword
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 13412
+  Name: Twin Edge of Naght Sieger
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 13413
+  Name: Twin Edge of Naght Sieger
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 13414
+  Name: Elemental Sword
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 13415
+  Name: Novice Falchion
+  Type: Weapon
+  Slots: 1
+  WeaponLevel: 1
+- Id: 13420
+  Name: Honglyun's Sword
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 13421
+  Name: Ruber
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 16000
+  Name: Erde
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 16001
+  Name: Red Square Bag
+  Type: Weapon
+  Slots: 3
+  WeaponLevel: 3
+- Id: 16030
+  Name: Pile Bunker S
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+- Id: 16032
+  Name: Pile Bunker T
+  Type: Weapon
+  Slots: 4
+  WeaponLevel: 4
+

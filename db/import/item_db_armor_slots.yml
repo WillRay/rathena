@@ -1,0 +1,2883 @@
+Header:
+  Type: ITEM_DB
+  Version: 3
+Body:
+- Id: 2102
+  AegisName: Guard_
+  Name: Wild Guard
+  Type: Armor
+  Buy: 500
+  Slots: 0
+  Defense: 5
+  Locations:
+    Left_Hand: true
+- Id: 2104
+  AegisName: Buckler_
+  Name: Wild Buckler
+  Type: Armor
+  Buy: 14000
+  Slots: 0
+  Defense: 6
+  Locations:
+    Left_Hand: true
+- Id: 2106
+  AegisName: Shield_
+  Name: Wild Shield
+  Type: Armor
+  Buy: 56000
+  Slots: 0
+  Defense: 8
+  Locations:
+    Left_Hand: true
+- Id: 2108
+  AegisName: Mirror_Shield_
+  Name: Wild Mirror Shield
+  Type: Armor
+  Buy: 60000
+  Slots: 0
+  Defense: 6
+  Locations:
+    Left_Hand: true
+- Id: 2113
+  AegisName: Novice_Shield
+  Name: Novice Shield
+  Type: Armor
+  Buy: 5000
+  Slots: 0
+  Defense: 3
+  Locations:
+    Left_Hand: true
+- Id: 2114
+  AegisName: Stone_Buckler
+  Name: Stone Buckler
+  Type: Armor
+  Buy: 30000
+  Slots: 0
+  Defense: 3
+  Locations:
+    Left_Hand: true
+- Id: 2115
+  AegisName: Valkyrja's_Shield
+  Name: Valkyrja's Shield
+  Type: Armor
+  Buy: 30000
+  Slots: 0
+  Defense: 3
+  Locations:
+    Left_Hand: true
+- Id: 2116
+  AegisName: Angel's_Safeguard
+  Name: Angelic Guard
+  Type: Armor
+  Buy: 10000
+  Slots: 0
+  Defense: 3
+  Locations:
+    Left_Hand: true
+- Id: 2118
+  AegisName: Arm_Guard_
+  Name: Wild Arm Guard
+  Type: Armor
+  Buy: 10000
+  Slots: 0
+  Defense: 7
+  Locations:
+    Left_Hand: true
+- Id: 2120
+  AegisName: Improved_Arm_Guard_
+  Name: Wild Advanced Arm Guard
+  Type: Armor
+  Buy: 40000
+  Slots: 0
+  Defense: 6
+  Locations:
+    Left_Hand: true
+- Id: 2121
+  AegisName: Memorize_Book_
+  Name: Wild Memory Book
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Left_Hand: true
+- Id: 2123
+  AegisName: Orleans_Server
+  Name: Orleans's Server
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Left_Hand: true
+- Id: 2124
+  AegisName: Thorny_Buckler
+  Name: Thorny Buckler
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Left_Hand: true
+- Id: 2125
+  AegisName: Strong_Shield
+  Name: Strong Shield
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Left_Hand: true
+- Id: 2128
+  AegisName: Herald_Of_GOD_
+  Name: Wild Sacred Mission
+  Type: Armor
+  Buy: 128000
+  Slots: 0
+  Defense: 7
+  Locations:
+    Left_Hand: true
+- Id: 2130
+  AegisName: Cross_Shield
+  Name: Cross Shield
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 6
+  Locations:
+    Left_Hand: true
+- Id: 2131
+  AegisName: Magic_Study_Vol1
+  Name: Magic Bible Vol1
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Left_Hand: true
+- Id: 2133
+  AegisName: Tournament_Shield
+  Name: Tournament Shield
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Left_Hand: true
+- Id: 2134
+  AegisName: Shield_Of_Naga
+  Name: Shield of Naga
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Left_Hand: true
+- Id: 2135
+  AegisName: Shadow_Guard
+  Name: Shadow Guard
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Left_Hand: true
+- Id: 2138
+  AegisName: Bradium_Shield
+  Name: Bradium Shield
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Left_Hand: true
+- Id: 2202
+  AegisName: Sunglasses_
+  Name: Wild Sunglasses
+  Type: Armor
+  Buy: 5000
+  Slots: 0
+  Locations:
+    Head_Mid: true
+- Id: 2204
+  AegisName: Glasses_
+  Name: Wild Glasses
+  Type: Armor
+  Buy: 4000
+  Slots: 0
+  Locations:
+    Head_Mid: true
+- Id: 2209
+  AegisName: Ribbon_
+  Name: Wild Ribbon
+  Type: Armor
+  Buy: 800
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 2217
+  AegisName: Biretta_
+  Name: Wild Biretta
+  Type: Armor
+  Buy: 9000
+  Slots: 0
+  Defense: 6
+  Locations:
+    Head_Top: true
+- Id: 2221
+  AegisName: Hat_
+  Name: Wild Hat
+  Type: Armor
+  Buy: 1000
+  Slots: 0
+  Defense: 4
+  Locations:
+    Head_Top: true
+- Id: 2223
+  AegisName: Turban_
+  Name: Wild Turban
+  Type: Armor
+  Buy: 4500
+  Slots: 0
+  Defense: 5
+  Locations:
+    Head_Top: true
+- Id: 2225
+  AegisName: Goggle_
+  Name: Wild Goggles
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 7
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 2227
+  AegisName: Cap_
+  Name: Wild Cap
+  Type: Armor
+  Buy: 12000
+  Slots: 0
+  Defense: 6
+  Locations:
+    Head_Top: true
+- Id: 2229
+  AegisName: Helm_
+  Name: Wild Helm
+  Type: Armor
+  Buy: 44000
+  Slots: 0
+  Defense: 8
+  Locations:
+    Head_Top: true
+- Id: 2231
+  AegisName: Gemmed_Sallet_
+  Name: Wild Gemmed Sallet
+  Type: Armor
+  Buy: 50000
+  Slots: 0
+  Defense: 6
+  Locations:
+    Head_Top: true
+- Id: 2233
+  AegisName: Circlet_
+  Name: Wild Circlet
+  Type: Armor
+  Buy: 7500
+  Slots: 0
+  Defense: 5
+  Locations:
+    Head_Top: true
+- Id: 2302
+  AegisName: Cotton_Shirt_
+  Name: Wild Cotton Shirt
+  Type: Armor
+  Buy: 10
+  Slots: 0
+  Defense: 3
+  Locations:
+    Armor: true
+- Id: 2304
+  AegisName: Leather_Jacket_
+  Name: Wild Jacket
+  Type: Armor
+  Buy: 200
+  Slots: 0
+  Defense: 4
+  Locations:
+    Armor: true
+- Id: 2306
+  AegisName: Adventurere's_Suit_
+  Name: Wild Adventurer's Suit
+  Type: Armor
+  Buy: 1000
+  Slots: 0
+  Defense: 5
+  Locations:
+    Armor: true
+- Id: 2308
+  AegisName: Mantle_
+  Name: Wild Mantle
+  Type: Armor
+  Buy: 10000
+  Slots: 0
+  Defense: 6
+  Locations:
+    Armor: true
+- Id: 2310
+  AegisName: Coat_
+  Name: Wild Coat
+  Type: Armor
+  Buy: 22000
+  Slots: 0
+  Defense: 7
+  Locations:
+    Armor: true
+- Id: 2311
+  AegisName: Mink_Coat
+  Name: Mink Coat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 6
+  Locations:
+    Armor: true
+- Id: 2313
+  AegisName: Padded_Armor_
+  Name: Wild Padded Armor
+  Type: Armor
+  Buy: 48000
+  Slots: 0
+  Defense: 9
+  Locations:
+    Armor: true
+- Id: 2315
+  AegisName: Chain_Mail_
+  Name: Wild Chain Mail
+  Type: Armor
+  Buy: 65000
+  Slots: 0
+  Defense: 10
+  Locations:
+    Armor: true
+- Id: 2317
+  AegisName: Plate_Armor_
+  Name: Wild Full Plate
+  Type: Armor
+  Buy: 80000
+  Slots: 0
+  Defense: 12
+  Locations:
+    Armor: true
+- Id: 2318
+  AegisName: Clothes_Of_The_Lord
+  Name: Lord's Clothes
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 8
+  Locations:
+    Armor: true
+- Id: 2319
+  AegisName: Glittering_Clothes
+  Name: Glittering Jacket
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 7
+  Locations:
+    Armor: true
+- Id: 2320
+  AegisName: Formal_Suit
+  Name: Formal Suit
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Armor: true
+- Id: 2322
+  AegisName: Silk_Robe_
+  Name: Wild Silk Robe
+  Type: Armor
+  Buy: 8000
+  Slots: 0
+  Defense: 5
+  Locations:
+    Armor: true
+- Id: 2324
+  AegisName: Scapulare_
+  Name: Wild Scapulare
+  Type: Armor
+  Buy: 6500
+  Slots: 0
+  Defense: 6
+  Locations:
+    Armor: true
+- Id: 2326
+  AegisName: Saint_Robe_
+  Name: Wild Saint's Robe
+  Type: Armor
+  Buy: 54000
+  Slots: 0
+  Defense: 8
+  Locations:
+    Armor: true
+- Id: 2329
+  AegisName: Wooden_Mail_
+  Name: Wild Wooden Mail
+  Type: Armor
+  Buy: 5500
+  Slots: 0
+  Defense: 6
+  Locations:
+    Armor: true
+- Id: 2331
+  AegisName: Tights_
+  Name: Wild Tights
+  Type: Armor
+  Buy: 71000
+  Slots: 0
+  Defense: 8
+  Locations:
+    Armor: true
+- Id: 2333
+  AegisName: Silver_Robe_
+  Name: Wild Silver Robe
+  Type: Armor
+  Buy: 7000
+  Slots: 0
+  Defense: 6
+  Locations:
+    Armor: true
+- Id: 2336
+  AegisName: Thief_Clothes_
+  Name: Wild Thief Clothes
+  Type: Armor
+  Buy: 74000
+  Slots: 0
+  Defense: 8
+  Locations:
+    Armor: true
+- Id: 2340
+  AegisName: Novice_Breast
+  Name: Novice Breastplate
+  Type: Armor
+  Buy: 89000
+  Slots: 0
+  Defense: 4
+  Locations:
+    Armor: true
+- Id: 2342
+  AegisName: Full_Plate_Armor_
+  Name: Wild Legion Plate Armor
+  Type: Armor
+  Buy: 102500
+  Slots: 0
+  Defense: 13
+  Locations:
+    Armor: true
+- Id: 2345
+  AegisName: Flame_Sprits_Armor_
+  Name: Wild Lucius's Fierce Armor of Volcano
+  Type: Armor
+  Buy: 136000
+  Slots: 0
+  Defense: 6
+  Locations:
+    Armor: true
+- Id: 2347
+  AegisName: Water_Sprits_Armor_
+  Name: Wild Saphien's Armor of Ocean
+  Type: Armor
+  Buy: 136000
+  Slots: 0
+  Defense: 6
+  Locations:
+    Armor: true
+- Id: 2349
+  AegisName: Wind_Sprits_Armor_
+  Name: Wild Aebecee's Raging Typhoon Armor
+  Type: Armor
+  Buy: 136000
+  Slots: 0
+  Defense: 6
+  Locations:
+    Armor: true
+- Id: 2351
+  AegisName: Earth_Sprits_Armor_
+  Name: Wild Claytos Cracking Earth Armor
+  Type: Armor
+  Buy: 136000
+  Slots: 0
+  Defense: 6
+  Locations:
+    Armor: true
+- Id: 2353
+  AegisName: Odin's_Blessing
+  Name: Odin's Blessing
+  Type: Armor
+  Buy: 30000
+  Slots: 0
+  Defense: 6
+  Locations:
+    Armor: true
+- Id: 2355
+  AegisName: Angel's_Protection
+  Name: Angelic Protection
+  Type: Armor
+  Buy: 10000
+  Slots: 0
+  Defense: 4
+  Locations:
+    Armor: true
+- Id: 2356
+  AegisName: Vestment_Of_Grace
+  Name: Blessed Holy Robe
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Armor: true
+- Id: 2357
+  AegisName: Valkyrie_Armor
+  Name: Valkyrian Armor
+  Type: Armor
+  Slots: 0
+  Defense: 6
+  Locations:
+    Armor: true
+- Id: 2359
+  AegisName: Ninja_Suit_
+  Name: Wild Ninja Suit
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 9
+  Locations:
+    Armor: true
+- Id: 2360
+  AegisName: Robe_Of_Casting_
+  Name: Wild Robe of Cast
+  Type: Armor
+  Buy: 124800
+  Slots: 0
+  Defense: 7
+  Locations:
+    Armor: true
+- Id: 2364
+  AegisName: Meteo_Plate_Armor
+  Name: Meteo Plate Armor
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 10
+  Locations:
+    Armor: true
+- Id: 2365
+  AegisName: Orleans_Gown
+  Name: Orleans's Gown
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Armor: true
+- Id: 2366
+  AegisName: Divine_Cloth
+  Name: Divine Cloth
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 6
+  Locations:
+    Armor: true
+- Id: 2367
+  AegisName: Sniping_Suit
+  Name: Sniping Suit
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Armor: true
+- Id: 2371
+  AegisName: G_Strings_
+  Name: Wild Pantie
+  Type: Armor
+  Buy: 1000
+  Slots: 0
+  Defense: 6
+  Locations:
+    Armor: true
+- Id: 2372
+  AegisName: Mage_Coat_
+  Name: Wild Mage Coat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 7
+  Locations:
+    Armor: true
+- Id: 2373
+  AegisName: Holy_Robe_
+  Name: Wild Holy Robe
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 9
+  Locations:
+    Armor: true
+- Id: 2374
+  AegisName: Diabolus_Robe
+  Name: Diabolus Robe
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 6
+  Locations:
+    Armor: true
+- Id: 2375
+  AegisName: Diabolus_Armor
+  Name: Diabolus Armor
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 7
+  Locations:
+    Armor: true
+- Id: 2376
+  AegisName: Assaulter_Plate
+  Name: Assaulter Plate
+  Type: Armor
+  Buy: 10
+  Slots: 0
+  Defense: 7
+  Locations:
+    Armor: true
+- Id: 2377
+  AegisName: Elite_Engineer_Armor
+  Name: Elite Engineer Armor
+  Type: Armor
+  Buy: 10
+  Slots: 0
+  Defense: 7
+  Locations:
+    Armor: true
+- Id: 2378
+  AegisName: Assassin_Robe
+  Name: Assassin Robe
+  Type: Armor
+  Buy: 10
+  Slots: 0
+  Defense: 7
+  Locations:
+    Armor: true
+- Id: 2379
+  AegisName: Warlock_Battle_Robe
+  Name: Warlock's Battle Robe
+  Type: Armor
+  Buy: 10
+  Slots: 0
+  Defense: 3
+  Locations:
+    Armor: true
+- Id: 2380
+  AegisName: Medic_Robe
+  Name: Medic's Robe
+  Type: Armor
+  Buy: 10
+  Slots: 0
+  Defense: 3
+  Locations:
+    Armor: true
+- Id: 2381
+  AegisName: Elite_Archer_Suit
+  Name: Elite Archer Suit
+  Type: Armor
+  Buy: 10
+  Slots: 0
+  Defense: 3
+  Locations:
+    Armor: true
+- Id: 2382
+  AegisName: Elite_Shooter_Suit
+  Name: Elite Shooter Suit
+  Type: Armor
+  Buy: 10
+  Slots: 0
+  Defense: 3
+  Locations:
+    Armor: true
+- Id: 2387
+  AegisName: Sprint_Mail
+  Name: Sprint Mail
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Armor: true
+- Id: 2388
+  AegisName: Kandura
+  Name: Kandura
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Armor: true
+- Id: 2389
+  AegisName: Armor_Of_Naga
+  Name: Armor of Naga
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Armor: true
+- Id: 2390
+  AegisName: Improved_Tights
+  Name: Improved Tights
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 6
+  Locations:
+    Armor: true
+- Id: 2391
+  AegisName: Life_Link
+  Name: Life Link
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 9
+  Locations:
+    Armor: true
+- Id: 2393
+  AegisName: N_Adventurer's_Suit
+  Name: Novice Adventurer's Suit
+  Type: Armor
+  Slots: 0
+  Defense: 8
+  Locations:
+    Armor: true
+- Id: 2398
+  AegisName: Sniping_Suit_M
+  Name: Sniping Suit
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Armor: true
+- Id: 2399
+  AegisName: Dragon_Vest
+  Name: Dragon Vest
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Armor: true
+- Id: 2402
+  AegisName: Sandals_
+  Name: Wild Sandals
+  Type: Armor
+  Buy: 400
+  Slots: 0
+  Defense: 3
+  Locations:
+    Shoes: true
+- Id: 2404
+  AegisName: Shoes_
+  Name: Wild Shoes
+  Type: Armor
+  Buy: 3500
+  Slots: 0
+  Defense: 4
+  Locations:
+    Shoes: true
+- Id: 2406
+  AegisName: Boots_
+  Name: Wild Boots
+  Type: Armor
+  Buy: 18000
+  Slots: 0
+  Defense: 6
+  Locations:
+    Shoes: true
+- Id: 2412
+  AegisName: Grave_
+  Name: Wild Greaves
+  Type: Armor
+  Buy: 54000
+  Slots: 0
+  Defense: 7
+  Locations:
+    Shoes: true
+- Id: 2415
+  AegisName: Slipper
+  Name: Bunny Slipper
+  Type: Armor
+  Buy: 34000
+  Slots: 0
+  Defense: 3
+  Locations:
+    Shoes: true
+- Id: 2416
+  AegisName: Novice_Shoes
+  Name: Novice Shoes
+  Type: Armor
+  Buy: 35000
+  Slots: 0
+  Defense: 2
+  Locations:
+    Shoes: true
+- Id: 2420
+  AegisName: Angel's_Arrival
+  Name: Angel's Reincarnation
+  Type: Armor
+  Buy: 10000
+  Slots: 0
+  Defense: 2
+  Locations:
+    Shoes: true
+- Id: 2421
+  AegisName: Valkyrie_Shoes
+  Name: Valkyrian Shoes
+  Type: Armor
+  Slots: 0
+  Defense: 4
+  Locations:
+    Shoes: true
+- Id: 2422
+  AegisName: High_Fashion_Sandals
+  Name: High Fashion Sandals
+  Type: Armor
+  Buy: 24000
+  Slots: 0
+  Defense: 2
+  Locations:
+    Shoes: true
+- Id: 2424
+  AegisName: Tidal_Shoes
+  Name: Tidal Shoes
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Shoes: true
+- Id: 2432
+  AegisName: Spiky_Heel_
+  Name: Wild High Heels
+  Type: Armor
+  Buy: 8500
+  Slots: 0
+  Defense: 4
+  Locations:
+    Shoes: true
+- Id: 2433
+  AegisName: Diabolus_Boots
+  Name: Diabolus Boots
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Shoes: true
+- Id: 2434
+  AegisName: Black_Leather_Boots_
+  Name: Wild Black Leather Boots
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 6
+  Locations:
+    Shoes: true
+- Id: 2435
+  AegisName: Battle_Greave
+  Name: Battle Greaves
+  Type: Armor
+  Buy: 10
+  Slots: 0
+  Defense: 4
+  Locations:
+    Shoes: true
+- Id: 2436
+  AegisName: Combat_Boots
+  Name: Combat Boots
+  Type: Armor
+  Buy: 10
+  Slots: 0
+  Defense: 3
+  Locations:
+    Shoes: true
+- Id: 2437
+  AegisName: Battle_Boots
+  Name: Battle Boots
+  Type: Armor
+  Buy: 10
+  Slots: 0
+  Defense: 3
+  Locations:
+    Shoes: true
+- Id: 2440
+  AegisName: Sprint_Shoes
+  Name: Sprint Shoes
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Shoes: true
+- Id: 2502
+  AegisName: Hood_
+  Name: Wild Hood
+  Type: Armor
+  Buy: 1000
+  Slots: 0
+  Defense: 3
+  Locations:
+    Garment: true
+- Id: 2504
+  AegisName: Muffler_
+  Name: Wild Muffler
+  Type: Armor
+  Buy: 5000
+  Slots: 0
+  Defense: 4
+  Locations:
+    Garment: true
+- Id: 2506
+  AegisName: Manteau_
+  Name: Wild Manteau
+  Type: Armor
+  Buy: 32000
+  Slots: 0
+  Defense: 6
+  Locations:
+    Garment: true
+- Id: 2512
+  AegisName: Novice_Manteau
+  Name: Novice Manteau
+  Type: Armor
+  Buy: 50000
+  Slots: 0
+  Defense: 2
+  Locations:
+    Garment: true
+- Id: 2513
+  AegisName: Celestial_Robe
+  Name: Heavenly Maiden Robe
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Garment: true
+- Id: 2514
+  AegisName: Pauldron
+  Name: Pauldron
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Garment: true
+- Id: 2515
+  AegisName: Wing_Of_Eagle
+  Name: Eagle Wing
+  Type: Armor
+  Buy: 20000
+  Slots: 0
+  Defense: 1
+  Locations:
+    Garment: true
+- Id: 2521
+  AegisName: Angel's_Warmth
+  Name: Angelic Cardigan
+  Type: Armor
+  Buy: 10000
+  Slots: 0
+  Defense: 2
+  Locations:
+    Garment: true
+- Id: 2523
+  AegisName: Undershirt_
+  Name: Wild Undershirt
+  Type: Armor
+  Buy: 20000
+  Slots: 0
+  Defense: 4
+  Locations:
+    Garment: true
+- Id: 2524
+  AegisName: Valkyrie_Manteau
+  Name: Valkyrian Manteau
+  Type: Armor
+  Slots: 0
+  Defense: 3
+  Locations:
+    Garment: true
+- Id: 2525
+  AegisName: Cape_Of_Ancient_Lord_
+  Name: Wild Ancient Cape
+  Type: Armor
+  Buy: 82000
+  Slots: 0
+  Defense: 4
+  Locations:
+    Garment: true
+- Id: 2527
+  AegisName: Dragon_Breath
+  Name: Dragon Breath
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Garment: true
+- Id: 2528
+  AegisName: Wool_Scarf
+  Name: Wool Scarf
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Garment: true
+- Id: 2530
+  AegisName: Rider_Insignia_
+  Name: Wild Rider Insignia
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 6
+  Locations:
+    Garment: true
+- Id: 2531
+  AegisName: Ulfhedinn
+  Name: Ulfhedinn
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Garment: true
+- Id: 2532
+  AegisName: Mithril_Magic_Cape
+  Name: Mithril Magic Cape
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Garment: true
+- Id: 2536
+  AegisName: Skin_Of_Ventus
+  Name: Skin of Ventus
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Garment: true
+- Id: 2537
+  AegisName: Diabolus_Manteau
+  Name: Diabolus Manteau
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Garment: true
+- Id: 2538
+  AegisName: Commander_Manteau
+  Name: Captain's Manteau
+  Type: Armor
+  Buy: 10
+  Slots: 0
+  Defense: 4
+  Locations:
+    Garment: true
+- Id: 2539
+  AegisName: Commander_Manteau_
+  Name: Wild Commander's Manteau
+  Type: Armor
+  Buy: 10
+  Slots: 0
+  Defense: 5
+  Locations:
+    Garment: true
+- Id: 2540
+  AegisName: Sheriff_Manteau
+  Name: Sheriff's Manteau
+  Type: Armor
+  Buy: 10
+  Slots: 0
+  Defense: 3
+  Locations:
+    Garment: true
+- Id: 2542
+  AegisName: Flame_Manteau
+  Name: Flame Manteau of Naght Sieger
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Garment: true
+- Id: 2544
+  AegisName: Leather_Of_Tendrilion
+  Name: Leather of Tendrilion
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Garment: true
+- Id: 2545
+  AegisName: Musika
+  Name: Musika
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Garment: true
+- Id: 2546
+  AegisName: Beach_Manteau
+  Name: Beach Manteau
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Locations:
+    Garment: true
+- Id: 2551
+  AegisName: Rider_Insignia_M
+  Name: Crest of the Rider
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Garment: true
+- Id: 2552
+  AegisName: Mithril_Magic_Cape_M
+  Name: Mithril Magic Manteau
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Garment: true
+- Id: 2553
+  AegisName: Dragon_Manteau
+  Name: Dragon Manteau
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Garment: true
+- Id: 2554
+  AegisName: Piece_Of_Angent_Skin
+  Name: Nydhorgg's Shadow Garb
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Garment: true
+- Id: 5093
+  AegisName: Blue_Coif_
+  Name: Wild Coif
+  Type: Armor
+  Buy: 150000
+  Slots: 0
+  Defense: 7
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5108
+  AegisName: Detective_Hat
+  Name: Renown Detective's Cap
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5119
+  AegisName: Super_Novice_Hat_
+  Name: Wild Super Novice Hat
+  Type: Armor
+  Buy: 8500
+  Slots: 0
+  Defense: 6
+  Locations:
+    Head_Top: true
+- Id: 5120
+  AegisName: Fedora_
+  Name: Wild Bucket Hat
+  Type: Armor
+  Buy: 6000
+  Slots: 0
+  Defense: 5
+  Locations:
+    Head_Top: true
+- Id: 5123
+  AegisName: Ulle_Cap
+  Name: Ulle's Cap
+  Type: Armor
+  Buy: 30000
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5125
+  AegisName: Kiss_Of_Angel
+  Name: Angel's Kiss
+  Type: Armor
+  Buy: 10000
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5137
+  AegisName: Alice_Doll
+  Name: Alice Doll
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Locations:
+    Head_Top: true
+- Id: 5140
+  AegisName: Charming_Ribbon
+  Name: Charming Ribbon
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5141
+  AegisName: Marionette_Doll
+  Name: Marionette Doll
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Locations:
+    Head_Top: true
+- Id: 5143
+  AegisName: Kabuki_Mask
+  Name: Kabuki Mask
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Head_Low: true
+    Head_Mid: true
+    Head_Top: true
+- Id: 5147
+  AegisName: Baseball_Cap
+  Name: Baseball Cap
+  Type: Armor
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5151
+  AegisName: Headset_OST
+  Name: Note Headphones
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5157
+  AegisName: Viking_Helm_
+  Name: Wild Orc Helm
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 7
+  Locations:
+    Head_Top: true
+- Id: 5158
+  AegisName: Holy_Bonnet_
+  Name: Wild Monk Hat
+  Type: Armor
+  Buy: 30000
+  Slots: 0
+  Defense: 7
+  Locations:
+    Head_Top: true
+- Id: 5159
+  AegisName: Golden_Gear_
+  Name: Wild Golden Gear
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 7
+  Locations:
+    Head_Top: true
+- Id: 5160
+  AegisName: Magestic_Goat_
+  Name: Wild Majestic Goat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 7
+  Locations:
+    Head_Top: true
+- Id: 5161
+  AegisName: Sharp_Gear_
+  Name: Wild Spiky Band
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 8
+  Locations:
+    Head_Top: true
+- Id: 5162
+  AegisName: Bone_Helm_
+  Name: Wild Bone Helm
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 9
+  Locations:
+    Head_Top: true
+- Id: 5163
+  AegisName: Corsair_
+  Name: Wild Corsair
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 7
+  Locations:
+    Head_Top: true
+- Id: 5164
+  AegisName: Tiara_
+  Name: Wild Tiara
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 6
+  Locations:
+    Head_Top: true
+- Id: 5165
+  AegisName: Crown_
+  Name: Wild Crown
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 6
+  Locations:
+    Head_Top: true
+- Id: 5166
+  AegisName: Spinx_Helm_
+  Name: Wild Sphinx Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 7
+  Locations:
+    Head_Low: true
+    Head_Top: true
+- Id: 5167
+  AegisName: Munak_Turban_
+  Name: Wild Munak Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 7
+  Locations:
+    Head_Low: true
+    Head_Mid: true
+    Head_Top: true
+- Id: 5168
+  AegisName: Bongun_Hat_
+  Name: Wild Bongun Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 7
+  Locations:
+    Head_Low: true
+    Head_Mid: true
+    Head_Top: true
+- Id: 5169
+  AegisName: Bride_Mask
+  Name: Bride Mask
+  Type: Armor
+  Buy: 30000
+  Slots: 0
+  Defense: 4
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5171
+  AegisName: Valkyrie_Helm
+  Name: Valkyrie Helm
+  Type: Armor
+  Buy: 100000
+  Slots: 0
+  Defense: 5
+  Locations:
+    Head_Top: true
+- Id: 5173
+  AegisName: Satto_Hat
+  Name: Magistrate Hat
+  Type: Armor
+  Buy: 30000
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5174
+  AegisName: Ayam
+  Name: Ayam
+  Type: Armor
+  Buy: 30000
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5177
+  AegisName: Guardian_Lion_Mask
+  Name: Mythical Lion Mask
+  Type: Armor
+  Buy: 30000
+  Slots: 0
+  Defense: 5
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5181
+  AegisName: Helm_Of_Darkness
+  Name: Helm of Darkness
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5185
+  AegisName: Laurel_Wreath
+  Name: Laurel Wreath
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5187
+  AegisName: Twin_Ribbon
+  Name: Twin Ribbon
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Locations:
+    Head_Top: true
+- Id: 5190
+  AegisName: Baseball_Cap_
+  Name: Wild Independence Memorial Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Head_Top: true
+- Id: 5191
+  AegisName: Ribbon_Black
+  Name: Black Ribbon
+  Type: Armor
+  Buy: 800
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5192
+  AegisName: Ribbon_Yellow
+  Name: Yellow Ribbon
+  Type: Armor
+  Buy: 800
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5193
+  AegisName: Ribbon_Green
+  Name: Green Ribbon
+  Type: Armor
+  Buy: 800
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5194
+  AegisName: Ribbon_Pink
+  Name: Pink Ribbon
+  Type: Armor
+  Buy: 800
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5195
+  AegisName: Ribbon_Red
+  Name: Red Ribbon
+  Type: Armor
+  Buy: 800
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5196
+  AegisName: Ribbon_Orange
+  Name: Orange Ribbon
+  Type: Armor
+  Buy: 800
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5197
+  AegisName: Ribbon_White
+  Name: White Ribbon
+  Type: Armor
+  Buy: 800
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5208
+  AegisName: Rideword_Hat
+  Name: Rideword Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5211
+  AegisName: Dress_Hat
+  Name: Dress Hat
+  Type: Armor
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5212
+  AegisName: Satellite_Hairband
+  Name: Satellite Hairband
+  Type: Armor
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5225
+  AegisName: Marcher_Hat
+  Name: Parade Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5243
+  AegisName: Chullos
+  Name: Shafka
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5253
+  AegisName: Lif_Doll_Hat
+  Name: Lif Doll Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5254
+  AegisName: Deviling_Hat
+  Name: Deviling Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5256
+  AegisName: Valkyrie_Feather_Band
+  Name: Valkyrie Feather Band
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5258
+  AegisName: Afro_Wig
+  Name: Afro Wig
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5270
+  AegisName: Fallen_Leaves_
+  Name: Wild Autumn Leaves
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5271
+  AegisName: Chinese_Crown_
+  Name: Wild Phoenix Crown
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 6
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5282
+  AegisName: euRO_Baseball_Cap
+  Name: Europe Baseball Cap
+  Type: Armor
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5284
+  AegisName: Water_Lily_Crown
+  Name: Water Lily Crown
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Locations:
+    Head_Top: true
+- Id: 5285
+  AegisName: Vane_Hairpin
+  Name: Vane Hairpin
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5287
+  AegisName: Vacation_Hat
+  Name: Vacation Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5296
+  AegisName: Drooping_Nine_Tail_
+  Name: Wild Drooping Nine Tail
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5297
+  AegisName: Soulless_Wing_
+  Name: Wild Soul Wing
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Head_Top: true
+- Id: 5298
+  AegisName: Marvelous_Wig_
+  Name: Wild Dokebi's Wig
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5299
+  AegisName: Ati_Atihan_Hat_
+  Name: Wild Pagdayaw
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Low: true
+    Head_Mid: true
+    Head_Top: true
+- Id: 5304
+  AegisName: Cap_Of_Blindness
+  Name: Cap Of Blindness
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Head_Low: true
+    Head_Mid: true
+    Head_Top: true
+- Id: 5308
+  AegisName: Brazilian_Flag_Hat
+  Name: Brazil National Flag Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5310
+  AegisName: Bulb_Hairband
+  Name: Shining Electric Bulb Hairband
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5311
+  AegisName: Large_Hibiscus
+  Name: Large Hisbiscus
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5312
+  AegisName: Ayothaya_Hat
+  Name: Ayothaya King's Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Head_Top: true
+- Id: 5313
+  AegisName: Diadem
+  Name: Diadem
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5340
+  AegisName: Deprotai_Doll_Hat
+  Name: Defolty Doll Hat
+  Type: Armor
+  Slots: 0
+  Locations:
+    Head_Top: true
+- Id: 5341
+  AegisName: Claris_Doll_Hat
+  Name: Glaris Doll Hat
+  Type: Armor
+  Slots: 0
+  Locations:
+    Head_Top: true
+- Id: 5342
+  AegisName: Sorin_Doll_Hat
+  Name: Sorin Doll Hat
+  Type: Armor
+  Slots: 0
+  Locations:
+    Head_Top: true
+- Id: 5343
+  AegisName: Tayelin_Doll_Hat
+  Name: Telling Doll Hat
+  Type: Armor
+  Slots: 0
+  Locations:
+    Head_Top: true
+- Id: 5344
+  AegisName: Binit_Doll_Hat
+  Name: Bennit Doll Hat
+  Type: Armor
+  Slots: 0
+  Locations:
+    Head_Top: true
+- Id: 5345
+  AegisName: Debril_Doll_Hat
+  Name: W Doll Hat
+  Type: Armor
+  Slots: 0
+  Locations:
+    Head_Top: true
+- Id: 5347
+  AegisName: Ph.D_Hat_
+  Name: Wild Ph.D Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Head_Top: true
+- Id: 5348
+  AegisName: Big_Sis'_Ribbon_
+  Name: Wild Big Ribbon
+  Type: Armor
+  Buy: 15000
+  Slots: 0
+  Defense: 4
+  Locations:
+    Head_Top: true
+- Id: 5349
+  AegisName: Boy's_Cap_
+  Name: Wild Boy's Cap
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Head_Top: true
+- Id: 5350
+  AegisName: Pirate_Bandana_
+  Name: Wild Pirate Bandana
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Head_Top: true
+- Id: 5351
+  AegisName: Sunflower_
+  Name: Wild Sunflower
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5353
+  AegisName: Helm_Of_Sun_
+  Name: Wild Hat of the Sun God
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 6
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5359
+  AegisName: J_Captain_Hat
+  Name: Ship Captain Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5363
+  AegisName: Helm_Of_Abyss
+  Name: Helm Of Abyss
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5364
+  AegisName: Dark_Snake_Lord_Hat
+  Name: Evil Snake Lord Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5365
+  AegisName: Fried_Egg
+  Name: Magnolia Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5367
+  AegisName: Hyegun_Hat
+  Name: Hyegun Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Head_Low: true
+    Head_Mid: true
+    Head_Top: true
+- Id: 5373
+  AegisName: Darkness_Helm
+  Name: Dark Randgris Helm
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5375
+  AegisName: L_Orc_Hero_Helm
+  Name: Orc Hero Headdress
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5376
+  AegisName: Satanic_Chain_P
+  Name: Flying Evil Wing
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5379
+  AegisName: Balloon_Hat
+  Name: Tam
+  Type: Armor
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5381
+  AegisName: Santa_Poring_Hat
+  Name: Santa Poring Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5382
+  AegisName: Bell_Ribbon
+  Name: Bell Ribbon
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5383
+  AegisName: Hunting_Cap
+  Name: Hunter's Cap
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5384
+  AegisName: Santa_Hat_1
+  Name: Twin Pompom By JB
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5387
+  AegisName: Neko_Mimi_Kafra
+  Name: Neko Mimi Kafra
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5388
+  AegisName: Snake_Head
+  Name: Snake Head Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5392
+  AegisName: Louyang_Cap
+  Name: Luoyang NewYear Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5395
+  AegisName: Tiraya_Bonnet
+  Name: Striped Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5396
+  AegisName: Jasper_Crest
+  Name: Jasper Crest
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5398
+  AegisName: Bone_Head
+  Name: Bone Head
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Head_Top: true
+- Id: 5399
+  AegisName: Mandragora_Cap
+  Name: Mandragora Cap
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5404
+  AegisName: Blue_Ribbon
+  Name: Blue Ribbon
+  Type: Armor
+  Buy: 10
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5407
+  AegisName: Academy_Graduating_Cap
+  Name: Academy Completion Hat
+  Type: Armor
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5409
+  AegisName: New_Cowboy_Hat
+  Name: Purple Cowboy Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Head_Top: true
+- Id: 5417
+  AegisName: Crown_Parrot
+  Name: Crown Parrots
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5418
+  AegisName: Soldier_Hat
+  Name: Legionnaire Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Head_Top: true
+- Id: 5424
+  AegisName: Fanta_Orange_Can
+  Name: Fanta Orange Can Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5425
+  AegisName: Fanta_Grape_Can
+  Name: Fanta Grape Can Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5426
+  AegisName: Karada_Meguri_Tea_Hat
+  Name: Karada Meguricha Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5427
+  AegisName: Royal_Milk_Tea_Hat
+  Name: Black Tea Kochakaden Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5429
+  AegisName: Bogy_Cap
+  Name: Bogy Cap
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5431
+  AegisName: Chicken_Hat
+  Name: Chicken Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Locations:
+    Head_Top: true
+- Id: 5435
+  AegisName: Coke_Hat
+  Name: Red Minstrel Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5437
+  AegisName: Flower_Of_Fairy
+  Name: Fairy Flower
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5442
+  AegisName: Necktie
+  Name: Necktie
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5443
+  AegisName: Status_Of_Baby_Angel
+  Name: Statue Of Baby Angel
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5446
+  AegisName: Cat_Foot_Hairpin
+  Name: Catfoot Hairpin
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Locations:
+    Head_Top: true
+- Id: 5448
+  AegisName: Solo_Play_Box1
+  Name: Soloplay Box1
+  Type: Armor
+  Slots: 0
+  Locations:
+    Head_Low: true
+    Head_Mid: true
+    Head_Top: true
+- Id: 5449
+  AegisName: Solo_Play_Box2
+  Name: Soloplay Box2
+  Type: Armor
+  Slots: 0
+  Locations:
+    Head_Low: true
+    Head_Mid: true
+    Head_Top: true
+- Id: 5451
+  AegisName: Dragonhelm_Gold
+  Name: RWC 2008 Dragon Helm Gold
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 7
+  Locations:
+    Head_Top: true
+- Id: 5452
+  AegisName: Dragonhelm_Silver
+  Name: RWC 2008 Dragon Helm Silver
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Head_Top: true
+- Id: 5453
+  AegisName: Dragonhelm_Copper
+  Name: RWC 2008 Dragon Helm Copper
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Locations:
+    Head_Top: true
+- Id: 5454
+  AegisName: Dog_Cap_
+  Name: Wild Puppy Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Head_Top: true
+- Id: 5455
+  AegisName: Geographer_Band_
+  Name: Wild Decorative Geographer
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5456
+  AegisName: Vacation_Hat_
+  Name: Wild Summer Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Locations:
+    Head_Top: true
+- Id: 5457
+  AegisName: Spring_Rabbit_Hat
+  Name: Moon Rabbit Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5477
+  AegisName: Bro_Flag
+  Name: Brazilian Flag Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5481
+  AegisName: Hermose_Cap
+  Name: Hermode Cap
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5491
+  AegisName: Hat_Of_Outlaw
+  Name: Bandit Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5495
+  AegisName: Power_Of_Thor
+  Name: Power Of Thor
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 6
+  Locations:
+    Head_Top: true
+- Id: 5497
+  AegisName: King_Tiger_Doll_Hat
+  Name: King Tiger Doll Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5511
+  AegisName: Samambaia
+  Name: Samambaia
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5519
+  AegisName: Peacock_Feather
+  Name: Peacock Feather
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Head_Top: true
+- Id: 5520
+  AegisName: Rabbit_Earplug
+  Name: Rabbit Earplugs
+  Type: Armor
+  Slots: 0
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5522
+  AegisName: Fanta_Zero_Lemon_Hat
+  Name: Fanta Zero Lemon Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Head_Top: true
+- Id: 5523
+  AegisName: Sakura_Mist_Hat
+  Name: Sakura Mist Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Head_Top: true
+- Id: 5524
+  AegisName: Sakura_Milk_Tea_Hat
+  Name: Sakura Milk Tea Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Head_Top: true
+- Id: 5525
+  AegisName: First_Leaf_Tea_Hat
+  Name: Flower Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Head_Top: true
+- Id: 5528
+  AegisName: King_Frog_Hat
+  Name: Frog King Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Head_Top: true
+- Id: 5529
+  AegisName: Evil's_Bone_Hat
+  Name: Satanic Bone Helm
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 6
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5530
+  AegisName: Raven_Cap
+  Name: Raven Cap
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 6
+  Locations:
+    Head_Top: true
+- Id: 5531
+  AegisName: B_Dragon_Hat
+  Name: Baby Dragon Hat
+  Type: Armor
+  Buy: 45000
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5533
+  AegisName: Emperor_Wreath_J
+  Name: Emperor Wreath
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5537
+  AegisName: Quati_Hat
+  Name: Kwati Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5538
+  AegisName: Tucan_Hat
+  Name: Tucan Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5539
+  AegisName: Jaguar_Hat
+  Name: Jaguar Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Head_Low: true
+    Head_Mid: true
+    Head_Top: true
+- Id: 5547
+  AegisName: RJC_Katusa
+  Name: RJC Katusa Flower
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5557
+  AegisName: Wild_Rose_Hat
+  Name: Wild Rose Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 6
+  Locations:
+    Head_Top: true
+- Id: 5558
+  AegisName: Saci_Hat
+  Name: Luxury Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 6
+  Locations:
+    Head_Top: true
+- Id: 5562
+  AegisName: Good_Wedding_Veil_J
+  Name: Luxurious Wedding Veil
+  Type: Armor
+  Slots: 0
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5564
+  AegisName: Crown_Of_Deceit
+  Name: Crown of Deceit
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5567
+  AegisName: Bright_Fury
+  Name: Bright Fury
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5568
+  AegisName: Rabbit_Bonnet
+  Name: Rabbit Bonnet
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5572
+  AegisName: Savage_Baby_Hat
+  Name: Savage Babe Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5573
+  AegisName: Bogy_Horn
+  Name: Dokebi Horn
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5575
+  AegisName: Onigiri_Hat
+  Name: Rice Ball Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 6
+  Locations:
+    Head_Top: true
+- Id: 5579
+  AegisName: Wanderer's_Sakkat
+  Name: Wanderer's Sakkat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5585
+  AegisName: Rune_Hairband
+  Name: Rune Cloth Circlet
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5586
+  AegisName: Mosquito_Coil
+  Name: Mosquito Coil
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5593
+  AegisName: K_Rabbit_Bonnet
+  Name: Rabbit Bonnet
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5603
+  AegisName: RTC_Winner_Only
+  Name: RTC First Place
+  Type: Armor
+  Slots: 0
+  Defense: 8
+  Locations:
+    Head_Top: true
+- Id: 5604
+  AegisName: RTC_Second_Best
+  Name: RTC Second Place
+  Type: Armor
+  Slots: 0
+  Defense: 6
+  Locations:
+    Head_Top: true
+- Id: 5605
+  AegisName: RTC_Third_Best
+  Name: RTC Third Place
+  Type: Armor
+  Slots: 0
+  Defense: 4
+  Locations:
+    Head_Top: true
+- Id: 5653
+  AegisName: Darkness_Helm_J
+  Name: Darkness Helm
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5654
+  AegisName: Holy_Marching_Hat_J
+  Name: Holy Marching Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5665
+  AegisName: Shaman_Hat
+  Name: Shaman Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Top: true
+- Id: 5666
+  AegisName: Golden_Crown
+  Name: Golden Crown
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 8
+  Locations:
+    Head_Top: true
+- Id: 5667
+  AegisName: Skull_Hood
+  Name: Skull Hood
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Mid: true
+    Head_Top: true
+- Id: 5671
+  AegisName: Drooping_Morocc_Minion
+  Name: Drooping Morocc Minion
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Locations:
+    Head_Top: true
+- Id: 5682
+  AegisName: Triangle_Rune_Cap
+  Name: Triangle Rune Cap
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Head_Top: true
+- Id: 5690
+  AegisName: Red_Wing_Hat
+  Name: Red Wing Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5738
+  AegisName: Snowman_Hat
+  Name: Snowman Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 4
+  Locations:
+    Head_Top: true
+- Id: 5770
+  AegisName: Splash_Hat
+  Name: Splash Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5771
+  AegisName: Family_Hat
+  Name: Family Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5781
+  AegisName: Persika
+  Name: Persika
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Locations:
+    Head_Top: true
+- Id: 5802
+  AegisName: Upgrade_Elephant_Hat
+  Name: Upgraded Elephant Hat
+  Type: Armor
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 5808
+  AegisName: Diabolus_Helmet
+  Name: Dark Bacilium
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 5
+  Locations:
+    Head_Low: true
+    Head_Mid: true
+    Head_Top: true
+- Id: 5824
+  AegisName: Fools_Day_Hat
+  Name: Fools Day Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 6
+  Locations:
+    Head_Top: true
+- Id: 5856
+  AegisName: Passion_FB_Hat
+  Name: Passion FB Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5857
+  AegisName: Cool_FB_Hat
+  Name: Cool FB Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5858
+  AegisName: Victory_FB_Hat
+  Name: Victory FB Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 5859
+  AegisName: Glory_FB_Hat
+  Name: Glory FB Hat
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Top: true
+- Id: 15000
+  AegisName: Bone_Plate
+  Name: Bone Plate
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Defense: 7
+  Locations:
+    Armor: true
+- Id: 18505
+  AegisName: Umbala_Spirit
+  Name: Umbala Spirit
+  Type: Armor
+  Slots: 0
+  Defense: 1
+  Locations:
+    Head_Low: true
+- Id: 18506
+  AegisName: Hattah_Black
+  Name: Hattah Black
+  Type: Armor
+  Buy: 12000
+  Slots: 0
+  Defense: 2
+  Locations:
+    Head_Low: true
+    Head_Mid: true
+    Head_Top: true
+- Id: 18507
+  AegisName: Elven_Ears_
+  Name: Wild Elven Ears
+  Type: Armor
+  Buy: 20
+  Slots: 0
+  Locations:
+    Head_Mid: true
+- Id: 18539
+  AegisName: Skull_Cap
+  Name: Skull Cap
+  Type: Armor
+  Buy: 40
+  Slots: 0
+  Defense: 5
+  Locations:
+    Head_Top: true
+- Id: 18595
+  AegisName: Horn_Of_Ancient
+  Name: Horn of Ancient
+  Type: Armor
+  Buy: 40
+  Slots: 0
+  Defense: 8
+  Locations:
+    Head_Top: true
+- Id: 18597
+  AegisName: Mercury_Helm
+  Name: Mercury Riser
+  Type: Armor
+  Buy: 40
+  Slots: 0
+  Defense: 10
+  Locations:
+    Head_Top: true
+- Id: 18612
+  AegisName: White_Musang_Hat
+  Name: White Musang Hat
+  Type: Armor
+  Buy: 40
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+- Id: 18613
+  AegisName: Black_Musang_Hat
+  Name: Black Musang Hat
+  Type: Armor
+  Buy: 40
+  Slots: 0
+  Defense: 3
+  Locations:
+    Head_Top: true
+

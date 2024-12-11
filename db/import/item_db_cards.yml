@@ -1,0 +1,2285 @@
+Header:
+  Type: ITEM_DB
+  Version: 3
+Body:
+- Id: 4001
+  Name: Poring Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4003
+  Name: Pupa Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4008
+  Name: Picky Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4009
+  Name: Chonchon Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4010
+  Name: Willow Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4011
+  Name: Picky Egg Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4012
+  Name: Thief Bug Egg Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4013
+  Name: Andre Egg Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4014
+  Name: Roda Frog Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4015
+  Name: Condor Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4016
+  Name: Thief Bug Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4021
+  Name: Rocker Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4022
+  Name: Spore Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4023
+  Name: Baby Desert Wolf Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4027
+  Name: Kukre Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4028
+  Name: Tarou Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4031
+  Name: Peco Peco Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4032
+  Name: Ambernite Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4033
+  Name: Poporing Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4034
+  Name: Wormtail Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4036
+  Name: Muka Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4038
+  Name: Zombie Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4039
+  Name: Stainer Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4040
+  Name: Creamy Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4041
+  Name: Coco Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4042
+  Name: Steel Chonchon Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4044
+  Name: Smokie Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4045
+  Name: Horn Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4046
+  Name: Martin Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4047
+  Name: Ghostring Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4048
+  Name: Poison Spore Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4050
+  Name: Male Thief Bug Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4051
+  Name: Yoyo Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4052
+  Name: Elder Willow Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4053
+  Name: Vitata Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4054
+  Name: Angeling Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4056
+  Name: Dustiness Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4058
+  Name: Thara Frog Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4059
+  Name: Soldier Andre Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4061
+  Name: Cornutus Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4064
+  Name: Zerom Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4066
+  Name: Orc Warrior Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4067
+  Name: Megalodon Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4070
+  Name: Eggyra Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4071
+  Name: Orc Zombie Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4073
+  Name: Pirate Skeleton Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4074
+  Name: Bigfoot Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4075
+  Name: Argos Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4077
+  Name: Phen Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4078
+  Name: Savage Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4079
+  Name: Mantis Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4081
+  Name: Hode Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4083
+  Name: Rafflesia Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4084
+  Name: Marine Sphere Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4087
+  Name: Giearth Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4088
+  Name: Frilldora Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4089
+  Name: Swordfish Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4090
+  Name: Munak Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4091
+  Name: Kobold Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4093
+  Name: Obeaune Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4095
+  Name: Marse Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4097
+  Name: Matyr Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4098
+  Name: Dokebi Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4099
+  Name: Pasana Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4100
+  Name: Sohee Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4101
+  Name: Sandman Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4102
+  Name: Whisper Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4103
+  Name: Horong Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4105
+  Name: Marc Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4107
+  Name: Verit Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4108
+  Name: Myst Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4109
+  Name: Jakk Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4110
+  Name: Ghoul Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4112
+  Name: Marduk Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4113
+  Name: Marionette Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4114
+  Name: Argiope Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4116
+  Name: Isis Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4119
+  Name: Bathory Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4120
+  Name: Sky Petite Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4122
+  Name: Deviruchi Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4123
+  Name: Eddga Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4124
+  Name: Medusa Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4127
+  Name: Nightmare Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4128
+  Name: Golden Thief Bug Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4129
+  Name: Bapho Jr. Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4131
+  Name: Moonlight Flower Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4132
+  Name: Mistress Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4133
+  Name: Raydric Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4135
+  Name: Orc Lord Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4136
+  Name: Khalitzburg Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4138
+  Name: Anubis Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4139
+  Name: Joker Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4141
+  Name: Evil Druid Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4143
+  Name: Orc Hero Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4144
+  Name: Osiris Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4145
+  Name: Berzebub Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4146
+  Name: Maya Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4148
+  Name: Pharaoh Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4149
+  Name: Gargoyle Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4150
+  Name: Goat Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4151
+  Name: Gajomart Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4152
+  Name: Galapago Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4154
+  Name: Dumpling Child Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4158
+  Name: Sky Deleter Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4159
+  Name: Nine Tail Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4160
+  Name: Firelock Soldier Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4161
+  Name: Grand Peco Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4162
+  Name: Grizzly Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4164
+  Name: Gullinbursti Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4166
+  Name: Nightmare Terror Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4168
+  Name: Dark Lord Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4169
+  Name: Dark Illusion Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4170
+  Name: Dark Frame Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4173
+  Name: Demon Pungus Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4174
+  Name: Deviling Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4175
+  Name: Poisonous Toad Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4177
+  Name: Dryad Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4178
+  Name: Dragon Tail Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4179
+  Name: Dragon Fly Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4181
+  Name: Disguise Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4183
+  Name: Vagabond Wolf Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4185
+  Name: Rideword Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4186
+  Name: Raggler Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4187
+  Name: Raydric Archer Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4188
+  Name: Leib Olmai Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4189
+  Name: Wraith Dead Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4190
+  Name: Wraith Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4191
+  Name: Loli Ruri Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4193
+  Name: Lude Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4194
+  Name: Rybio Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4195
+  Name: Leaf Cat Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4196
+  Name: Marin Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4197
+  Name: Mastering Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4198
+  Name: Maya Purple Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4199
+  Name: Merman Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4200
+  Name: Megalith Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4201
+  Name: Majoruros Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4204
+  Name: Mini Demon Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4205
+  Name: Mimic Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4206
+  Name: Myst Case Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4207
+  Name: Mysteltainn Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4208
+  Name: Miyabi Doll Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4209
+  Name: Violy Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4210
+  Name: Wanderer Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4211
+  Name: Vocal Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4212
+  Name: Bongun Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4213
+  Name: Brilight Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4215
+  Name: Blazer Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4216
+  Name: Sasquatch Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4217
+  Name: Enchanted Peach Tree Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4218
+  Name: Succubus Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4219
+  Name: Sage Worm Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4220
+  Name: Solider Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4221
+  Name: Skeleton General Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4222
+  Name: Skeleton Prisoner Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4223
+  Name: Stalactic Golem Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4224
+  Name: Stem Worm Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4226
+  Name: Sting Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4227
+  Name: Spring Rabbit Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4228
+  Name: Sleeper Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4229
+  Name: Tower Keeper Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4230
+  Name: Shinobi Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4231
+  Name: Mi Gao Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4232
+  Name: Hermit Plant Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4233
+  Name: Baby Leopard Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4234
+  Name: Anolian Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4235
+  Name: Christmas Cookie Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4236
+  Name: Amon Ra Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4237
+  Name: Owl Duke Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4238
+  Name: Owl Baron Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4239
+  Name: Iron Fist Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4240
+  Name: Arclouze Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4241
+  Name: Arc Angeling Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4242
+  Name: Apocalipse Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4243
+  Name: Antonio Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4244
+  Name: Alarm Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4245
+  Name: Am Mut Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4248
+  Name: Ancient Mummy Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4249
+  Name: Ancient Worm Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4250
+  Name: Executioner Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4252
+  Name: Alligator Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4253
+  Name: Alice Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4254
+  Name: Ogretooth Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4256
+  Name: Orc Archer Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4257
+  Name: Wild Rose Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4258
+  Name: Evil Nymph Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4259
+  Name: Wooden Golem Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4260
+  Name: Wootan Shooter Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4261
+  Name: Wootan Fighter Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4262
+  Name: Cloud Hermit Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4264
+  Name: Wind Ghost Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4265
+  Name: Jing Guai Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4266
+  Name: Eclipse Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4267
+  Name: Explosion Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4269
+  Name: Incubus Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4270
+  Name: Giant Spider Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4271
+  Name: Giant Hornet Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4272
+  Name: Zhu Po Long Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4275
+  Name: Zombie Prisoner Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4277
+  Name: Zealotus Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4278
+  Name: Gibbet Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4279
+  Name: Earth Deleter Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4280
+  Name: Geographer Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4282
+  Name: Tengu Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4283
+  Name: Greatest General Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4285
+  Name: Choco Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4286
+  Name: Karakasa Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4287
+  Name: Kapha Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4288
+  Name: Carat Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4290
+  Name: Cat O' Nine Tails Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4293
+  Name: Cookie Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4294
+  Name: Quve Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4295
+  Name: Kraben Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4296
+  Name: Cramp Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4298
+  Name: Creamy Fear Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4299
+  Name: Clock Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4300
+  Name: Chimera Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4301
+  Name: Killer Mantis Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4302
+  Name: Tao Gunka Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4303
+  Name: Giant Whisper Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4304
+  Name: Tamruan Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4306
+  Name: Toad Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4309
+  Name: Parasite Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4311
+  Name: Permeter Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4313
+  Name: Punk Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4314
+  Name: Penomena Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4315
+  Name: Pest Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4319
+  Name: Freezer Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4321
+  Name: Hylozoist Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4322
+  Name: High Orc Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4324
+  Name: Hatii Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4325
+  Name: Harpy Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4326
+  Name: Sea-Otter Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4327
+  Name: Bloody Butterfly Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4328
+  Name: Yao Jun Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4330
+  Name: Evil Snake Lord Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4331
+  Name: Heater Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4332
+  Name: Waste Stove Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4333
+  Name: Venomous Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4334
+  Name: Noxious Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4336
+  Name: Ungoliant Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4337
+  Name: Porcellio Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4338
+  Name: Obsidian Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4339
+  Name: Mineral Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4340
+  Name: Teddy Bear Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4342
+  Name: RSX-0806 Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4343
+  Name: Holden Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4344
+  Name: Anopheles Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4346
+  Name: Egnigem Cenia Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4347
+  Name: Armeyer Dinze Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4348
+  Name: Wickebine Tres Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4349
+  Name: Errende Ebecee Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4351
+  Name: Kavach Icarus Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4352
+  Name: General Egnigem Cenia Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4353
+  Name: Remover Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4354
+  Name: Gemini-S58 Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4355
+  Name: Gremlin Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4356
+  Name: Beholder Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4357
+  Name: Lord Knight Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4358
+  Name: Seyren Windsor Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4359
+  Name: Assassin Cross Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4363
+  Name: High Priest Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4364
+  Name: Margaretha Sorin Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4365
+  Name: High Wizard Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4366
+  Name: Kathryne Keyron Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4369
+  Name: Venatu Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4370
+  Name: Dimik Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4371
+  Name: Archdam Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4372
+  Name: White Lady Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4373
+  Name: Green Maiden Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4374
+  Name: Vesper Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4375
+  Name: Orc Baby Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4376
+  Name: Lady Tanee Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4377
+  Name: Grove Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4378
+  Name: Gold Acidus Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4379
+  Name: Blue Acidus Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4381
+  Name: Green Ferus Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4382
+  Name: Yellow Novus Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4383
+  Name: Red Novus Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4384
+  Name: Hydrolancer Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4385
+  Name: Dragon Egg Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4386
+  Name: Detardeurus Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4387
+  Name: Ancient Mimic Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4389
+  Name: Plasma Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4391
+  Name: Baroness of Retribution Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4392
+  Name: Dame of Sentinel Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4393
+  Name: Mistress of Shelter Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4396
+  Name: Odium of Thanatos Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4397
+  Name: Despero of Thanatos Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4400
+  Name: Aliza Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4401
+  Name: Alicel Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4402
+  Name: Aliot Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4403
+  Name: Kiel-D-01 Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4404
+  Name: Skogul Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4405
+  Name: Frus Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4408
+  Name: Gloom Under Night Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4409
+  Name: Agav Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4410
+  Name: Echio Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4411
+  Name: Vanberk Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4412
+  Name: Isilla Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4413
+  Name: Hodremlin Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4414
+  Name: Seeker Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4415
+  Name: Snowier Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4416
+  Name: Siroma Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4417
+  Name: Ice Titan Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4418
+  Name: Gazeti Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4419
+  Name: Ktullanux Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4420
+  Name: Muscipular Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4422
+  Name: Roween Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4423
+  Name: Galion Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4424
+  Name: Stapo Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4426
+  Name: Byorgue Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4429
+  Name: Salamander Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4430
+  Name: Ifrit Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4431
+  Name: Kasa Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4432
+  Name: Magmaring Card
+  Type: Shadowgear
+  Locations:
+    Garment: false
+    Costume_Garment: true
+- Id: 4433
+  Name: Imp Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4434
+  Name: Knocker Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4435
+  Name: Zombie Slaughter Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4436
+  Name: Ragged Zombie Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4437
+  Name: Hell Poodle Card
+  Type: Card
+  Locations:
+    Both_Accessory: true
+- Id: 4438
+  Name: Banshee Card
+  Type: Shadowgear
+  Locations:
+    Head_Low: false
+    Head_Mid: false
+    Head_Top: false
+    Shadow_Weapon: true
+- Id: 4439
+  Name: Flame Skull Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4441
+  Name: Fallen Bishop Hibram Card
+  Type: Shadowgear
+  Locations:
+    Shoes: false
+    Shadow_Shoes: true
+- Id: 4442
+  Name: Tatacho Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4443
+  Name: Aqua Elemental Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4444
+  Name: Draco Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4445
+  Name: Luciola Vespa Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4447
+  Name: Centipede Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4448
+  Name: Cornus Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4449
+  Name: Dark Shadow Card
+  Type: Shadowgear
+  Locations:
+    Left_Hand: false
+    Shadow_Shield: true
+- Id: 4450
+  Name: Banshee Master Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4451
+  Name: Entweihen Crothen Card
+  Type: Shadowgear
+  Locations:
+    Armor: false
+    Shadow_Armor: true
+- Id: 4700
+  Name: STR+1
+  Type: Card
+- Id: 4701
+  Name: STR+2
+  Type: Card
+- Id: 4702
+  Name: STR+3
+  Type: Card
+- Id: 4703
+  Name: STR+4
+  Type: Card
+- Id: 4704
+  Name: STR+5
+  Type: Card
+- Id: 4705
+  Name: STR+6
+  Type: Card
+- Id: 4706
+  Name: STR+7
+  Type: Card
+- Id: 4707
+  Name: STR+8
+  Type: Card
+- Id: 4708
+  Name: STR+9
+  Type: Card
+- Id: 4709
+  Name: STR+10
+  Type: Card
+- Id: 4710
+  Name: INT+1
+  Type: Card
+- Id: 4711
+  Name: INT+2
+  Type: Card
+- Id: 4712
+  Name: INT+3
+  Type: Card
+- Id: 4713
+  Name: INT+4
+  Type: Card
+- Id: 4714
+  Name: INT+5
+  Type: Card
+- Id: 4715
+  Name: INT+6
+  Type: Card
+- Id: 4716
+  Name: INT+7
+  Type: Card
+- Id: 4717
+  Name: INT+8
+  Type: Card
+- Id: 4718
+  Name: INT+9
+  Type: Card
+- Id: 4719
+  Name: INT+10
+  Type: Card
+- Id: 4720
+  Name: DEX+1
+  Type: Card
+- Id: 4721
+  Name: DEX+2
+  Type: Card
+- Id: 4722
+  Name: DEX+3
+  Type: Card
+- Id: 4723
+  Name: DEX+4
+  Type: Card
+- Id: 4724
+  Name: DEX+5
+  Type: Card
+- Id: 4725
+  Name: DEX+6
+  Type: Card
+- Id: 4726
+  Name: DEX+7
+  Type: Card
+- Id: 4727
+  Name: DEX+8
+  Type: Card
+- Id: 4728
+  Name: DEX+9
+  Type: Card
+- Id: 4729
+  Name: DEX+10
+  Type: Card
+- Id: 4730
+  Name: AGI+1
+  Type: Card
+- Id: 4731
+  Name: AGI+2
+  Type: Card
+- Id: 4732
+  Name: AGI+3
+  Type: Card
+- Id: 4733
+  Name: AGI+4
+  Type: Card
+- Id: 4734
+  Name: AGI+5
+  Type: Card
+- Id: 4735
+  Name: AGI+6
+  Type: Card
+- Id: 4736
+  Name: AGI+7
+  Type: Card
+- Id: 4737
+  Name: AGI+8
+  Type: Card
+- Id: 4738
+  Name: AGI+9
+  Type: Card
+- Id: 4739
+  Name: AGI+10
+  Type: Card
+- Id: 4740
+  Name: VIT+1
+  Type: Card
+- Id: 4741
+  Name: VIT+2
+  Type: Card
+- Id: 4742
+  Name: VIT+3
+  Type: Card
+- Id: 4743
+  Name: VIT+4
+  Type: Card
+- Id: 4744
+  Name: VIT+5
+  Type: Card
+- Id: 4745
+  Name: VIT+6
+  Type: Card
+- Id: 4746
+  Name: VIT+7
+  Type: Card
+- Id: 4747
+  Name: VIT+8
+  Type: Card
+- Id: 4748
+  Name: VIT+9
+  Type: Card
+- Id: 4749
+  Name: VIT+10
+  Type: Card
+- Id: 4750
+  Name: LUK+1
+  Type: Card
+- Id: 4751
+  Name: LUK+2
+  Type: Card
+- Id: 4752
+  Name: LUK+3
+  Type: Card
+- Id: 4753
+  Name: LUK+4
+  Type: Card
+- Id: 4754
+  Name: LUK+5
+  Type: Card
+- Id: 4755
+  Name: LUK+6
+  Type: Card
+- Id: 4756
+  Name: LUK+7
+  Type: Card
+- Id: 4757
+  Name: LUK+8
+  Type: Card
+- Id: 4758
+  Name: LUK+9
+  Type: Card
+- Id: 4759
+  Name: LUK+10
+  Type: Card
+- Id: 4760
+  Name: MATK+1%
+  Type: Card
+- Id: 4761
+  Name: MATK+2%
+  Type: Card
+- Id: 4762
+  Name: FLEE+6
+  Type: Card
+- Id: 4763
+  Name: FLEE+12
+  Type: Card
+- Id: 4764
+  Name: CRI+5
+  Type: Card
+- Id: 4765
+  Name: CRI+7
+  Type: Card
+- Id: 4766
+  Name: ATK+2%
+  Type: Card
+- Id: 4767
+  Name: ATK+3%
+  Type: Card
+- Id: 4768
+  Name: STR+1
+  Type: Card
+- Id: 4769
+  Name: STR+2
+  Type: Card
+- Id: 4770
+  Name: STR+3
+  Type: Card
+- Id: 4771
+  Name: INT+1
+  Type: Card
+- Id: 4772
+  Name: INT+2
+  Type: Card
+- Id: 4773
+  Name: INT+3
+  Type: Card
+- Id: 4774
+  Name: VIT+1
+  Type: Card
+- Id: 4775
+  Name: VIT+2
+  Type: Card
+- Id: 4776
+  Name: VIT+3
+  Type: Card
+- Id: 4777
+  Name: AGI+1
+  Type: Card
+- Id: 4778
+  Name: AGI+2
+  Type: Card
+- Id: 4779
+  Name: AGI+3
+  Type: Card
+- Id: 4780
+  Name: DEX+1
+  Type: Card
+- Id: 4781
+  Name: DEX+2
+  Type: Card
+- Id: 4782
+  Name: DEX+3
+  Type: Card
+- Id: 4783
+  Name: LUK+1
+  Type: Card
+- Id: 4784
+  Name: LUK+2
+  Type: Card
+- Id: 4785
+  Name: LUK+3
+  Type: Card
+
