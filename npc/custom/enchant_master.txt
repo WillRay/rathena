@@ -224,7 +224,7 @@ OnInit:
 	setarray .defensive_enchants[1],
 		4730,	// Agi
 		4740,	// Vit
-		4720;	// Dex
+		4750;	// Luk
 
 	// Enchant level
 	setarray .enchants_upgrade[0],
