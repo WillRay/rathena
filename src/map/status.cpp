@@ -14210,9 +14210,10 @@ TIMER_FUNC(status_change_timer){
 				damage = (type == SC_DPOISON) ? 2 + status->max_hp / 50 : 2 + status->max_hp * 4 / 200;
 			else
 				damage = (type == SC_DPOISON) ? 2 + status->max_hp / 100 : 2 + status->max_hp / 100;
-			if (status->hp > umax(status->max_hp / 1, damage)) // Stop damaging after 1% HP left.
+
+			if (status->hp > umax(status->max_hp / 10, damage)) // Stop damaging after 1% HP left.
 				status_zap(bl, damage, 0);
-			}
+		}
 		break;
 
 	case SC_BLEEDING:
