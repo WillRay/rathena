@@ -228,9 +228,10 @@ Body:
     Name: ITEM_ENCHANTARMS
     Duration1: 1800000
   - Id: 48
+    Name: TF_DOUBLE
     DamageFlags:
       Critical: true
- - Id: 111
+  - Id: 111
     Name: BS_ADRENALINE
     Duration1:
       - Level: 1
