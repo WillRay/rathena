@@ -245,4 +245,9 @@ prt_fild04,356,148,3	script	Laertes#Creamy_Hunt	798,{
 		mes "Go kill more Porings!";
 		close;
 	}
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 14 && BaseLevel < 45 && !isbegin_quest(60122) && !isbegin_quest(60123) && !isbegin_quest(60124)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60122, HUNTING) == 2 || checkquest(60123, HUNTING) == 2 || checkquest(60124, HUNTING) == 2");
+		end;
 }

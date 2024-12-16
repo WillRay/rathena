@@ -230,4 +230,9 @@ gef_fild04,191,54,3	script	Halgus#Pupa_Hunt	123,{
 		mes "Please return to me when you are a little stronger.";
 		close;
 	}
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 1 && BaseLevel < 21 && !isbegin_quest(60110) && !isbegin_quest(60111) && !isbegin_quest(60112)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60110, HUNTING) == 2 || checkquest(60111, HUNTING) == 2 || checkquest(60112, HUNTING) == 2");
+		end;
 }

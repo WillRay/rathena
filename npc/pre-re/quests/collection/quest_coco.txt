@@ -240,4 +240,8 @@ mjolnir_01,293,20,3	script	Nutters#Coco_Hunt	779,{
 		mes "Can you get a little taller then return?";
 		close;
 	}
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 17 && BaseLevel < 60 && !isbegin_quest(60113) && !isbegin_quest(60114) && !isbegin_quest(60115)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60113, HUNTING) == 2 || checkquest(60114, HUNTING) == 2 || checkquest(60115, HUNTING) == 2");
+		end;
 }

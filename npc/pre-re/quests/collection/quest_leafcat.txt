@@ -236,4 +236,9 @@ ayo_fild01,44,241,5	script	Lella#LeafCat_Hunt	877,{
 		mes "Quickly escape before they get their claws into your sanity!";
 		close;
 	}
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 35 && BaseLevel < 66 && !isbegin_quest(60143) && !isbegin_quest(60144) && !isbegin_quest(60145)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60143, HUNTING) == 2 || checkquest(60144, HUNTING) == 2 || checkquest(60145, HUNTING) == 2");
+		end;
 }

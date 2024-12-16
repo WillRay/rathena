@@ -248,4 +248,9 @@ moc_fild02,74,329,3	script	Gregor#PecoPeco_Hunt	97,{
 		mes "Those picky's over there seem to be about your speed.";
 		close;
 	}
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 9 && BaseLevel < 31 && !isbegin_quest(60101) && !isbegin_quest(60102) && !isbegin_quest(60103)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60101, HUNTING) == 2 || checkquest(60102, HUNTING) == 2 || checkquest(60103, HUNTING) == 2");
+		end;
 }

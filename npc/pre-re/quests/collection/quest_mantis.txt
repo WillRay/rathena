@@ -98,4 +98,9 @@ lou_fild01,240,354,4	script	Mantis Researcher	878,{
 	mes "[Mantis Researcher]";
 	mes "Sorry I can't talk right now I am in a world of pain here, these darn Mantis are going to kill me.";
 	close;
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 34 && BaseLevel < 71 && !isbegin_quest(60179)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60179, HUNTING) == 2");
+		end;
 }

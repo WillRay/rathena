@@ -235,6 +235,11 @@ moc_fild17,66,273,5	script	Lemly#Frilldora_Hunt	725,{
 		mes "The desert will kill you here!";
 		close;
 	}
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 29 && BaseLevel < 66 && !isbegin_quest(60134) && !isbegin_quest(60135) && !isbegin_quest(60136)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60134, HUNTING) == 2 || checkquest(60135, HUNTING) == 2 || checkquest(60136, HUNTING) == 2");
+		end;
 }
 
 

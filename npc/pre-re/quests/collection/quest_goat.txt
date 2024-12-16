@@ -241,5 +241,9 @@ ein_fild06,82,171,0	script	Vegetable Farmer#Goat	919,{
 		mes "Oh, no..no!!!";
 		close;
 	}
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 69 && BaseLevel < 85 && !isbegin_quest(60137) && !isbegin_quest(60138) && !isbegin_quest(60139)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60137, HUNTING) == 2 || checkquest(60138, HUNTING) == 2 || checkquest(60139, HUNTING) == 2");
+		end;
 }
 
