@@ -1,0 +1,109 @@
+ice_dun01,199, 46,4	script	Jealous Snow Man#siromas	10281,{
+	@quest_id = -1;
+	
+	if (checkquest(60167) != -1) {
+		@quest_id = 60167;
+		@kill_ammount = 50;
+		@base_exp = 92916;
+		@job_exp = 41875;
+	}
+	if (checkquest(60168) != -1) {
+		@quest_id = 60168;
+		@kill_ammount = 100;
+		@base_exp = 92916 * 2;
+		@job_exp = 41875 * 2;
+	}
+	if (checkquest(60169) != -1) {
+		@quest_id = 60169;
+		@kill_ammount = 150;
+		@base_exp = 92916 * 3;
+		@job_exp = 41875 * 3;
+	}
+
+
+	debugmes "questid: " + @quest_id;
+	debugmes "checkquest: " + checkquest(@quest_id, HUNTING);
+	switch (checkquest(@quest_id, HUNTING)) {
+		case 2: // Completed
+			mes "[Jealous Snow Man]";
+			mes "Excellent work.";
+			getexp @base_exp,@job_exp;
+			erasequest @quest_id;
+			close;
+		case 1: // Quest in progress
+		case 0:
+			mes "[Jealous Snow Man]";
+			mes "Have you finished hunting " + @kill_ammount + " Siromas?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Jealous Snow Man]";
+				mes "Hmm, I don't think you've hunted " + @kill_ammount + " yet.";
+				close;
+			case 2:
+				mes "[Jealous Snow Man]";
+				mes "Remember, I need help hunting Siromas so go and hunt " + @kill_ammount + " of them.";
+				close;
+			case 3:
+				mes "[Jealous Snow Man]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Jealous Snow Man]";
+					mes "Return to me when you change your mind.";
+					erasequest @quest_id;
+					close;
+				case 2:
+					mes "[Jealous Snow Man]";
+					mes "Kill " + @kill_ammount + " Siromas to help make this place safer to research.";
+					close;
+				}
+			}
+		case -1: // Quest not in quest log
+			if (BaseLevel < 50 || BaseLevel > 79) {
+				mes "[Jealous Snow Man]";
+				mes "What are you doing here? Get some warmer clothes on!";
+				close;
+			}
+			mes "[Jealous Snow Man]";
+			mes "These Siromas keep stealing my thunder! The think they're so cute - but Snowmen are the REAL cuties.";
+			mes "Could you me wipe out these annoying creatures?";
+			next;
+			switch(select("Hunt Siromas:Cancel")) {
+				case 1:
+					mes "[Jealous Snow Man]";
+					mes "Good.";
+					mes "How many Siromas would you like to hunt?";
+					next;
+					switch(select("50 Siromas:100 Siromas:150 Siromas")) {
+						case 1:
+							mes "[Jealous Snow Man]";
+							mes "Kill 50 of those Siromas and let me know when you're done. I will reward you for your efforts.";
+							setquest 60167;
+							close;
+						case 2:
+							mes "[Jealous Snow Man]";
+							mes "Kill 100 of those Siromas and let me know when you're done. I will reward you for your efforts.";
+							setquest 60168;
+							close;
+						case 3:
+							mes "[Jealous Snow Man]";
+							mes "Kill 150 of those Siromas and let me know when you're done. I will reward you for your efforts.";
+							setquest 60169;
+							close;
+					}
+				case 2:
+					mes "[Jealous Snow Man]";
+					mes "I'll be here if you change your mind.";
+					close;
+			}
+	}
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 50 && BaseLevel < 79 && !isbegin_quest(60167) && !isbegin_quest(60168) && !isbegin_quest(60169)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60167, HUNTING) == 2 || checkquest(60168, HUNTING) == 2 || checkquest(60169, HUNTING) == 2");
+		end;
+}
+
