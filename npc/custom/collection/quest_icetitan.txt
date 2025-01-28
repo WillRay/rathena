@@ -1,0 +1,105 @@
+ice_dun03,154,27,4	script	Vengeful Snow Man#Ice Titans	10282,{
+	@quest_id = -1;
+	
+	if (checkquest(60170) != -1) {
+		@quest_id = 60170;
+		@kill_ammount = 50;
+		@base_exp = 693600;
+		@job_exp = 396400;
+	}
+	if (checkquest(60171) != -1) {
+		@quest_id = 60171;
+		@kill_ammount = 100;
+		@base_exp = 693600 * 2;
+		@job_exp = 396400 * 2;
+	}
+	if (checkquest(60172) != -1) {
+		@quest_id = 60172;
+		@kill_ammount = 150;
+		@base_exp = 693600 * 3;
+		@job_exp = 396400 * 3;
+	}
+
+	switch (checkquest(@quest_id, HUNTING)) {
+		case 2: // Completed
+			mes "[Vengeful Snow Man]";
+			mes "Excellent work.";
+			getexp @base_exp,@job_exp;
+			erasequest @quest_id;
+			close;
+		case 1: // Quest in progress
+		case 0:
+			mes "[Vengeful Snow Man]";
+			mes "Have you finished hunting " + @kill_ammount + " Ice Titans?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Vengeful Snow Man]";
+				mes "Hmm, I don't think you've hunted " + @kill_ammount + " yet.";
+				close;
+			case 2:
+				mes "[Vengeful Snow Man]";
+				mes "Remember, I need help hunting Ice Titans so go and hunt " + @kill_ammount + " of them.";
+				close;
+			case 3:
+				mes "[Vengeful Snow Man]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Vengeful Snow Man]";
+					mes "Return to me when you change your mind.";
+					erasequest @quest_id;
+					close;
+				case 2:
+					mes "[Vengeful Snow Man]";
+					mes "Kill " + @kill_ammount + " Ice Titans to help make this place safer to research.";
+					close;
+				}
+			}
+		case -1: // Quest not in quest log
+			if (BaseLevel < 69 || BaseLevel > 99) {
+				mes "[Vengeful Snow Man]";
+				mes "What are you doing here? This place is about it be covered in the frozen death of my vengence!";
+				close;
+			}
+			mes "[Vengeful Snow Man]";
+			mes "This place used to be beautiful, before the Ice Titans came. They've destroyed everything lovely in this cave. They must be crushed!";
+			mes "Will you help?";
+			next;
+			switch(select("Let's kill some Ice Titans:Cancel")) {
+				case 1:
+					mes "[Vengeful Snow Man]";
+					mes "Good. How many Ice Titans would you like to hunt?";
+					next;
+					switch(select("50 Ice Titans:100 Ice Titans:150 Ice Titans")) {
+						case 1:
+							mes "[Vengeful Snow Man]";
+							mes "Kill 50 of those Ice Titans and let me know when you're done. I will reward you for your efforts.";
+							setquest 60170;
+							close;
+						case 2:
+							mes "[Vengeful Snow Man]";
+							mes "Kill 100 of those Ice Titans and let me know when you're done. I will reward you for your efforts.";
+							setquest 60171;
+							close;
+						case 3:
+							mes "[Vengeful Snow Man]";
+							mes "Kill 150 of those Ice Titans and let me know when you're done. I will reward you for your efforts.";
+							setquest 60172;
+							close;
+					}
+				case 2:
+					mes "[Vengeful Snow Man]";
+					mes "I'll be here if you change your mind.";
+					close;
+			}
+	}
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 69 && BaseLevel < 99 && !isbegin_quest(60170) && !isbegin_quest(60171) && !isbegin_quest(60172)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60170, HUNTING) == 2 || checkquest(60171, HUNTING) == 2 || checkquest(60172, HUNTING) == 2");
+		end;
+}
+

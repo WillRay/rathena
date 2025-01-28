@@ -1,0 +1,95 @@
+nif_fild01,321,327,4	script	Deadman#lolirui	795,{
+	@quest_id = -1;
+	
+	if (checkquest(60427) != -1) {
+		@quest_id = 60152;
+		@kill_ammount = 100;
+		@base_exp = 170150 * 2;
+		@job_exp = 103300 * 2;
+	}
+	if (checkquest(60428) != -1) {
+		@quest_id = 60153;
+		@kill_ammount = 200;
+		@base_exp = 170150 * 3;
+		@job_exp = 103300 * 3;
+	}
+
+	switch (checkquest(@quest_id, HUNTING)) {
+		case 2: // Completed
+			mes "[Coal Miner]";
+			mes "Excellent work.";
+			getexp @base_exp,@job_exp;
+			erasequest @quest_id;
+			close;
+		case 1: // Quest in progress
+		case 0:
+			mes "[Coal Miner]";
+			mes "Have you finished hunting " + @kill_ammount + " Deleters?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Coal Miner]";
+				mes "Hmm, I don't think you've hunted " + @kill_ammount + " yet.";
+				close;
+			case 2:
+				mes "[Coal Miner]";
+				mes "Remember, I need help hunting Deleters so go and hunt " + @kill_ammount + " of them.";
+				close;
+			case 3:
+				mes "[Coal Miner]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Coal Miner]";
+					mes "Return to me when you change your mind.";
+					erasequest @quest_id;
+					close;
+				case 2:
+					mes "[Coal Miner]";
+					mes "Kill " + @kill_ammount + " Deleters to help make this place safer to research.";
+					close;
+				}
+			}
+		case -1: // Quest not in quest log
+			if (BaseLevel < 75  || BaseLevel > 95) {
+				mes "[Coal Miner]";
+				mes "Sorry, busy mining. Take care down here!";
+				close;
+			}
+			mes "[Coal Miner]";
+			mes "This heat is killing me. I need to finish this mining operation and get out of here, but these Deleters are causing a headache!";
+			mes "Could you clear some of them out so I can finish?";
+			next;
+			switch(select("Hunt Deleters:Cancel")) {
+				case 1:
+					mes "[Coal Miner]";
+					mes "Good.";
+					mes "How many Deleters would you like to hunt?";
+					next;
+					switch(select("100 Deleters:200 Deleters")) {
+						case 1:
+							mes "[Coal Miner]";
+							mes "Kill 100 of those Deleters and let me know when you're done. I will reward you for your efforts.";
+							setquest 60427;
+							close;
+						case 2:
+							mes "[Coal Miner]";
+							mes "Kill 200 of those Deleters and let me know when you're done. I will reward you for your efforts.";
+							setquest 60428;
+							close;
+					}
+				case 2:
+					mes "[Coal Miner]";
+					mes "I'll be here if you change your mind.";
+					close;
+			}
+	}
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 74 && BaseLevel < 96 && !isbegin_quest(60427) && !isbegin_quest(60428)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60427, HUNTING) == 2 || checkquest(60428, HUNTING) == 2");
+		end;
+}
+

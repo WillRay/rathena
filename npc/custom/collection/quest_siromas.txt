@@ -1,28 +1,25 @@
-ice_dun01,199, 46,4	script	Jealous Snow Man#siromas	10281,{
+ice_dun01,156,25,6	script	Jealous Snow Man#siromas	10281,{
 	@quest_id = -1;
 	
 	if (checkquest(60167) != -1) {
 		@quest_id = 60167;
 		@kill_ammount = 50;
-		@base_exp = 92916;
-		@job_exp = 41875;
+		@base_exp = 111500;
+		@job_exp = 50250;
 	}
 	if (checkquest(60168) != -1) {
 		@quest_id = 60168;
 		@kill_ammount = 100;
-		@base_exp = 92916 * 2;
-		@job_exp = 41875 * 2;
+		@base_exp = 111500 * 2;
+		@job_exp = 50250 * 2;
 	}
 	if (checkquest(60169) != -1) {
 		@quest_id = 60169;
 		@kill_ammount = 150;
-		@base_exp = 92916 * 3;
-		@job_exp = 41875 * 3;
+		@base_exp = 111500 * 3;
+		@job_exp = 50250 * 3;
 	}
 
-
-	debugmes "questid: " + @quest_id;
-	debugmes "checkquest: " + checkquest(@quest_id, HUNTING);
 	switch (checkquest(@quest_id, HUNTING)) {
 		case 2: // Completed
 			mes "[Jealous Snow Man]";
