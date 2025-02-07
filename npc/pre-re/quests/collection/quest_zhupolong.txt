@@ -98,4 +98,9 @@ lou_dun02,161,264,4	script	Dragon Hunter	732,{
 	mes "[Dragon Hunter]";
 	mes "Sorry I can't talk right now I am in a world of pain here, these darn Zhu Po Long are going to kill me.";
 	close;
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 49 && BaseLevel < 91 && !isbegin_quest(60182)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60182, HUNTING) == 2");
+		end;
 }

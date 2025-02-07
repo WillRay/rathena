@@ -226,6 +226,11 @@ gef_fild07,321,193,4	script	Langry#Fabre_Hunt	754,{
 		mes "You may just be the most unlikely person ever, recycle a few Fabres and come back.";
 		close;
 	}
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 1 && BaseLevel < 21 && !isbegin_quest(60107) && !isbegin_quest(60108) && !isbegin_quest(60109)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60107, HUNTING) == 2 || checkquest(60108, HUNTING) == 2 || checkquest(60109, HUNTING) == 2");
+		end;
 }
 
 

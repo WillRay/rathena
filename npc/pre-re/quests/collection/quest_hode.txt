@@ -238,4 +238,9 @@ moc_fild17,208,346,5	script	Shone#Hode_Hunt	707,{
 		mes "Come back when you are stronger and have earned much more wisdom.";
 		close;
 	}
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 24 && BaseLevel < 61 && !isbegin_quest(60104) && !isbegin_quest(60105) && !isbegin_quest(60106)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60104, HUNTING) == 2 || checkquest(60105, HUNTING) == 2 || checkquest(60106, HUNTING) == 2");
+		end;
 }

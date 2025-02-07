@@ -239,6 +239,11 @@ ein_fild01,43,249,0	script	Local Villager#hunt	898,{
 		mes "I just wish I could get through this all.";
 		close;
 	}
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 59 && BaseLevel < 75 && !isbegin_quest(60125) && !isbegin_quest(60126) && !isbegin_quest(60127)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60125, HUNTING) == 2 || checkquest(60126, HUNTING) == 2 || checkquest(60127, HUNTING) == 2");
+		end;
 }
 
 

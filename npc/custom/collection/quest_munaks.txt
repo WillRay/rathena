@@ -1,0 +1,119 @@
+pay_dun02,29,67,4	script	Researcher Eldrid#Munaks	883,{
+	@quest_id = -1;
+	
+	if (checkquest(60149) != -1) {
+		@quest_id = 60149;
+		@kill_ammount = 50;
+		@base_exp = 25041;
+		@job_exp = 11791;
+	}
+	if (checkquest(60150) != -1) {
+		@quest_id = 60150;
+		@kill_ammount = 100;
+		@base_exp = 25041 * 2;
+		@job_exp = 11791 * 2;
+	}
+	if (checkquest(60151) != -1) {
+		@quest_id = 60151;
+		@kill_ammount = 150;
+		@base_exp = 25041 * 3;
+		@job_exp = 11791 * 3;
+	}
+
+	debugmes "QuestID:" + @quest_id;
+
+	switch (checkquest(@quest_id, HUNTING)) {
+		case 2: // Completed
+			mes "[Researcher Eldrid]";
+			mes "Excellent work.";
+			getexp @base_exp,@job_exp;
+			erasequest @quest_id;
+			close;
+		case 1: // Quest in progress
+		case 0:
+			mes "[Researcher Eldrid]";
+			mes "Have you finished hunting " + @kill_ammount + " Munaks?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Researcher Eldrid]";
+				mes "Hmm, I don't think you've hunted " + @kill_ammount + " yet.";
+				close;
+			case 2:
+				mes "[Researcher Eldrid]";
+				mes "Remember, I need help hunting Munaks so go and hunt " + @kill_ammount + " of them.";
+				close;
+			case 3:
+				mes "[Researcher Eldrid]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Researcher Eldrid]";
+					mes "Return to me when you change your mind.";
+					erasequest @quest_id;
+					close;
+				case 2:
+					mes "[Researcher Eldrid]";
+					mes "Kill " + @kill_ammount + " Munaks to help make this place safer to research.";
+					close;
+				}
+			}
+		case -1: // Quest not in quest log
+			if (BaseLevel < 29 || BaseLevel > 66) {
+				mes "[Researcher Eldrid]";
+				mes "Sorry I can't talk right now. So much to learn!";
+				close;
+			}
+			mes "[Researcher Eldrid]";
+			mes "Hey! This place is so dangerous!";
+			mes "Could you help me conduct my research?";
+			next;
+			switch(select("Yes:No")) {
+				case 1:
+					mes "[Researcher Eldrid]";
+					mes "These Munaks are making this place too dangerous for me.";
+					mes "Can you hunt them so it's safer?";
+					next;
+					switch(select("Hunt Munaks:Cancel")) {
+						case 1:
+							mes "[Researcher Eldrid]";
+							mes "Good.";
+							mes "How many Munaks would you like to hunt?";
+							next;
+							switch(select("50 Munaks:100 Munaks:150 Munaks")) {
+								case 1:
+									mes "[Researcher Eldrid]";
+									mes "Kill 50 of those Munaks and let me know when you're done. I will reward you for your efforts.";
+									setquest 60149;
+									close;
+								case 2:
+									mes "[Researcher Eldrid]";
+									mes "Kill 100 of those Munaks and let me know when you're done. I will reward you for your efforts.";
+									setquest 60150;
+									close;
+								case 3:
+									mes "[Researcher Eldrid]";
+									mes "Kill 150 of those Munaks and let me know when you're done. I will reward you for your efforts.";
+									setquest 60151;
+									close;
+							}
+						case 2:
+							mes "[Researcher Eldrid]";
+							mes "I'll be here if you change your mind.";
+							close;
+					}
+				case 2:
+					mes "[Researcher Eldrid]";
+					mes "I'll be here if you change your mind.";
+					close;
+			}
+	}
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 29 && BaseLevel < 66 && !isbegin_quest(60149) && !isbegin_quest(60150) && !isbegin_quest(60151)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60149, HUNTING) == 2 || checkquest(60150, HUNTING) == 2 || checkquest(60151, HUNTING) == 2");
+		end;
+}
+

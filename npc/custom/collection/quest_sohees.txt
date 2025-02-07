@@ -1,0 +1,117 @@
+pay_dun03,152,152,0	script	Researcher Erland#Sohees	47,{
+	@quest_id = -1;
+	
+	if (checkquest(60152) != -1) {
+		@quest_id = 60152;
+		@kill_ammount = 50;
+		@base_exp = 30791;
+		@job_exp = 18958;
+	}
+	if (checkquest(60153) != -1) {
+		@quest_id = 60153;
+		@kill_ammount = 100;
+		@base_exp = 30791 * 2;
+		@job_exp = 18958 * 2;
+	}
+	if (checkquest(60154) != -1) {
+		@quest_id = 60154;
+		@kill_ammount = 150;
+		@base_exp = 30791 * 3;
+		@job_exp = 18958 * 3;
+	}
+
+	switch (checkquest(@quest_id, HUNTING)) {
+		case 2: // Completed
+			mes "[Researcher Erland]";
+			mes "Excellent work.";
+			getexp @base_exp,@job_exp;
+			erasequest @quest_id;
+			close;
+		case 1: // Quest in progress
+		case 0:
+			mes "[Researcher Erland]";
+			mes "Have you finished hunting " + @kill_ammount + " Sohees?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Researcher Erland]";
+				mes "Hmm, I don't think you've hunted " + @kill_ammount + " yet.";
+				close;
+			case 2:
+				mes "[Researcher Erland]";
+				mes "Remember, I need help hunting Sohees so go and hunt " + @kill_ammount + " of them.";
+				close;
+			case 3:
+				mes "[Researcher Erland]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Researcher Erland]";
+					mes "Return to me when you change your mind.";
+					erasequest @quest_id;
+					close;
+				case 2:
+					mes "[Researcher Erland]";
+					mes "Kill " + @kill_ammount + " Sohees to help make this place safer to research.";
+					close;
+				}
+			}
+		case -1: // Quest not in quest log
+			if (BaseLevel < 34 || BaseLevel > 71) {
+				mes "[Researcher Erland]";
+				mes "Sorry I can't talk right now. So much to learn!";
+				close;
+			}
+			mes "[Researcher Erland]";
+			mes "Hey! This place is so dangerous!";
+			mes "Could you help me conduct my research?";
+			next;
+			switch(select("Yes:No")) {
+				case 1:
+					mes "[Researcher Erland]";
+					mes "These Sohees are making this place too dangerous for me.";
+					mes "Can you hunt them so it's safer?";
+					next;
+					switch(select("Hunt Sohees:Cancel")) {
+						case 1:
+							mes "[Researcher Erland]";
+							mes "Good.";
+							mes "How many Sohees would you like to hunt?";
+							next;
+							switch(select("50 Sohees:100 Sohees:150 Sohees")) {
+								case 1:
+									mes "[Researcher Erland]";
+									mes "Kill 50 of those Sohees and let me know when you're done. I will reward you for your efforts.";
+									setquest 60152;
+									close;
+								case 2:
+									mes "[Researcher Erland]";
+									mes "Kill 100 of those Sohees and let me know when you're done. I will reward you for your efforts.";
+									setquest 60153;
+									close;
+								case 3:
+									mes "[Researcher Erland]";
+									mes "Kill 150 of those Sohees and let me know when you're done. I will reward you for your efforts.";
+									setquest 60154;
+									close;
+							}
+						case 2:
+							mes "[Researcher Erland]";
+							mes "I'll be here if you change your mind.";
+							close;
+					}
+				case 2:
+					mes "[Researcher Erland]";
+					mes "I'll be here if you change your mind.";
+					close;
+			}
+	}
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 34 && BaseLevel < 71 && !isbegin_quest(60152) && !isbegin_quest(60153) && !isbegin_quest(60154)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60152, HUNTING) == 2 || checkquest(60153, HUNTING) == 2 || checkquest(60154, HUNTING) == 2");
+		end;
+}
+

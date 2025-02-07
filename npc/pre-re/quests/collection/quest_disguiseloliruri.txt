@@ -147,4 +147,9 @@ nif_fild01,332,327,4	script	Deadman	795,{
 	mes "[Deadman]";
 	mes "Sorry I can't talk right now I am in a world of pain here, these darn Disguise and Loli Ruri are going to kill me.";
 	close;
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 59 && BaseLevel < 99 && !isbegin_quest(60173) && !isbegin_quest(60176)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60173, HUNTING) == 2 || checkquest(60173, HUNTING) == 2 || checkquest(60173, HUNTING) == 2");
+		end;
 }

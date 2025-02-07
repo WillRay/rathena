@@ -1,0 +1,117 @@
+pay_dun00,55,148,6	script	Researcher Leif#Skeletons	702,{
+	@quest_id = -1;
+
+	if (checkquest(60146) != -1) {
+		@quest_id = 60146;
+		@kill_ammount = 50;
+		@base_exp = 750;
+		@job_exp = 700;
+	}
+	if (checkquest(60147) != -1) {
+		@quest_id = 60147;
+		@kill_ammount = 100;
+		@base_exp = 750 * 2;
+		@job_exp = 700 * 2;
+	}
+	if (checkquest(60148) != -1) {
+		@quest_id = 60148;
+		@kill_ammount = 150;
+		@base_exp = 750 * 3;
+		@job_exp = 700 * 3;
+	}
+
+	switch (checkquest(@quest_id, HUNTING)) {
+		case 2: // Completed
+			mes "[Researcher Leif]";
+			mes "Excellent work.";
+			getexp @base_exp,@job_exp;
+			erasequest @quest_id;
+			close;
+		case 1: // Quest in progress
+		case 0:
+			mes "[Researcher Leif]";
+			mes "Have you finished hunting " + @kill_ammount + " Skeletons?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Researcher Leif]";
+				mes "Hmm, I don't think you've hunted " + @kill_ammount + " yet.";
+				close;
+			case 2:
+				mes "[Researcher Leif]";
+				mes "Remember, I need help hunting Skeletons so go and hunt " + @kill_ammount + " of them.";
+				close;
+			case 3:
+				mes "[Researcher Leif]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Researcher Leif]";
+					mes "Return to me when you change your mind.";
+					erasequest @quest_id;
+					close;
+				case 2:
+					mes "[Researcher Leif]";
+					mes "Kill " + @kill_ammount + " Skeletons to help make this place safer to research.";
+					close;
+				}
+			}
+		case -1: // Quest not in quest log
+			if (BaseLevel < 11 || BaseLevel > 31) {
+				mes "[Researcher Leif]";
+				mes "Sorry I can't talk right now. So much to learn!";
+				close;
+			}
+			mes "[Researcher Leif]";
+			mes "Hey! This place is so dangerous!";
+			mes "Could you help me conduct my research?";
+			next;
+			switch(select("Yes:No")) {
+				case 1:
+					mes "[Researcher Leif]";
+					mes "These Skeletons are making this place too dangerous for me.";
+					mes "Can you hunt them so it's safer?";
+					next;
+					switch(select("Hunt Skeletons:Cancel")) {
+						case 1:
+							mes "[Researcher Leif]";
+							mes "Good.";
+							mes "How many Skeletons would you like to hunt?";
+							next;
+							switch(select("50 Skeletons:100 Skeletons:150 Skeletons")) {
+								case 1:
+									mes "[Researcher Leif]";
+									mes "Kill 50 of those Skeletons and let me know when you're done. I will reward you for your efforts.";
+									setquest 60146;
+									close;
+								case 2:
+									mes "[Researcher Leif]";
+									mes "Kill 100 of those Skeletons and let me know when you're done. I will reward you for your efforts.";
+									setquest 60147;
+									close;
+								case 3:
+									mes "[Researcher Leif]";
+									mes "Kill 150 of those Skeletons and let me know when you're done. I will reward you for your efforts.";
+									setquest 60148;
+									close;
+							}
+						case 2:
+							mes "[Researcher Leif]";
+							mes "I'll be here if you change your mind.";
+							close;
+					}
+				case 2:
+					mes "[Researcher Leif]";
+					mes "I'll be here if you change your mind.";
+					close;
+			}
+	}
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 11 && BaseLevel < 31 && !isbegin_quest(60146) && !isbegin_quest(60147) && !isbegin_quest(60148)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60146, HUNTING) == 2 || checkquest(60147, HUNTING) == 2 || checkquest(60148, HUNTING) == 2");
+		end;
+}
+

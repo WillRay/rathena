@@ -229,6 +229,11 @@ pay_fild10,108,357,5	script	Li#Dokebi_Hunt	90,{
 		mes "You should leave quickly!";
 		close;
 	}
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 34 && BaseLevel < 71 && !isbegin_quest(60128) && !isbegin_quest(60129) && !isbegin_quest(60130)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60128, HUNTING) == 2 || checkquest(60129, HUNTING) == 2 || checkquest(60130, HUNTING) == 2");
+		end;
 }
 
 

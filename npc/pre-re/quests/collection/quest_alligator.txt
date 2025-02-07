@@ -239,4 +239,9 @@ cmd_fild01,362,256,3	script	Cuir#Gator_Hunt	106,{
 		mes "Perhaps when you are stronger you and I can do business.";
 		close;
 	}
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 44 && BaseLevel < 81 && !isbegin_quest(60119) && !isbegin_quest(60120) && !isbegin_quest(60121)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60119, HUNTING) == 2 || checkquest(60120, HUNTING) == 2 || checkquest(60121, HUNTING) == 2");
+		end;
 }

@@ -227,6 +227,11 @@ moc_fild11,57,138,0	script	Private Jeremy#hunt	707,{
 		mes "It is dangerous here citizen.";
 		close;
 	}
+
+	OnInit:
+		questinfo( QTYPE_QUEST2, QMARK_YELLOW, "BaseLevel > 24 && BaseLevel < 61 && !isbegin_quest(60140) && !isbegin_quest(60141) && !isbegin_quest(60142)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60140, HUNTING) == 2 || checkquest(60141, HUNTING) == 2 || checkquest(60142, HUNTING) == 2");
+		end;
 }
 
 

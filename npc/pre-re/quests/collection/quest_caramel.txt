@@ -239,4 +239,9 @@ mjolnir_01,296,29,6	script	Yullo#Caramel_Hunt	95,{
 		mes "Come back when you are taller and stronger.";
 		close;
 	}
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 23 && BaseLevel < 61 && !isbegin_quest(60116) && !isbegin_quest(60117) && !isbegin_quest(60118)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60116, HUNTING) == 2 || checkquest(60117, HUNTING) == 2 || checkquest(60118, HUNTING) == 2");
+		
+		end;
 }

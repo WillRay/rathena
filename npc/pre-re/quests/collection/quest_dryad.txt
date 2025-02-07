@@ -239,4 +239,9 @@ um_fild01,34,281,5	script	Lilla#Dryad_Hunt	724,{
 		mes "Thank you for your offer though.";
 		close;
 	}
+
+	OnInit:
+		questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 59 && BaseLevel < 86 && !isbegin_quest(60131) && !isbegin_quest(60132) && !isbegin_quest(60133)");
+		questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(60131, HUNTING) == 2 || checkquest(60132, HUNTING) == 2 || checkquest(60133, HUNTING) == 2");
+		end;
 }
