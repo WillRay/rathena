@@ -1,0 +1,41 @@
+-	script	EngraverNPC#dummy::Engraver	-1,{
+
+	for(.@i = 0; .@i <= getarraysize(.equipOptions) - 1; .@i++) {
+		.@menu$ = .@menu$ + ((getequipisequiped(.equipOptions[.@i])) ? getequipname(.equipOptions[.@i]) : "") + ":";
+	}
+
+	.@selection = select(.@menu$, "Cancel")-1;
+	
+	.@equipIndex = .equipOptions[.@selection];
+	
+	.@itemId = getequipid(.@equipIndex);
+	.@refine = getequiprefinerycnt(.@equipIndex);
+
+	setarray .@cards[0], getequipcardid(.@equipIndex,0), getequipcardid(.@equipIndex,1), getequipcardid(.@equipIndex,2), getequipcardid(.@equipIndex,3);
+	setarray .@optId[0], getequiprandomoption(.@equipIndex,0,ROA_ID), getequiprandomoption(.@equipIndex,1,ROA_ID), getequiprandomoption(.@equipIndex,2,ROA_ID), getequiprandomoption(.@equipIndex,3,ROA_ID), getequiprandomoption(.@equipIndex,4,ROA_ID);
+	setarray .@optVal[0], getequiprandomoption(.@equipIndex,0,ROA_VALUE), getequiprandomoption(.@equipIndex,1,ROA_VALUE), getequiprandomoption(.@equipIndex,2,ROA_VALUE), getequiprandomoption(.@equipIndex,3,ROA_VALUE), getequiprandomoption(.@equipIndex,4,ROA_VALUE);
+	setarray .@optParam[0], 0, 0, 0, 0, 0;	
+
+	//setarray .@optId[0], RDMOPT_MELEE_ATTACK_DAMAGE_TARGET, RDMOPT_VAR_CRITICAL_RATE, RDMOPT_VAR_PLUSASPD; // Engraving Type
+	//setarray .@optVal[0], rand(1,5), rand(6,11), rand(12,17); // Random values for the engraving
+	//setarray .@optParam[0], 0, 0, 0, 0, 0;	
+	.@grade = 0;
+	
+	npctalk "stuff " + .@OptID[0];
+
+	delequip .@equipIndex;
+	getitem3 .@itemId,1,1,.@refine,0,.@cards[0],.@cards[1],.@cards[2],.@cards[3],.@optId,.@optVal,.@optParam;
+	specialeffect2 EF_THUNDERSTORM2; //effect 900
+	// getitem4 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+
+	close;
+
+OnInit:
+	setarray .equipOptions[0], EQI_HEAD_TOP, EQI_ARMOR, EQI_GARMENT, EQI_SHOES, EQI_HAND_R , EQI_HAND_L; // EQI_HEAD_LOW, EQI_HEAD_MID
+
+	// setarray .@weaponPhysicalTier1[0], MELEE_ATTACK_DAMAGE_TARGET, 
+
+}
+
+
+prt_in,249,16,2	duplicate(Engraver)	Gerald#pront	73

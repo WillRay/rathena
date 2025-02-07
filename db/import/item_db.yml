@@ -89,10 +89,87 @@ Header:
   Version: 3
 
 Body:
-  - Id: 645
-    Name: Concentration Potion
-    Buy: 160
+  - Id: 6223
+    AegisName: Carnium
+    Name: Carnium
+    Type: Etc
+    Buy: 2000
+    Weight: 150
+    Flags:
+      BuyingStore: true
+      DropEffect: YELLOW_PILLAR
+  - Id: 6224
+    AegisName: Bradium
+    Name: Bradium
+    Type: Etc
+    Buy: 2000
+    Weight: 150
+    Flags:
+      BuyingStore: true
+      DropEffect: YELLOW_PILLAR
+  - Id: 6225
+    AegisName: HD_Carnium
+    Name: HD Carnium
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 6226
+    AegisName: HD_Bradium
+    Name: HD Bradium
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25728
+    AegisName: Shadowdecon_Ore
+    Name: Rough Shadowdecon
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 25729
+    AegisName: Shadowdecon
+    Name: Shadowdecon
+    Type: Etc
     Weight: 20
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 25730
+    AegisName: Zelunium_Ore
+    Name: Rough Zelunium
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 25731
+    AegisName: Zelunium
+    Name: Zelunium
+    Type: Etc
+    Weight: 20
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 7836
+    AegisName: Dawn_Essence
+    Weight: 0
+    Flags:
+      DropEffect: BLUE_PILLAR
   - Id: 656
     AegisName: Awakening_Potion
     Buy: 300
@@ -187,6 +264,56 @@ Body:
     Name: Green Potion
     Buy: 20
     Weight: 3
+  - Id: 1164
+    AegisName: Muramasa
+    Script: |
+      bonus bCritical,20;
+      bonus bAspdRate,8;
+  - Id: 5567
+    AegisName: Bright_Fury
+    Script: |
+      bonus bStr,1;
+      if (getrefine()>6) {
+         bonus bCritical,10;
+         bonus bHit,10;
+         autobonus "{ bonus bBaseAtk,30; }",100,3000,BF_WEAPON,"{ specialeffect2 EF_AURABLADE; }";
+      }
+  - Id: 4373
+    AegisName: Chung_E_Card
+    Name: Green Maiden Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus bLuk,-5;
+      bonus bLuk,getequiprefinerycnt(EQI_GARMENT);
+      bonus bCritical,getequiprefinerycnt(EQI_GARMENT);
+  - Id: 4411
+    AegisName: Vanberk_Card
+    Script: |
+      bonus bStr,2;
+      autobonus "{ bonus bCritical,100; }",25,5000,0,"{ specialeffect2 EF_ENHANCE; }";
+  - Id: 18666
+    AegisName: CD_In_Mouth
+    Name: CD In Mouth
+    Type: Armor
+    Buy: 20
+    Weight: 200
+    Jobs:
+      All: true
+      Novice: false
+      SuperNovice: false
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 20
+    View: 815
+    Script: |
+      autobonus "{ bonus3 bAutoSpell,\"MG_FIREBOLT\",rand(1,5),400; bonus3 bAutoSpell,\"MG_LIGHTNINGBOLT\",rand(1,5),400; bonus3 bAutoSpell,\"MG_COLDBOLT\",rand(1,5),400; bonus3 bAutoSpell,\"WZ_EARTHSPIKE\",rand(1,5),400; bonus3 bAutoSpell,\"MG_SOULSTRIKE\",rand(1,5),400; }",60,5000,BF_NORMAL,"{ specialeffect2 EF_ENHANCE; }";
 
 Footer:
   Imports:

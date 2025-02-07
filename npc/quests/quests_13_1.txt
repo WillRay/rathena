@@ -75,6 +75,7 @@ function	script	Promotional_Staff	{
 		mes "[Promotional Staff]";
 		mes "Anyway, I'm supposed to inform many adventurers about it.";
 		mes "There's no time to waste!";
+		navigateto "prt_castle",83,67,1,1;
 		close;
 	case 2:
 		mes "[Promotional Staff]";
@@ -85,6 +86,9 @@ function	script	Promotional_Staff	{
 
 prontera,163,53,3	script	Promotional Staff#prt	100,{
 	callfunc "Promotional_Staff";
+	OnInit:
+		questinfo(QTYPE_QUEST, QMARK_NONE, "BaseLevel > 69 && ep13_ryu < 9 && ep13_ryu < 1");
+		end;
 	end;
 }
 
@@ -365,53 +369,6 @@ aldebaran,127,138,3	script	Promotional Staff#alde	100,{
 		mes "Just visit the ^FF0000Promotional Staff in Geffen^000000. You have no business with me anymore. Bless you. I wish you a safe adventure.";
 		close;
 	}
-	if (ep13_ryu == 2) {
-		if (countitem(909) < 300) {
-			mes "[Promotional Staff]";
-			mes "Don't forget to bring... ^FF0000300 Jellopy^000000.";
-			mes "Got it? ^FF0000300 Jellopy^000000!";
-			mes "Let me know once you got them.";
-			close;
-		}
-		mes "[Promotional Staff]";
-		mes "Hey! Let me know once you collect all of them.";
-		mes "Don't disturb me anymore. I'm a busy man... What a waste.";
-		next;
-		mes "[Promotional Staff]";
-		mes "Hm? Did you bring all of them?";
-		mes "No! It's quite an annoying job";
-		mes "I'm impressed that you managed to do such a menial thing to bring 300 Jellopy!";
-		next;
-		mes "[Promotional Staff]";
-		mes "You have guts kid!";
-		mes "You're a good-willed person!";
-		mes "Ok, you win!";
-		mes "You pass!!";
-		next;
-		mes "[Promotional Staff]";
-		mes "Adventurers like you";
-		mes "are not common";
-		mes "A hard-boiled soldier!";
-		mes "Stronger than me!";
-		next;
-		mes "[Promotional Staff]";
-		mes "Now can you go to the";
-		mes "Promotional Staff in Geffen?";
-		mes "He will test you again.";
-		next;
-		mes "[Promotional Staff]";
-		mes "You know this isn't an easy quest.";
-		mes "You resolved to carry it out, didn't you?";
-		mes "Brace yourself for it.";
-		next;
-		delitem 909,300; //Jellopy
-		changequest 10058,10059;
-		set ep13_ryu,3;
-		mes "[Promotional Staff]";
-		mes "Anyway you did the first step.";
-		mes "Bless you!";
-		close;
-	}
 	if (ep13_ryu == 1) {
 		mes "[Promotional Staff]";
 		mes "We want the adventurers who are super curious and extremely brave. Join us for a wonderful adventure!";
@@ -438,16 +395,34 @@ aldebaran,127,138,3	script	Promotional Staff#alde	100,{
 		mes "My job is testing if you are strong and brave enough for this adventure.";
 		mes "What a bother!";
 		next;
+		select("You can trust me. I have what it takes.");
 		mes "[Promotional Staff]";
-		mes "I will accept you if you bring me ^FF0000300 Jellopy^000000.";
-		mes "I believe that you can bring them to me.";
-		mes "Are you ready?";
+		mes "You have guts kid!";
+		mes "You're a good-willed person!";
+		mes "Ok, you win!";
+		mes "You pass!!";
 		next;
-		changequest 10057,10058;
-		set ep13_ryu,2;
 		mes "[Promotional Staff]";
-		mes "Just go ahead and hunt monsters, or whatever and collect 300 jellopies.";
-		mes "Then we can go forward.";
+		mes "Adventurers like you";
+		mes "are not common";
+		mes "A hard-boiled soldier!";
+		mes "Stronger than me!";
+		next;
+		mes "[Promotional Staff]";
+		mes "Now can you go to the";
+		mes "Promotional Staff in Geffen?";
+		mes "He will test you again.";
+		next;
+		mes "[Promotional Staff]";
+		mes "You know this isn't an easy quest.";
+		mes "You resolved to carry it out, didn't you?";
+		mes "Brace yourself for it.";
+		next;
+		changequest 10057,10059;
+		set ep13_ryu,3;
+		mes "[Promotional Staff]";
+		mes "Anyway you did the first step.";
+		mes "Bless you!";
 		close;
 	}
 	callfunc "Promotional_Staff";
@@ -467,17 +442,26 @@ geffen,90,67,3	script	Promotional Staff#gef	100,{
 		mes "Or do you have any business in Geffen?";
 		close;
 	}
-	if (ep13_ryu == 5) {
-		if (countitem(723) == 0) {
-			mes "[Promotional Staff]";
-			mes "^FF00001 Ruby!!^000000.";
-			mes "Don't you forget it!";
-			mes "Hurry up! Time is zeny!";
-			close;
-		}
+	if (ep13_ryu == 3) {
 		mes "[Promotional Staff]";
-		mes "Wow, you brought a genuine Jewel.";
-		mes "You are absolutely qualified.";
+		mes "We are recruiting adventurers who are strong and curious. Try your life at something more challenging.";
+		next;
+		mes "[Promotional Staff]";
+		mes "Hey, you're a knowledgeable person, right? Are you interested in my story?";
+		next;
+		select("The Staff in Aldebaran sent me.");
+		mes "[Promotional Staff]";
+		mes "Oh he did?";
+		next;
+		mes "[Promotional Staff]";
+		mes "Ok, I guess that it's time for the second part of your test.";
+		next;
+		mes "[Promotional Staff]";
+		mes "Why do you want to travel to the New World?";
+		next;
+		select("I want to see new lands!:I want to gather more power.:It sounds interesting.");
+		mes "[Promotional Staff]";
+		mes "Wow, okay.You are absolutely qualified.";
 		mes "I can tell these things.";
 		next;
 		mes "[Promotional Staff]";
@@ -499,71 +483,11 @@ geffen,90,67,3	script	Promotional Staff#gef	100,{
 		mes "It is a very dangerous place so you must go through these tests before we can send you....";
 		mes "We're pretty picky.";
 		next;
-		delitem 723,1; //Cardinal_Jewel
-		changequest 10061,10062;
+		changequest 10059,10062;
 		set ep13_ryu,6;
 		mes "[Promotional Staff]";
 		mes "I hope you can do it!";
 		mes "Good luck!";
-		close;
-	}
-	if (ep13_ryu == 4) {
-		if (countitem(721) == 0) {
-			mes "[Promotional Staff]";
-			mes "The one you should bring me is";
-			mes "^FF0000Emerald^000000. Can you get it?";
-			close;
-		}
-		mes "[Promotional Staff]";
-		mes "You brought it so soon!";
-		mes "You're a real adventurer!";
-		mes "I will accept this Emerald as evidence.";
-		next;
-		mes "[Promotional Staff]";
-		mes "This isn't something I wanted to keep for myself.";
-		mes "You know that, right?";
-		next;
-		mes "[Promotional Staff]";
-		mes "Next bring me ^FF00001 Ruby^000000.";
-		mes "I can't judge you with only one jewel.";
-		mes "So I need one more stone.";
-		next;
-		delitem 721,1; //Azure_Jewel
-		changequest 10060,10061;
-		set ep13_ryu,5;
-		mes "[Promotional Staff]";
-		mes "Please bring me a Ruby.";
-		mes "As I mentioned, this is the second request.";
-		mes "I will wait until you bring me a stone again.";
-		close;
-	}
-	if (ep13_ryu == 3) {
-		mes "[Promotional Staff]";
-		mes "We are recruiting adventurers who are strong and curious. Try your life at something more challenging.";
-		next;
-		mes "[Promotional Staff]";
-		mes "Hey, you're a knowledgeable person, right? Are you interested in my story?";
-		next;
-		select("The Staff in Aldebaran sent me.");
-		mes "[Promotional Staff]";
-		mes "Oh he did?";
-		next;
-		mes "[Promotional Staff]";
-		mes "Ok, I guess that it's time for the second part of your test.";
-		next;
-		mes "[Promotional Staff]";
-		mes "I need you to gather some stones for me.";
-		next;
-		mes "[Promotional Staff]";
-		mes "I will accept you if you bring ^FF00001 Emerald^000000.";
-		mes "Are you ready?";
-		next;
-		changequest 10059,10060;
-		set ep13_ryu,4;
-		mes "[Promotional Staff]";
-		mes "Just bring me ^ff00001 Emerald^000000.";
-		mes "That isn't hard for you right?";
-		mes "Then we can go forward.";
 		close;
 	}
 	callfunc "Promotional_Staff";
@@ -3452,11 +3376,11 @@ spl_fild02,348,76,0	script	Tree#ep13bs1::ep13tree	111,{
 		close;
 	}
 	if (ep13_newbs == 6) {
-		if (rand(1,3) == 3) {
+		if (rand(1,2) == 2) {
 			mes "- rustling sound -";
 			mes "- You find a branch -";
 			next;
-			if (rand(1,3) == 2) {
+			if (rand(1,2) == 2) {
 				mes "- Break! -";
 				mes "- Bomb, bomb~~ -";
 				mes "- You got the branch. -";
@@ -8257,7 +8181,7 @@ spl_fild02,314,165,0	script	School of Fish#1::Fishinghole	844,{
 	if ((checkquest(12060,PLAYTIME) == -1) && (countitem(6039) < 20)) {
 		specialeffect2 EF_BUBBLE;
 		specialeffect2 EF_INVENOM;
-		set .@fcast,15;
+		set .@fcast,7;
 		if (isequipped(2550)) //Fisher's_Muffler
 			set .@fcast,.@fcast - 2;
 		if (isequipped(2443)) //Fish_Shoes
@@ -8280,17 +8204,17 @@ spl_fild02,314,165,0	script	School of Fish#1::Fishinghole	844,{
 			}
 		}
 		set .@rhea_ran,rand(1,70);
-		if (.@rhea_ran < 20) getitem 6039,1; //Piece_Of_Fish
-		else if (.@rhea_ran == 20) getitem 908,1; //Spawn
-		else if (.@rhea_ran == 21) getitem 909,1; //Jellopy
-		else if (.@rhea_ran == 22) getitem 963,1; //Sharp_Scale
-		else if (.@rhea_ran == 23) getitem 956,1; //Gill
-		else if (.@rhea_ran == 24) getitem 6049,1; //Marlin
-		else if (.@rhea_ran == 25) getitem 918,1; //Sticky_Webfoot
-		else if (.@rhea_ran == 26) getitem 960,1; //Nipper
-		else if (.@rhea_ran == 27) getitem 910,1; //Garlet
-		else if (.@rhea_ran == 28) getitem 938,1; //Sticky_Mucus
-		else if ((.@rhea_ran > 28) && (.@rhea_ran < 40)) getitem 7049,1; //Stone
+		if (.@rhea_ran < 30) getitem 6039,1; //Piece_Of_Fish
+		else if (.@rhea_ran == 30) getitem 908,1; //Spawn
+		else if (.@rhea_ran == 31) getitem 909,1; //Jellopy
+		else if (.@rhea_ran == 32) getitem 963,1; //Sharp_Scale
+		else if (.@rhea_ran == 33) getitem 956,1; //Gill
+		else if (.@rhea_ran == 34) getitem 6049,1; //Marlin
+		else if (.@rhea_ran == 35) getitem 918,1; //Sticky_Webfoot
+		else if (.@rhea_ran == 36) getitem 960,1; //Nipper
+		else if (.@rhea_ran == 37) getitem 910,1; //Garlet
+		else if (.@rhea_ran == 38) getitem 938,1; //Sticky_Mucus
+		else if ((.@rhea_ran > 38) && (.@rhea_ran < 50)) getitem 7049,1; //Stone
 		else {
 			mes "Nothing was caught.";
 			close;
@@ -8423,13 +8347,13 @@ mid_camp,88,100,55	script	Cat Paw Mining Agent	876,{
 -	script	Mysterious Rock#0::manukrock	-1,{
 	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
 		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
+		progressbar "ffff00",5;
 		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) getitem 7049,1; //Stone
-		else if (.@rhea_ran == 13) getitem 990,1; //Boody_Red
-		else if (.@rhea_ran == 14) getitem 991,1; //Crystal_Blue
-		else if (.@rhea_ran == 15) getitem 992,1; //Wind_Of_Verdure
-		else if (.@rhea_ran == 16) getitem 993,1; //Yellow_Live
+		if (.@rhea_ran < 5) getitem 7049,1; //Stone
+		else if (.@rhea_ran == 6) getitem 990,1; //Boody_Red
+		else if (.@rhea_ran == 7) getitem 991,1; //Crystal_Blue
+		else if (.@rhea_ran == 8) getitem 992,1; //Wind_Of_Verdure
+		else if (.@rhea_ran == 9) getitem 993,1; //Yellow_Live
 		else getitem 6048,1; //Unidentified_Mineral
 		initnpctimer;
 		disablenpc();

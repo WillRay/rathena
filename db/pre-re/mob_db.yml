@@ -26145,7 +26145,7 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
-    Element: Ghost
+    Element: Wind
     ElementLevel: 3
     WalkSpeed: 150
     AttackDelay: 1152

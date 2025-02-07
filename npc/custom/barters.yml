@@ -44,3 +44,240 @@
 Header:
   Type: BARTER_DB
   Version: 1
+
+Body:
+  - Name: Glorious Gear Shop
+    Map: prontera
+    X: 131
+    Y: 217
+    Direction: East
+    Sprite: 4_M_KNIGHT_BLACK
+    Items:
+      - Index: 0
+        Item: Krieger_Twohand_Spear1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 1
+        Item: Krieger_Onehand_Spear1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 2
+        Item: Krieger_Twohand_Sword1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 3
+        Item: Krieger_Onehand_Sword3
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 4
+        Item: Krieger_Onehand_Sword2
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 5
+        Item: Krieger_Onehand_Sword1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 6
+        Item: Krieger_Dagger1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 7
+        Item: Krieger_Huuma_Shuriken1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 8
+        Item: Krieger_Twohand_Axe1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 9
+        Item: Krieger_Onehand_Axe1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 10
+        Item: Krieger_Onehand_Mace1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 11
+        Item: Krieger_Onehand_Staff2
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 12
+        Item: Krieger_Onehand_Staff1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 13
+        Item: Krieger_Twohand_Staff1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 14
+        Item: Krieger_Whip1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 15
+        Item: Krieger_Instrument1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 16
+        Item: Krieger_Katar2
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 17
+        Item: Krieger_Katar1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 18
+        Item: Krieger_Bow1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 19
+        Item: Krieger_Knuckle2
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 20
+        Item: Krieger_Knuckle1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 21
+        Item: Krieger_Book2
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 22
+        Item: Krieger_Book1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 23
+        Item: Krieger_Launcher1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 24
+        Item: Krieger_Shotgun1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 25
+        Item: Krieger_Gatling1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 26
+        Item: Krieger_Rifle1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 27
+        Item: Krieger_Pistol1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 100
+      - Index: 28
+        Item: Krieger_Suit1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 25
+      - Index: 29
+        Item: Krieger_Muffler1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 25
+      - Index: 30
+        Item: Krieger_Shoes1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 25
+      - Index: 31
+        Item: Krieger_Ring1
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 25
+      - Index: 32
+        Item: Krieger_Suit2
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 25
+      - Index: 33
+        Item: Krieger_Shoes2
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 25
+      - Index: 34
+        Item: Krieger_Ring2
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 25
+        - Index: 35
+        Item: Krieger_Suit3
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 25
+      - Index: 36
+        Item: Krieger_Shoes3
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 25
+      - Index: 37
+        Item: Krieger_Ring3
+        RequiredItems:
+          - Index: 0
+            Item: BF_Badge1
+            Amount: 25

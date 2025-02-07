@@ -1,0 +1,80 @@
+-	script	QuestBoard#basic::QuestBoard	-1,{
+	.i = 0;
+	function AddQuestOption;
+	function ClearQuestOptions;
+	
+	ClearQuestOptions();
+
+	AddQuestOption("Hunt Fabres", 2, 20, "Langry", "gef_fild07", 321, 193);
+	AddQuestOption("Hunt Pupa", 2, 20, "Halgus", "gef_fild04", 191, 54);
+	AddQuestOption("Hunt Peco Peco", 10, 30, "Gregor", "moc_fild02", 74, 329);
+	AddQuestOption("Hunt Skeleton", 10, 30, "Researcher Leif", "pay_dun00", 55, 148);
+	AddQuestOption("Hunt Creamy", 15, 45, "Laertes", "prt_fild04", 356, 148);
+	AddQuestOption("Hunt Coco", 18, 60, "Nutters", "mjolnir_01", 293, 20);
+	AddQuestOption("Hunt Caramel", 24, 60, "Yullo", "mjolnir_01", 296, 29);
+	AddQuestOption("Hunt Golem", 25, 60, "Private Jeremy", "moc_fild11", 57, 138);
+	AddQuestOption("Hunt Hode", 25, 60, "Shone", "moc_fild17", 208, 346);
+	AddQuestOption("Hunt Munak", 30, 65, "Researcher Eldrid", "pay_dun02", 29, 67);
+	AddQuestOption("Hunt Frilldora", 30, 65, "Lemly", "moc_fild17", 66, 273);
+	AddQuestOption("Hunt Dokebi", 35, 70, "Li", "pay_fild10", 108, 357);
+	AddQuestOption("Hunt Sohee", 35, 70, "Researcher Erland", "pay_dun03", 152, 152);
+	AddQuestOption("Hunt Leaf Cat", 36, 65, "Lella", "ayo_fild01", 44, 241);
+	AddQuestOption("Hunt Alligator", 45, 80, "Cuir", "cmd_fild01", 362,256);
+	AddQuestOption("Hunt Siromas", 50, 80, "Jealous Snow Man", "ice_dun01", 199, 46);
+	AddQuestOption("Hunt Demon Pungus", 60, 74, "Local Villager", "ein_fild01", 43,249);
+	AddQuestOption("Hunt Disguise", 60, 90, "Deadman", "nif_fild01", 332, 327);
+	AddQuestOption("Hunt Dryad", 60, 85, "Lilla", "um_fild01", 35, 281);
+	AddQuestOption("Hunt Goat", 70, 85, "Vegetable Farmer", "ein_fild06", 82, 171);
+	AddQuestOption("Hunt Ice Titans", 70, 98, "Vengeful Snow Man", "ice_dun03", 154, 27);
+	AddQuestOption("Hunt Loli Ruri", 75, 98, "Deadman", "nif_fild01", 332, 327);
+	//AddQuestOption("Hunt Medusa", 75, 95, "Miner", "beach_dun", 269, 71);
+	//AddQuestOption("Hunt Lava Golem", 75, 95, "Jotun Tridesman", "mag_dun01", 127, 71);
+	AddQuestOption("Hunt Deleter", 75, 95, "Coal Miner", "mag_dun02", 46, 40);
+
+	if (getarraysize(.quest_names$) == 0) {
+		close;
+	}
+
+	.@menu$ = implode(.quest_names$, ":");
+
+	mes "[Quest Board]";
+	mes "Several quests appear on the questboard:";
+	next;
+	.@selected = select(.@menu$) - 1;
+	mes "[Quest Board]";
+	mes "Follow the path to help " + .quest_npc_names$[.@selected] + "."; 
+	navigateto .quest_map_names$[.@selected],.quest_map_x[.@selected],.quest_map_y[.@selected],1,1;
+	close;
+	
+	function ClearQuestOptions{
+		deletearray .quest_names$, getarraysize(.quest_names$);
+		deletearray .quest_npc_names$, getarraysize(.quest_npc_names$);
+		deletearray .quest_map_names$, getarraysize(.quest_map_names$);
+		deletearray .quest_map_x, getarraysize(.quest_map_x);
+		deletearray .quest_map_y, getarraysize(.quest_map_y);
+	}
+
+	function AddQuestOption{
+		if (BaseLevel >= getarg(1) && BaseLevel <= getarg(2) ) {
+			set .quest_names$[.i], "[" + getarg(1) + "-" + getarg(2) + "] " + getarg(0);
+			set .quest_npc_names$[.i], getarg(3);
+			set .quest_map_names$[.i], getarg(4);
+			set .quest_map_x[.i], getarg(5);
+			set .quest_map_y[.i], getarg(6);
+			.i = .i + 1;
+		}
+	}
+
+	OnInit:
+		questinfo(QTYPE_QUEST, QMARK_NONE, "BaseLevel < 99");
+		end;
+}
+
+prontera,164,172,4	duplicate(QuestBoard)	Local Quests#pront	857 
+morocc,166,110,4	duplicate(QuestBoard)	Local Quests#morocc	857 
+geffen,115,65,6	duplicate(QuestBoard)	Local Quests#geffen	857
+payon,178,105,6	duplicate(QuestBoard)	Local Quests#payon	857
+alberta,122,59,4	duplicate(QuestBoard)	Local Quests#alberta	857
+izlude,135,119,4	duplicate(QuestBoard)	Local Quests#izlude	857
+aldebaran,143,133,4	duplicate(QuestBoard)	Local Quests#aldebaren	857
+comodo,201,150,6	duplicate(QuestBoard)	Local Quests#comodo	857

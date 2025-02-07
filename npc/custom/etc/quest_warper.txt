@@ -1662,7 +1662,6 @@ niflheim,197,192,3	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#9	895
 pay_arche,39,135,4	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#10	895
 prt_fild05,273,215,4	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#11	895
 tur_dun01,148,239,4	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#12	895
-valkyrie,48,35,8	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#13	895
 yuno_fild03,37,135,4	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#14	895
 
 alberta,32,240,4	script	Kafra Adventure Corp#15	895,{ callfunc "QWS_Town_Warpra",1,"Alberta Town"; close; }
@@ -1672,16 +1671,16 @@ amatsu,193,81,1	script	Kafra Adventure Corp#18	895,{ callfunc "QWS_Town_Warpra",
 comodo,195,158,4	script	Kafra Adventure Corp#19	895,{ callfunc "QWS_Town_Warpra",5,"Comodo Town"; close; }
 einbroch,229,196,5	script	Kafra Adventure Corp#20	895,{ callfunc "QWS_Town_Warpra",7,"Einbroch Town"; close; }
 einbech,173,131,5	script	Kafra Adventure Corp#21	895,{ callfunc "QWS_Town_Warpra",6,"Einbech Town"; close; }
-geffen,116,66,4	script	Kafra Adventure Corp#22	895,{ callfunc "QWS_Town_Warpra",8,"Geffen Town"; close; }
+geffen,124,71,4	script	Kafra Adventure Corp#22	895,{ callfunc "QWS_Town_Warpra",8,"Geffen Town"; close; }
 gonryun,152,130,4	script	Kafra Adventure Corp#23	895,{ callfunc "QWS_Town_Warpra",9,"Kunlun Town"; close; }
 hugel,90,127,5	script	Kafra Adventure Corp#24	895,{ callfunc "QWS_Town_Warpra",10,"Hugel Town"; close; }
 jawaii,107,182,5	script	Kafra Adventure Corp#25	895,{ callfunc "QWS_Town_Warpra",12,"Jawaii Town"; close; }
-izlude,132,116,4	script	Kafra Adventure Corp#26	895,{ callfunc "QWS_Town_Warpra",11,"Izlude Town"; close; }
+izlude,134,92,4	script	Kafra Adventure Corp#26	895,{ callfunc "QWS_Town_Warpra",11,"Izlude Town"; close; }
 lighthalzen,153,100,5	script	Kafra Adventure Corp#27	895,{ callfunc "QWS_Town_Warpra",13,"Lighthalzen Town"; close; }
 louyang,211,106,4	script	Kafra Adventure Corp#28	895,{ callfunc "QWS_Town_Warpra",14,"Luoyang Town"; close; }
-morocc,157,95,4	script	Kafra Adventure Corp#29	895,{ callfunc "QWS_Town_Warpra",16,"Morocc Town"; close; }
+morocc,160,97,4	script	Kafra Adventure Corp#29	895,{ callfunc "QWS_Town_Warpra",16,"Morocc Town"; close; }
 nif_fild01,319,77,1	script	Kafra Adventure Corp#30	895,{ callfunc "QWS_Town_Warpra",17,"Niflheim Town"; close; }
-payon,183,110,4	script	Kafra Adventure Corp#31	895,{ callfunc "QWS_Town_Warpra",18,"Payon Town"; close; }
+payon,184,104,4	script	Kafra Adventure Corp#31	895,{ callfunc "QWS_Town_Warpra",18,"Payon Town"; close; }
 prontera,147,172,5	script	Kafra Adventure Corp#32	895,{ callfunc "QWS_Town_Warpra",0,"Prontera Town"; close; }
 umbala,133,130,4	script	Kafra Adventure Corp33	895,{ callfunc "QWS_Town_Warpra",19,"Umbala Town"; close; }
 xmas,151,136,4	script	Kafra Adventure Corp#34	895,{ callfunc "QWS_Town_Warpra",15,"Lutie Town"; close; }
@@ -1714,7 +1713,7 @@ juperos_02,127,154,5	script	Kafra Adventurer#13	900,{ callfunc "QWS_Dungeon_Warp
 kh_dun01,14,224,3	script	Kafra Adventurer#14	900,{ callfunc "QWS_Dungeon_Warpra",28,"Kiel Dungeon"; close; }
 lhz_dun02,156,151,5	script	Kafra Adventurer#15	900,{ callfunc "QWS_Dungeon_Warpra",15,"Lighthalzen Bio Lab"; close; }
 lou_dun02,168,264,4	script	Kafra Adventurer#16	900,{ callfunc "QWS_Dungeon_Warpra",16,"Luoyang Dungeon"; close; }
-mag_dun02,46,41,3	script	Kafra Adventurer#17	900,{ callfunc "QWS_Dungeon_Warpra",17,"Magma Dungeon"; close; }
+mag_dun02,43,45,3	script	Kafra Adventurer#17	900,{ callfunc "QWS_Dungeon_Warpra",17,"Magma Dungeon"; close; }
 odin_tem01,115,148,3	script	Kafra Adventurer#18	900,{ callfunc "QWS_Dungeon_Warpra",18,"Odin Temple"; close; }
 orcsdun01,185,11,3	script	Kafra Adventurer#19	900,{ callfunc "QWS_Dungeon_Warpra",19,"Orc Dungeon"; close; }
 pay_dun03,162,143,3	script	Kafra Adventurer#20	900,{ callfunc "QWS_Dungeon_Warpra",20,"Payon Dungeon"; close; }
@@ -1727,4 +1726,4 @@ um_dun02,44,28,3	script	Kafra Adventurer#26	900,{ callfunc "QWS_Dungeon_Warpra",
 tur_dun02,162,23,3	script	Kafra Adventurer#27	900,{ callfunc "QWS_Dungeon_Warpra",26,"Turtle Island Dungeon"; close; }
 prt_maze02,102,69,4	script	Kafra Adventurer#28	900,{ callfunc "QWS_Dungeon_Warpra",13,"Hidden Dungeon"; close; }
 ice_dun02,150,153,4	script	Kafra Adventurer#29	900,{ callfunc "QWS_Dungeon_Warpra",28,"Ice Dungeon"; close; }
-ra_san02,208,274,4	script	Kafra Adventurer#30	900,{ callfunc "QWS_Dungeon_Warpra",29,"Rachel Sanctuary"; close; }
+ra_san01,208,274,4	script	Kafra Adventurer#30	900,{ callfunc "QWS_Dungeon_Warpra",29,"Rachel Sanctuary"; close; }

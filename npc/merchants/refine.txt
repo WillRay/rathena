@@ -1123,16 +1123,13 @@ function	script	orimain	{
 	}
 	.@npc_name$ = getarg(0);
 	mes "["+ .@npc_name$ +"]";
-	mes "I can purify your";
-	mes "Rough Oridecons or";
-	mes "Rough Eluniums. I'll need";
-	mes "5 Rough Stones to make";
-	mes "1 pure one for you.";
+	mes "I can purify your Rough Oridecons or Rough Eluniums. I'll need 5 Rough Stones to make 1 pure one for you.";
+	mes "I can also break apart pure Oridecon and Elunium into their Rough versions. One pure stone will break into 2 rough ones.";
 	next;
-	switch(select("Make Oridecon:Make Elunium:Ask about Enchanted Stones")) {
+	switch(select("Make Oridecon:Make Elunium:Make Rough Oridecon:Make Rough Elunium:Ask about Enchanted Stones")) {
 	case 1:
 		if (countitem(756) > 4) {
-			delitem 756,5;  //Oridecon_Stone
+			delitem 756,5; // Oridecon_Stone
 			getitem 984,1; // Oridecon
 			mes "["+ .@npc_name$ +"]";
 			mes "Here's your Oridecon.";
@@ -1162,7 +1159,39 @@ function	script	orimain	{
 			mes "I just told you that I need 5 Rough Eluniums to make a pure Elunium.";
 			close;
 		}
-	case 3:
+    case 3:
+		if (countitem(984) > 0) {
+			delitem 984,1;  // Oridecon
+			getitem 756,2; // Oridecon_Stone
+			mes "["+ .@npc_name$ +"]";
+			mes "Here's your Rough Oridecon.";
+			mes "You're welcome to come";
+			mes "back whenever you want.";
+			close;
+		}
+		else {
+			mes "["+ .@npc_name$ +"]";
+			mes "You're kidding me, right?";
+			mes "I just told you that I need 1 Oridecon to break into 2 Rough Oridecon.";
+			close;
+		}
+    case 4:
+		if (countitem(985) > 0) {
+			delitem 985,1;  //Elunium_Stone
+			getitem 757,2; // Elunium
+			mes "["+ .@npc_name$ +"]";
+			mes "Here's your Rough Elunium.";
+			mes "You're welcome to come";
+			mes "back whenever you want.";
+			close;
+		}
+		else {
+			mes "["+ .@npc_name$ +"]";
+			mes "You're kidding me, right?";
+			mes "I just told you that I need 1 Elunium to break into 2 Rough Elunium.";
+			close;
+		}
+	case 5:
 		mes "["+ .@npc_name$ +"]";
 		mes "Enchanted Stones...?";
 		mes "I've been a stonesmith for 20 years, so I've heard a lot about them. Supposedly, there are";

@@ -64,8 +64,11 @@ bat_room,167,178,5	script	Guillaume Knight#kvm	417,{
 	switch(select("Apply for KVM.:What is KVM?:How do I participate in KVM?:I want to know my Kreiger Points.")) {
 	case 1:
 		mes "[Guillaume Knight]";
-		if (getbattleflag("feature.bgqueue"))
+		if (getbattleflag("feature.bgqueue")) {
 			mes "If you are ready for battle, click the ^0000FFbattle button from the interface^000000 to apply for KVM battle!";
+			setbattleflag "feature.bgqueue", 1;
+			atcommand "@reloadbattleconf";
+		}
 		else {
 			mes "Applications are not available yet.";
 			mes "To apply, you need to go to a KVM Mercenary Officer.";

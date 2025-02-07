@@ -231,6 +231,10 @@ Body:
     Name: TF_DOUBLE
     DamageFlags:
       Critical: true
+  - Id: 56
+    Name: KN_PIERCE
+    DamageFlags:
+      Critical: true
   - Id: 111
     Name: BS_ADRENALINE
     Duration1:
@@ -306,3 +310,53 @@ Body:
           Amount: 16
         - Level: 5
           Amount: 14
+  - Id: 355
+    Name: LK_AURABLADE
+    Duration1:
+      - Level: 1
+        Time: 30000
+      - Level: 2
+        Time: 60000
+      - Level: 3
+        Time: 90000
+      - Level: 4
+        Time: 120000
+      - Level: 5
+        Time: 150000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 18
+        - Level: 2
+          Amount: 26
+        - Level: 3
+          Amount: 34
+        - Level: 4
+          Amount: 42
+        - Level: 5
+          Amount: 50
+  - Id: 357
+    Name: LK_CONCENTRATION
+    Duration1:
+      - Level: 1
+        Time: 30000
+      - Level: 2
+        Time: 60000
+      - Level: 3
+        Time: 90000
+      - Level: 4
+        Time: 120000
+      - Level: 5
+        Time: 150000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 18
+        - Level: 2
+          Amount: 26
+        - Level: 3
+          Amount: 34
+        - Level: 4
+          Amount: 42
+        - Level: 5
+          Amount: 50

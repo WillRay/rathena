@@ -8,24 +8,67 @@ Body:
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4002
+  Name: Fabre Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4003
   Name: Pupa Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4004
+  Name: Drops Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4005
+  Name: Santa Poring Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4006
+  Name: Lunatic Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4007
+  Name: Peco Peco Egg Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4008
   Name: Picky Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4009
   Name: Chonchon Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4010
   Name: Willow Card
   Type: Shadowgear
@@ -34,102 +77,215 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4011
   Name: Picky Egg Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4012
   Name: Thief Bug Egg Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4013
   Name: Andre Egg Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4014
   Name: Roda Frog Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4015
   Name: Condor Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4016
   Name: Thief Bug Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4017
+  Name: Savage Babe Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4018
+  Name: Andre Larva Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4019
+  Name: Hornet Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4020
+  Name: Familiar Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4021
   Name: Rocker Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4022
   Name: Spore Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4023
   Name: Baby Desert Wolf Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4024
+  Name: Plankton Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4025
+  Name: Skeleton Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4026
+  Name: Female Thief Bug Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4027
   Name: Kukre Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4028
   Name: Tarou Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4029
+  Name: Wolf Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4030
+  Name: Mandragora Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4031
   Name: Peco Peco Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4032
   Name: Ambernite Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4033
   Name: Poporing Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4034
   Name: Wormtail Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4035
+  Name: Hydra Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4036
   Name: Muka Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4037
+  Name: Snake Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4038
   Name: Zombie Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4039
   Name: Stainer Card
   Type: Shadowgear
@@ -138,11 +294,15 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4040
   Name: Creamy Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4041
   Name: Coco Card
   Type: Shadowgear
@@ -151,23 +311,38 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4042
   Name: Steel Chonchon Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4043
+  Name: Andre Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4044
   Name: Smokie Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4045
   Name: Horn Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4046
   Name: Martin Card
   Type: Shadowgear
@@ -176,28 +351,45 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4047
   Name: Ghostring Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4048
   Name: Poison Spore Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4049
+  Name: Vadon Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4050
   Name: Male Thief Bug Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4051
   Name: Yoyo Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4052
   Name: Elder Willow Card
   Type: Shadowgear
@@ -206,120 +398,260 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4053
   Name: Vitata Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4054
   Name: Angeling Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4055
+  Name: Marina Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4056
   Name: Dustiness Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4057
+  Name: Metaller Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4058
   Name: Thara Frog Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4059
   Name: Soldier Andre Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4060
+  Name: Goblin Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4061
   Name: Cornutus Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4062
+  Name: Anacondaq Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4063
+  Name: Caramel Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4064
   Name: Zerom Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4065
+  Name: Kaho Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4066
   Name: Orc Warrior Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4067
   Name: Megalodon Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4068
+  Name: Scorpion Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4069
+  Name: Drainliar Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4070
   Name: Eggyra Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4071
   Name: Orc Zombie Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4072
+  Name: Golem Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4073
   Name: Pirate Skeleton Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4074
   Name: Bigfoot Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4075
   Name: Argos Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4076
+  Name: Magnolia Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4077
   Name: Phen Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4078
   Name: Savage Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4079
   Name: Mantis Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4080
+  Name: Flora Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4081
   Name: Hode Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4082
+  Name: Desert Wolf Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4083
   Name: Rafflesia Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4084
   Name: Marine Sphere Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4085
+  Name: Orc Skeleton Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4086
+  Name: Soldier Skeleton Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4087
   Name: Giearth Card
   Type: Shadowgear
@@ -328,105 +660,176 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4088
   Name: Frilldora Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4089
   Name: Swordfish Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4090
   Name: Munak Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4091
   Name: Kobold Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4092
+  Name: Skeleton Worker Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4093
   Name: Obeaune Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4094
+  Name: Archer Skeleton Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4095
   Name: Marse Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4096
+  Name: Zenorc Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4097
   Name: Matyr Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4098
   Name: Dokebi Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4099
   Name: Pasana Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4100
   Name: Sohee Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4101
   Name: Sandman Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4102
   Name: Whisper Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4103
   Name: Horong Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4104
+  Name: Requiem Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4105
   Name: Marc Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4106
+  Name: Mummy Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4107
   Name: Verit Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4108
   Name: Myst Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4109
   Name: Jakk Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4110
   Name: Ghoul Card
   Type: Shadowgear
@@ -435,6 +838,15 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4111
+  Name: Strouf Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4112
   Name: Marduk Card
   Type: Shadowgear
@@ -443,36 +855,76 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4113
   Name: Marionette Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4114
   Name: Argiope Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4115
+  Name: Hunter Fly Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4116
   Name: Isis Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4117
+  Name: Sidewinder Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4118
+  Name: Earth Petite Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4119
   Name: Bathory Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4120
   Name: Sky Petite Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4121
+  Name: Phreeoni Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4122
   Name: Deviruchi Card
   Type: Shadowgear
@@ -481,18 +933,38 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4123
   Name: Eddga Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4124
   Name: Medusa Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4125
+  Name: Deviace Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4126
+  Name: Minorous Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4127
   Name: Nightmare Card
   Type: Shadowgear
@@ -501,24 +973,39 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4128
   Name: Golden Thief Bug Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4129
   Name: Bapho Jr. Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4130
+  Name: Scorpion King Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4131
   Name: Moonlight Flower Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4132
   Name: Mistress Card
   Type: Shadowgear
@@ -527,41 +1014,83 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4133
   Name: Raydric Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4134
+  Name: Dracula Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4135
   Name: Orc Lord Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4136
   Name: Khalitzburg Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4137
+  Name: Drake Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4138
   Name: Anubis Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4139
   Name: Joker Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4140
+  Name: Abysmal Knight Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4141
   Name: Evil Druid Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4142
+  Name: Doppelganger Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4143
   Name: Orc Hero Card
   Type: Shadowgear
@@ -570,22 +1099,37 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4144
   Name: Osiris Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4145
   Name: Berzebub Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4146
   Name: Maya Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4147
+  Name: Baphomet Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4148
   Name: Pharaoh Card
   Type: Shadowgear
@@ -594,51 +1138,97 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4149
   Name: Gargoyle Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4150
   Name: Goat Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4151
   Name: Gajomart Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4152
   Name: Galapago Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4153
+  Name: Crab Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4154
   Name: Dumpling Child Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4155
+  Name: Goblin Leader Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4156
+  Name: Goblin Steamrider Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4157
+  Name: Goblin Archer Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4158
   Name: Sky Deleter Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4159
   Name: Nine Tail Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4160
   Name: Firelock Soldier Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4161
   Name: Grand Peco Card
   Type: Shadowgear
@@ -647,30 +1237,61 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4162
   Name: Grizzly Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4163
+  Name: Gryphon Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4164
   Name: Gullinbursti Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4165
+  Name: Gig Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4166
   Name: Nightmare Terror Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4167
+  Name: Nereid Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4168
   Name: Dark Lord Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4169
   Name: Dark Illusion Card
   Type: Shadowgear
@@ -679,29 +1300,60 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4170
   Name: Dark Frame Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4171
+  Name: Dark Priest Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4172
+  Name: The Paper Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4173
   Name: Demon Pungus Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4174
   Name: Deviling Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4175
   Name: Poisonous Toad Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4176
+  Name: Dullahan Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4177
   Name: Dryad Card
   Type: Shadowgear
@@ -710,30 +1362,61 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4178
   Name: Dragon Tail Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4179
   Name: Dragon Fly Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4180
+  Name: Driller Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4181
   Name: Disguise Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4182
+  Name: Diabolic Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4183
   Name: Vagabond Wolf Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4184
+  Name: Lava Golem Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4185
   Name: Rideword Card
   Type: Shadowgear
@@ -742,17 +1425,23 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4186
   Name: Raggler Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4187
   Name: Raydric Archer Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4188
   Name: Leib Olmai Card
   Type: Shadowgear
@@ -761,34 +1450,53 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4189
   Name: Wraith Dead Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4190
   Name: Wraith Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4191
   Name: Loli Ruri Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4192
+  Name: Rotar Zairo Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4193
   Name: Lude Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4194
   Name: Rybio Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4195
   Name: Leaf Cat Card
   Type: Shadowgear
@@ -797,17 +1505,23 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4196
   Name: Marin Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4197
   Name: Mastering Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4198
   Name: Maya Purple Card
   Type: Shadowgear
@@ -816,35 +1530,61 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4199
   Name: Merman Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4200
   Name: Megalith Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4201
   Name: Majoruros Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4202
+  Name: Mao Guai Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4203
+  Name: Mutant Dragonoid Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4204
   Name: Mini Demon Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4205
   Name: Mimic Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4206
   Name: Myst Case Card
   Type: Shadowgear
@@ -853,92 +1593,131 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4207
   Name: Mysteltainn Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4208
   Name: Miyabi Doll Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4209
   Name: Violy Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4210
   Name: Wanderer Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4211
   Name: Vocal Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4212
   Name: Bongun Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4213
   Name: Brilight Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4214
+  Name: Bloody Murderer Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4215
   Name: Blazer Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4216
   Name: Sasquatch Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4217
   Name: Enchanted Peach Tree Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4218
   Name: Succubus Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4219
   Name: Sage Worm Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4220
   Name: Solider Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4221
   Name: Skeleton General Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4222
   Name: Skeleton Prisoner Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4223
   Name: Stalactic Golem Card
   Type: Shadowgear
@@ -947,27 +1726,44 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4224
   Name: Stem Worm Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4225
+  Name: Stone Shooter Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4226
   Name: Sting Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4227
   Name: Spring Rabbit Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4228
   Name: Sleeper Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4229
   Name: Tower Keeper Card
   Type: Shadowgear
@@ -976,68 +1772,92 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4230
   Name: Shinobi Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4231
   Name: Mi Gao Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4232
   Name: Hermit Plant Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4233
   Name: Baby Leopard Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4234
   Name: Anolian Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4235
   Name: Christmas Cookie Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4236
   Name: Amon Ra Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4237
   Name: Owl Duke Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4238
   Name: Owl Baron Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4239
   Name: Iron Fist Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4240
   Name: Arclouze Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4241
   Name: Arc Angeling Card
   Type: Shadowgear
@@ -1046,76 +1866,130 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4242
   Name: Apocalipse Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4243
   Name: Antonio Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4244
   Name: Alarm Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4245
   Name: Am Mut Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4246
+  Name: Assaulter Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4247
+  Name: Aster Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4248
   Name: Ancient Mummy Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4249
   Name: Ancient Worm Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4250
   Name: Executioner Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4251
+  Name: Elder Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4252
   Name: Alligator Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4253
   Name: Alice Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4254
   Name: Ogretooth Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4255
+  Name: Orc Lady Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4256
   Name: Orc Archer Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4257
   Name: Wild Rose Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4258
   Name: Evil Nymph Card
   Type: Shadowgear
@@ -1124,12 +1998,16 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4259
   Name: Wooden Golem Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4260
   Name: Wootan Shooter Card
   Type: Shadowgear
@@ -1138,6 +2016,8 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4261
   Name: Wootan Fighter Card
   Type: Shadowgear
@@ -1146,33 +2026,59 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4262
   Name: Cloud Hermit Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4263
+  Name: Samurai Spector Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4264
   Name: Wind Ghost Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4265
   Name: Jing Guai Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4266
   Name: Eclipse Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4267
   Name: Explosion Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4268
+  Name: Injustice Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4269
   Name: Incubus Card
   Type: Shadowgear
@@ -1181,12 +2087,16 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4270
   Name: Giant Spider Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4271
   Name: Giant Hornet Card
   Type: Shadowgear
@@ -1195,23 +2105,52 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4272
   Name: Zhu Po Long Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4273
+  Name: Shell Fish Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4274
+  Name: Zombie Master Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4275
   Name: Zombie Prisoner Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4276
+  Name: Lord of The Dead Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4277
   Name: Zealotus Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4278
   Name: Gibbet Card
   Type: Shadowgear
@@ -1220,46 +2159,76 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4279
   Name: Earth Deleter Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4280
   Name: Geographer Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4281
+  Name: Zipper Bear Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4282
   Name: Tengu Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4283
   Name: Greatest General Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4284
+  Name: Chepet Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4285
   Name: Choco Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4286
   Name: Karakasa Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4287
   Name: Kapha Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4288
   Name: Carat Card
   Type: Shadowgear
@@ -1268,28 +2237,59 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4289
+  Name: Caterpillar Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4290
   Name: Cat O' Nine Tails Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4291
+  Name: Kobold Leader Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4292
+  Name: Kobold Archer Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4293
   Name: Cookie Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4294
   Name: Quve Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4295
   Name: Kraben Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4296
   Name: Cramp Card
   Type: Shadowgear
@@ -1298,60 +2298,115 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4297
+  Name: Cruiser Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4298
   Name: Creamy Fear Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4299
   Name: Clock Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4300
   Name: Chimera Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4301
   Name: Killer Mantis Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4302
   Name: Tao Gunka Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4303
   Name: Giant Whisper Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4304
   Name: Tamruan Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4305
+  Name: Turtle General Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4306
   Name: Toad Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4307
+  Name: Beetle King Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4308
+  Name: Tri Joint Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4309
   Name: Parasite Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4310
+  Name: Panzer Goblin Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4311
   Name: Permeter Card
   Type: Shadowgear
@@ -1360,69 +2415,142 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4312
+  Name: Seal Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4313
   Name: Punk Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4314
   Name: Penomena Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4315
   Name: Pest Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4316
+  Name: False Angel Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4317
+  Name: Mobster Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4318
+  Name: Stormy Knight Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4319
   Name: Freezer Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4320
+  Name: Bloody Knight Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4321
   Name: Hylozoist Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4322
   Name: High Orc Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4323
+  Name: Hatii Babe Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4324
   Name: Hatii Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4325
   Name: Harpy Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4326
   Name: Sea-Otter Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4327
   Name: Bloody Butterfly Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4328
   Name: Yao Jun Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4329
+  Name: Phendark Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4330
   Name: Evil Snake Lord Card
   Type: Shadowgear
@@ -1431,29 +2559,46 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4331
   Name: Heater Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4332
   Name: Waste Stove Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4333
   Name: Venomous Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4334
   Name: Noxious Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4335
+  Name: Pitman Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4336
   Name: Ungoliant Card
   Type: Shadowgear
@@ -1462,36 +2607,55 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4337
   Name: Porcellio Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4338
   Name: Obsidian Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4339
   Name: Mineral Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4340
   Name: Teddy Bear Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4341
+  Name: Metaling Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4342
   Name: RSX-0806 Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4343
   Name: Holden Card
   Type: Shadowgear
@@ -1500,50 +2664,82 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4344
   Name: Anopheles Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4345
+  Name: Hill Wind Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4346
   Name: Egnigem Cenia Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4347
   Name: Armeyer Dinze Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4348
   Name: Wickebine Tres Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4349
   Name: Errende Ebecee Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4350
+  Name: Laurell Weinder Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4351
   Name: Kavach Icarus Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4352
   Name: General Egnigem Cenia Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4353
   Name: Remover Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4354
   Name: Gemini-S58 Card
   Type: Shadowgear
@@ -1552,16 +2748,22 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4355
   Name: Gremlin Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4356
   Name: Beholder Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4357
   Name: Lord Knight Card
   Type: Shadowgear
@@ -1570,6 +2772,8 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4358
   Name: Seyren Windsor Card
   Type: Shadowgear
@@ -1578,18 +2782,45 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4359
   Name: Assassin Cross Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4360
+  Name: Eremes Guile Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4361
+  Name: MasterSmith Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4362
+  Name: Howard Alt-Eisen Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4363
   Name: High Priest Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4364
   Name: Margaretha Sorin Card
   Type: Shadowgear
@@ -1598,6 +2829,8 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4365
   Name: High Wizard Card
   Type: Shadowgear
@@ -1606,6 +2839,8 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4366
   Name: Kathryne Keyron Card
   Type: Shadowgear
@@ -1614,24 +2849,46 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4367
+  Name: Sniper Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4368
+  Name: Cecil Damon Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4369
   Name: Venatu Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4370
   Name: Dimik Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4371
   Name: Archdam Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4372
   Name: White Lady Card
   Type: Shadowgear
@@ -1640,12 +2897,16 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4373
   Name: Green Maiden Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4374
   Name: Vesper Card
   Type: Shadowgear
@@ -1654,29 +2915,39 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4375
   Name: Orc Baby Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4376
   Name: Lady Tanee Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4377
   Name: Grove Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4378
   Name: Gold Acidus Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4379
   Name: Blue Acidus Card
   Type: Shadowgear
@@ -1685,98 +2956,181 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4380
+  Name: Red Ferus Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4381
   Name: Green Ferus Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4382
   Name: Yellow Novus Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4383
   Name: Red Novus Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4384
   Name: Hydrolancer Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4385
   Name: Dragon Egg Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4386
   Name: Detardeurus Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4387
   Name: Ancient Mimic Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4388
+  Name: Death Word Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4389
   Name: Plasma Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4390
+  Name: Breeze Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4391
   Name: Baroness of Retribution Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4392
   Name: Dame of Sentinel Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4393
   Name: Mistress of Shelter Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4394
+  Name: Lady Solace Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4395
+  Name: Maero of Thanatos Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4396
   Name: Odium of Thanatos Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4397
   Name: Despero of Thanatos Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4398
+  Name: Dolor of Thanatos Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4399
+  Name: Memory of Thanatos Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4400
   Name: Aliza Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4401
   Name: Alicel Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4402
   Name: Aliot Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4403
   Name: Kiel-D-01 Card
   Type: Shadowgear
@@ -1785,36 +3139,62 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4404
   Name: Skogul Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4405
   Name: Frus Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4406
+  Name: Skeggiold Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4407
+  Name: Randgris Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4408
   Name: Gloom Under Night Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4409
   Name: Agav Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4410
   Name: Echio Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4411
   Name: Vanberk Card
   Type: Shadowgear
@@ -1823,6 +3203,8 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4412
   Name: Isilla Card
   Type: Shadowgear
@@ -1831,101 +3213,165 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4413
   Name: Hodremlin Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4414
   Name: Seeker Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4415
   Name: Snowier Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4416
   Name: Siroma Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4417
   Name: Ice Titan Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4418
   Name: Gazeti Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4419
   Name: Ktullanux Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4420
   Name: Muscipular Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4421
+  Name: Drosera Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4422
   Name: Roween Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4423
   Name: Galion Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4424
   Name: Stapo Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4425
+  Name: Atroce Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4426
   Name: Byorgue Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4427
+  Name: Sword Guardian Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4428
+  Name: Bow Guardian Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4429
   Name: Salamander Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4430
   Name: Ifrit Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4431
   Name: Kasa Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4432
   Name: Magmaring Card
   Type: Shadowgear
   Locations:
     Garment: false
     Costume_Garment: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4433
   Name: Imp Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4434
   Name: Knocker Card
   Type: Shadowgear
@@ -1934,22 +3380,30 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4435
   Name: Zombie Slaughter Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4436
   Name: Ragged Zombie Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4437
   Name: Hell Poodle Card
   Type: Card
   Locations:
     Both_Accessory: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4438
   Name: Banshee Card
   Type: Shadowgear
@@ -1958,72 +3412,117 @@ Body:
     Head_Mid: false
     Head_Top: false
     Shadow_Weapon: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4439
   Name: Flame Skull Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4440
+  Name: Necromancer Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4441
   Name: Fallen Bishop Hibram Card
   Type: Shadowgear
   Locations:
     Shoes: false
     Shadow_Shoes: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4442
   Name: Tatacho Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4443
   Name: Aqua Elemental Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4444
   Name: Draco Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4445
   Name: Luciola Vespa Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4447
   Name: Centipede Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4448
   Name: Cornus Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4449
   Name: Dark Shadow Card
   Type: Shadowgear
   Locations:
     Left_Hand: false
     Shadow_Shield: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4450
   Name: Banshee Master Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4451
   Name: Entweihen Crothen Card
   Type: Shadowgear
   Locations:
     Armor: false
     Shadow_Armor: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4452
+  Name: Centipede Larva Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
+- Id: 4453
+  Name: Hillsrion Card
+  Type: Card
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: CLIENT
 - Id: 4700
   Name: STR+1
   Type: Card

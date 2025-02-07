@@ -8,7 +8,7 @@
  * rAthena configuration file (http://rathena.org)
  * For detailed guidance on these check http://rathena.org/wiki/SRC/config/
  **/
-#define PACKETVER 20220328
+#define PACKETVER 20220406 // 20220328
 #define PACKETVER_RE
 
 #endif /* CONFIG_CUSTOM_DEFINES_PRE_HPP */

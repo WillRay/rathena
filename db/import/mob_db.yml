@@ -194,6 +194,9 @@ Body:
     DamageMotion: 0
     Ai: 24
 
+Footer:
+  Imports:
+  - Path: db/import/mob_db_engraved_items.yml
 
 
 #Body:

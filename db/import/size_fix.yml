@@ -31,3 +31,65 @@
 Header:
   Type: SIZE_FIX_DB
   Version: 1
+
+Body:
+  - Weapon: DAGGER
+    Small: 100
+    Medium: 90
+    Large: 80
+  - Weapon: 1HSWORD
+    Small: 90
+    Medium: 100
+    Large: 90
+  - Weapon: 2HSWORD
+    Small: 90
+    Medium: 90
+    Large: 100
+  - Weapon: 1HSPEAR
+    Small: 90
+    Medium: 90
+    Large: 100
+  - Weapon: 2HSPEAR
+    Small: 90
+    Medium: 90
+    Large: 100
+  - Weapon: 1HAXE
+    Small: 90
+    Medium: 90
+    Large: 100
+  - Weapon: 2HAXE
+    Small: 80
+    Medium: 90
+    Large: 100
+  - Weapon: 2HAXE
+    Small: 80
+    Medium: 90
+    Large: 100
+  - Weapon: MACE
+    Small: 90
+    Medium: 100
+    Large: 100
+  - Weapon: BOW
+    Small: 100
+    Medium: 100
+    Large: 90
+  - Weapon: KNUCKLE
+    Small: 100
+    Medium: 90
+    Large: 80
+  - Weapon: MUSICAL
+    Small: 90
+    Medium: 100
+    Large: 90
+  - Weapon: WHIP
+    Small: 90
+    Medium: 100
+    Large: 90
+  - Weapon: BOOK
+    Small: 100
+    Medium: 100
+    Large: 80
+  - Weapon: KATAR
+    Small: 90
+    Medium: 100
+    Large: 90

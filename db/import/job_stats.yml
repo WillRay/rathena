@@ -264,7 +264,170 @@ Body:
         Exp: 254798
       - Level: 50
         Exp: 999999999
-
+  - Jobs:
+      Novice_High: true
+      Swordman_High: true
+      Mage_High: true
+      Archer_High: true
+      Acolyte_High: true
+      Merchant_High: true
+      Thief_High: true
+      Lord_Knight: true
+      High_Priest: true
+      High_Wizard: true
+      Whitesmith: true
+      Sniper: true
+      Assassin_Cross: true
+      Lord_Knight2: true
+      Paladin: true
+      Champion: true
+      Professor: true
+      Stalker: true
+      Creator: true
+      Clown: true
+      Gypsy: true
+      Paladin2: true
+    MaxBaseLevel: 99
+    BaseExp:
+      - Level: 60
+        Exp: 731828
+      - Level: 61
+        Exp: 806448
+      - Level: 62
+        Exp: 884232
+      - Level: 63
+        Exp: 965180
+      - Level: 64
+        Exp: 1073896
+      - Level: 65
+        Exp: 1170382
+      - Level: 66
+        Exp: 1270556
+      - Level: 67
+        Exp: 1374422
+      - Level: 68
+        Exp: 1481976
+      - Level: 69
+        Exp: 1850800
+      - Level: 70
+        Exp: 3389616
+      - Level: 71
+        Exp: 3666333
+      - Level: 72
+        Exp: 3953534
+      - Level: 73
+        Exp: 4251217
+      - Level: 74
+        Exp: 4559382
+      - Level: 75
+        Exp: 5129260
+      - Level: 76
+        Exp: 5488173
+      - Level: 77
+        Exp: 5859059
+      - Level: 78
+        Exp: 6241919
+      - Level: 79
+        Exp: 7374168
+      - Level: 80
+        Exp: 9570662
+      - Level: 81
+        Exp: 10458427
+      - Level: 82
+        Exp: 11380262
+      - Level: 83
+        Exp: 12336168
+      - Level: 84
+        Exp: 13326144
+      - Level: 85
+        Exp: 14994907
+      - Level: 86
+        Exp: 16130400
+      - Level: 87
+        Exp: 17304206
+      - Level: 88
+        Exp: 18516326
+      - Level: 89
+        Exp: 19766760
+      - Level: 90
+        Exp: 29216160
+      - Level: 91
+        Exp: 34949880
+      - Level: 92
+        Exp: 40930560
+      - Level: 93
+        Exp: 55017900
+      - Level: 94
+        Exp: 71510400
+      - Level: 95
+        Exp: 106974000
+      - Level: 96
+        Exp: 146061000
+      - Level: 97
+        Exp: 174405000
+      - Level: 98
+        Exp: 343210000
+  - Jobs:
+      Swordman_High: true
+      Mage_High: true
+      Archer_High: true
+      Acolyte_High: true
+      Merchant_High: true
+      Thief_High: true
+    MaxJobLevel: 50
+    JobExp:
+      - Level: 25
+        Exp: 22946
+      - Level: 26
+        Exp: 30580
+      - Level: 27
+        Exp: 33782
+      - Level: 28
+        Exp: 37140
+      - Level: 29
+        Exp: 46458
+      - Level: 30
+        Exp: 56718
+      - Level: 31
+        Exp: 72956
+      - Level: 32
+        Exp: 79432
+      - Level: 33
+        Exp: 86176
+      - Level: 34
+        Exp: 104834
+      - Level: 35
+        Exp: 114912
+      - Level: 36
+        Exp: 124990
+      - Level: 37
+        Exp: 135068
+      - Level: 38
+        Exp: 145146
+      - Level: 39
+        Exp: 160184
+      - Level: 40
+        Exp: 178526
+      - Level: 41
+        Exp: 198192
+      - Level: 42
+        Exp: 219182
+      - Level: 43
+        Exp: 241496
+      - Level: 44
+        Exp: 276134
+      - Level: 45
+        Exp: 312066
+      - Level: 46
+        Exp: 386372
+      - Level: 47
+        Exp: 408796
+      - Level: 48
+        Exp: 482092
+      - Level: 49
+        Exp: 509596
+      - Level: 50
+        Exp: 999999999
 #Body:
 ###########################################################################
 #

@@ -1206,8 +1206,6 @@ Body:
     Icon: EFST_BERSERK
     DurationLookup: LK_BERSERK
     States:
-      NoCast: true
-      NoChat: true
       NoEquipItem: true
       NoUnEquipItem: true
       NoConsumeItem: true

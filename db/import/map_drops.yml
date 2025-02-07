@@ -42,3 +42,68 @@
 Header:
   Type: MAP_DROP_DB
   Version: 2
+
+Body:
+  - Map: lhz_dun01
+    GlobalDrops:
+    - Index: 0
+      Item: BF_Badge1
+      Rate: 40000
+  - Map: lhz_dun02
+    GlobalDrops:
+    - Index: 0
+      Item: BF_Badge1
+      Rate: 60000
+  - Map: lhz_dun03
+    GlobalDrops:
+    - Index: 0
+      Item: BF_Badge1
+      Rate: 100000
+  - Map: man_fild01
+    GlobalDrops:
+    - Index: 0
+      Item: Bradium
+      Rate: 400
+    - Index: 1
+      Item: Carnium
+      Rate: 400
+  - Map: man_fild02
+    GlobalDrops:
+    - Index: 0
+      Item: Bradium
+      Rate: 400
+    - Index: 1
+      Item: Carnium
+      Rate: 400
+  - Map: man_fild03
+    GlobalDrops:
+    - Index: 0
+      Item: Bradium
+      Rate: 400
+    - Index: 1
+      Item: Carnium
+      Rate: 400
+  - Map: spl_fild01
+    GlobalDrops:
+    - Index: 0
+      Item: Bradium
+      Rate: 400
+    - Index: 1
+      Item: Carnium
+      Rate: 5000
+  - Map: spl_fild02
+    GlobalDrops:
+    - Index: 0
+      Item: Bradium
+      Rate: 400
+    - Index: 1
+      Item: Carnium
+      Rate: 5000
+  - Map: spl_fild03
+    GlobalDrops:
+    - Index: 0
+      Item: Bradium
+      Rate: 400
+    - Index: 1
+      Item: Carnium
+      Rate: 400
