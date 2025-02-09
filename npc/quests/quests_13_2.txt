@@ -2459,9 +2459,9 @@ spl_in02,236,92,5	script	Arc#ep13md_l02	447,{
 			set ep13_mdrama,27;
 			getitem 6081,25; //Splendide_Coin
 			if (checkre(3))
-				getexp 120000,10000;
-			else
 				getexp 1200000,100000;
+			else
+				getexp 12000000,1000000;
 			completequest 7071;
 			close;
 		}
@@ -2781,9 +2781,9 @@ manuk,252,116,3	script	Manuk Galtun#ep13_2day	450,{
 				completequest 7075;
 				set ep13_2_days01,2;
 				if (checkre(3))
-					getexp 50000,30000;
-				else
 					getexp 500000,300000;
+				else
+					getexp 5000000,3000000;
 				getitem 6080,10; //Manuk_Coin
 				close;
 			}
@@ -2857,7 +2857,7 @@ man_in01,378,276,3	script	Manuk Engineer#ep13_2	453,{
 					delitem 6090,20; //Purified_Bradium
 					erasequest 7079;
 					setquest 7080;
-					getexp 40000,40000;
+					getexp 400000,400000;
 					getitem 6080,3; //Manuk_Coin
 					close;
 				}
@@ -2963,7 +2963,7 @@ spl_in01,97,313,3	script	Laphine Craftsman#ep13	446,{
 					delitem 6075,15; //Crystalized_Teardrop
 					erasequest 7081;
 					setquest 7082;
-					getexp 30000,30000;
+					getexp 300000,300000;
 					getitem 6081,3; //Splendide_Coin
 					close;
 				}
@@ -3151,7 +3151,7 @@ mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	982,{
 			erasequest 7077;
 			setquest 7078;
 			set ep13_2_dayegg,2;
-			getexp 40000,40000;
+			getexp 400000,400000;
 			getitem 6081,1; //Splendide_Coin
 			getitem 6080,1; //Manuk_Coin
 			close;
@@ -3711,9 +3711,9 @@ mid_camp,197,237,3	script	Schwarzwald Mechanic#1	869,{
 				completequest 8253;
 				set ep13_2_rhea,100;
 				if (checkre(3))
-					getexp 200000,5000;
+					getexp 2000000,50000;
 				else
-					getexp 1000000,300000;
+					getexp 10000000,3000000;
 				getitem 2782,1; //Ring_Of_Wise_King
 				close;
 			}
@@ -4501,7 +4501,7 @@ function	script	jewel_13_2	{
 				mes "...What the heck am I doing now...";
 				close;
 			}
-			if (rand(1,4) == 2) {
+			if (rand(1,2) == 2) {
 				mes "- You dug up a pile of earth -";
 				mes "- and pulled out the "+ .@color$ +" Gem -";
 				setquest 8240+.@num;

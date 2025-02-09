@@ -277,9 +277,9 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 		changequest 10064,10065;
 		set ep13_ryu,9;
 		if (checkre(3))
-			getexp 66000,21000;
-		else
 			getexp 660000,210000;
+		else
+			getexp 6600000,2100000;
 		mes "[Recruiter]";
 		mes "Just go there!";
 		mes "And listen carefully";
@@ -1713,9 +1713,9 @@ moc_fild22b,230,197,5	script	Munkenro#2	967,{
 		completequest 10078;
 		set ep13_ryu,100;
 		if (checkre(3))
-			getexp 66000,21000;
+			getexp 6600000,210000;
 		else
-			getexp 660000,210000;
+			getexp 6600000,2100000;
 		mes "[Munkenro]";
 		mes "I will let you go there.";
 		mes "Let me know once you are ready.";
@@ -2605,9 +2605,9 @@ mid_camp,261,284,4	script	Instructor#ep13bs	405,{
 			getitem 617,1; //Old_Violet_Box
 			getitem 12322,5; //Chocolate_Pie
 			if (checkre(3))
-				getexp 100000,10000;
+				getexp 10000000,100000;
 			else
-				getexp 1000000,100000;
+				getexp 10000000,1000000;
 			completequest 11100;
 			close;
 		}
@@ -4137,7 +4137,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 				mes "I hope you'll make yourself known in Ash Vacuum with your great accomplishments.";
 				set ep13_animal,15;
 				completequest 2157;
-				getexp (checkre(3))?100000:150000,0;
+				getexp (checkre(3))?1000000:1500000,0;
 				close;
 			}
 			else {
@@ -4234,7 +4234,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 				mes "- You really hope that Rumis will be able to go back home. -";
 				set ep13_animal,100;
 				delitem 6033,1; //Horn_Of_Tendrilion
-				getexp (checkre(3))?50000:100000,0;
+				getexp (checkre(3))?500000:1000000,0;
 				close;
 			}
 			else {
@@ -4870,7 +4870,7 @@ mid_camp,212,237,5	script	Camp Guard Captain#man1	852,{
 			mes "I'll discuss this more with the expedition management.";
 			mes "Thank you for your valuable information.";
 			completequest 2158;
-			getexp (checkre(3))?90000:70000,0;
+			getexp (checkre(3))?900000:700000,0;
 			close;
 		}
 		else if (checkquest(2158) == -1) {
@@ -4891,7 +4891,7 @@ mid_camp,212,237,5	script	Camp Guard Captain#man1	852,{
 				mes "I'll discuss this more with the expedition management.";
 				mes "Thank you for your valuable information.";
 				completequest 2159;
-				getexp (checkre(3))?90000:70000,0;
+				getexp (checkre(3))?900000:700000,0;
 				close;
 			}
 			else {
@@ -5317,9 +5317,9 @@ OnTouch_:
 			specialeffect2 EF_ABSORBSPIRITS;
 			set ep13_1_rhea,100;
 			if (checkre(3))
-				getexp 80000,3000;
+				getexp 800000,30000;
 			else
-				getexp 300000,100000;
+				getexp 3000000,1000000;
 			completequest 8210;
 			next;
 			mes "[United Research Official]";
@@ -7140,11 +7140,11 @@ mid_camp,143,306,5	script	Breeder Taab#ep13_alba	946,{
 				delitem 579,50; //Delicious_Fish
 				set ep13_alba,6;
 				if (checkre(3)) {
-					getexp 8000,3000;
+					getexp 80000,30000;
 					mes "^4d4dff You have received 8,000 EXP";
 					mes "and 3,000 JEXP.^000000.";
 				} else {
-					getexp 80000,30000;
+					getexp 80000,300000;
 					mes "^4d4dff You have received 80,000 EXP";
 					mes "and 30,000 JEXP.^000000.";
 				}
@@ -7179,11 +7179,11 @@ mid_camp,143,306,5	script	Breeder Taab#ep13_alba	946,{
 				delitem 7188,30; //Browny_Root
 				set ep13_alba,6;
 				if (checkre(3)) {
-					getexp 9000,4000;
+					getexp 90000,40000;
 					mes "^4d4dff You have received 9,000 EXP";
 					mes "and 4,000 JEXP.^000000.";
 				} else {
-					getexp 90000,40000;
+					getexp 900000,400000;
 					mes "^4d4dff You have received 90,000 EXP";
 					mes "and 40,000 JEXP.^000000.";
 				}
@@ -7223,11 +7223,11 @@ mid_camp,143,306,5	script	Breeder Taab#ep13_alba	946,{
 				delitem 537,30; //Pet_Food
 				set ep13_alba,6;
 				if (checkre(3)) {
-					getexp 8000,3000;
+					getexp 80000,30000;
 					mes "^4d4dff You have received 8,000 EXP";
 					mes "and 3,000 JEXP.^000000.";
 				} else {
-					getexp 80000,30000;
+					getexp 800000,300000;
 					mes "^4d4dff You have received 80,000 EXP";
 					mes "and 30,000 JEXP.^000000.";
 				}
@@ -7264,11 +7264,11 @@ mid_camp,143,306,5	script	Breeder Taab#ep13_alba	946,{
 				delitem 537,30; //Pet_Food
 				set ep13_alba,6;
 				if (checkre(3)) {
-					getexp 8000,3000;
+					getexp 80000,30000;
 					mes "^4d4dff You have received 8,000 EXP";
 					mes "and 3,000 JEXP.^000000.";
 				} else {
-					getexp 80000,30000;
+					getexp 800000,300000;
 					mes "^4d4dff You have received 80,000 EXP";
 					mes "and 30,000 JEXP.^000000.";
 				}
@@ -7302,11 +7302,11 @@ mid_camp,143,306,5	script	Breeder Taab#ep13_alba	946,{
 				delitem 6020,30; //Fur
 				set ep13_alba,6;
 				if (checkre(3)) {
-					getexp 8000,3000;
+					getexp 80000,30000;
 					mes "^4d4dff You have received 8,000 EXP";
 					mes "and 3,000 JEXP.^000000.";
 				} else {
-					getexp 80000,30000;
+					getexp 800000,300000;
 					mes "^4d4dff You have received 80,000 EXP";
 					mes "and 30,000 JEXP.^000000.";
 				}
@@ -8055,7 +8055,7 @@ mid_camp,69,144,0	script	Ferocious Gorurug	421,{
 				mes "You've brough Pieces of Fish!";
 				mes "GOOD JOB!";
 				delitem 6039,10; //Piece_Of_Fish
-				getexp (checkre(3))?20000:30000,0;
+				getexp (checkre(3))?200000:300000,0;
 				set ep13_yong1,10;
 				setquest 12060;
 				next;
@@ -8075,7 +8075,7 @@ mid_camp,69,144,0	script	Ferocious Gorurug	421,{
 				mes "You've brough Pieces of Fish!";
 				mes "GOOD JOB!";
 				delitem 6039,10; //Piece_Of_Fish
-				getexp 15000,0;
+				getexp 150000,0;
 				setquest 12060;
 				set ep13_yong1,ep13_yong1+1;
 				next;
@@ -8096,7 +8096,7 @@ mid_camp,69,144,0	script	Ferocious Gorurug	421,{
 				mes "You've brough Pieces of Fish!";
 				mes "GOOD JOB!";
 				delitem 6039,10; //Piece_Of_Fish
-				getexp 15000,0;
+				getexp 150000,0;
 				setquest 12060;
 				set ep13_yong1,ep13_yong1+1;
 				next;
@@ -8116,7 +8116,7 @@ mid_camp,69,144,0	script	Ferocious Gorurug	421,{
 				mes "You've brough Pieces of Fish!";
 				mes "GOOD JOB!";
 				delitem 6039,10; //Piece_Of_Fish
-				getexp 15000,0;
+				getexp 150000,0;
 				setquest 12060;
 				set ep13_yong1,ep13_yong1+1;
 				next;
@@ -8138,7 +8138,7 @@ mid_camp,69,144,0	script	Ferocious Gorurug	421,{
 				mes "You've brough Pieces of Fish!";
 				mes "GOOD JOB!";
 				delitem 6039,10; //Piece_Of_Fish
-				getexp 15000,0;
+				getexp 150000,0;
 				setquest 12060;
 				set ep13_yong1,ep13_yong1+1;
 				next;
@@ -8301,7 +8301,7 @@ mid_camp,88,100,55	script	Cat Paw Mining Agent	876,{
 			mes "Thank you for collecting minerals for me.";
 			next;
 			delitem 6048,3; //Unidentified_Mineral
-			getexp (checkre(3))?20000:30000,0;
+			getexp (checkre(3))?200000:300000,0;
 			setquest 12062;
 			set ep13_yong1,ep13_yong1+1;
 			select("I'm freezing! Take them quickly.");
@@ -8812,7 +8812,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "And please take this small reward.";
 		mes "Thank you for your help so far.";
 		next;
-		getexp (checkre(3))?300000:250000,0;
+		getexp (checkre(3))?3000000:8000000,200000;
 		getitem 12110,3; //First_Aid_Kit
 		set ep13_1_edq,14;
 		completequest 3094;
@@ -9294,7 +9294,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 		mes "I'm thinking this because the report contains information about the ecology of the otherworldly creatures. It's also made of paper and ink, materials from the mainland that might seem interesting to those creatures.";
 		next;
 		mes "[Staff Officer Abidal]";
-		mes "Anyways, please bring the pages of the report in ^0000FFincrements of 10^000000 whenever you find them. I'll try to put them in order.";
+		mes "Anyways, please bring the pages of the report in ^0000FFincrements of 5^000000 whenever you find them. I'll try to put them in order.";
 		set ep13_1_edq,71;
 		changequest 3089,3090;
 		close;
@@ -9316,7 +9316,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 		mes "I'm thinking this because the report contains information about the ecology of the otherworldly creatures. It's also made of paper and ink, materials from the mainland that might seem interesting to those creatures.";
 		next;
 		mes "[Staff Officer Abidal]";
-		mes "Anyways, please bring the pages of the report in ^0000FFincrements of 10^000000 whenever you find them. I'll try to put them in order.";
+		mes "Anyways, please bring the pages of the report in ^0000FFincrements of 5^000000 whenever you find them. I'll try to put them in order.";
 		set ep13_1_edq,72;
 		changequest 3089,3090;
 		close;
@@ -9338,9 +9338,9 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 			}
 			else {
 				mes "[Staff Officer Abidal]";
-				mes "Have you brought me pages of the lost report? Please bring them to me in increments of 10.";
+				mes "Have you brought me pages of the lost report? Please bring them to me in increments of 5.";
 				next;
-				if (countitem(6040) > 9) {
+				if (countitem(6040) > 4) {
 					mes "[Staff Officer Abidal]";
 					mes "Thank you. Let me try to put them in order.";
 					next;
@@ -9353,13 +9353,14 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
-							delitem 6040,10; //Some_Of_Report
+							delitem 6040,5; //Some_Of_Report
 							getitem 11013,1; //Expedition_Report_Vol1
 							mes "[Staff Officer Abidal]";
 							mes "This is the first volume of the report. I'm glad that we've restored atleast the first part.";
 							next;
 							mes "[Staff Officer Abidal]";
 							mes "Keep up the good work on finding the rest of the volumes.";
+							getexp 1200000,200000;
 							close;
 						}
 						else if ((countitem(11013) == 1) && (.@ep13_edq_wrong == 1)) {
@@ -9368,20 +9369,21 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							next;
 							mes "[Staff Officer Abidal]";
 							mes "Unfortunately, this is the first volume of the report which we've restored already. I'm sorry, but we need to find pages for the rest of the volumes.";
-							delitem 6040,10; //Some_Of_Report
+							delitem 6040,5; //Some_Of_Report
 							close;
 						}
-						else if ((countitem(11014) == 0) && ((.@ep13_edq_wrong == 3) || (.@ep13_edq_wrong == 2))) {
+						else if ((countitem(11014) == 0) && ((.@ep13_edq_wrong == 3) || (.@ep13_edq_wrong == 2) || (.@ep13_edq_wrong == 2))) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
-							delitem 6040,10; //Some_Of_Report
+							delitem 6040,5; //Some_Of_Report
 							getitem 11014,1; //Expedition_Report_Vol2
 							mes "[Staff Officer Abidal]";
 							mes "This is the second volume of the report. I'm glad that we've restored atleast the second part.";
 							next;
 							mes "[Staff Officer Abidal]";
 							mes "Keep up the good work on finding the rest of the volumes.";
+							getexp 1200000,200000;
 							close;
 						}
 						else if ((countitem(11014) == 1) && ((.@ep13_edq_wrong == 3) || (.@ep13_edq_wrong == 2))) {
@@ -9390,20 +9392,21 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							next;
 							mes "[Staff Officer Abidal]";
 							mes "Unfortunately, this is the second volume of the report which we've restored already. I'm sorry, but we need to find pages for the rest of the volumes.";
-							delitem 6040,10; //Some_Of_Report
+							delitem 6040,5; //Some_Of_Report
 							close;
 						}
 						else if ((countitem(11015) == 0) && ((.@ep13_edq_wrong == 5) || (.@ep13_edq_wrong == 6))) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
-							delitem 6040,10; //Some_Of_Report
+							delitem 6040,5; //Some_Of_Report
 							getitem 11015,1; //Expedition_Report_Vol3
 							mes "[Staff Officer Abidal]";
 							mes "This is the third volume of the report. I'm glad that we've restored atleast the third part.";
 							next;
 							mes "[Staff Officer Abidal]";
 							mes "Keep up the good work on finding the rest of the volumes.";
+							getexp 1200000,200000;
 							close;
 						}
 						else if ((countitem(11015) == 1) && ((.@ep13_edq_wrong == 5) || (.@ep13_edq_wrong == 6))) {
@@ -9412,24 +9415,25 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							next;
 							mes "[Staff Officer Abidal]";
 							mes "Unfortunately, this is the third volume of the report which we've restored already. I'm sorry, but we need to find pages for the rest of the volumes.";
-							delitem 6040,10; //Some_Of_Report
+							delitem 6040,5; //Some_Of_Report
 							close;
 						}
 						else if ((countitem(11016) == 0) && (.@ep13_edq_wrong == 7)) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
-							delitem 6040,10; //Some_Of_Report
+							delitem 6040,5; //Some_Of_Report
 							getitem 11016,1; //Expedition_Report_Vol4
 							mes "[Staff Officer Abidal]";
 							mes "This is the fourth volume of the report. I'm glad that we've restored atleast the fourth part.";
 							next;
 							mes "[Staff Officer Abidal]";
 							mes "Keep up the good work on finding the rest of the volumes.";
+							getexp 1200000,200000;
 							close;
 						}
 						else if ((countitem(11016) == 1) && (.@ep13_edq_wrong == 7)) {
-							delitem 6040,10; //Some_Of_Report
+							delitem 6040,5; //Some_Of_Report
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
@@ -9439,7 +9443,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 						}
 						else {
 							mes "[Staff Officer Abidal]";
-							delitem 6040,10; //Some_Of_Report
+							delitem 6040,5; //Some_Of_Report
 							mes "I'm sorry, but you've brought pages from different volumes of the report, I was unable to put them in order.";
 							next;
 							mes "[Staff Officer Abidal]";
@@ -9456,13 +9460,14 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
-							delitem 6040,10; //Some_Of_Report
+							delitem 6040,5; //Some_Of_Report
 							getitem 11013,1; //Expedition_Report_Vol1
 							mes "[Staff Officer Abidal]";
 							mes "This is the first volume of the report. I'm glad that we've restored atleast the first part.";
 							next;
 							mes "[Staff Officer Abidal]";
 							mes "Keep up the good work on finding the rest of the volumes.";
+							getexp 1200000,200000;
 							close;
 						}
 						else if ((countitem(11013) == 1) && (.@ep13_edq_wrong == 1)) {
@@ -9471,20 +9476,21 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							next;
 							mes "[Staff Officer Abidal]";
 							mes "Unfortunately, this is the first volume of the report which we've restored already. I'm sorry, but we need to find pages for the rest of the volumes.";
-							delitem 6040,10; //Some_Of_Report
+							delitem 6040,5; //Some_Of_Report
 							close;
 						}
 						else if ((countitem(11014) == 0) && (.@ep13_edq_wrong == 2)) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
-							delitem 6040,10; //Some_Of_Report
+							delitem 6040,5; //Some_Of_Report
 							getitem 11014,1; //Expedition_Report_Vol2
 							mes "[Staff Officer Abidal]";
 							mes "This is the second volume of the report. I'm glad that we've restored atleast the second part.";
 							next;
 							mes "[Staff Officer Abidal]";
 							mes "Keep up the good work on finding the rest of the volumes.";
+							getexp 1200000,200000;
 							close;
 						}
 						else if ((countitem(11014) == 1) && (.@ep13_edq_wrong == 2)) {
@@ -9493,7 +9499,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							next;
 							mes "[Staff Officer Abidal]";
 							mes "Unfortunately, this is the second volume of the report which we've restored already. I'm sorry, but we need to find pages for the rest of the volumes.";
-							delitem 6040,10; //Some_Of_Report
+							delitem 6040,5; //Some_Of_Report
 							close;
 						}
 						else if ((countitem(11015) == 0) && ((.@ep13_edq_wrong == 3) || (.@ep13_edq_wrong == 4))) {
@@ -9507,6 +9513,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							next;
 							mes "[Staff Officer Abidal]";
 							mes "Keep up the good work on finding the rest of the volumes.";
+							getexp 1200000,200000;
 							close;
 						}
 						else if ((countitem(11015) == 1) && ((.@ep13_edq_wrong == 3) || (.@ep13_edq_wrong == 4))) {
@@ -9515,20 +9522,21 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							next;
 							mes "[Staff Officer Abidal]";
 							mes "Unfortunately, this is the third volume of the report which we've restored already. I'm sorry, but we need to find pages for the rest of the volumes.";
-							delitem 6040,10; //Some_Of_Report
+							delitem 6040,5; //Some_Of_Report
 							close;
 						}
 						else if ((countitem(11016) == 0) && (.@ep13_edq_wrong == 5)) {
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
-							delitem 6040,10; //Some_Of_Report
+							delitem 6040,5; //Some_Of_Report
 							getitem 11016,1; //Expedition_Report_Vol4
 							mes "[Staff Officer Abidal]";
 							mes "This is the fourth volume of the report. I'm glad that we've restored atleast the fourth part.";
 							next;
 							mes "[Staff Officer Abidal]";
 							mes "Keep up the good work on finding the rest of the volumes.";
+							getexp 1200000,200000;
 							close;
 						}
 						else if ((countitem(11016) == 1) && (.@ep13_edq_wrong == 5)) {
@@ -9537,14 +9545,14 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							next;
 							mes "[Staff Officer Abidal]";
 							mes "Unfortunately, this is the fourth volume of the report which we've restored already. I'm sorry, but we need to find pages for the rest of the volumes.";
-							delitem 6040,10; //Some_Of_Report
+							delitem 6040,5; //Some_Of_Report
 							close;
 						}
 						else {
 							mes "[Staff Officer Abidal]";
 							mes "I'm sorry, but you've brought pages from different volumes of the report, I was unable to put them in order.";
 							next;
-							delitem 6040,10; //Some_Of_Report
+							delitem 6040,5; //Some_Of_Report
 							mes "[Staff Officer Abidal]";
 							mes "I'm sorry, but please go try to find pages that can be bound into one volume.";
 							close;
@@ -9553,7 +9561,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 				}
 				else {
 					mes "[Staff Officer Abidal]";
-					mes "You didn't bring enough pages, please bring them to me in increments of 10.";
+					mes "You didn't bring enough pages, please bring them to me in increments of 5.";
 					close;
 				}
 			}
@@ -9579,6 +9587,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 				mes "[Staff Officer Abidal]";
 				mes "I'm glad that we were able to make this again. Please bring this report to the commander.";
 				close;
+				getexp 1200000,200000;
 			}
 			else if ((countitem(11013) == 0) && (countitem(11014) == 0) && (countitem(11015) == 0) && (countitem(11016) == 0)) {
 				mes "[Staff Officer Abidal]";
@@ -10008,10 +10017,10 @@ man_fild01,315,95,3	script	Expedition Scout#1	707,{
 				case 3:
 					set .@i,3;
 					break;
+				case 2:
 				case 4:
 					set .@i,5;
 					break;
-				case 2:
 				case 5:
 					set .@i,0;
 					break;
@@ -10238,7 +10247,7 @@ OnTimer600000:
 	end;
 
 OnMyMobDead:
-	if (mobcount("spl_fild02","ep13_spl_fild02_mon_edq::OnMyMobDead") < 14 && (ep13_1_edq == 71 || ep13_1_edq == 72))
+	if (ep13_1_edq == 71 || ep13_1_edq == 72)
 		getitem 6040,1; //Some_Of_Report
 	end;
 }
@@ -10269,7 +10278,7 @@ OnTimer600000:
 	end;
 
 OnMyMobDead:
-	if (mobcount("spl_fild03","ep13_spl_fild03_mon_edq::OnMyMobDead") < 14 && (ep13_1_edq == 71 || ep13_1_edq == 72))
+	if (ep13_1_edq == 71 || ep13_1_edq == 72)
 		getitem 6040,1; //Some_Of_Report
 	end;
 }
@@ -10281,8 +10290,8 @@ OnInit:
 	end;
 
 OnEnable:
-	monster "man_fild01",0,0,"Nepenthes",1988,7,"ep13_man_fild01_mon_edq::OnMyMobDead";
-	monster "man_fild01",0,0,"Hillslion",1989,7,"ep13_man_fild01_mon_edq::OnMyMobDead";
+	monster "man_fild01",0,0,"Nepenthes",1988,14,"ep13_man_fild01_mon_edq::OnMyMobDead";
+	monster "man_fild01",0,0,"Hillslion",1989,14,"ep13_man_fild01_mon_edq::OnMyMobDead";
 	initnpctimer;
 	end;
 
@@ -10299,7 +10308,7 @@ OnTimer600000:
 	end;
 
 OnMyMobDead:
-	if (mobcount("man_fild01","ep13_man_fild01_mon_edq::OnMyMobDead") < 14 && (ep13_1_edq == 71 || ep13_1_edq == 72))
+	if (ep13_1_edq == 71 || ep13_1_edq == 72)
 		getitem 6040,1; //Some_Of_Report
 	end;
 }
@@ -10329,7 +10338,7 @@ OnTimer600000:
 	end;
 
 OnMyMobDead:
-	if (mobcount("man_fild03","ep13_man_fild03_mon_edq::OnMyMobDead") < 14 && (ep13_1_edq == 71 || ep13_1_edq == 72))
+	if (ep13_1_edq == 71 || ep13_1_edq == 72)
 		getitem 6040,1; //Some_Of_Report
 	end;
 }
@@ -10596,9 +10605,9 @@ mid_campin,68,185,3	script	Pursuit Party Leader#1	803,{
 		mes "Keep up the good work assisting the explorers in this camp.";
 		set mao_morocc2,100;
 		if (checkre(3))
-			getexp 120000,20000;
+			getexp 12000000,200000;
 		else
-			getexp 1200000,200000;
+			getexp 12000000,200000;
 		getitem 617,1; //Old_Violet_Box
 		completequest 7036;
 		close;
@@ -10976,9 +10985,9 @@ mid_camp,199,311,7	script	Mr. Kidd#ep13_dan01	884,{
 			delitem 6027,1; //Crystal_Of_Feardoom
 			set mao_morocc2,10;
 			if (checkre(3))
-				getexp 20000,1000;
-			else
 				getexp 200000,10000;
+			else
+				getexp 2000000,100000;
 			changequest 7018,7019;
 			close2;
 		}
@@ -13596,7 +13605,7 @@ OnTimer7000:
 	mapwarp "que_dan01","mid_camp",204,312;
 	end;
 
-OnTimer10000:
+OnTimer600000:
 	donpcevent "Corpse#moc2_dead01::OnDisable";
 	donpcevent "Rin#moc2_bt_rin01::OnDisable";
 	donpcevent "Rin#moc2_bt_rin02::OnDisable";

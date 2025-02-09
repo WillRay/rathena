@@ -976,6 +976,15 @@ function	script	QWS_Tarray	{
 	setarray @pTXcoords[@Ti], 160;
 	setarray @pTYcoords[@Ti], 168;
 
+	QWS_Make_Town_Menu 30;
+//----------------Midgard Expedition Camp:
+	setarray @pTmenuitems$[@Ti], "Midgard Expedition Camp";
+	setarray @pTprice[@Ti], $QW_AW_PRICE;
+
+	setarray @pTmap$[@Ti], "mid_camp";
+	setarray @pTXcoords[@Ti], 218;
+	setarray @pTYcoords[@Ti], 237;
+
 	QWS_Make_Town_Menu 20;
 //----------------Cancel
 	setarray @pTmenuitems$[@Ti], "Cancel";
@@ -1695,6 +1704,7 @@ splendide,205,153,4	script	Kafra Adventure Corp#42	895,{ callfunc "QWS_Town_Warp
 veins,214,123,4	script	Kafra Adventure Corp#43	895,{ callfunc "QWS_Town_Warpra",28,"Veins Town"; close; }
 dewata,194,178,6	script	Kafra Adventure Corp#44	895,{ callfunc "QWS_Town_Warpra",29,"Dewata Town"; close; }
 eclage,107,37,4	script	Kafra Adventure Corp#45	895,{ callfunc "QWS_Town_Warpra",30,"Eclage Town"; close; }
+mid_camp,225,238,4	script	Kafra Adventure Corp#46	895,{ callfunc "QWS_Town_Warpra",31,"Midgard Expedition Camp"; close; }
 
 abyss_02,274,266,1	script	Kafra Adventurer#0	900,{ callfunc "QWS_Dungeon_Warpra",0,"Abyss Lake"; close; }
 ama_dun02,192,118,5	script	Kafra Adventurer#1	900,{ callfunc "QWS_Dungeon_Warpra",1,"Amatsu Dungeon"; close; }
