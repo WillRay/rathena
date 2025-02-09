@@ -696,3 +696,13 @@ brasilis,197,221,4	script	Kafra Employee::kaf_bra	4_F_KAFRA1,{
 	savepoint "brasilis",195,259,1,1;
 	callfunc "F_KafEnd",0,1,"in the city of Brasilis";
 }
+
+// Midgard Expedtion Camp
+//============================================================
+mid_camp,220,245,4	script	Kafra Employee::kaf_mid	4_F_KAFRA8,{
+	cutin "kafra_08",2;
+	callfunc "F_KafSet";
+	callfunc "F_Kafra",0,0,1,20,600;
+	savepoint "mid_camp",218,238,1,1;
+	callfunc "F_KafEnd",0,1,"in the Expedition Camp.";
+}

@@ -331,6 +331,7 @@ function	script	F_KafTele	{
 	else if (@wrpD$[.@j] == "Hugel") warp "hugel", 96, 145;
 	else if (@wrpD$[.@j] == "Einbech") warp "einbech", 70, 95;
 	else if (@wrpD$[.@j] == "Lighthalzen") warp "lighthalzen", 158, 92;
+	else if (@wrpD$[.@j] == "Midgard Expedition Camp") warp "mid_camp", 210, 287;
 	end;
 }
 
@@ -614,9 +615,13 @@ function	script	F_KafSet	{
 	deletearray @viewpY[0], getarraysize(@viewpY);
 
 	.@map$ = strnpcinfo(4);
+
 	if (.@map$ == "prontera") {
-		setarray @wrpD$[0], "Izlude", "Geffen", "Payon", "Morocc", "Orc Dungeon", "Alberta";
-		setarray @wrpP[0], 60, 120, 120, 120, 170, 180;
+		if (ep13_ryu > 8)
+			setarray @wrpD$[0], "Izlude", "Geffen", "Payon", "Morocc", "Orc Dungeon", "Alberta", "Midgard Expedition Camp";
+		else
+			setarray @wrpD$[0], "Izlude", "Geffen", "Payon", "Morocc", "Orc Dungeon", "Alberta";
+		setarray @wrpP[0], 60, 120, 120, 120, 170, 180, 300;
 		setarray @viewpX[0], 151, 29, 282, 152;
 		setarray @viewpY[0], 29, 207, 200, 326;
 	} else if (.@map$ == "alberta") {
@@ -660,6 +665,11 @@ function	script	F_KafSet	{
 	} else if (.@map$ == "job3_rune01") {
 		setarray @wrpD$[0], "Izlude", "Geffen", "Payon", "Morocc", "Alberta";
 		setarray @wrpP[0], 60, 120, 120, 120, 180;
+	} else if (.@map$ == "mid_camp") {
+		setarray @wrpD$[0], "Prontera", "Lighthalzen";
+		setarray @wrpP[0], 250, 300;
+		setarray @viewpX[0], 151, 0;
+		setarray @viewpY[0], 29, 0;
 	}
 
 	.@warp_size = getarraysize(@wrpD$);

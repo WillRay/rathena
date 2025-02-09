@@ -46,6 +46,49 @@ Header:
   Version: 1
 
 Body:
+  - Name: Expedition Gear
+    Map: mid_camp
+    X: 223
+    Y: 241
+    Direction: South
+    Sprite: 4_M_EINMAN
+    Items:
+      - Index: 0
+        Item: Mercury_Helm
+        RequiredItems:
+          - Index: 0
+            Item: Horn_Of_Hilsrion
+            Amount: 50
+          - Index: 1
+            Item: Pinguicula_Corsage
+            Amount: 1
+      - Index: 1
+        Item: Puppy_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Peaked_Hat
+            Amount: 50
+          - Index: 1
+            Item: Strong_Bine
+            Amount: 100
+      - Index: 2
+        Item: Mini_Propeller_
+        RequiredItems:
+          - Index: 0
+            Item: Strong_Bine
+            Amount: 100
+          - Index: 1
+            Item: Purified_Bradium
+            Amount: 5
+      - Index: 3
+        Item: Valkyrie_Helmet
+        RequiredItems:
+          - Index: 0
+            Item: Fur
+            Amount: 50
+          - Index: 1
+            Item: Purified_Bradium
+            Amount: 5
   - Name: Glorious Gear Shop
     Map: prontera
     X: 131
