@@ -63,47 +63,55 @@ Body:
     GlobalDrops:
     - Index: 0
       Item: Bradium
-      Rate: 1000
+      Rate: 1500
     - Index: 1
       Item: Carnium
-      Rate: 1000
+      Rate: 1500
   - Map: man_fild02
     GlobalDrops:
     - Index: 0
       Item: Bradium
-      Rate: 1000
+      Rate: 1500
     - Index: 1
       Item: Carnium
-      Rate: 1000
+      Rate: 1500
   - Map: man_fild03
     GlobalDrops:
     - Index: 0
       Item: Bradium
-      Rate: 1000
+      Rate: 1500
     - Index: 1
       Item: Carnium
-      Rate: 1000
+      Rate: 1500
   - Map: spl_fild01
     GlobalDrops:
     - Index: 0
       Item: Bradium
-      Rate: 1000
+      Rate: 1500
     - Index: 1
       Item: Carnium
-      Rate: 1000
+      Rate: 1500
   - Map: spl_fild02
     GlobalDrops:
     - Index: 0
       Item: Bradium
-      Rate: 1000
+      Rate: 1500
     - Index: 1
       Item: Carnium
-      Rate: 1000
+      Rate: 1500
   - Map: spl_fild03
     GlobalDrops:
     - Index: 0
       Item: Bradium
-      Rate: 1000
+      Rate: 1500
     - Index: 1
       Item: Carnium
-      Rate: 1000
+      Rate: 1500
+  - Map: nyd_dun01
+    GlobalDrops:
+    - Index: 0
+      Item: Bradium
+      Rate: 1500
+    - Index: 1
+      Item: Carnium
+      Rate: 1500
