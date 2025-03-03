@@ -44,3 +44,505 @@
 Header:
   Type: RANDOM_OPTION_GROUP
   Version: 1
+
+Body:
+  - Id: 900
+    Group: Melee_Level_1
+    MaxRandom: 3
+    Random:
+        - Option: VAR_HITSUCCESSVALUE
+          MinValue: 1
+          MaxValue: 10
+          Chance: 2500
+        - Option: VAR_CRITICALSUCCESSVALUE
+          MinValue: 1
+          MaxValue: 6
+          Chance: 2500
+        - Option: VAR_ATTPOWER
+          MinValue: 1
+          MaxValue: 10
+          Chance: 2500
+        - Option: VAR_ATKPERCENT
+          MinValue: 1
+          MaxValue: 1
+          Chance: 1500
+        - Option: MELEE_ATTACK_DAMAGE_TARGET
+          MinValue: 1
+          MaxValue: 2
+          Chance: 1500
+        - Option: VAR_PLUSASPD
+          MinValue: 1
+          MaxValue: 1
+          Chance: 1000
+  - Id: 901
+    Group: Melee_Level_2
+    MaxRandom: 3
+    Random:
+        - Option: VAR_HITSUCCESSVALUE
+          MinValue: 5
+          MaxValue: 15
+          Chance: 2500
+        - Option: VAR_CRITICALSUCCESSVALUE
+          MinValue: 5
+          MaxValue: 9
+          Chance: 2500
+        - Option: VAR_ATTPOWER
+          MinValue: 5
+          MaxValue: 15
+          Chance: 2500
+        - Option: VAR_ATKPERCENT
+          MinValue: 1
+          MaxValue: 2
+          Chance: 1500
+        - Option: MELEE_ATTACK_DAMAGE_TARGET
+          MinValue: 1
+          MaxValue: 3
+          Chance: 1500
+        - Option: VAR_PLUSASPD
+          MinValue: 1
+          MaxValue: 1
+          Chance: 1000
+  - Id: 902
+    Group: Melee_Level_3
+    MaxRandom: 3
+    Random:
+        - Option: VAR_HITSUCCESSVALUE
+          MinValue: 10
+          MaxValue: 20
+          Chance: 2500
+        - Option: VAR_CRITICALSUCCESSVALUE
+          MinValue: 7
+          MaxValue: 12
+          Chance: 2500
+        - Option: VAR_ATTPOWER
+          MinValue: 10
+          MaxValue: 20
+          Chance: 2500
+        - Option: VAR_ATKPERCENT
+          MinValue: 1
+          MaxValue: 3
+          Chance: 1500
+        - Option: MELEE_ATTACK_DAMAGE_TARGET
+          MinValue: 1
+          MaxValue: 4
+          Chance: 1500
+        - Option: VAR_PLUSASPD
+          MinValue: 1
+          MaxValue: 2
+          Chance: 1000
+  - Id: 903
+    Group: Melee_Level_4
+    MaxRandom: 3
+    Random:
+        - Option: VAR_HITSUCCESSVALUE
+          MinValue: 15
+          MaxValue: 25
+          Chance: 2500
+        - Option: VAR_CRITICALSUCCESSVALUE
+          MinValue: 7
+          MaxValue: 15
+          Chance: 2500
+        - Option: VAR_ATTPOWER
+          MinValue: 15
+          MaxValue: 25
+          Chance: 2500
+        - Option: VAR_ATKPERCENT
+          MinValue: 3
+          MaxValue: 5
+          Chance: 1500
+        - Option: MELEE_ATTACK_DAMAGE_TARGET
+          MinValue: 3
+          MaxValue: 5
+          Chance: 1500
+        - Option: VAR_PLUSASPD
+          MinValue: 1
+          MaxValue: 2
+          Chance: 1000
+  - Id: 904
+    Group: Ranged_Level_1
+    MaxRandom: 3
+    Random:
+        - Option: VAR_HITSUCCESSVALUE
+          MinValue: 1
+          MaxValue: 10
+          Chance: 2500
+        - Option: VAR_CRITICALSUCCESSVALUE
+          MinValue: 1
+          MaxValue: 6
+          Chance: 2500
+        - Option: VAR_ATTPOWER
+          MinValue: 1
+          MaxValue: 10
+          Chance: 2500
+        - Option: VAR_ATKPERCENT
+          MinValue: 1
+          MaxValue: 1
+          Chance: 1500
+        - Option: RANGE_ATTACK_DAMAGE_TARGET
+          MinValue: 1
+          MaxValue: 1
+          Chance: 1500
+        - Option: VAR_PLUSASPD
+          MinValue: 1
+          MaxValue: 1
+          Chance: 1000
+  - Id: 905
+    Group: Ranged_Level_2
+    MaxRandom: 3
+    Random:
+        - Option: VAR_HITSUCCESSVALUE
+          MinValue: 5
+          MaxValue: 15
+          Chance: 2500
+        - Option: VAR_CRITICALSUCCESSVALUE
+          MinValue: 5
+          MaxValue: 9
+          Chance: 2500
+        - Option: VAR_ATTPOWER
+          MinValue: 5
+          MaxValue: 15
+          Chance: 2500
+        - Option: VAR_ATKPERCENT
+          MinValue: 1
+          MaxValue: 2
+          Chance: 1500
+        - Option: RANGE_ATTACK_DAMAGE_TARGET
+          MinValue: 1
+          MaxValue: 2
+          Chance: 1500
+        - Option: VAR_PLUSASPD
+          MinValue: 1
+          MaxValue: 1
+          Chance: 1000
+  - Id: 906
+    Group: Ranged_Level_3
+    MaxRandom: 3
+    Random:
+        - Option: VAR_HITSUCCESSVALUE
+          MinValue: 10
+          MaxValue: 20
+          Chance: 2500
+        - Option: VAR_CRITICALSUCCESSVALUE
+          MinValue: 7
+          MaxValue: 12
+          Chance: 2500
+        - Option: VAR_ATTPOWER
+          MinValue: 10
+          MaxValue: 20
+          Chance: 2500
+        - Option: VAR_ATKPERCENT
+          MinValue: 1
+          MaxValue: 3
+          Chance: 1500
+        - Option: RANGE_ATTACK_DAMAGE_TARGET
+          MinValue: 1
+          MaxValue: 3
+          Chance: 1500
+        - Option: VAR_PLUSASPD
+          MinValue: 1
+          MaxValue: 2
+          Chance: 1000
+  - Id: 907
+    Group: Ranged_Level_4
+    MaxRandom: 3
+    Random:
+        - Option: VAR_HITSUCCESSVALUE
+          MinValue: 15
+          MaxValue: 25
+          Chance: 2500
+        - Option: VAR_CRITICALSUCCESSVALUE
+          MinValue: 7
+          MaxValue: 15
+          Chance: 2500
+        - Option: VAR_ATTPOWER
+          MinValue: 15
+          MaxValue: 25
+          Chance: 2500
+        - Option: VAR_ATKPERCENT
+          MinValue: 3
+          MaxValue: 5
+          Chance: 1500
+        - Option: RANGE_ATTACK_DAMAGE_TARGET
+          MinValue: 3
+          MaxValue: 5
+          Chance: 1500
+        - Option: VAR_PLUSASPD
+          MinValue: 1
+          MaxValue: 2
+          Chance: 1000
+  - Id: 909
+    Group: Magic_Level_1
+    MaxRandom: 3
+    Random:
+        - Option: HEAL_MODIFY_PERCENT
+          MinValue: 1
+          MaxValue: 10
+          Chance: 2500
+        - Option: ADDSKILLMDAMAGE_ALL
+          MinValue: 1
+          MaxValue: 5
+          Chance: 2500
+        - Option: VAR_ATTMPOWER
+          MinValue: 1
+          MaxValue: 10
+          Chance: 2500
+        - Option: VAR_MAGICATKPERCENT
+          MinValue: 1
+          MaxValue: 1
+          Chance: 1500
+        - Option: CLASS_MDAMAGE_NORMAL
+          MinValue: 1
+          MaxValue: 2
+          Chance: 1500
+        - Option: DEC_SPELL_CAST_TIME
+          MinValue: 1
+          MaxValue: 2
+          Chance: 1000
+  - Id: 910
+    Group: Magic_Level_2
+    MaxRandom: 3
+    Random:
+        - Option: HEAL_MODIFY_PERCENT
+          MinValue: 5
+          MaxValue: 15
+          Chance: 2500
+        - Option: ADDSKILLMDAMAGE_ALL
+          MinValue: 3
+          MaxValue: 7
+          Chance: 2500
+        - Option: VAR_ATTMPOWER
+          MinValue: 5
+          MaxValue: 15
+          Chance: 2500
+        - Option: VAR_MAGICATKPERCENT
+          MinValue: 1
+          MaxValue: 3
+          Chance: 1500
+        - Option: CLASS_MDAMAGE_NORMAL
+          MinValue: 1
+          MaxValue: 3
+          Chance: 1500
+        - Option: DEC_SPELL_CAST_TIME
+          MinValue: 1
+          MaxValue: 3
+          Chance: 1000
+  - Id: 911
+    Group: Magic_Level_3
+    MaxRandom: 3
+    Random:
+        - Option: HEAL_MODIFY_PERCENT
+          MinValue: 10
+          MaxValue: 20
+          Chance: 2500
+        - Option: ADDSKILLMDAMAGE_ALL
+          MinValue: 7
+          MaxValue: 12
+          Chance: 2500
+        - Option: VAR_ATTMPOWER
+          MinValue: 10
+          MaxValue: 20
+          Chance: 2500
+        - Option: VAR_MAGICATKPERCENT
+          MinValue: 2
+          MaxValue: 4
+          Chance: 1500
+        - Option: CLASS_MDAMAGE_NORMAL
+          MinValue: 2
+          MaxValue: 4
+          Chance: 1500
+        - Option: DEC_SPELL_CAST_TIME
+          MinValue: 2
+          MaxValue: 4
+          Chance: 1000
+  - Id: 912
+    Group: Magic_Level_4
+    MaxRandom: 3
+    Random:
+        - Option: HEAL_MODIFY_PERCENT
+          MinValue: 15
+          MaxValue: 25
+          Chance: 2500
+        - Option: ADDSKILLMDAMAGE_ALL
+          MinValue: 7
+          MaxValue: 15
+          Chance: 2500
+        - Option: VAR_ATTMPOWER
+          MinValue: 15
+          MaxValue: 25
+          Chance: 2500
+        - Option: VAR_MAGICATKPERCENT
+          MinValue: 3
+          MaxValue: 5
+          Chance: 1500
+        - Option: CLASS_MDAMAGE_NORMAL
+          MinValue: 3
+          MaxValue: 5
+          Chance: 1500
+        - Option: DEC_SPELL_CAST_TIME
+          MinValue: 3
+          MaxValue: 5
+          Chance: 1000
+  - Id: 908
+    Group: Armor
+    MaxRandom: 3
+    Random:
+        - Option: VAR_ITEMDEFPOWER
+          MinValue: 1
+          MaxValue: 3
+          Chance: 1500
+        - Option: VAR_MDEFPOWER
+          MinValue: 1
+          MaxValue: 5
+          Chance: 1500
+        - Option: VAR_AVOIDSUCCESSVALUE
+          MinValue: 1
+          MaxValue: 5
+          Chance: 2500
+        - Option: VAR_PLUSAVOIDSUCCESSVALUE
+          MinValue: 1
+          MaxValue: 5
+          Chance: 2500
+        - Option: VAR_MAXHPAMOUNT
+          MinValue: 100
+          MaxValue: 300
+          Chance: 2500
+        - Option: VAR_MAXSPAMOUNT
+          MinValue: 5
+          MaxValue: 75
+          Chance: 2500
+        - Option: VAR_MAXHPPERCENT
+          MinValue: 1
+          MaxValue: 5
+          Chance: 1500
+        - Option: VAR_MAXSPPERCENT
+          MinValue: 1
+          MaxValue: 5
+          Chance: 1500
+  - Id: 913
+    Group: Shoes
+    MaxRandom: 3
+    Random:
+        - Option: VAR_HPACCELERATION
+          MinValue: 1
+          MaxValue: 5
+          Chance: 2500
+        - Option: VAR_SPACCELERATION
+          MinValue: 1
+          MaxValue: 5
+          Chance: 2500
+        - Option: VAR_ITEMDEFPOWER
+          MinValue: 1
+          MaxValue: 3
+          Chance: 2500
+        - Option: VAR_MDEFPOWER
+          MinValue: 1
+          MaxValue: 5
+          Chance: 2500
+        - Option: DEC_SP_CONSUMPTION
+          MinValue: 1
+          MaxValue: 5
+          Chance: 2500
+        - Option: VAR_PLUSASPD
+          MinValue: 1
+          MaxValue: 2
+          Chance: 1000
+        - Option: DEC_SPELL_CAST_TIME
+          MinValue: 1
+          MaxValue: 5
+          Chance: 1000
+  - Id: 914
+    Group: Garment
+    MaxRandom: 3
+    Random:
+        - Option: VAR_MAXHPAMOUNT
+          MinValue: 10
+          MaxValue: 300
+          Chance: 1500
+        - Option: VAR_MAXSPAMOUNT
+          MinValue: 10
+          MaxValue: 100
+          Chance: 1500
+        - Option: VAR_AVOIDSUCCESSVALUE
+          MinValue: 1
+          MaxValue: 10
+          Chance: 2500
+        - Option: VAR_HPACCELERATION
+          MinValue: 1
+          MaxValue: 10
+          Chance: 2500
+        - Option: DEC_SP_CONSUMPTION
+          MinValue: 1
+          MaxValue: 10
+          Chance: 2500
+        - Option: DEC_SPELL_CAST_TIME
+          MinValue: 1
+          MaxValue: 5
+          Chance: 1500
+        - Option: DEC_SPELL_DELAY_TIME
+          MinValue: 1
+          MaxValue: 5
+          Chance: 1500
+  - Id: 915
+    Group: Shield
+    MaxRandom: 3
+    Random:
+        - Option: VAR_ITEMDEFPOWER
+          MinValue: 1
+          MaxValue: 3
+          Chance: 2500
+        - Option: VAR_MDEFPOWER
+          MinValue: 1
+          MaxValue: 5
+          Chance: 2500
+        - Option: VAR_AVOIDSUCCESSVALUE
+          MinValue: 1
+          MaxValue: 5
+          Chance: 1500
+        - Option: VAR_PLUSAVOIDSUCCESSVALUE
+          MinValue: 1
+          MaxValue: 5
+          Chance: 1500
+        - Option: VAR_HPACCELERATION
+          MinValue: 1
+          MaxValue: 5
+          Chance: 2500
+        - Option: VAR_SPACCELERATION
+          MinValue: 1
+          MaxValue: 5
+          Chance: 2500
+        - Option: DEC_SPELL_CAST_TIME
+          MinValue: 1
+          MaxValue: 5
+          Chance: 1500
+  - Id: 916
+    Group: Accessory
+    MaxRandom: 3
+    Random:
+          - Option: VAR_CRITICALSUCCESSVALUE
+            MinValue: 1
+            MaxValue: 5
+            Chance: 2500
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 1
+            MaxValue: 5
+            Chance: 2500
+          - Option: VAR_ATTPOWER
+            MinValue: 1
+            MaxValue: 5
+            Chance: 1500
+          - Option: VAR_ATTMPOWER
+            MinValue: 1
+            MaxValue: 5
+            Chance: 1500
+          - Option: ADDEXPPERCENT_KILLRACE_ALL
+            MinValue: 1
+            MaxValue: 5
+            Chance: 1000
+          - Option: MELEE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 1000    
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 1000

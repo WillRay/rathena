@@ -1,41 +1,444 @@
 -	script	EngraverNPC#dummy::Engraver	-1,{
 
+	mes "[Aino]";
+	mes "Ho there! I can improve the power of your equipment beyond normal refinement. Bring me items ^FF0000already showing enhanced power^000000^000000, and I can enhance them further.";
+	next;
+
+	.@selection = select("I want improve my equipment.:'Improve beyond normal'?:Cancel");
+	switch (.@selection) {
+		case 3:
+			end;
+		case 2:
+			mes "[Aino]";
+			mes "Equipment has chance to drop with one or more empowered options. I can improve these options even further, pushing them to their maximum. However, I cannot add new empowerment options.";
+			end;
+		case 1:
+			break;
+	}
+
+	if (countitem(7836) < 1) { // Dawn_Essence
+		mes "[Aino]";
+		mes "I require at least one ^0000FFDawn Essence^000000^000000 to complete my work.";
+		end;
+	}
+
+	mes "[Aino]";
+	mes "Select the item you wish to enhance:";
+	next;
+	
 	for(.@i = 0; .@i <= getarraysize(.equipOptions) - 1; .@i++) {
 		.@menu$ = .@menu$ + ((getequipisequiped(.equipOptions[.@i])) ? getequipname(.equipOptions[.@i]) : "") + ":";
 	}
 
-	.@selection = select(.@menu$, "Cancel")-1;
-	
+
+	.@selection = select(.@menu$)-1;
+
 	.@equipIndex = .equipOptions[.@selection];
-	
+
+	// BEGIN Get Selected Equip Data -------------------
+
 	.@itemId = getequipid(.@equipIndex);
 	.@refine = getequiprefinerycnt(.@equipIndex);
+	.@itemType = .equipOptions[.@selection];
+	.itemSubtype = getiteminfo(.@itemId, ITEMINFO_SUBTYPE);
+	.weaponLevel = getequipweaponlv(.@equipIndex);
 
 	setarray .@cards[0], getequipcardid(.@equipIndex,0), getequipcardid(.@equipIndex,1), getequipcardid(.@equipIndex,2), getequipcardid(.@equipIndex,3);
 	setarray .@optId[0], getequiprandomoption(.@equipIndex,0,ROA_ID), getequiprandomoption(.@equipIndex,1,ROA_ID), getequiprandomoption(.@equipIndex,2,ROA_ID), getequiprandomoption(.@equipIndex,3,ROA_ID), getequiprandomoption(.@equipIndex,4,ROA_ID);
 	setarray .@optVal[0], getequiprandomoption(.@equipIndex,0,ROA_VALUE), getequiprandomoption(.@equipIndex,1,ROA_VALUE), getequiprandomoption(.@equipIndex,2,ROA_VALUE), getequiprandomoption(.@equipIndex,3,ROA_VALUE), getequiprandomoption(.@equipIndex,4,ROA_VALUE);
-	setarray .@optParam[0], 0, 0, 0, 0, 0;	
+	setarray .@optParam[0], 0, 0, 0, 0, 0;
 
-	//setarray .@optId[0], RDMOPT_MELEE_ATTACK_DAMAGE_TARGET, RDMOPT_VAR_CRITICAL_RATE, RDMOPT_VAR_PLUSASPD; // Engraving Type
-	//setarray .@optVal[0], rand(1,5), rand(6,11), rand(12,17); // Random values for the engraving
-	//setarray .@optParam[0], 0, 0, 0, 0, 0;	
-	.@grade = 0;
-	
-	npctalk "stuff " + .@OptID[0];
+	set @numTiers, 0;
+	if (.@optId[0] > 0) {
+		@numTiers++;
+	}
+	if (.@optId[1] > 0) {
+		@numTiers++;
+	}
+	if (.@optId[2] > 0) {
+		@numTiers++;
+	}
+	// END Set Selected Equip Data -------------------
 
+	if (@numTiers < 3) {
+		mes "[Aino]";
+		mes "Would you like to increase the existing powers, or try to add a new one?";
+		.@selection = select("Improve existing powers.:Try to add a new power.");
+		next;
+	}
+	else {
+		.@selection = 0;
+	}
+
+	if (.@selection == 1 && @numTiers == 0) {
+		mes "[Aino]";
+		mes "This item has no powers to enhance.";
+		end;	
+	}
+
+	if (.@selection == 2) {
+		.@newOptId = callfunc("GetRandomOptId", .@itemType, .weaponLevel, .itemSubtype);
+
+		if (.@newOptId == 0) {
+			switch (@numTiers + 1) {
+				case 1: specialeffect2 EF_BEGINSPELL_N2; break;
+				case 2: specialeffect2 EF_BEGINSPELL_N5; break;
+				case 3: specialeffect2 EF_BEGINSPELL_N7; break;
+			}
+			progressbar "ffff00",2;
+			specialeffect2 EF_TEMP_FAIL;
+			delitem 7836, 1; // Dawn_Essence
+			mes "[Aino]";
+			mes "I'm sorry,  I was unable to add a new power.";
+			end;
+		}
+		else {
+			.@optId[@numTiers] = .@newOptId;
+			.@optVal[@numTiers] = 0;
+			@numTiers++;
+		}
+	}
+
+	// BEGIN Set Tier Enchants -------------------
+	@initalOptValsTotal = .@optVal[0] + .@optVal[1] + .@optVal[2];
+
+	// No break statements - it's intended to fall through here.
+	switch (@numTiers) {
+		case 3:
+			set @maxValue, callfunc("GetMaxOptValue", .@optId[2], .@itemType, .weaponLevel, .itemSubtype);
+			if (@maxValue - .@optVal[2] > 1)	
+				set .@optVal[2], rand(.@optVal[2], @maxValue);
+			else
+				set .@optVal[2], @maxValue;
+		case 2:
+			set @maxValue, callfunc("GetMaxOptValue", .@optId[1], .@itemType, .weaponLevel, .itemSubtype);
+			if (@maxValue - .@optVal[1] > 1)	
+				set .@optVal[1], rand(.@optVal[1], @maxValue);
+			else
+				set .@optVal[1], @maxValue;
+		case 1:
+			set @maxValue, callfunc("GetMaxOptValue", .@optId[0], .@itemType, .weaponLevel, .itemSubtype);
+			if (@maxValue - .@optVal[0] > 1)	
+				set .@optVal[0], rand(.@optVal[0], @maxValue);
+			else
+				set .@optVal[0], @maxValue;
+	}
+
+	@initalOptValsTotal = @initalOptValsTotal - .@optVal[0] - .@optVal[1] - .@optVal[2];
+
+	if (@initalOptValsTotal == 0) {
+		mes "[Aino]";
+		mes "This equipment has been upgraded to it's maximum potential. I can upgrade it no further.";
+		end;
+	}
+
+	delitem 7836, 1; // Dawn_Essence
+
+	switch (@numTiers) {
+		case 1: specialeffect2 EF_BEGINSPELL_N2; break;
+		case 2: specialeffect2 EF_BEGINSPELL_N5; break;
+		case 3: specialeffect2 EF_BEGINSPELL_N7; break;
+	}
+
+	// END Set Tier Enchants -------------------
+
+	progressbar "ffff00",2;
+	specialeffect2 EF_DETECT4;
+	//soundeffect "complete.wav",0;
 	delequip .@equipIndex;
 	getitem3 .@itemId,1,1,.@refine,0,.@cards[0],.@cards[1],.@cards[2],.@cards[3],.@optId,.@optVal,.@optParam;
-	specialeffect2 EF_THUNDERSTORM2; //effect 900
-	// getitem4 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
-
 	close;
 
 OnInit:
-	setarray .equipOptions[0], EQI_HEAD_TOP, EQI_ARMOR, EQI_GARMENT, EQI_SHOES, EQI_HAND_R , EQI_HAND_L; // EQI_HEAD_LOW, EQI_HEAD_MID
-
-	// setarray .@weaponPhysicalTier1[0], MELEE_ATTACK_DAMAGE_TARGET, 
-
+	setarray .equipOptions[0], EQI_ACC_L, EQI_ACC_R, EQI_ARMOR, EQI_GARMENT, EQI_SHOES, EQI_HAND_L, EQI_HAND_R; //, EQI_HEAD_TOP EQI_HEAD_LOW, EQI_HEAD_MID
 }
 
+function	script	GetRandomOptId	{
+	@itemType = getarg(0);
+	@weaponLevel = getarg(1);
+	@itemSubtype = getarg(2);
 
-prt_in,249,16,2	duplicate(Engraver)	Gerald#pront	73
+	if (@weaponLevel > 0) {
+		switch(@itemSubtype) {
+			case W_BOW:
+			case W_MUSICAL:
+			case W_WHIP:
+				if (callfunc("IsRandomChanceOf", 20)) {
+					return RDMOPT_VAR_PLUSASPD;
+				}
+
+				if (callfunc("IsRandomChanceOf", 30)) {
+					setarray @optIds[0], RDMOPT_RANGED_ATTACK_DAMAGE_TARGET, RDMOPT_VAR_ATKPERCENT;
+					return @optIds[rand(0,getarraysize(@optIds)-1)];
+				}
+
+				if (callfunc("IsRandomChanceOf", 50)) {
+					setarray @optIds[0], RDMOPT_VAR_ATTPOWER, RDMOPT_AR_CRITICALSUCCESSVALUE, RDMOPT_VAR_HITSUCCESSVALUE;
+					return @optIds[rand(0,getarraysize(@optIds)-1)];
+				}
+				return 0;
+			case W_2HSTAFF:
+			case W_BOOK:
+				if (callfunc("IsRandomChanceOf", 20)) {
+					return RDMOPT_DEC_SPELL_CAST_TIME;
+				}
+				
+				if (callfunc("IsRandomChanceOf", 30)) {
+					setarray @optIds[0], RDMOPT_VAR_MAGICATKPERCENT, RDMOPT_CLASS_MDAMAGE_NORMAL;
+					return @optIds[rand(0,getarraysize(@optIds)-1)];
+				}
+
+				if (callfunc("IsRandomChanceOf", 50)) {
+					setarray @optIds[0], RDMOPT_HEAL_MODIFY_PERCENT, RDMOPT_ADDSKILLMDAMAGE_ALL, RDMOPT_VAR_ATTMPOWER;
+					return @optIds[rand(0,getarraysize(@optIds)-1)];
+				}
+			default:
+				if (callfunc("IsRandomChanceOf", 20)) {
+					return RDMOPT_VAR_PLUSASPD;
+				}
+
+				if (callfunc("IsRandomChanceOf", 30)) {
+					setarray @optIds[0], RDMOPT_MELEE_ATTACK_DAMAGE_TARGET, RDMOPT_VAR_ATKPERCENT;
+					return @optIds[rand(0,getarraysize(@optIds)-1)];
+				}
+
+				if (callfunc("IsRandomChanceOf", 50)) {
+					setarray @optIds[0], RDMOPT_VAR_ATTPOWER, RDMOPT_AR_CRITICALSUCCESSVALUE, RDMOPT_VAR_HITSUCCESSVALUE;
+					return @optIds[rand(0,getarraysize(@optIds)-1)];
+				}
+				return 0;
+		}
+	}
+
+	if (@itemType == EQI_ARMOR) {
+		if (callfunc("IsRandomChanceOf", 30)) {
+			setarray @optIds[0], RDMOPT_VAR_ITEMDEFPOWER, RDMOPT_VAR_MDEFPOWER, RDMOPT_VAR_MAXHPPERCENT, RDMOPT_VAR_MAXSPPERCENT;
+			return @optIds[rand(0,getarraysize(@optIds)-1)];
+		}
+
+		if (callfunc("IsRandomChanceOf", 50)) {
+			setarray @optIds[0], RDMOPT_VAR_MAXHPAMOUNT, RDMOPT_VAR_MAXSPAMOUNT, RDMOPT_VAR_AVOIDSUCCESSVALUE, RMDOPT_VAR_PLUSAVOIDSUCCESSVALUE;
+			return @optIds[rand(0,getarraysize(@optIds)-1)];
+		}
+	}
+
+	if (@itemType == EQI_SHOES) {
+		if (callfunc("IsRandomChanceOf", 50)) {
+			setarray @optIds[0], RDMOPT_VAR_HPACCELERATION, RDMOPT_VAR_SPACCELERATION, RDMOPT_VAR_ITEMDEFPOWER, RDMOPT_DEC_SP_CONSUMPTION;
+			return @optIds[rand(0,getarraysize(@optIds)-1)];
+		}
+
+		if (callfunc("IsRandomChanceOf", 20)) {
+			setarray @optIds[0], RDMOPT_VAR_PLUSASPD, RDMOPT_DEC_SPELL_CAST_TIME;
+			return @optIds[rand(0,getarraysize(@optIds)-1)];
+		}
+	}
+
+	if (@itemType == EQI_GARMENT) {
+		if (callfunc("IsRandomChanceOf", 50)) {
+			setarray @optIds[0], RDMOPT_VAR_AVOIDSUCCESSVALUE, RDMOPT_VAR_HPACCELERATION, RDMOPT_DEC_SP_CONSUMPTION;
+			return @optIds[rand(0,getarraysize(@optIds)-1)];
+		}
+
+		if (callfunc("IsRandomChanceOf", 30)) {
+			setarray @optIds[0], RDMOPT_VAR_MAXHPAMOUNT, RDMOPT_VAR_MAXSPAMOUNT, RDMOPT_DEC_SPELL_CAST_TIME, RDMOPT_DEC_SPELL_DELAY_TIME;
+			return @optIds[rand(0,getarraysize(@optIds)-1)];
+		}
+	}
+
+	if (@itemType == EQI_HAND_L) {
+		if (callfunc("IsRandomChanceOf", 50)) {
+			setarray @optIds[0], RDMOPT_VAR_ITEMDEFPOWER, RDMOPT_VAR_MDEFPOWER, RDMOPT_VAR_HPACCELERATION, RDMOPT_VAR_SPACCELERATION;
+			return @optIds[rand(0,getarraysize(@optIds)-1)];
+		}
+
+		if (callfunc("IsRandomChanceOf", 30)) {
+			setarray @optIds[0], RDMOPT_VAR_AVOIDSUCCESSVALUE, RDMOPT_VAR_PLUSAVOIDSUCCESSVALUE, RDMOPT_DEC_SPELL_CAST_TIME;
+			return @optIds[rand(0,getarraysize(@optIds)-1)];
+		}
+	}
+
+	if (@itemType == EQI_ACC_L || @itemType == EQI_ACC_R) {
+		if (callfunc("IsRandomChanceOf", 50)) {
+			setarray @optIds[0], RDMOPT_VAR_CRITICALSUCCESSVALUE, RDMOPT_VAR_HITSUCCESSVALUE;
+			return @optIds[rand(0,getarraysize(@optIds)-1)];
+		}
+
+		if (callfunc("IsRandomChanceOf", 30)) {
+			setarray @optIds[0], RDMOPT_VAR_ATTPOWER, RDMOPT_VAR_ATTMPOWER;
+			return @optIds[rand(0,getarraysize(@optIds)-1)];
+		}
+
+		if (callfunc("IsRandomChanceOf", 20)) {
+			setarray @optIds[0], RDMOPT_ADDEXPPERCENT_KILLRACE_ALL, RDMOPT_MELEE_ATTACK_DAMAGE_TARGET, RDMOPT_RANGE_ATTACK_DAMAGE_TARGET;
+			return @optIds[rand(0,getarraysize(@optIds)-1)];
+		}
+	}
+
+	return 0;
+}
+
+function	script	IsRandomChanceOf	{
+	@percentage = getarg(0);
+	@random = rand(1,100);
+
+	if (@random < @percentage + 1) {
+		return 1;
+	}
+
+	return 0;
+}
+
+function	script	GetMaxOptValue	{
+	@optId = getarg(0);
+	@itemType = getarg(1);
+	@weaponLevel = getarg(2);
+	@itemSubtype = getarg(3);
+	itemClass$ = "";
+
+	if (@weaponLevel > 0) {
+		switch(@itemSubtype) {
+			case W_BOW:
+			case W_MUSICAL:
+			case W_WHIP:
+				itemClass$ = "Ranged";
+				break;
+			case W_STAFF:
+			case W_2HSTAFF:
+			case W_BOOK:
+				itemClass$ = "Magic";
+				break;
+			default:
+				itemClass$ = "Melee";
+				break;
+		}
+	}
+
+	if (itemClass$ == "Ranged") {
+		switch(@optId) {
+			case RDMOPT_VAR_HITSUCCESSVALUE:
+			case RDMOPT_VAR_ATTPOWER:
+				return @weaponlevel * 5 + 5;
+			case RDMOPT_VAR_CRITICALSUCCESSVALUE:
+				return @weaponLevel * 3 + 3;
+			case RDMOPT_VAR_ATKPERCENT:
+			case RDMOPT_RANGE_ATTACK_DAMAGE_TARGET:
+				return @weaponLevel + 1;
+			case RDMOPT_VAR_PLUSASPD:
+				return (@weaponLevel == 3 || @weaponlevel == 4) ? 2 : 1;
+		}
+	}
+
+	if (itemClass$ == "Magic") {
+		switch(@optId) {
+			case RDMOPT_HEAL_MODIFY_PERCENT:
+			case RDMOPT_VAR_ATTMPOWER:
+				return @weaponlevel * 5 + 5;
+			case RDMOPT_ADDSKILLMDAMAGE_ALL:
+				return @weaponLevel * 3 + 3;
+			case RDMOPT_VAR_MAGICATKPERCENT:
+			case RDMOPT_DEC_SPELL_CAST_TIME:
+			case RDMOPT_CLASS_MDAMAGE_NORMAL:
+				return @weaponLevel + 1;
+		}
+	}
+
+	if (itemClass$ == "Melee") {
+		switch(@optId) {
+			case RDMOPT_VAR_HITSUCCESSVALUE:
+			case RDMOPT_VAR_ATTPOWER:
+				return @weaponlevel * 5 + 5;
+			case RDMOPT_VAR_CRITICALSUCCESSVALUE:
+				return @weaponLevel * 3 + 3;
+			case RDMOPT_VAR_ATKPERCENT:
+			case RDMOPT_MELEE_ATTACK_DAMAGE_TARGET:
+				return @weaponLevel + 1;
+			case RDMOPT_VAR_PLUSASPD:
+				return (@weaponLevel == 3 || @weaponlevel == 4) ? 2 : 1;
+		}
+	}
+
+	if (@itemType == EQI_ARMOR) {
+		switch(@optId) {
+			case RDMOPT_VAR_ITEMDEFPOWER:
+				return 3;
+			case RDMOPT_VAR_MDEFPOWER:
+			case RDMOPT_VAR_AVOIDSUCCESSVALUE:
+			case RDMOPT_VAR_PLUSAVOIDSUCCESSVALUE:
+			case RDMOPT_VAR_MAXHPPERCENT:
+			case RDMOPT_VAR_MAXSPPERCENT:
+				return 5;
+			case RDMOPT_VAR_MAXHPAMOUNT:
+				return 300;
+			case RDMOPT_VAR_MAXSPAMOUNT:
+				return 300;
+		}
+	}
+
+	if (@itemType == EQI_SHOES) {
+		switch(@optId) {
+			case RDMOPT_VAR_ITEMDEFPOWER:
+				return 3;
+			case RDMOPT_VAR_HPACCELERATION:
+			case RDMOPT_VAR_SPACCELERATION:
+			case RDMOPT_VAR_MDEFPOWER:
+			case RDMOPT_DEC_SP_CONSUMPTION:
+			case RDMOPT_DEC_SPELL_CAST_TIME:
+				return 5;
+			case RDMOPT_VAR_PLUSASPD:
+				return 2;
+		}
+	}
+
+	if (@itemType == EQI_GARMENT) {
+		switch(@optId) {
+			case RDMOPT_VAR_MAXHPAMOUNT:
+				return 300;
+			case RDMOPT_VAR_MAXSPAMOUNT:
+				return 100;
+			case RDMOPT_VAR_AVOIDSUCCESSVALUE:
+			case RDMOPT_VAR_HPACCELERATION:
+			case RDMOPT_DEC_SP_CONSUMPTION:
+				return 10;
+			case RDMOPT_DEC_SPELL_CAST_TIME:
+			case RDMOPT_DEC_SPELL_DELAY_TIME:
+				return 5;
+		}
+	}
+
+	if (@itemType == EQI_HAND_L) {
+		switch(@optId) {
+			case RDMOPT_VAR_ITEMDEFPOWER:
+				return 3;
+			case RDMOPT_VAR_MDEFPOWER:
+			case RDMOPT_VAR_AVOIDSUCCESSVALUE:
+			case RDMOPT_VAR_PLUSAVOIDSUCCESSVALUE:
+			case RDMOPT_VAR_HPACCELERATION:
+			case RDMOPT_VAR_SPACCELERATION:
+			case RDMOPT_DEC_SPELL_CAST_TIME:
+				return 5;
+		}
+	}
+
+	if (@itemType == EQI_ACC_L || @itemType == EQI_ACC_R) {
+		switch(@optId) {
+			case RDMOPT_VAR_CRITICALSUCCESSVALUE:
+			case RDMOPT_VAR_HITSUCCESSVALUE:
+			case RDMOPT_VAR_ATTPOWER:
+			case RDMOPT_VAR_ATTMPOWER:
+			case RDMOPT_ADDEXPPERCENT_KILLRACE_ALL:
+			case RDMOPT_MELEE_ATTACK_DAMAGE_TARGET:
+			case RDMOPT_RANGE_ATTACK_DAMAGE_TARGET:
+				return 5;
+		}	
+	}
+
+	return 1;
+}
+
+//prt_in,59,55,2	duplicate(Engraver)	Aino#pront	813
+izlude,94,126,4	duplicate(Engraver)	Aino#izlude	402
+izlude_a,94,126,4	duplicate(Engraver)	Aino#izlude	402
+izlude_b,94,126,4	duplicate(Engraver)	Aino#izlude	402
+izlude_c,94,126,4	duplicate(Engraver)	Aino#izlude	402
+izlude_d,94,126,4	duplicate(Engraver)	Aino#izlude	402
