@@ -10040,6 +10040,40 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 #if PACKETVER_MAIN_NUM >= 20180207 || PACKETVER_RE_NUM >= 20171129 || PACKETVER_ZERO_NUM >= 20171130
 				unit_data *ud = unit_bl2ud(bl);
 
+				int ele_group = -1;
+				char ele_name[8] = { 0 };
+				char output[16] = { 0 };
+				// Show Element Info [Hyroshima]
+				if (battle_config.mob_ele_view)
+				{
+					switch (md->status.def_ele)
+					{
+					case 0: ele_group = 51; strcpy(ele_name, "Neutral");	break;
+					case 1: ele_group = 52; strcpy(ele_name, "Water"); break;
+					case 2: ele_group = 53; strcpy(ele_name, "Earth"); break;
+					case 3: ele_group = 54; strcpy(ele_name, "Fire"); break;
+					case 4: ele_group = 55; strcpy(ele_name, "Wind"); break;
+					case 5: ele_group = 59; strcpy(ele_name, "Poison"); break;
+					case 6: ele_group = 57; strcpy(ele_name, "Holy"); break;
+					case 7: ele_group = 58; strcpy(ele_name, "Shadow"); break;
+					case 8: ele_group = 59; strcpy(ele_name, "Ghost"); break;
+					case 9: ele_group = 60; strcpy(ele_name, "Undead"); break;
+					default: break;
+					}
+
+					if (ud != nullptr)
+					{
+						if (ele_group > -1)
+							md->ud.group_id = ele_group;
+
+						if (strlen(ele_name))
+						{
+							safesnprintf(output, sizeof(output), "%s Lv: %d", ele_name, md->level);
+							safestrncpy(ud->title, output, NAME_LENGTH);
+						}
+					}
+				}
+
 				if (ud != nullptr) {
 					memcpy(packet.title, ud->title, NAME_LENGTH);
 					packet.groupId = ud->group_id;
