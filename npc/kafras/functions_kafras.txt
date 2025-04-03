@@ -318,7 +318,7 @@ function	script	F_KafTele	{
 		if (checkre(0) == true)
 			warp "izlude", 128, 98;
 		else
-			warp "izlude", 91, 105;
+			warp "izlude", 128, 98;
 	}
 	else if (@wrpD$[.@j] == "Juno") warp "yuno", 158, 125;
 	else if (@wrpD$[.@j] == "Mjolnir Dead Pit") warp "mjolnir_02", 99, 351;
@@ -643,7 +643,7 @@ function	script	F_KafSet	{
 		setarray @wrpP[0], 120, 120, 170, 170;
 		setarray @viewpX[0], 120, 203;
 		setarray @viewpY[0], 62, 123;
-	} else if (.@map$ == "izlude") {
+	} else if (.@map$ == "izlude" || .@map$ == "izlude_a" ||.@map$ == "izlude_b" ||.@map$ == "izlude_c" ||.@map$ == "izlude_d") {
 		setarray @wrpD$[0], "Prontera", "Geffen", "Payon", "Morocc", "Al De Baran", "Rachel";
 		setarray @wrpP[0], 60, 120, 120, 100, 180, 250;
 	} else if (.@map$ == "morocc") {

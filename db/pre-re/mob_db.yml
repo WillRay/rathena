@@ -29874,8 +29874,9 @@ Body:
     Name: Poring
     Level: 1
     Hp: 50
+    Sp: 0
     Attack: 7
-    Attack2: 10
+    Attack2: 3
     MagicDefense: 5
     Int: 0
     Dex: 6
@@ -29893,6 +29894,11 @@ Body:
     ClientAttackMotion: 288
     DamageMotion: 480
     Ai: 02
+    Modes:
+      FixedItemDrop: true
+    Drops:
+      - Item: Stone
+        Rate: 10000
   - Id: 1726
     AegisName: R_LUNATIC
     Name: Lunatic
@@ -41835,4 +41841,3 @@ Body:
     ClientAttackMotion: 288
     DamageMotion: 864
     Ai: 20
-

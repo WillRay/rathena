@@ -111,10 +111,10 @@ prt_fild08,0,0	monster	Drops	1113,10
 // prt_fild09 - Prontera Field
 //==================================================
 prt_fild09,0,0	monster	Savage Babe	1167,70
-prt_fild09,0,0	monster	Baby Desert Wolf	1107,20
+prt_fild09,0,0	monster	Baby Desert Wolf	1107,40
 prt_fild09,0,0	monster	Peco Peco Egg	1047,20
 prt_fild09,0,0	monster	Picky	1049,20
-prt_fild09,0,0	monster	Condor	1009,10
+prt_fild09,0,0	monster	Condor	1009,40
 prt_fild09,237,115,5,5	monster	Yellow Plant	1081,3,360000,180000
 
 //==================================================

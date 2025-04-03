@@ -21,7 +21,7 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer3600000:
+OnTimer1000:
 	donpcevent "Monster Controler1#aru::OnEnable";
 	mapannounce "arug_dun01", "Kublin: Aargh!",bc_map,"0x99CC00";
 	mapannounce "arug_dun01", "Morestone: Stop righ there! You thief!",bc_map,"0x99CC00";
@@ -60,11 +60,11 @@ OnMyMobDead:
 }
 
 arug_dun01,199,195,5	script	Dwarf#aru_gd	826,{
-	if (getcharid(2) == 0) {
-		mes "[Dwarf]";
-		mes "Hey did you see an ugly Goblin come by? He stole something from me!";
-		close;
-	}
+	//if (getcharid(2) == 0) {
+	//	mes "[Dwarf]";
+	//	mes "Hey did you see an ugly Goblin come by? He stole something from me!";
+	//	close;
+	//}
 	set .@chk_urquest,checkquest(2143,PLAYTIME);
 	set .@chk_yourgdname$,getguildname(getcharid(2));
 	if ($@gdeventv_a1 == 0) {

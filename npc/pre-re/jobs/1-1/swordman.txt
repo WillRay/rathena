@@ -156,6 +156,7 @@ izlude_in,74,172,4	script	Swordman#swd_1	119,{
 			mes "Hahaha! Congratulations! Now you are fully qualified to be a real Swordman! I will transform you right away!";
 			next;
 			callfunc "Job_Change",Job_Swordman;
+			getitem 1109,1;
 			set job_sword_q,0;
 			completequest 1014;
 			mes "[Swordman]";

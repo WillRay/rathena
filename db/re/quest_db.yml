@@ -3595,7 +3595,7 @@ Body:
   - Id: 7131
     Title: The training course 'conquer the desert!' - A real battle 3
     Targets:
-      - Mob: SCORPION
+      - Mob: SAVAGE_BABE
         Count: 5
   - Id: 7132
     Title: The training course 'conquer the desert!' - Complete a quest

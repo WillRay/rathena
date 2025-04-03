@@ -1684,7 +1684,11 @@ geffen,124,71,4	script	Kafra Adventure Corp#22	895,{ callfunc "QWS_Town_Warpra",
 gonryun,152,130,4	script	Kafra Adventure Corp#23	895,{ callfunc "QWS_Town_Warpra",9,"Kunlun Town"; close; }
 hugel,90,127,5	script	Kafra Adventure Corp#24	895,{ callfunc "QWS_Town_Warpra",10,"Hugel Town"; close; }
 jawaii,107,182,5	script	Kafra Adventure Corp#25	895,{ callfunc "QWS_Town_Warpra",12,"Jawaii Town"; close; }
-izlude,134,92,4	script	Kafra Adventure Corp#26	895,{ callfunc "QWS_Town_Warpra",11,"Izlude Town"; close; }
+izlude,124,148,4	script	Kafra Adventure Corp#26	895,{ callfunc "QWS_Town_Warpra",11,"Izlude Town"; close; }
+//izlude_a,124,148,4	script	Kafra Adventure Corp#26	895,{ callfunc "QWS_Town_Warpra",11,"Izlude Town"; close; }
+//izlude_b,124,148,4	script	Kafra Adventure Corp#26	895,{ callfunc "QWS_Town_Warpra",11,"Izlude Town"; close; }
+//izlude_c,124,148,4	script	Kafra Adventure Corp#26	895,{ callfunc "QWS_Town_Warpra",11,"Izlude Town"; close; }
+//izlude_d,124,148,4	script	Kafra Adventure Corp#26	895,{ callfunc "QWS_Town_Warpra",11,"Izlude Town"; close; }
 lighthalzen,153,100,5	script	Kafra Adventure Corp#27	895,{ callfunc "QWS_Town_Warpra",13,"Lighthalzen Town"; close; }
 louyang,211,106,4	script	Kafra Adventure Corp#28	895,{ callfunc "QWS_Town_Warpra",14,"Luoyang Town"; close; }
 morocc,160,97,4	script	Kafra Adventure Corp#29	895,{ callfunc "QWS_Town_Warpra",16,"Morocc Town"; close; }

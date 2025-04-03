@@ -34,6 +34,7 @@ izlude_in,172,139,0	warp	iz07	3,2,izlude_in,172,161
 izlude_in,172,158,0	warp	iz07-1	3,2,izlude_in,172,136
 izlude_in,172,116,0	warp	iz06-1	3,2,izlude_in,172,94
 izlude_in,171,97,0	warp	iz06	3,2,izlude_in,172,119
+izlude,214,161,0	warp	iz03	3,2,izlude_in,151,127
 
 //= Izlude & Prontera Field 8 Duplicates =====================
 prt_fild08a,371,212,0	warp	prtf005_a	3,3,izlude_a,24,98
@@ -52,6 +53,7 @@ izlude_a,52,172,0	warp	iz04_a	2,2,izlude_in,74,161
 izlude_b,52,172,0	warp	iz04_b	2,2,izlude_in,74,161
 izlude_c,52,172,0	warp	iz04_c	2,2,izlude_in,74,161
 izlude_d,52,172,0	warp	iz04_d	2,2,izlude_in,74,161
+
 
 //= iz_int(Intro) & int_land(Secluded Island) ================
 iz_int,27,30,0	warp	#room_out	1,1,iz_int,51,30
@@ -102,7 +104,7 @@ OnTouch:
 	close2;
 	if (isbegin_quest(21001) == 1)
 		completequest 21001;
-	.@map$ = "izlude" + replacestr( strnpcinfo(2), "intro_to_izlude", "" );
+	.@map$ = "izlude";;
 	warp .@map$,196,209;
 	savepoint .@map$,128,142,1,1;
 	end;

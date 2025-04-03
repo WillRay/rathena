@@ -111,7 +111,7 @@ OnInit:
 	set .Level,0;   		// Minimum monster level to trade corresponding cards.
 	set .Points$,"#Card_Points";	// Variable to store points.
 	setarray .Shop[0],		// Card Shop items: <ID>,<point cost>
-	  7619,1,7620,1,14211,1,7776,2,5445,1,5596,5,5594,5,5220,5,5403,5,5361,5,5419,5,5362,5,5004,5,5305,5,5548,5,5536,5,5462,5,5574,5,5463,7,18666,10;
+	  7619,1,7620,1,14211,1,12997,1,12998,1,7776,2,5445,1,5596,5,5594,5,5220,5,5403,5,5361,5,5419,5,5362,5,5004,5,5305,5,5548,5,5536,5,5462,5,5574,5,5463,7,18666,10;
 	setarray .Points[0],1,100;	// Points per <normal card>,<MVP card>
 	set .MVP$,			// List of MVP cards.
 	  "4121,4123,4128,4131,4132,4134,4135,4137,4142,4143,4144,4145,4146,4147,4148,4168,4236,"+
@@ -127,7 +127,7 @@ OnInit:
 -	shop	card_shop	-1,909:-1
 
 prt_in,168,140,4	duplicate(CardMerchant)	Card Merchant#pront	90
-izlude_in,57,110,4	duplicate(CardMerchant)	Card Merchant#izlude	90
+izlude_in,72,110,4	duplicate(CardMerchant)	Card Merchant#izlude	90
 morocc_in,127,63,6	duplicate(CardMerchant)	Card Merchant#morocc	101
 geffen_in,22,167,6	duplicate(CardMerchant)	Card Merchant#geffen	90
 payon_in01,18,123,6	duplicate(CardMerchant)	Card Merchant#payon	75

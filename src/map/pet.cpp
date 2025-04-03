@@ -1320,7 +1320,7 @@ int pet_catch_process2(map_session_data* sd, int target_id)
 	if(battle_config.pet_catch_rate != 100)
 		pet_catch_rate = (pet_catch_rate*battle_config.pet_catch_rate)/100;
 
-	if(rnd_chance(pet_catch_rate, 10000)) {
+	if(rnd_chance(pet_catch_rate, 10000) || battle_config.pet_catch_rate == 100) {
 		achievement_update_objective(sd, AG_TAMING, 1, md->mob_id);
 		unit_remove_map(&md->bl,CLR_OUTSIGHT);
 		status_kill(&md->bl);

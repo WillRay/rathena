@@ -523,10 +523,10 @@ nguild_prt,84,19,0	warp	nprtg109	1,1,nguild_prt,192,65
 nguild_prt,84,49,0	warp	nprtg101-1	1,1,nguild_prt,61,19
 
 //Guild Dungeons
-gld_dun01,119,14,0	warp	gdun01_payg	1,1,pay_gld,53,141
-gld_dun02,20,160,0	warp	gdun02a_aldega	1,1,alde_gld,229,185
-gld_dun02,180,112,0	warp	gdun02b_aldegb	1,1,alde_gld,242,121
-gld_dun03,238,274,0	warp	gdun03a_prtg	1,1,prt_gld,252,247
-gld_dun03,42,30,0	warp	gdun03b_prtg	1,1,prt_gld,63,66
-gld_dun04,37,230,0	warp	gdun04_g13a	1,1,gef_fild13,42,331
-gld_dun04,110,20,0	warp	gdun04_g13b	1,1,gef_fild13,373,62
+//gld_dun01,119,14,0	warp	gdun01_payg	1,1,pay_gld,53,141
+//gld_dun02,20,160,0	warp	gdun02a_aldega	1,1,alde_gld,229,185
+//gld_dun02,180,112,0	warp	gdun02b_aldegb	1,1,alde_gld,242,121
+//gld_dun03,238,274,0	warp	gdun03a_prtg	1,1,prt_gld,252,247
+//gld_dun03,42,30,0	warp	gdun03b_prtg	1,1,prt_gld,63,66
+//gld_dun04,37,230,0	warp	gdun04_g13a	1,1,gef_fild13,42,331
+//gld_dun04,110,20,0	warp	gdun04_g13b	1,1,gef_fild13,373,62

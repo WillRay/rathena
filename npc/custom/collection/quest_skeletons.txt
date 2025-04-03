@@ -6,24 +6,30 @@ pay_dun00,55,148,6	script	Researcher Leif#Skeletons	702,{
 		@kill_ammount = 50;
 		@base_exp = 750;
 		@job_exp = 700;
+		@tokens = 1;
 	}
 	if (checkquest(60147) != -1) {
 		@quest_id = 60147;
 		@kill_ammount = 100;
 		@base_exp = 750 * 2;
 		@job_exp = 700 * 2;
+		@tokens = 2;
 	}
 	if (checkquest(60148) != -1) {
 		@quest_id = 60148;
 		@kill_ammount = 150;
 		@base_exp = 750 * 3;
 		@job_exp = 700 * 3;
+		@tokens = 3;
 	}
 
 	switch (checkquest(@quest_id, HUNTING)) {
 		case 2: // Completed
 			mes "[Researcher Leif]";
 			mes "Excellent work.";
+			if (isbegin_quest(4269)) {
+				getitem 6495, @tokens; // Eden_Merit_Badge
+			}
 			getexp @base_exp,@job_exp;
 			erasequest @quest_id;
 			close;

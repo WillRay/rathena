@@ -1721,9 +1721,8 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 			sc_start(src,bl,SC_BLIND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case LK_HEADCRUSH: //Headcrush has chance of causing Bleeding status, except on demon and undead element
-		if (!(battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race == RC_DEMON))
-			sc_start2(src,bl, SC_BLEEDING,50, skill_lv, src->id, skill_get_time2(skill_id,skill_lv));
+	case LK_HEADCRUSH: //Headcrush has chance of causing Bleeding status
+		sc_start2(src,bl, SC_BLEEDING,skill_lv * 40, skill_lv, src->id, skill_get_time2(skill_id,skill_lv));
 		break;
 
 	case ASC_METEORASSAULT:
@@ -5199,7 +5198,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case CR_ACIDDEMONSTRATION:
 #endif
 	case LK_AURABLADE:
-	case LK_SPIRALPIERCE:
 	case ML_SPIRALPIERCE:
 	case CG_ARROWVULCAN:
 	case HW_MAGICCRASHER:
@@ -5344,13 +5342,18 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		}
 		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
-
+	case LK_SPIRALPIERCE:
+		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
+		if (pc_checkskill(sd,LK_JOINTBEAT) < 1) {
+			break;
+		}
 	case LK_JOINTBEAT:
 		flag = 1 << rnd() % 6;
 		if (flag != BREAK_NECK && tsc && tsc->getSCE(SC_JOINTBEAT) && tsc->getSCE(SC_JOINTBEAT)->val2 & BREAK_NECK)
 			flag = BREAK_NECK; // Target should always receive double damage if neck is already broken
+		// (50 * (skill_lv + 1) - (270 * tstatus->str) / 100) * 10
 		if (skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag))
-			status_change_start(src, bl, SC_JOINTBEAT, (50 * (skill_lv + 1) - (270 * tstatus->str) / 100) * 10, skill_lv, flag & BREAK_FLAGS, src->id, 0, skill_get_time2(skill_id, skill_lv), SCSTART_NONE);
+			status_change_start(src, bl, SC_JOINTBEAT, 200, skill_lv, flag & BREAK_FLAGS, src->id, 0, skill_get_time2(skill_id, skill_lv), SCSTART_NONE);
 		break;
 
 	case MO_COMBOFINISH:
@@ -7896,7 +7899,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case PR_IMPOSITIO:
 	case PR_SUFFRAGIUM:
 #endif
-	case LK_BERSERK:
+	// case LK_BERSERK:
 	case MS_BERSERK:
 	case KN_TWOHANDQUICKEN:
 	case KN_ONEHAND:
@@ -8914,6 +8917,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SJ_SUNSTANCE:
 	case SP_SOULCOLLECT:
 	case IG_GUARD_STANCE:
+	case LK_BERSERK:
 	case IG_ATTACK_STANCE:
 		if( tsce )
 		{
@@ -9149,7 +9153,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case NV_FIRSTAID:
 		clif_skill_nodamage(src,*bl,skill_id,5);
-		status_heal(bl,5,0,0);
+		status_heal(bl,tstatus->max_hp / 100,0,0);
+		status_change_end(bl, SC_BLEEDING);
 		break;
 
 	case AL_CURE:
@@ -19231,11 +19236,22 @@ int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 		uint8 flag = skill_get_castnodex(skill_id);
 
 		// Calculate base cast time (reduced by dex)
-		if (!(flag&1)) {
-			int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
+		if (!(flag & 1)) {
+			int dex = status_get_dex(bl);
 
-			if (scale > 0)	// not instant cast
-				time = time * (float)scale / battle_config.castrate_dex_scale;
+
+			int scale = battle_config.castrate_dex_scale - dex;
+			if (scale > 0) { // not instant cast
+				if (dex <= 40) {
+					int time1 = time - dex * (float)25;
+					int time2 = time * (float)scale / battle_config.castrate_dex_scale;
+					time = time1 > time2 ? time2 : time1;
+				}
+				else {
+					time = (time - 1000) * (float)(scale) / (battle_config.castrate_dex_scale - 40);
+				}
+			}
+				// time = time * (float)scale / battle_config.castrate_dex_scale;
 			else
 				return 0; // instant cast
 		}

@@ -131,38 +131,12 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-  - Id: 25728
-    AegisName: Shadowdecon_Ore
-    Name: Rough Shadowdecon
-    Type: Etc
-    Weight: 10
-    Flags:
-      BuyingStore: true
-      DropEffect: CLIENT
-  - Id: 25729
-    AegisName: Shadowdecon
-    Name: Shadowdecon
-    Type: Etc
+  - Id: 645
+    AegisName: Center_Potion
+    Name: Concentration Potion
+    Type: Usable
+    Buy: 160
     Weight: 20
-    Flags:
-      BuyingStore: true
-      DropEffect: CLIENT
-  - Id: 25730
-    AegisName: Zelunium_Ore
-    Name: Rough Zelunium
-    Type: Etc
-    Weight: 10
-    Flags:
-      BuyingStore: true
-      DropEffect: CLIENT
-  - Id: 25731
-    AegisName: Zelunium
-    Name: Zelunium
-    Type: Etc
-    Weight: 20
-    Flags:
-      BuyingStore: true
-      DropEffect: CLIENT
   - Id: 656
     AegisName: Awakening_Potion
     Buy: 300
@@ -302,7 +276,582 @@ Body:
     View: 815
     Script: |
       autobonus "{ bonus3 bAutoSpell,\"MG_FIREBOLT\",rand(1,5),400; bonus3 bAutoSpell,\"MG_LIGHTNINGBOLT\",rand(1,5),400; bonus3 bAutoSpell,\"MG_COLDBOLT\",rand(1,5),400; bonus3 bAutoSpell,\"WZ_EARTHSPIKE\",rand(1,5),400; bonus3 bAutoSpell,\"MG_SOULSTRIKE\",rand(1,5),400; }",60,5000,BF_NORMAL,"{ specialeffect2 EF_ENHANCE; }";
-
+  - Id: 6495
+    AegisName: Eden_Merit_Badge
+    Name: Academy Mark
+    Type: Etc
+  - Id: 2456
+    AegisName: Para_Team_Boots1
+    Name: Basic Academy Boots
+    Type: Armor
+    Defense: 1
+    Locations:
+      Shoes: true
+    EquipLevelMin: 10
+    Weight: 0
+    ArmorLevel: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Refineable: false
+    Script: |
+      bonus bMaxHP,50;
+      bonus bHPrecovRate,10;
+      bonus bSPrecovRate,2;
+  - Id: 2457
+    AegisName: Para_Team_Boots2
+    Name: Academy Boots
+    Type: Armor
+    Defense: 2
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 20
+    Weight: 0
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxHP,75;
+      bonus bHPrecovRate,12;
+      bonus bSPrecovRate,4;
+  - Id: 2458
+    AegisName: Para_Team_Boots3
+    Name: Improved Academy Boots
+    Type: Armor
+    Defense: 3
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 30
+    Weight: 0
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxHP,100;
+      bonus bHPrecovRate,14;
+      bonus bSPrecovRate,6;
+  - Id: 2473
+    AegisName: Para_Team_Boots4
+    Name: Superior Academy Boots
+    Type: Armor
+    Defense: 3
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 40
+    Weight: 0
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxHP,150;
+      bonus bHPrecovRate,28;
+      bonus bSPrecovRate,12;
+  - Id: 2560
+    AegisName: Para_Team_Manteau
+    Name: Basic Academy Manteau
+    Type: Armor
+    Defense: 1
+    Locations:
+      Garment: true
+    EquipLevelMin: 10
+    Refineable: false
+    ArmorLevel: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxHP,100;
+  - Id: 2571
+    AegisName: Para_Team_Manteau2
+    Name: Superior Academy Manteau
+    Type: Armor
+    Defense: 2
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 35
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bFlee,10;
+      bonus bMaxHP,150;
+  - Id: 15009
+    AegisName: Para_Team_Uniform1
+    Name: Basic Academy Uniform
+    Type: Armor
+    Defense: 1
+    Locations:
+      Armor: true
+    EquipLevelMin: 10
+    Refineable: false
+    ArmorLevel: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxHP,100;
+      bonus bMaxSP,10;
+  - Id: 15010
+    AegisName: Para_Team_Uniform2
+    Name: Academy Uniform
+    Type: Armor
+    Defense: 2
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 25
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxHP,200;
+      bonus bMaxSP,20;
+  - Id: 15011
+    AegisName: Para_Team_Uniform3
+    Name: Superior Academy Uniform
+    Type: Armor
+    Defense: 3
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 45
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxHP,300;
+      bonus bMaxSP,30;
+      bonus bMdef,5;
+  - Id: 5583
+    AegisName: Para_Team_Hat
+    Name: Basic Academy Hat
+    Type: Armor
+    Defense: 1
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 15
+    Refineable: false
+    ArmorLevel: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxHP,50;
+  - Id: 18514
+    AegisName: Para_Team_Hat2
+    Name: Superior Academy Hat
+    Type: Armor
+    Defense: 2
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 50
+    Refineable: true
+    View: 682
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxHP,100;
+      autobonus "{ bonus bBaseAtk,30; }",70,5000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }";
+      autobonus "{ bonus bMatk,30; }",50,5000,BF_MAGIC,"{ specialeffect2 EF_SPELLBREAKER; }";
+  - Id: 28453
+    AegisName: Para_Team_Ring100B
+    Name: Academy Ring
+    Type: Armor
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 20
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bAllStats,1;
+  - Id: 28444
+    AegisName: Para_Team_Necklace100A
+    Name: Academy Necklace
+    Type: Armor
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 20
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bVariableCast,-250;
+  - Id: 16004
+    AegisName: P_Mace1
+    Name: Basic Academy Mace
+    Type: Weapon
+    SubType: Mace
+    Attack: 90
+    Range: 1
+    Jobs:
+      Acolyte: true
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Monk: true
+      Priest: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 20
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 16005
+    AegisName: P_Mace2
+    Name: Academy Mace
+    Type: Weapon
+    SubType: Mace
+    Attack: 115
+    Range: 1
+    Jobs:
+      Acolyte: true
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Monk: true
+      Priest: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 35
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 16014
+    AegisName: P_Mace3
+    Name: Superior Academy Mace
+    Type: Weapon
+    SubType: Mace
+    Attack: 150
+    Range: 1
+    Jobs:
+      Acolyte: true
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Monk: true
+      Priest: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 50
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1650
+    AegisName: P_Staff1
+    Name: Basic Academy Staff
+    Type: Weapon
+    SubType: Staff
+    Attack: 30
+    Range: 1
+    Jobs:
+      Acolyte: true
+      Mage: true
+      Monk: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 20
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,30;
+  - Id: 1651
+    AegisName: P_Staff2
+    Name: Academy Staff
+    Type: Weapon
+    SubType: Staff
+    Attack: 30
+    Range: 1
+    Jobs:
+      Acolyte: true
+      Mage: true
+      Monk: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 35
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,50;
+  - Id: 1658
+    AegisName: P_Staff3
+    Name: Superior Academy Staff
+    Type: Weapon
+    SubType: Staff
+    Attack: 60
+    MagicAttack: 70
+    Range: 1
+    Jobs:
+      Acolyte: true
+      Mage: true
+      Monk: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 50
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,70;
+  - Id: 13423
+    AegisName: P_Sabre1
+    Name: Basic Academy Saber
+    Type: Weapon
+    SubType: 1hSword
+    Attack: 80
+    Range: 1
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Rogue: true
+      Swordman: true
+      Thief: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 20
+    Refinable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 13424
+    AegisName: P_Sabre2
+    Name: Academy Saber
+    Type: Weapon
+    SubType: 1hSword
+    Attack: 100
+    Range: 1
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Rogue: true
+      Swordman: true
+      Thief: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 35
+    Refinable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 13434
+    AegisName: P_Saber3
+    Name: Superior Academy Saber
+    Type: Weapon
+    SubType: 1hSword
+    Attack: 120
+    Range: 1
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Rogue: true
+      Swordman: true
+      Thief: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 50
+    Refinable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 14528
+    AegisName: PVP_Tele_Scroll
+    Name: Academy Warp Scroll
+    Type: Usable
+    Weight: 0
+    Flags:
+      NoConsume: true
+    Delay:
+      Duration: 1800000
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      warp "iz_ac01",100,33;
+  - Id: 12846
+    AegisName: Unripe_Apple2
+    Name: Little Unripe Apple
+    Type: Usable
+    Buy: 10
+    Weight: 50
+    Script: |
+      pet 2398;
 Footer:
   Imports:
   - Path: db/import/item_db_cards.yml

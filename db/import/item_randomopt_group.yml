@@ -50,10 +50,6 @@ Body:
     Group: Melee_Level_1
     MaxRandom: 3
     Random:
-        - Option: VAR_HITSUCCESSVALUE
-          MinValue: 1
-          MaxValue: 10
-          Chance: 2500
         - Option: VAR_CRITICALSUCCESSVALUE
           MinValue: 1
           MaxValue: 6
@@ -78,10 +74,6 @@ Body:
     Group: Melee_Level_2
     MaxRandom: 3
     Random:
-        - Option: VAR_HITSUCCESSVALUE
-          MinValue: 5
-          MaxValue: 15
-          Chance: 2500
         - Option: VAR_CRITICALSUCCESSVALUE
           MinValue: 5
           MaxValue: 9
@@ -106,10 +98,6 @@ Body:
     Group: Melee_Level_3
     MaxRandom: 3
     Random:
-        - Option: VAR_HITSUCCESSVALUE
-          MinValue: 10
-          MaxValue: 20
-          Chance: 2500
         - Option: VAR_CRITICALSUCCESSVALUE
           MinValue: 7
           MaxValue: 12
@@ -134,10 +122,6 @@ Body:
     Group: Melee_Level_4
     MaxRandom: 3
     Random:
-        - Option: VAR_HITSUCCESSVALUE
-          MinValue: 15
-          MaxValue: 25
-          Chance: 2500
         - Option: VAR_CRITICALSUCCESSVALUE
           MinValue: 7
           MaxValue: 15
@@ -162,10 +146,6 @@ Body:
     Group: Ranged_Level_1
     MaxRandom: 3
     Random:
-        - Option: VAR_HITSUCCESSVALUE
-          MinValue: 1
-          MaxValue: 10
-          Chance: 2500
         - Option: VAR_CRITICALSUCCESSVALUE
           MinValue: 1
           MaxValue: 6
@@ -190,10 +170,6 @@ Body:
     Group: Ranged_Level_2
     MaxRandom: 3
     Random:
-        - Option: VAR_HITSUCCESSVALUE
-          MinValue: 5
-          MaxValue: 15
-          Chance: 2500
         - Option: VAR_CRITICALSUCCESSVALUE
           MinValue: 5
           MaxValue: 9
@@ -218,10 +194,6 @@ Body:
     Group: Ranged_Level_3
     MaxRandom: 3
     Random:
-        - Option: VAR_HITSUCCESSVALUE
-          MinValue: 10
-          MaxValue: 20
-          Chance: 2500
         - Option: VAR_CRITICALSUCCESSVALUE
           MinValue: 7
           MaxValue: 12
@@ -246,10 +218,6 @@ Body:
     Group: Ranged_Level_4
     MaxRandom: 3
     Random:
-        - Option: VAR_HITSUCCESSVALUE
-          MinValue: 15
-          MaxValue: 25
-          Chance: 2500
         - Option: VAR_CRITICALSUCCESSVALUE
           MinValue: 7
           MaxValue: 15
@@ -519,10 +487,6 @@ Body:
     MaxRandom: 3
     Random:
           - Option: VAR_CRITICALSUCCESSVALUE
-            MinValue: 1
-            MaxValue: 5
-            Chance: 2500
-          - Option: VAR_HITSUCCESSVALUE
             MinValue: 1
             MaxValue: 5
             Chance: 2500

@@ -2787,7 +2787,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				 // zeny calculation moblv + random moblv [Valaris]
 				zeny=(int) ((md->level+rnd()%md->level)*per*bonus/100.);
 				if( md->get_bosstype() == BOSSTYPE_MVP )
-					zeny*=rnd()%250;
+					zeny=200000;
 			}
 
 			if (map_getmapflag(m, MF_NOBASEEXP) || !md->db->base_exp)

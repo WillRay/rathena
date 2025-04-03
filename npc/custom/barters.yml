@@ -46,7 +46,210 @@ Header:
   Version: 1
 
 Body:
-  - Name: Expedition Gear
+  # - Name: Hat Shop
+  #   Map: prontera
+  #   X: 183
+  #   Y: 213
+  #   Direction: South
+  #   Sprite: 4_F_ANNIVERSARY
+  #   Items:
+  #     -  Index: 0
+  #        Item: Marionette_Doll
+  #        RequiredItems:
+  #          - Index: 0
+  #            Item: Chrysalis
+  #            Amount: 25
+  #     - Index: 1
+  #       Item: Sombrero
+  #       RequiredItems:
+  #         - Index: 0
+  #           Item: Limb_Of_Mantis
+  #           Amount: 25
+  #     - Index: 2
+  #       Item: Vacation_Hat
+  #       RequiredItems:
+  #         - Index: 0
+  #           Item: Resin
+  #           Amount: 25
+  #     -  Index: 3
+  #        Item: Orchid_Hairband
+  #        RequiredItems:
+  #          - Index: 0
+  #            Item: Moth_Dust
+  #            Amount: 25
+  #     - Index: 4
+  #       Item: Indian_Headband
+  #       RequiredItems:
+  #         - Index: 0
+  #           Item: Old_Frying_Pan
+  #           Amount: 25
+  #     - Index: 5
+  #       Item: Fur_Hat
+  #       RequiredItems:
+  #         - Index: 0
+  #           Item: Orcish_Cuspid
+  #           Amount: 25
+  #     - Index: 6
+  #       Item: Gold_Tiara_
+  #       RequiredItems:
+  #         - Index: 0
+  #           Item: Golden_Hair
+  #           Amount: 50
+  #     - Index: 7
+  #       Item: Mistress_Crown
+  #       RequiredItems:
+  #         - Index: 0
+  #           Item: Solid_Twig
+  #           Amount: 50
+  - Name: Academy Armor Dealer
+    Map: iz_ac01
+    X: 64
+    Y: 83
+    Direction: South
+    Sprite: 4_M_SWORDMAN
+    Items:
+      - Index: 0
+        Item: Para_Team_Boots1
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+      - Index: 1
+        Item: Para_Team_Boots2
+        RequiredItems:
+          - Index: 0
+            Item: Para_Team_Boots1
+            Amount: 1
+      - Index: 2
+        Item: Para_Team_Boots3
+        RequiredItems:
+          - Index: 0
+            Item: Para_Team_Boots2
+            Amount: 1
+      - Index: 3
+        Item: Para_Team_Boots4
+        RequiredItems:
+          - Index: 0
+            Item: Para_Team_Boots4
+            Amount: 1
+      - Index: 4
+        Item: Para_Team_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+      - Index: 5
+        Item: Para_Team_Manteau2
+        RequiredItems:
+          - Index: 0
+            Item: Para_Team_Manteau
+            Amount: 1
+      - Index: 6
+        Item: Para_Team_Uniform1
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+      - Index: 7
+        Item: Para_Team_Uniform2
+        RequiredItems:
+          - Index: 0
+            Item: Para_Team_Uniform1
+            Amount: 1
+      - Index: 8
+        Item: Para_Team_Uniform3
+        RequiredItems:
+          - Index: 0
+            Item: Para_Team_Uniform2
+            Amount: 1
+      - Index: 9
+        Item: Para_Team_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+      - Index: 10
+        Item: Para_Team_Hat2
+        RequiredItems:
+          - Index: 0
+            Item: Para_Team_Hat
+            Amount: 1
+      - Index: 11
+        Item: Para_Team_Ring100B
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+      - Index: 12
+        Item: Para_Team_Necklace100A
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+
+  - Name: Academy Weapon Dealer
+    Map: iz_ac01
+    X: 67
+    Y: 83
+    Direction: South
+    Sprite: 4_M_LGTMAN
+    Items:
+      - Index: 0
+        Item: P_Mace1
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+      - Index: 1
+        Item: P_Mace2
+        RequiredItems:
+          - Index: 0
+            Item: P_Mace1
+            Amount: 1
+      - Index: 2
+        Item: P_Mace3
+        RequiredItems:
+          - Index: 0
+            Item: P_Mace2
+            Amount: 1
+      - Index: 3
+        Item: P_Staff1
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+      - Index: 4
+        Item: P_Staff2
+        RequiredItems:
+          - Index: 0
+            Item: P_Staff1
+            Amount: 1
+      - Index: 5
+        Item: P_Staff3
+        RequiredItems:
+          - Index: 0
+            Item: P_Staff2
+            Amount: 1
+      - Index: 6
+        Item: P_Sabre1
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+      - Index: 7
+        Item: P_Sabre2
+        RequiredItems:
+          - Index: 0
+            Item: P_Sabre1
+            Amount: 1
+      - Index: 8
+        Item: P_Saber3
+        RequiredItems:
+          - Index: 0
+            Item: P_Sabre2
+            Amount: 1
+          
+  - Name: Expedition Gear Dealer
     Map: mid_camp
     X: 223
     Y: 241
@@ -314,12 +517,6 @@ Body:
             Amount: 25
       - Index: 36
         Item: Krieger_Shoes3
-        RequiredItems:
-          - Index: 0
-            Item: BF_Badge1
-            Amount: 25
-      - Index: 37
-        Item: Krieger_Ring3
         RequiredItems:
           - Index: 0
             Item: BF_Badge1

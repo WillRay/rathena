@@ -6,24 +6,30 @@ pay_dun03,152,152,0	script	Researcher Erland#Sohees	47,{
 		@kill_ammount = 50;
 		@base_exp = 30791;
 		@job_exp = 18958;
+		@tokens = 1;
 	}
 	if (checkquest(60153) != -1) {
 		@quest_id = 60153;
 		@kill_ammount = 100;
 		@base_exp = 30791 * 2;
 		@job_exp = 18958 * 2;
+		@tokens = 2;
 	}
 	if (checkquest(60154) != -1) {
 		@quest_id = 60154;
 		@kill_ammount = 150;
 		@base_exp = 30791 * 3;
 		@job_exp = 18958 * 3;
+		@tokens = 3;
 	}
 
 	switch (checkquest(@quest_id, HUNTING)) {
 		case 2: // Completed
 			mes "[Researcher Erland]";
 			mes "Excellent work.";
+			if (isbegin_quest(4269)) {
+				getitem 6495, @tokens; // Eden_Merit_Badge
+			}
 			getexp @base_exp,@job_exp;
 			erasequest @quest_id;
 			close;

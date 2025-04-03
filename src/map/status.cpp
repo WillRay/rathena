@@ -3151,7 +3151,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 			if(sc->getSCE(SC_DELUGE))
 				bonus += sc->getSCE(SC_DELUGE)->val2;
 			if(sc->getSCE(SC_BERSERK))
-				bonus += 200; //+200%
+				//bonus += 200; //+200%
 			if(sc->getSCE(SC_MERC_HPUP))
 				bonus += sc->getSCE(SC_MERC_HPUP)->val2;
 			if(sc->getSCE(SC_EPICLESIS))
@@ -7747,7 +7747,7 @@ static signed short status_calc_flee(struct block_list *bl, status_change *sc, i
 	if(sc->getSCE(SC_SPIDERWEB) || sc->getSCE(SC_WIDEWEB))
 		flee -= flee * 50/100;
 	if(sc->getSCE(SC_BERSERK))
-		flee -= flee * 50/100;
+		// flee -= flee * 90/100;
 	if(sc->getSCE(SC_BLIND))
 		flee -= flee * 25/100;
 	if(sc->getSCE(SC_FEAR))
@@ -7829,7 +7829,7 @@ static defType status_calc_def(struct block_list *bl, status_change *sc, int def
 		return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
 
 	if(sc->getSCE(SC_BERSERK))
-		return 0;
+		return def * 50 / 100;
 #ifdef RENEWAL
 	if(sc->getSCE(SC_ETERNALCHAOS))
 		return 0;
@@ -7950,7 +7950,7 @@ static signed short status_calc_def2(struct block_list *bl, status_change *sc, i
 #endif
 
 	if(sc->getSCE(SC_BERSERK))
-		return 0;
+		return def2 * 50 / 100;
 	if(sc->getSCE(SC_ETERNALCHAOS))
 		return 0;
 	if(sc->getSCE(SC_DEFSET))
@@ -8012,7 +8012,7 @@ static defType status_calc_mdef(struct block_list *bl, status_change *sc, int md
 		return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 
 	if(sc->getSCE(SC_BERSERK))
-		return 0;
+		return 50 * mdef / 100;
 	if(sc->getSCE(SC_BARRIER))
 		return 100;
 
@@ -8084,7 +8084,7 @@ static signed short status_calc_mdef2(struct block_list *bl, status_change *sc, 
 #endif
 
 	if(sc->getSCE(SC_BERSERK))
-		return 0;
+		return (short)cap_value(mdef2 * 50 / 100,1,SHRT_MAX);
 	if(sc->getSCE(SC_SKA))
 		return 90;
 	if(sc->getSCE(SC_MDEFSET))
@@ -9662,7 +9662,7 @@ static int status_get_sc_interval(enum sc_type type)
 			return 5000;
 		case SC_BLEEDING:
 		case SC_TOXIN:
-			return 10000;
+			return 500;
 		case SC_HELLS_PLANT:
 			return 333;
 		case SC_SHIELDSPELL_HP:
@@ -13242,8 +13242,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	switch (type) {
 		case SC_BERSERK:
 			if (!(sce->val2)) { // Don't heal if already set
-				status_heal(bl, status->max_hp, 0, 1); // Do not use percent_heal as this healing must override BERSERK's block.
-				status_set_sp(bl, 0, 0); // Damage all SP
+				//status_heal(bl, status->max_hp, 0, 1); // Do not use percent_heal as this healing must override BERSERK's block.
+				//status_set_sp(bl, 0, 0); // Damage all SP
 			}
 			sce->val2 = 5 * status->max_hp / 100;
 			break;
@@ -13699,17 +13699,18 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			if (sc->getSCE(SC_ENDURE) && !sc->getSCE(SC_ENDURE)->val4)
 				status_change_end(bl, SC_ENDURE);
 			break;
-		case SC_BERSERK:
+		case SC_BERSERK: // mememe
 			if(status->hp > 200 && sc && sc->getSCE(SC__BLOODYLUST)) {
 				status_percent_heal(bl, 100, 0);
 				status_change_end(bl, SC__BLOODYLUST);
-			} else if (status->hp > 100 && sce->val2) // If val2 is removed, no HP penalty (dispelled?) [Skotlex]
-				status_set_hp(bl, 100, 0);
+			}
+			else if (status->hp > 100 && sce->val2) // If val2 is removed, no HP penalty (dispelled?) [Skotlex]
+				// status_set_hp(bl, 100, 0);
 			if(sc->getSCE(SC_ENDURE) && sc->getSCE(SC_ENDURE)->val4) {
 				sc->getSCE(SC_ENDURE)->val4 = 0;
 				status_change_end(bl, SC_ENDURE);
 			}
-			sc_start4(bl, bl, SC_REGENERATION, 100, 10,0,0,(RGN_HP|RGN_SP), skill_get_time(LK_BERSERK, sce->val1));
+			// sc_start4(bl, bl, SC_REGENERATION, 100, 10,0,0,(RGN_HP|RGN_SP), skill_get_time(LK_BERSERK, sce->val1));
 			break;
 		case SC_GOSPEL:
 			if (sce->val3) { // Clear the group.
@@ -14218,7 +14219,7 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_BLEEDING:
 		if (sce->val4 >= 0) {
-			int64 damage = rnd() % 600 + 200;
+			int64 damage = rnd() % 400 + 100;
 			if (!sd && damage >= status->hp)
 				damage = status->hp - 1; // No deadly damage for monsters
 			map_freeblock_lock();

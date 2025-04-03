@@ -1,0 +1,451 @@
+iz_ac01,103,44,5	script	Instructor Boya#1	4_M_HUMAN_01,{
+
+	if (BaseLevel < 10) {
+		mes "[Boya]";
+		mes "I offer quests to Academy members.";
+		mes "However, you need to be at least level 10!";
+		mes "I'm sorry but those are the rules.";
+		close;
+	}
+	if (para_suv01 < 1) {
+		mes "The first step is course A.";
+		mes "Course A is called 'Conquer the Desert!'.";
+		mes "It's the most proper mission for your level.";
+		next;
+		mes "[Boya]";
+		mes "^4d4dffThere is a desert town called Morocc.";
+		mes "From there go south and then east. There is small oasis in the center of that field.^000000";
+		next;
+		mes "[Boya]";
+		mes "If you go there, you will find a dog around the oasis.";
+		mes "He is really mysterious and he can speak so don't be suprised.";
+		next;
+		mes "[Boya]";
+		mes "Tell the dog ^4d4dffBoya is really great.^000000";
+		mes "If you have any questions ask that dog.";
+		next;
+		mes "[Boya]";
+		mes "Why are you staring at me?";
+		mes "I had to come up with a password right?";
+		mes "What's wrong with that password?";
+		next;
+		mes "[Boya]";
+		mes "Anyway, that place is not far from here so, it is a reasonable place for a beginner like you.";
+		mes "Ok, may Freya bless you~!";
+		para_suv01 = 1;
+		setquest 7128;
+		close;
+	}
+	if(para_suv01 == 5) {
+		mes "[Boya]";
+		mes "Great work!";
+		getitem 6495, 1;// Eden_Merit_Badge
+		getitem 2456,1; // Para_Team_Boots1
+		getitem 15009,1; // Para_Team_Uniform1
+		completequest 7132;
+		para_suv01 = 6;
+		next;
+		mes "[Boya]";
+		mes "Now, I'll send you to the first step of course B.";
+		mes "Course B is called 'Conquer the Culvert!'.";
+		next;
+		mes "[Boya]";
+		mes "You need to register to explore the culvert in Prontera at the Knight Guild.";
+		mes "After registering there go to the western gate of Prontera. The manager of the culvert is near the entrance.";
+		next;
+		mes "[Boya]";
+		mes "Once you enter the culvert you can find a dispatched cat. Don't be surprised if he talks to you.";
+		next;
+		mes "[Boya]";
+		mes "He is really mysterious and he can speak so don't be suprised.";
+		mes "He will give you a battle target when you tell him that.";
+		mes "If you have any questions ask the cat.";
+		mes "May Freya bless you~!";
+		para_suv01 = 6;
+		setquest 7133;
+		close;
+	}
+
+	if (para_suv01 == 10) {
+		mes "Oh you're back.";
+		mes "Good job.";
+		mes "Now you are adapting.";
+		next;
+		mes "[Boya]";
+		mes "Congratulations.";
+		mes "Here, you've earned this equipment.";
+		getitem 6495, 1;// Eden_Merit_Badge
+		getitem 2560, 1; // Para_Team_Hat
+		getitem 5583, 1; // Para_Team_Manteau
+		para_suv01 = 11;
+		completequest 7137;
+		close;
+	}
+
+	mes "[Boya]";
+	mes "I offer quests to Academy members.";
+	close;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(4269) && BaseLevel > 9" );
+	end;
+}
+
+prt_fild09,268,190,5	script	Talking Dog#para03	972,{
+	if (para_suv01 == 1) {
+		mes "[Talking Dog]";
+		mes "kkkkuuuuahhh.";
+		mes "rrrrrruuuuhh.";
+		mes "bowwow..";
+		next;
+		mes "[Talking Dog]";
+		mes "What's up?";
+		mes "You are!";
+		mes "A member of the Academy.";
+		mes "Have you come to give me a meal? I don't like drinks.";
+		next;
+		mes "[Talking Dog]";
+		mes "Ahh... um...";
+		mes "Gosh, did you come here to participate in the training?";
+		mes "If Boya sent you then you know that it's battle training.";
+		mes "Bow wow...";
+		next;
+		mes "[Talking Dog]";
+		mes "If so, should I start securing this oasis more clearly?";
+		mes "Can you see a Condor flying?";
+		next;
+		mes "[Talking Dog]";
+		mes "Can you scare them away for me?";
+		mes "So people can use this oasis safer and more comfortably.";
+		next;
+		mes "[Talking Dog]";
+		mes "We should hunt at least 10 Condors, ok?";
+		mes "I will sleep for a while.";
+		mes "Krrrr woo bow...";
+		set para_suv01,2;
+		changequest 7128,7129;
+		close;
+	}
+	if (para_suv01 == 2) {
+		if (checkquest(7129,HUNTING) == 2) {
+			mes "[Talking Dog]";
+			mes "Woooohh...";
+			mes "Great!";
+			mes "I can feel my youth from you.";
+			getexp 60,50;
+			next;
+			mes "[Talking Dog]";
+			mes "Nevermind.";
+			mes "Let's find the next target kk!";
+			mes "Ok. Let's drive the Desert Wolves out of here.";
+			next;
+			mes "[Talking Dog]";
+			mes "If they grow up they will become dangerous.";
+			mes "......";
+			next;
+			mes "[Talking Dog]";
+			mes "Why, why are you looking at me like that?";
+			mes "They are wolves and I am a nice dog.";
+			mes "But I haven't always been a dog my entire life.";
+			next;
+			mes "[Talking Dog]";
+			mes "I will show you that don't have to pity me at all.";
+			next;
+			mes "[Talking Dog]";
+			mes "They pee wherever and have no shame.";
+			mes "Just waving their tails when they grow up and biting people without any care!";
+			next;
+			mes "[Talking Dog]";
+			mes "It's the last step. Just hunt 10!";
+			mes "Go go go!";
+			set para_suv01,4;
+			changequest 7129,7130;
+			close;
+		}
+		mes "[Talking Dog]";
+		mes "First lets follow the bald and noisy bird.";
+		mes "Yes Condors.";
+		mes "Kill 10 Condors. It seems to easy, right?";
+		mes "Oh, if you are tired I will help you.";
+		next;
+		mes "-When the dog barked, your HP and SP recovered.-";
+		npcskill "AL_HEAL",11,99,60;
+		percentheal 100,100;
+		close;
+	}
+	if (para_suv01 == 4) {
+		if (checkquest(7130,HUNTING) == 2) {
+			mes "[Talking Dog]";
+			mes "Um. Excellent.";
+			mes "You are awesome!";
+			getexp 200,160;
+			next;
+			mes "[Talking Dog]";
+			mes "Thanks to your effort the oasis is secure.";
+			mes "Don't look around!";
+			mes "If I say it's secure!";
+			mes "Uhuhuhuh aaaang!";
+			next;
+			mes "[Talking Dog]";
+			mes "Here here here.";
+			mes "This oasis will be safer for sure.";
+			next;
+			mes "[Talking Dog]";
+			mes "You can be proud and confident by yourself and do your best.";
+			mes "You've helped a lot to make my rest comfortable.";
+			next;
+			mes "[Talking Dog]";
+			mes "You've helped to conquer the desert,";
+			mes "and passed the beginner training steps so I will stamp my feet.";
+			mes "krrrrreuung. hup.";
+			next;
+			mes "[Talking Dog]";
+			mes "Go back to the Academy and show it to the flashy Rune Knight.";
+			mes "Let me say again that you are great!";
+			mes "Hooooohooo~";
+			set para_suv01,5;
+			changequest 7130,7132;
+			close;
+		}
+		mes "[Talking Dog]";
+		mes "Let's hunt 10 Baby Desert Wolf.";
+		mes "So we can make peace in this oasis.";
+		next;
+		mes "[Talking Dog]";
+		mes "When I take a nap they won't chew my tail any more.";
+		mes "Due to his mistake my feet won't be hurt at all.";
+		next;
+		mes "[Talking Dog]";
+		mes "You can fight.";
+		mes "I can rest more comfortably.";
+		mes "Other people are going to be safer too.";
+		next;
+		mes "[Talking Dog]";
+		mes "Everyone will think fondly of the Academy.";
+		mes "Oh, if you are tired I will help you.";
+		next;
+		mes "-When the dog barked, your HP and SP recovered.-";
+		npcskill "AL_HEAL",11,99,60;
+		percentheal 100,100;
+		close;
+	}
+	if (para_suv01 == 5) {
+		mes "[Talking Dog]";
+		mes "kkkkkaaaaauuuunnng.";
+		mes "oopssss kup.";
+		next;
+		mes "[Talking Dog]";
+		mes "Why are you still here?";
+		mes "You are done here.";
+		mes "Hooooo bow wow.";
+		close;
+	}
+	if (para_suv01 > 5) {
+		mes "[Talking Dog]";
+		mes "Hey man~ What's going on?";
+		mes "What about the Rune Knight?";
+		mes "Krrrrr...";
+		mes "Hyuk huk...";
+		next;
+		mes "[Talking Dog]";
+		mes "The Academy is cool.";
+		mes "They're a really good group.";
+		mes "They accepted a wandering talking dog.";
+		mes "Take care and good luck.";
+		close;
+	}
+	mes "Hey look.";
+	mes "I'm a talking dog.";
+	mes "Not a wolf.";
+	mes "I wasn't a dog originally...";
+	next;
+	mes "[Talking Dog]";
+	mes "Why are you looking at me like that?";
+	mes "......";
+	close;
+  OnInit:
+  	questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(7129, HUNTING) == 2 || checkquest(7130, HUNTING) == 2");
+  end;
+}
+
+
+prt_sewb1,131,262,3	script	Timid Cat#para04	422,{
+	if (para_suv01 < 6) {
+		mes "[Timid Cat]";
+		mes "Meow...";
+		mes "Who are you meow?";
+		mes "Why are you here meow?";
+		close;
+	}
+	if (para_suv01 == 6) {
+		mes "[Timid Cat]";
+		mes "Come on meow...";
+		mes "I may be standing here and talking to you like this meow but I am a still a cat meow...";
+		next;
+		mes "[Timid Cat]";
+		mes "Dear human you are";
+		mes "a member of my group?";
+		mes "Re... really...!";
+		mes "Dear Boya's help is like a giant and...";
+		next;
+		mes "[Timid Cat]";
+		mes "Do you know the big and beautiful tuna?";
+		mes "Dear Boya sent you here for sure.";
+		mes "How do I explain this...?";
+		next;
+		mes "[Timid Cat]";
+		mes "Did something pass under my feet just now meow?";
+		mes "Do you want to kill a cat.";
+		mes "The environment here is terrible.";
+		next;
+		mes "[Timid Cat]";
+		mes "Anyway I'm doing what I was assigned to do.";
+		mes "So hi, hello and welcome.";
+		next;
+		mes "[Timid Cat]";
+		mes "Did you come here to have a battle?";
+		mes "Hunt those Thief Bugs, hurry up!";
+		mes "Hunt at least 10!";
+		mes "Meooow!";
+		next;
+		mes "[Timid Cat]";
+		mes "I really don't like those nasty crawlers...";
+		mes "Meow~!";
+		next;
+		mes "^4d4dffThe cat was suprised by";
+		mes "a thief bug and froze in";
+		mes "place. Hunt those";
+		mes "Thief Bugs around here.^000000";
+		set para_suv01,7;
+		changequest 7133,7134;
+		close;
+	}
+	if (para_suv01 == 7) {
+		if (checkquest(7134,HUNTING) == 2) {
+			mes "[Timid Cat]";
+			mes "Now do you understand the dirty and humid underground sewers?";
+			mes "Eeeh look what's next meow.";
+			next;
+			getexp 170, 50;
+			mes "[Timid Cat]";
+			mes "It's a symbol of dirt next to those Thief Bugs.";
+			mes "Hunt some Tarou to make the sewers cleaner.";
+			next;
+			mes "[Timid Cat]";
+			mes "For our members joining this mission.";
+			mes "Hunt 10 Tarou.";
+			mes "Easy, ain't it?";
+			next;
+			mes "[Timid Cat]";
+			mes "Why didn't I ask you at once? kkk..??";
+			mes "Umm........";
+			mes "Because it's just a training mission.";
+			next;
+			mes "[Timid Cat]";
+			mes "Training missions are hard and anoying.";
+			mes "So go hurry and hunt 10 Tarou.";
+			set para_suv01,8;
+			changequest 7134,7135;
+			close;
+		}
+		mes "[Timid Cat]";
+		mes "Clean the sewers. Now the first step is hunting Thief Bugs.";
+		mes "Isn't that simple, meow?";
+		next;
+		mes "[Timid Cat]";
+		mes "Take care to check your map so you don't get lost.";
+		mes "It's a service meeow.";
+		npcskill "AL_HEAL",11,99,60;
+		percentheal 100,100;
+		close;
+	}
+	if (para_suv01 == 8) {
+		if (checkquest(7135,HUNTING) == 2) {
+			mes "[Timid Cat]";
+			mes "Great job~!";
+			mes "How'd you get rid of those dirty bugs and Tarou. You are brave.";
+			next;
+			getexp 570, 280;
+			mes "[Timid Cat]";
+			mes "Now have courage because I'm sending you to a stronger opponent.";
+			mes "But first in order to test your courage, hunt Familiars.";
+			next;
+			mes "[Timid Cat]";
+			mes "Familiars will bite you so be careful.";
+			mes "They are mean.";
+			mes "They scare me so just hunt 5 and that should be enough.";
+			next;
+			mes "[Timid Cat]";
+			mes "That will show me that you are brave.";
+			mes "Meow~!";
+			next;
+			mes "[Timid Cat]";
+			mes "I don't have anything...";
+			mes "......";
+			mes "What do you want meow? Familiars are waiting to fight with you, hurry up, move~!";
+			set para_suv01,9;
+			changequest 7135,7136;
+			close;
+		}
+		mes "[Timid Cat]";
+		mes "If you can't kill the Tarou you might get all kinds of dirty diseases.";
+		mes "So be proud of yourself and do your best to kill them.";
+		next;
+		mes "[Timid Cat]";
+		mes "I will help you a little.";
+		mes "Here, I have recovered your strengh meow..";
+		npcskill "AL_HEAL",11,99,60;
+		percentheal 100,100;
+		close;
+	}
+	if (para_suv01 == 9) {
+		if (checkquest(7136,HUNTING) == 2) {
+			mes "[Timid Cat]";
+			mes "You are great meow~";
+			mes "You killed them so quickly!";
+			mes "Meow...";
+			getexp 140,75;
+			next;
+			mes "[Timid Cat]";
+			mes "Now you are not scared of bugs and tarou at all.";
+			mes "Thanks for participating in the Conquer the Culvert training mission.";
+			next;
+			mes "[Timid Cat]";
+			mes "Now go back to the headquarters and ask Instructor Boya to make sure he has the beautiful tuna...";
+			mes "I will be waiting here.";
+			set para_suv01,10;
+			changequest 7136,7137;
+			close;
+		}
+		mes "[Timid Cat]";
+		mes "Familiars are really scary.";
+		mes "They're always flying.";
+		next;
+		mes "[Timid Cat]";
+		mes "It's the last course so cheer up.";
+		mes "I will help you a little.";
+		mes "Here, I have recovered your strengh meow..";
+		npcskill "AL_HEAL",11,99,60;
+		percentheal 100,100;
+		close;
+	}
+	if (para_suv01 >= 10) {
+		mes "[Timid Cat]";
+		mes "You've completed 'Conquer the Culvert'.";
+		mes "Go back to the Academy and report to Boya.";
+		next;
+		mes "[Timid Cat]";
+		mes "Boya might eat my tuna while he is waiting for you.";
+		close;
+	}
+	mes "[Timid Cat]";
+	mes "How are you meeow?";
+	mes "Did you volunteer to conquer the Culvert?";
+	mes "You are a member of the Academy for sure.";
+	mes "You are helping to make the world a better place.";
+	close;
+	
+ OnInit:
+  	questinfo( QTYPE_QUEST2, QMARK_GREEN, "checkquest(7136, HUNTING) == 2 || checkquest(7135, HUNTING) == 2 || checkquest(7134, HUNTING) == 2");
+	end;
+}

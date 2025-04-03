@@ -229,8 +229,6 @@ Body:
     Duration1: 1800000
   - Id: 48
     Name: TF_DOUBLE
-    DamageFlags:
-      Critical: true
   - Id: 56
     Name: KN_PIERCE
     DamageFlags:

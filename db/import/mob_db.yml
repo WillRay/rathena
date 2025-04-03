@@ -81,124 +81,131 @@ Header:
   Version: 4
 
 Body:
-  - Id: 20390
-    AegisName: MD_GH_WHITEKNIGHT
-    Name: MD_GH_WHITEKNIGHT
-    Level: 70
-    Hp: 60000
-    Attack: 369
-    Attack2: 120
-    Defense: 61
-    MagicDefense: 19
-    Str: 19
-    Agi: 9
-    Vit: 13
-    Int: 3
-    Dex: 14
-    Luk: 4
-    AttackRange: 1
-    SkillRange: 9
-    ChaseRange: 10
-    Size: Large
+  - Id: 2408
+    AegisName: DUMMY_10
+    Name: Dummy 10
+    Level: 10
+    Hp: 99999999
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    SkillRange: 0
+    ChaseRange: 0
+    Size: Medium
     Race: Formless
     Element: Neutral
-    ElementLevel: 3
-    WalkSpeed: 300
-    AttackDelay: 1500
-    AttackMotion: 1020
-    ClientAttackMotion: 720
-    DamageMotion: 0
-    Ai: 24
-  - Id: 20574
-    AegisName: MD_C_WHITEKNIGHT
-    Name: MD_C_WHITEKNIGHT
-    Level: 70
-    Hp: 60000
-    Attack: 369
-    Attack2: 120
-    Defense: 61
-    MagicDefense: 19
-    Str: 19
-    Agi: 9
-    Vit: 13
-    Int: 3
-    Dex: 14
-    Luk: 4
-    AttackRange: 1
-    SkillRange: 9
-    ChaseRange: 10
-    Size: Large
-    Race: Formless
-    Element: Neutral
-    ElementLevel: 3
-    WalkSpeed: 300
-    AttackDelay: 3650
-    AttackMotion: 3650
-    ClientAttackMotion: 3650
-    DamageMotion: 0
-    Ai: 24
-  - Id: 20385
-    AegisName: MD_GH_KING_SCHMIDT
-    Name: MD_GH_KING_SCHMIDT
-    Level: 70
-    Hp: 60000
-    Attack: 369
-    Attack2: 120
-    Defense: 61
-    MagicDefense: 19
-    Str: 19
-    Agi: 9
-    Vit: 13
-    Int: 3
-    Dex: 14
-    Luk: 4
-    AttackRange: 1
-    SkillRange: 9
-    ChaseRange: 10
-    Size: Large
-    Race: Formless
-    Element: Neutral
-    ElementLevel: 3
+    ElementLevel: 1
     WalkSpeed: 200
-    AttackDelay: 1000
-    AttackMotion: 1000
-    ClientAttackMotion: 1000
-    DamageMotion: 0
-    Ai: 24
-  - Id: 20892
-    AegisName: MD_SAKRAY
-    Name: MD_SAKRAY
-    Level: 70
-    Hp: 60000
-    Attack: 369
-    Attack2: 120
-    Defense: 61
-    MagicDefense: 19
-    Str: 19
-    Agi: 9
-    Vit: 13
-    Int: 3
-    Dex: 14
-    Luk: 4
-    AttackRange: 1
-    SkillRange: 9
-    ChaseRange: 10
-    Size: Large
+    ClientAttackMotion: 672
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 2413
+    AegisName: DUMMY_10_FIRE
+    Name: Dummy 10
+    Level: 10
+    Hp: 99999999
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    SkillRange: 0
+    ChaseRange: 0
+    Size: Medium
     Race: Formless
-    Element: Neutral
-    ElementLevel: 3
+    Element: Fire
+    ElementLevel: 1
     WalkSpeed: 200
-    AttackDelay: 1000
-    AttackMotion: 1000
-    ClientAttackMotion: 1000
-    DamageMotion: 0
-    Ai: 24
-
-Footer:
-  Imports:
-  - Path: db/import/mob_db_engraved_items.yml
-
-
+    ClientAttackMotion: 672
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 2398
+    AegisName: LITTLE_PORING
+    Name: Little Poring
+    Level: 1
+    Hp: 40
+    BaseExp: 18
+    JobExp: 10
+    Attack: 1
+    Attack2: 1
+    Defense: 2
+    MagicDefense: 5
+    Str: 6
+    Int: 0
+    Dex: 6
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    ClientAttackMotion: 288
+    DamageMotion: 480
+    Ai: 02
+    Drops:
+      - Item: Jellopy
+        Index: 0
+        Rate: 9000
+      - Item: Knife_
+        Index: 1
+        Rate: 100
+#       RandomOptionGroup: 30L
+      - Item: Sticky_Mucus
+        Index: 2
+        Rate: 1000
+      - Item: Apple
+        Index: 3
+        Rate: 5000
+      - Item: Red_Herb
+        Index: 4
+        Rate: 1000
+      - Item: Apple
+        Index: 5
+        Rate: 500
+      - Item: Red_Herb
+        Index: 6
+        Rate: 1000
+  - Id: 2401
+    AegisName: G_PORING
+    Name: Poring
+    Level: 1
+    Hp: 55
+    Attack: 1
+    Attack2: 1
+    Defense: 2
+    MagicDefense: 5
+    Str: 6
+    Int: 0
+    Dex: 6
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    ClientAttackMotion: 288
+    DamageMotion: 480
+    Ai: 02
+    Modes:
+      FixedItemDrop: true
 #Body:
 # eAthena Dev Team
 #=============================================================

@@ -1,0 +1,74 @@
+ordeal_1-1,149,149,0	warp	ordeal1_pront	3,2,prontera,156,196
+
+// North Entrace
+ordeal_1-1,149,273,0	warp	ordeal1_gdun01	3,2,gld_dun01,119,19
+gld_dun01,119,14,0	warp	gdun01_ordeal1	1,1,ordeal_1-1,149,269
+
+ordeal_1-1,140,260,5,5	monster	Skeleton General	1290,2,300000,300000
+ordeal_1-1,140,260,5,5	monster	Am Mut	1301,2,300000,300000
+
+// West Entrance
+ordeal_1-1,26,149,0	warp	ordeal1_gdun02	3,2,gld_dun02,175,112
+gld_dun02,20,160,0	warp	gdun02a_ordeal1	1,1,ordeal_1-1,30,149
+gld_dun02,180,112,0	warp	gdun02b_ordeal1	1,1,ordeal_1-1,30,149
+
+ordeal_1-1,70,148,5,5	monster	Ancient Worm	1305,2,300000,300000
+ordeal_1-1,43,148,5,5	monster	Killer Mantis	1294,2,300000,300000
+
+// South Entrance
+ordeal_1-1,149,26,0	warp	ordeal1_gdun03	3,2,gld_dun03,238,268
+gld_dun03,238,274,0	warp	gdun03a_ordeal1	1,1,ordeal_1-1,149,30
+gld_dun03,42,30,0	warp	gdun03b_ordeal1	1,1,ordeal_1-1,149,30
+
+ordeal_1-1,140,30,5,5	monster	Leib Olmai	1306,2,300000,300000
+ordeal_1-1,149,68,5,5	monster	Gullinbursti	1311,2,300000,300000
+
+// East Entrance
+ordeal_1-1,273,149,0	warp	ordeal1_gdun04	3,2,gld_dun04,41,230
+gld_dun04,37,230,0	warp	gdun04_g13a	1,1,ordeal_1-1,269,149
+gld_dun04,110,20,0	warp	gdun04_g13b	1,1,ordeal_1-1,269,149
+
+ordeal_1-1,228,149,5,5	monster	Wraith Dead	1291,2,300000,300000
+ordeal_1-1,265,149,5,5	monster	Zombie Master	1298,2,300000,300000
+
+// North-West Entrance
+ordeal_1-1,54,245,0	warp	ordeal1_arg01	3,2,arug_dun01,200,14
+arug_dun01,200,10,0	warp	arg01a_ordeal1	3,2,ordeal_1-1,57,242
+
+ordeal_1-1,65,233,5,5	monster	Fanat	1797,3,300000,300000
+ordeal_1-1,65,233,5,5	monster	Aunoe	1796,3,300000,300000
+
+// North-East Entrance
+ordeal_1-1,245,245,0	warp	ordeal1_schg01	3,2,schg_dun01,200,138
+schg_dun01,200,134,0	warp	schg01a_ordeal1	3,2,ordeal_1-1,242,242
+
+ordeal_1-1,240,240,5,5	monster	Heavy Metaling	1977,3,300000,300000
+ordeal_1-1,240,240,5,5	monster	Cobalt Mineral	1976,3,300000,300000
+
+
+//==================================================
+// schg_dun01 - Schwarzwald Guild Dungeon
+//==================================================
+schg_dun01,0,0	monster	Hell Apocalypse	1978,20
+schg_dun01,0,0	monster	Zakudam	1979,20
+schg_dun01,0,0	monster	Heavy Metaling	1977,15
+schg_dun01,0,0	monster	Cobalt Mineral	1976,15
+
+
+prontera,156,204,0	script	Fountain#pront	111,{
+	if (BaseLevel > 80) {
+		mes "^3355FFAs you approach the fountain you notice a hidden button you had not seen before, just below the fountain's water.^000000";
+		next;
+		switch(select("Press the hidden button.:Ignore it.")) {
+		case 1:
+            warp "ordeal_1-1", 149, 145;
+			close;
+		case 2:
+			close;
+		}
+	}
+	else {
+		mes "^3355FFThis is the Prontera Fountain.^000000";
+		close;
+	}
+}

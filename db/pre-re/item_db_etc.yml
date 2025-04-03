@@ -4347,7 +4347,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      bonus bAspdRate,10;
+      bonus bAspd,10;
   - Id: 4143
     AegisName: Orc_Hero_Card
     Name: Orc Hero Card

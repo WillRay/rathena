@@ -3412,12 +3412,12 @@ static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, e_bonus_chk_flag 
 		case LG_EARTHDRIVE:
 		case NPC_DRAGONBREATH:
 			return false;
-#ifndef RENEWAL
-		case LK_SPIRALPIERCE:
-			// In Pre-Renewal Spiral Pierce is influenced only by refine bonus and Star Crumbs for players
-			if (chk_flag != BCHK_REFINE && chk_flag != BCHK_STAR)
-				return false;
-#endif
+//#ifndef RENEWAL
+//		case LK_SPIRALPIERCE:
+//			// In Pre-Renewal Spiral Pierce is influenced only by refine bonus and Star Crumbs for players
+//			if (chk_flag != BCHK_REFINE && chk_flag != BCHK_STAR)
+//				return true;
+//#endif
 			break;
 	}
 
@@ -4124,31 +4124,22 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 			break;
 		case LK_SPIRALPIERCE:
 		case ML_SPIRALPIERCE:
-			if (sd) {
-				short index = sd->equip_index[EQI_HAND_R];
 
-				if (index >= 0 &&
-					sd->inventory_data[index] &&
-					sd->inventory_data[index]->type == IT_WEAPON)
-					wd->damage = sd->inventory_data[index]->weight*8/100; //80% of weight
+			wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, 0); //Monsters have no weight and use ATK instead
+			ATK_ADDRATE(wd->damage, wd->damage2, 10 * skill_lv);
 
-				ATK_ADDRATE(wd->damage, wd->damage2, 50*skill_lv); //Skill modifier applies to weight only.
-			} else {
-				wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, 0); //Monsters have no weight and use ATK instead
-			}
-
-			i = sstatus->str/10;
-			i*=i;
-			ATK_ADD(wd->damage, wd->damage2, i); //Add str bonus.
-			switch (tstatus->size) { //Size-fix. Is this modified by weapon perfection?
-				case SZ_SMALL: //Small: 125%
-					ATK_RATE(wd->damage, wd->damage2, 125);
-					break;
-				//case SZ_MEDIUM: //Medium: 100%
-				case SZ_BIG: //Large: 75%
-					ATK_RATE(wd->damage, wd->damage2, 75);
-					break;
-			}
+			//i = sstatus->str/10;
+			//i*=i;
+			//ATK_ADD(wd->damage, wd->damage2, i); //Add str bonus.
+			//switch (tstatus->size) { //Size-fix. Is this modified by weapon perfection?
+			//	case SZ_SMALL: //Small: 125%
+			//		ATK_RATE(wd->damage, wd->damage2, 125);
+			//		break;
+			//	case SZ_MEDIUM: //Medium: 100%
+			//	case SZ_BIG: //Large: 75%
+			//		ATK_RATE(wd->damage, wd->damage2, 75);
+			//		break;
+			//}
 #endif
 			break;
 		case CR_SHIELDBOOMERANG:
@@ -6746,7 +6737,7 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 	if (sc) { // SC skill damages
 		if (sc->getSCE(SC_AURABLADE)
 #ifndef RENEWAL
-			&& skill_id != LK_SPIRALPIERCE && skill_id != ML_SPIRALPIERCE
+			// && skill_id != LK_SPIRALPIERCE && skill_id != ML_SPIRALPIERCE
 #endif
 			) {
 #ifdef RENEWAL

@@ -157,8 +157,8 @@ nguild_prt	mapflag	hidemobhpbar
 //============================================================
 // Guild Dungeons
 //============================================================
-arug_dun01	mapflag	hidemobhpbar
-schg_dun01	mapflag	hidemobhpbar
+//arug_dun01	mapflag	hidemobhpbar
+//schg_dun01	mapflag	hidemobhpbar
 
 //============================================================
 // Battlegrounds

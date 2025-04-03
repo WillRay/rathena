@@ -132,6 +132,7 @@ Weapon Perfection: Buff length increased to 5 minutes at max rank, slight SP inc
 
 ## Status Mechanics
 
+- Bleeding: Tick speed reduced from once every ten seconds to twice per second. Damage changed to 100 to 500 per tick.
 - Posion: VIT Defence reduction increased from 25% to 50%. Ticking damage increased from 1% to 2% of Max HP per second.
 
 ## EXP & Loot
@@ -187,3 +188,6 @@ The Kafra Adventure Corp is here to expedite all your travel needs. Every time y
 
 ## Enchanting
 Enchant your armor with select stat upgrades, stacking up to 3 times.
+
+## Card Merchant
+Sell unwanted cards to the Card Merchant in exchange for points that can be spent on helpful items.

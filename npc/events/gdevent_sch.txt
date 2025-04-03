@@ -21,7 +21,7 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer3600000:
+OnTimer1000:
 	donpcevent "Monster Controler1#sch::OnEnable";
 	mapannounce "schg_dun01", "Kublin: Aargh!",bc_map,"0x99CC00";
 	mapannounce "schg_dun01", "Morestone: Stop righ there! You thief!",bc_map,"0x99CC00";

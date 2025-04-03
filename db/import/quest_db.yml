@@ -66,3 +66,181 @@ Body:
         Location: mag_dun02
         MapMobTargets:
           NIGHTMARE_TERROR: true
+  - Id: 21001
+    Title: Escape the Wreck
+  - Id: 21002
+    Title: The first battle
+  - Id: 21008
+    Title: The first battle
+    Drops:
+      - Mob: G_PORING
+        Item: Wood
+        Rate: 10000
+  - Id: 7471
+    Title: First time talking after being born
+  - Id: 7472
+    Title: First step towards a new world
+  - Id: 7473
+    Title: Cool drink
+  - Id: 7474
+    Title: Searching for treasure
+  - Id: 7475
+    Title: Discovered the Airship
+  - Id: 7476
+    Title: Discovered the Arena
+  - Id: 7477
+    Title: Bridge to Prontera
+  - Id: 7478
+    Title: Basic Medical Botany
+  - Id: 7479
+    Title: Friend or Foe?
+  - Id: 15001
+    Title: Hold your breath
+    TimeLimit: +20s
+  - Id: 4269
+    Title: Registration at the Academy
+  - Id: 15000
+    Title: Experiencing abnormal statuses
+  - Id: 1237
+    Title: Shop guide
+  - Id: 1238
+    Title: Shop guide
+  - Id: 1239
+    Title: Shop guide
+  - Id: 1240
+    Title: Shop guide
+  - Id: 2299
+    Title: Rapid Completion Experience
+  - Id: 14154
+    Title: Fragrant herb mix  - Id: 1229
+    Title: Swordsman training
+  - Id: 1230
+    Title: Swordsman training
+  - Id: 2293
+    Title: Adventurer's Companion
+  - Id: 2294
+    Title: Adventurer's Companion
+  - Id: 2295
+    Title: Adventurer's Companion
+  - Id: 2296
+    Title: Adventurer's Companion
+  - Id: 2297
+    Title: Adventurer's Companion
+  - Id: 2298
+    Title: Adventurer's Companion
+  - Id: 4268
+    Title: Ninja trainer
+  - Id: 5149
+    Title: <Battle training request form A>
+    Targets:
+      - Mob: HORNET
+        Count: 10
+  - Id: 5150
+    Title: <Battle training request form B>
+    Targets:
+      - Mob: RODA_FROG
+        Count: 10
+  - Id: 5151
+    Title: <Battle training request form C>
+    Targets:
+      - Mob: SAVAGE_BABE
+        Count: 10
+  - Id: 5152
+    Title: <Battle training request form D>
+    Targets:
+      - Mob: ROCKER
+        Count: 10
+  - Id: 5153
+    Title: Refining tutorial (1)
+  - Id: 5154
+    Title: Refining tutorial (2)
+  - Id: 5155
+    Title: Refining tutorial (3)
+  - Id: 5156
+    Title: Refining tutorial (4)
+  - Id: 5157
+    Title: Enchant tutorial (1)
+  - Id: 5158
+    Title: Enchant tutorial (2)
+  - Id: 5159
+    Title: Enchant tutorial (3)
+  - Id: 7480
+    Title: Regarding Thief job
+  - Id: 7481
+    Title: Vicente's class
+  - Id: 7482
+    Title: Vercassel's class
+  - Id: 7483
+    Title: Use the Thief Manual
+  - Id: 7484
+    Title: Shop owner! Order to steal!
+  - Id: 7485
+    Title: Assassin! Use Envenom
+    Targets:
+      - Mob: R_PORING
+        Count: 1
+  - Id: 7486
+    Title: With Lumin
+  - Id: 7487
+    Title: 30 seconds duel
+    TimeLimit: +30s
+    Targets:
+      - Mob: R_PORING
+        Count: 4
+  - Id: 9264
+    Title: Job change to Mage
+  - Id: 9265
+    Title: Job change to Mage
+  - Id: 9266
+    Title: Job change to Mage
+  - Id: 11338
+    Title: Conversation with Subino
+  - Id: 11343
+    Title: Conversation with Alice
+  - Id: 12302
+    Title: Salim Hamid
+  - Id: 12303
+    Title: Applicant for trader
+  - Id: 12304
+    Title: Introduction to merchantology
+  - Id: 12305
+    Title: About the capability figure
+  - Id: 12306
+    Title: Experience of disounts
+  - Id: 12307
+    Title: Way to the Merchant
+  - Id: 13101
+    Title: The way of Taekwon
+  - Id: 13102
+    Title: Spinning kick
+  - Id: 14142
+    Title: To the Archer's town!
+  - Id: 14155
+    Title: Crunchy salad
+  - Id: 14156
+    Title: Anything shabushabu
+  - Id: 14157
+    Title: Baked golden apple
+  - Id: 14158
+    Title: Presentation of the Archer manual
+  - Id: 11339
+    Title: The most delicious on earth
+    Targets:
+      - Mob: PORING
+        Count: 10
+  - Id: 11340
+    Title: Carrots are delicious!
+    Targets:
+      - Mob: LUNATIC
+        Count: 10
+  - Id: 11341
+    Title: Rolling Fabre's clothing
+    Targets:
+      - Mob: FABRE
+        Count: 10
+  - Id: 11342
+    Title: Antidote Material~
+    Targets:
+      - Mob: HORNET
+        Count: 10
+
