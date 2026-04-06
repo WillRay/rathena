@@ -88,29 +88,22 @@ iz_int04,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsm
 iz_int,56,32,3	script	Wounded Swordsman#intro_npc02_iz_int	4_TOWER_02,{
 	if (isbegin_quest(21001) == 0) {
 		mes "[Wounded]";
-		mes "Wow! Thanks a lot!";
-		mes "I don't know how this happened to our ship";
-		mes "but we should go to see the captain.";
+		mes "Thank you for stopping.";
+		mes "The ship was damaged in the storm and some of the crew are still trapped aboard.";
+		mes "Please tell the captain we need lumber to repair the hull.";
 		next;
 		mes "[Wounded]";
-		mes "... ohh, it seems my body is too injured.";
-		mes "Maybe you can go without me?";
+		mes "I can't move much, but I can still point you to the ship.";
 		setquest 21001;
 		next;
 		cutin "tutorial02",4;
 		mes "^4d4dff!- Information -!^000000";
-		mes "NPC Quest Received.";
+		mes "Quest started: Help the stranded crew.";
 	}
 	else {
 		mes "[Wounded]";
-		mes "Luckily the water has not entered the ship.";
-		mes "I will wait here, you should go see the captain.";
-		next;
-		mes "[Wounded]";
-		mes "I'm fine! I'm fine!";
-		mes "Don't worry about me, you should really go to the captain!";
-		next;
-		mes "^4d4dff!- Information -!^000000";
+		mes "I can't leave this spot, but you should go to the captain as soon as possible.";
+		mes "The crew needs lumber to get this ship back in shape.";
 	}
 	mes "^4d4dffQuestinfo Shortcut is Alt + U^000000";
 	mes "You can check your quest status there anytime.";
@@ -134,69 +127,36 @@ int_land,78,103,5	script	Captain Carocc#intro_npc03	4_M_REINDEER,{
 	switch( isbegin_quest(21008) ) {
 	case 0:
 		mes "[Captain Carocc]";
-		mes "There are still people in the cabins?!";
-		mes "At least you are safe.";
-		mes "Are you alright?";
-		next;
-		if (select("I'm alright, but others need help.", "I think I am the last?") == 1) {
-			mes "[Captain Carocc]";
-			mes "There are more people left?";
-			mes "I will send a rescue team to them.";
-			mes "Thank you for your report.";
-		} else {
-			mes "[Captain Carocc]";
-			mes "Alright, that's good.";
-			mes "The storm came unexpectedly but I never thought it would hit us that hard.";
-		}
+		mes "The storm left this ship badly damaged.";
+		mes "We can still reach Izlude, but the hull needs repair before we can set sail.";
 		next;
 		mes "[Captain Carocc]";
-		mes "At least most people made it to safety.";
+		mes "Some Porings stole the lumber we were saving for repairs.";
+		mes "Please collect 2 Lumbers from the southern beach and bring them to my crew.";
 		next;
 		mes "[Captain Carocc]";
-		mes "Look at the trees there, ^4d4dfffollow them to the southwest^000000 to find a new ship.";
-		mes "The ship will take you to ^4d4dffIzlude^000000, our original destination.";
-		next;
-		mes "[Captain Carocc]";
-		mes "Ah! Speaking of it, those ^4d4dffPorings^000000 on this island drop several materials we could use for repairs.";
-		next;
-		mes "[Captain Carocc]";
-		mes "^4d4dffKill the Porings and bring 2 Lumbers to the southern crew^000000.";
-		next;
-		mes "[Captain Carocc]";
-		mes "It is a hard task, but you look tough enough.";
-		specialeffect2 EF_HEAL2;
-		heal 9999,0;
-		skilleffect 34,0;
-		sc_start SC_BLESSING,240000,10;
-		skilleffect 29,0;
-		sc_start SC_INCREASEAGI,240000,10;
+		mes "Once the materials arrive, we can finish repairs and continue to Izlude.";
 		if (isbegin_quest(21001) == 1) {
 			completequest 21001;
 			getexp 40,40;
 		}
 		setquest 21008;
 		next;
-		mes "[Captain Carocc]";
-		mes "Speaking of Porings, you have to equip your gears.";
-		mes "You should have a ^4d4dffweapon and an armor^000000 equipped.";
+		mes "!- Information -!";
+		mes "^4d4dffTip:^000000 Equip a weapon and armor before you leave.";
+		mes "Open the item window with Alt + E and the equipment window with Alt + Q.";
 		next;
 		cutin "tutorial03",4;
 		mes "!- Information -!";
-		mes "^4d4dffYou can equip gear or use items by simply double clicking them.";
-		mes "The item window can be opened by pressing Alt + E or using the menu button.^000000";
+		mes "^4d4dffTip:^000000 Use the quest tracker to keep track of your task.";
+		mes "It will help you stay focused on the repair mission.";
 		next;
-		mes "!- Information -!";
-		mes "^4d4dffEquipped Items can be seen by pressing Alt + Q.";
-		mes "Either double click or drag & drop to equip or unequip them.^000000";
-		next;
-		cutin "",255;
-		mes "[Captain Carlock]";
-		mes "Did you check all your equipment?";
-		mes "^4d4dffSkill distribution^000000 should be done.";
-		next;
-		mes "[Captain Carlock]";
-		mes "For a smooth battle, you have to distribute your abilities properly.";
-		mes "^4d4dffIf you want to increase your strength, you need to raise Str^000000. ^4d4dffIf you want to increase your hit, you must raise Dex^000000.";
+		specialeffect2 EF_HEAL2;
+		heal 9999,0;
+		skilleffect 34,0;
+		sc_start SC_BLESSING,240000,10;
+		skilleffect 29,0;
+		sc_start SC_INCREASEAGI,240000,10;
 		break;
 	case 1:
 		mes "[Captain Carocc]";
@@ -251,31 +211,15 @@ int_land,73,100,3	script	Lumin#new_ship	4_M_NOV_RUMIN,{
 		next;
 		cutin "fly_trock.bmp",2;
 		mes "[Captain Carocc]";
-		mes "Had a good dream?";
-		mes "Soon, we will get to Izlude. And you can talk to other people like you just talked to me.";
+		mes "We are arriving at Izlude shortly.";
 		next;
 		mes "[Captain Carocc]";
-		mes "I think that guy over there lost his memory. I gave him a new name.";
-		mes "Lumin.";
+		mes "Once the ship docks, step through the Shining Portal to reach the harbor.";
+		mes "From there, head north to the Criatura Academy for help and guidance.";
 		next;
 		mes "[Captain Carocc]";
-		mes "Many youngsters visit the ^4d4dffRune-Midgarts Kingdom^000000 to chase their dreams.";
-		mes "Izlude is a satellite city of Prontera, the capital of the Rune-Midgarts Kingdom.";
-		next;
-		mes "[Captain Carocc]";
-		mes "Izlude always welcomes young adventurers like you who have just started their journey through the world.";
-		mes "You are one of them, of course.";
-		next;
-		mes "[Captain Carocc]";
-		mes "I would like to tell you more stories, but it's time to get ready for arrival.";
-		mes "There is an academy in Izlude for newcomers like yourself.";
-		next;
-		mes "[Captain Carocc]";
-		mes "Let me give you more details later. See you back at the harbor deck.";
-		next;
-		mes "[Captain Carocc]";
-		mes "To get off this ship, you should enter the ^4d4dffShining Portal^000000 over there.";
-		mes "All transportation is made through the portals.";
+		mes "That quiet man on deck is called Lumin.";
+		mes "He'll be around once we land.";
 		setquest 7471;
 		completequest 7471;
 		next;
@@ -335,42 +279,31 @@ int_land,58,69,5	script	Sailor#intro_npc04	4W_SAILOR,{
 	if (isbegin_quest(21008) == 1) {
 		if (countitem(6008) < 2) {
 			mes "[Sailor]";
-			mes "These Porings stole my materials to repair the ship. Can you help me to get them back?";
-			mes "There are plenty of Porings on this island.";
+			mes "The Porings took the lumber we needed for repairs.";
+			mes "Please bring 2 Lumbers from the beach back to me.";
 			next;
 			mes "[Sailor]";
-			mes "I would really appreciate it if you help me.";
-			mes "I am not allowed to set foot on this island.";
-			mes "That's why I ask for your help~";
+			mes "I can't leave the dock, so I need your help to get the ship ready.";
 			close;
 		}
 		mes "[Sailor]";
-		mes "Unbelievable, perfect! Any chance you want to join my crew?";
-		mes "Enough talking!!";
-		mes "Come on, we're ready to set sail!";
-		mes "Thank you so much!";
+		mes "Great! With these Lumbers, the crew can repair the hull.";
+		mes "The ship will be ready to sail to Izlude soon.";
 		next;
 		mes "[Sailor]";
-		mes "If you want to sail with us to Izlude, jump on board!";
 		delitem 6008,2;
 		getexp 40,40;
 		getitem 611,5;
 		completequest 21008;
 		next;
 		mes "[Sailor]";
-		mes "Oh, and take these ^4d4dffMagnifiers^000000.";
-		mes "When you hunt monsters you can find ^4d4dffunidentified items^000000.";
-		next;
-		mes "[Sailor]";
-		mes "Using a Magnifier will identify the item.";
-		next;
-		mes "[Sailor]";
-		mes "Maybe you already have some unidentified items from your fights with those Porings?";
+		mes "Take these ^4d4dffMagnifiers^000000.";
+		mes "They help identify mysterious items you may find when hunting.";
 		close;
 	}
 	mes "[Sailor]";
-	mes "The ship is heading to Izlude soon~!";
-	mes "I'll let you know when we set sail~!";
+	mes "The ship is heading to Izlude soon!";
+	mes "When the repairs are done, I will let you know.";
 	close;
 
 OnInit:
@@ -514,8 +447,8 @@ izlude,198,213,3	script	Captain Carocc#iz	4_M_REINDEER,5,5,{
 						next;
 						cutin "", 255;
 						mes "[Carocc]";
-						mes "Anyway, my friend will help you register with the academy";
-						mes "I hope it will help you out in your journey";
+						mes "He's a good fellow. He'll get you started at the Academy.";
+						mes "That's all you need to know.";
 						close;
 					}
 				} else if (isbegin_quest(7472) == 1) {
@@ -554,127 +487,82 @@ izlude,198,213,3	script	Captain Carocc#iz	4_M_REINDEER,5,5,{
 				} else {
 					mes "[Carocc]";
 					mes "Oh, " + strcharinfo(0) + "!";
-					mes "Still being dilligent?";
-					mes "I've been busy, also.";
-					mes "I was reparing the ship.";
+					mes "Still working hard out there?";
+					mes "I've been keeping busy myself.";
+					mes "The ship needed some repairs.";
 					next;
 					mes "[Carocc]";
-					mes "I'll be taking off as soon as the repairs are complete.";
-					mes "At that time, the sailing route to ^4d4dffPharos lighthouse ^000000will be opened.";
-					mes "Be excited for it.";
+					mes "Once repairs are complete, I'm setting sail.";
+					mes "The route to ^4d4dffPharos Lighthouse^000000 will be ready by then.";
+					mes "Look forward to it.";
 				}
 			} else {
 				if (!isbegin_quest(7472)) {
 					mes "[Carocc]";
-					mes "Hello?";
-					mes "Is it your first time on Izlude?";
+					mes "Welcome to Izlude Harbor.";
+					mes "Is this your first time here?";
 					next;
-					switch(select("Hello?", "Let me get on the ship!", "I don't know what to do.")) {
+					switch(select("Who are you?", "Can you take me somewhere?", "I'm not sure what to do.")) {
 					case 1:
 						mes "[Carocc]";
-						mes "You look strong and able!";
-						mes "I like able people like you!";
-						mes "Always be healthy and strong as you are now.";
+						mes "I'm Carocc, captain of this vessel.";
+						mes "You've got the look of an adventurer about you.";
+						mes "Stay strong out there.";
 						break;
 					case 2:
 						mes "[Carocc]";
-						mes "I usually travel to ^4d4dffPharos Lighthouse^000000.";
-						mes "But I'm resting up due to some problems.";
-						next;
-						mes "[Carocc]";
-						mes "If it's Alberta or Byalan Island, talk to the next sailor.";
+						mes "I sail to ^4d4dffPharos Lighthouse^000000 regularly.";
+						mes "For other destinations like Alberta or Byalan Island, speak to the other sailors here.";
 						break;
 					case 3:
 						mes "[Carocc]";
-						mes "Hmm? You said you didn't know what to do.";
-						mes "Since you're at Izlude, why don't you visit ^4d4dffCriatura Academy^000000?";
+						mes "New to Izlude, are you?";
+						mes "I'd suggest visiting the ^4d4dffCriatura Academy^000000 first.";
 						next;
 						mes "[Carocc]";
-						mes "Izlude has the Institute for budding adventurers like you";
-						mes "A friend of mine works there, so I'll give you the introduction to him.";
+						mes "It's an institute dedicated to helping new adventurers get started.";
+						mes "A friend of mine works there—I can introduce you.";
 						next;
 						mes "[Carocc]";
-						mes "He ususally talks to new adventurers near the entrance of an academy.";
+						mes "You'll find him near the Academy entrance.";
 						mes "Go and meet him personally.";
 						next;
 						if (!isbegin_quest(7473)) {
 							mes "[Carocc]";
-							mes "His name is ^4d4dffHun^000000";
-							mes "I will mark his location on the map so go to see him.";
+							mes "His name is ^4d4dffHun^000000. I'll mark his location on the map.";
 							setquest 7472;
 							viewpoint 1,122,207,0,0x4d4dff;
 							next;
-							mes "!- Information -!";
-							mes "^4d4dff Mini map can be seen on the right top of the screen.";
-							mes "You can zoom in with +, zoom out with -. The waypoint from the NPC will be marked on it. ^000000";
+							mes "!- Quest Hint -!";
+							mes "You can see the mini-map in the top-right corner of your screen.";
+							mes "Waypoints and markers will appear there to guide you.";
 							next;
-							mes "!- Information -!";
-							mes "Received a Quest from ^4d4dffCaptain Carocc.";
-							mes "Contents of your Quest can be monitored on the Quest information window.";
-							next;
-							mes "!- Information -!";
-							mes "Quest window can be opened by pressing the ^4d4dffAlt + u^000000 key.";
-							next;
-							mes "[Carocc]";
-							mes "If you need more help with the map, press <NAVI>[Hun]<INFO>izlude,122,207,</INFO></NAVI> here";
-							mes "Yes, the part that says [Hun].";
-							next;
-							mes "!- Information -!";
-							mes "^4d4dff the icon during talk <NAVI>[Hun]<INFO>izlude,122,207,</INFO></NAVI> means";
-							mes "a link to navigation directions.";
+							mes "!- Quest Hint -!";
+							mes "Press ^4d4dffAlt + U^000000 to open your quest log and track your objectives.";
+							mes "Click the quest info button for navigation assistance to your target.";
 							cutin "navi01.bmp", 4;
-							next;
-							mes "!- Information -!";
-							mes "If you press info after selecting a task in the objectives^4d4dff,";
-							mes "an arrow pointing to the location of the objective will pop up along with navigation help";
-							cutin "navi02.bmp", 4;
 							next;
 							cutin "", 255;
 							mes "[Carocc]";
-							mes "Anyway, my friend will help you register with the academy";
-							mes "I hope it will help you out in your journey";
+							mes "Go meet Hun at the Academy. He'll help you get registered and settled in.";
+							mes "Good luck, adventurer.";
 							close;
 						} else {
 							select("I know who you're talking about.");
 							mes "[Carocc]";
-							mes "Then there's no worry.";
-							mes "He'll introduce you to the academy.";
+							mes "Good, you've already met him.";
+							mes "He'll take it from here and guide your training.";
 							next;
 							mes "[Carocc]";
-							mes "OK. I will show you the direction. You try it again.";
-							mes "By the way, did I tell you his name? His name is ^4d4dffHun^000000";
-							viewpoint 1,122,207,1,0x4d4dff;
-							next;
-							mes "!- Information -!";
-							mes "^4d4dff Mini map can be seen on the right top of the screen.";
-							mes "You can zoom in with +, zoom out with -. The waypoint from the NPC will be marked on it. ^000000";
-							next;
-							mes "[Carocc]";
-							mes "If you need more help with the map, press <NAVI>[Hun]<INFO>izlude,122,207,</INFO></NAVI> here";
-							mes "Yes, the part that says [Hun].";
-							next;
-							mes "!- Information -!";
-							mes "^4d4dff the icon during talk <NAVI>[Hun]<INFO>izlude,122,207,</INFO></NAVI> means";
-							mes "a link to navigation directions.";
-							cutin "navi01.bmp", 4;
-							next;
-							mes "!- Information -!";
-							mes "If you press info after selecting a task in the objectives^4d4dff,";
-							mes "an arrow pointing to the location of the objective will pop up along with navigation help";
-							cutin "navi02.bmp", 4;
-							next;
-							cutin "", 255;
-							mes "[Carocc]";
-							mes "Anyway, my friend will help you register with the academy";
-							mes "I hope it will help you out in your journey";
+							mes "Hunt well, adventurer. I'm sure we'll meet again on the seas.";
 							close;
 						}
 					}
 				} else if (isbegin_quest(7472) == 1) {
 					mes "[Carocc]";
-					mes "Ah, it's you.";
-					mes "This guy has also decided to register at Criatura Academy.";
-					mes "This might be a good destiny for you. Hope you and him can be good friends.";
+					mes "Ah, it's you again.";
+					mes "I see this one wants to join the Academy too.";
+					mes "Perhaps you two will become good companions on your travels.";
 					next;
 					cutin "nov_lumin01.bmp", 0;
 					mes "[Lumin]";
@@ -709,8 +597,8 @@ izlude,198,213,3	script	Captain Carocc#iz	4_M_REINDEER,5,5,{
 	} else {
 		if (isbegin_quest(7471) == 2 || isbegin_quest(7472) > 0) {
 			mes "[Carocc]";
-			mes "It's been a while!";
-			mes "Looking at your expression, you must be doing well.";
+			mes "Ah, it's been a while!";
+			mes "You look like you've been growing stronger. The Academy's been good for you?";
 			next;
 			switch(select("Take me to Pharos Lighthouse", "To Alberta", "Talk")) {
 			case 1:
@@ -815,202 +703,59 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 	if (Class == Job_Novice && BaseLevel < 15) {
 		if (isbegin_quest(7472) == 1) {
 			mes "[Hun]";
-			mes "Oh.. you must be the adventurer Carocc was talking about.";
-			mes "I don't know where your homeland is but Midgard is a good place to start your life's journey.";
+			mes "You must be the adventurer Carocc sent.";
+			mes "Welcome to the Royal Criatura Academy.";
 			next;
 			mes "[Hun]";
-			mes "It's a good sight to see new adventurers start their journey.";
-			mes "You must be tired. Need a drink?";
+			mes "I'll show you the first basics: inventory, item use, and equipment.";
 			completequest 7472;
 			getexp 16,0;
 			setquest 7473;
 			getitem 531,1;// Apple_Juice
 			next;
 			mes "[Hun]";
-			mes "You can open the Item window by clicking on the 'item' icon on top left portion of the screen.";
+			mes "Open the inventory with Alt+E.";
+			mes "Double-click the apple juice to drink it or drag it to use it.";
 			next;
 			mes "[Hun]";
-			mes "The items are automatically catagorized by 'consumables' 'equipment' 'etcetera' and 'personal' suitable for each use.";
-			mes "It will do the automatic sorting per indiviaul useage to";
+			mes "Right-click an item to see its details.";
 			next;
 			mes "[Hun]";
-			mes "Either ^4d4dffdouble click on the item^000000 you intend to use";
-			mes "or drag it onto^4d4dff the equipment window and use it^000000";
-			next;
-			cutin "tutorial03.bmp", 4;
-			mes "!- Information -!";
-			mes "^4d4dffItems can be used or equipped with simply double-clicking.";
-			mes "Item window can be opened with shortcut key Alt+E";
-			next;
-			mes "!- Information -!";
-			mes "^4d4dff Equipped items can be checked with Alt+ Q";
-			mes "Items can also be dragged onto the location where you wish to equip it.";
-			next;
-			cutin "", 255;
-			mes "[Hun]";
-			mes "For detailed info on individual items^4d4dff, right click ^000000on that item.";
-			mes "You can check the detailed info on the item.";
-			next;
-			cutin "tutorial04.bmp", 4;
-			mes "!- Information -!";
-			mes "^4d4dffRight-clicking on the item icon^4d4dff  brings up detailed info on the item.";
-			next;
-			mes "!- Information -!";
-			mes "^4d4dffWhen you select other players, you can trade, party up with them with the community window that pops up.";
-			next;
-			cutin "", 255;
-			mes "[Hun]";
-			mes "Ok now ^4d4dffdrink the apple juice that I gave you^000000.";
+			mes "After you drink it, come back and I will give you more supplies.";
 			close;
 		} else {
 			if (!isbegin_quest(7473)) {
 				mes "[Hun]";
-				mes "Hey there.";
-				mes "Rest up for a bit.";
+				mes "Welcome back. I have one more beginner item for you.";
 				next;
 				mes "[Hun]";
-				mes "It's joyous to see new adventurers starting out.";
-				mes "You want something to drink while you are resting?";
+				mes "This will help you learn the basics of inventory and equipment.";
 				setquest 7473;
 				getitem 531,1;// Apple_Juice
 				next;
 				mes "[Hun]";
-				mes "Right clicking on the item icon ^4d4dffon the basic item window at the upper left corner brings up the detailed info on the item";
-				next;
-				mes "[Hun]";
-				mes "The items are automatically catagorized by 'consumables' 'equipment' 'etcetera' and 'personal' suitable for each use.";
-				mes "It will do the automatic sorting per indiviaul useage to";
-				next;
-				mes "[Hun]";
-				mes "Either ^4d4dffdouble click on the item^000000 you intend to use";
-				mes "or drag it onto^4d4dff the equipment window and use it^000000";
-				next;
-				mes "[Hun]";
-				mes "For detailed info on individual items^4d4dff, right-click ^000000on the item.";
-				mes "You can check the detailed info on the item.";
-				next;
-				cutin "tutorial04.bmp", 3;
-				mes "!- Information -!";
-				mes "Right clicking on the item icon ^4d4dffbrings up the detailed info on the item";
-				next;
-				mes "!- Information -!";
-				mes "When you select on other players^4d4dff you can trade, party up with them with the community window that pops up.";
-				next;
-				cutin "", 255;
-				mes "[Hun]";
-				mes "Ok now ^4d4dffdrink the apple juice that I gave you^000000.";
+				mes "Open your inventory with Alt+E and drink the apple juice.";
+				mes "Then return here for your next lesson.";
 				close;
 			} else if (isbegin_quest(7473) == 1) {
 				if (countitem(531) > 0) {
 					mes "[Hun]";
-					mes "Consume the apple juice that I gave you in your inventory.";
-					mes "Then we'll talk.";
+					mes "Drink the apple juice I gave you and then come back.";
 					close;
-				} else {
-					if (isbegin_quest(4269) > 0) {
-						mes "[Hun]";
-						mes "How's the taste?";
-						mes "Pretty good-taste of sweet and sour, right? It might not be much but it also has healing properties.";
-						next;
-						mes "[Hun]";
-						mes "I want to give you more but that was the last of it";
-						mes "Anyways here's some potions. They'll come in handy when you start fighting.";
-						completequest 7473;
-						getitem 569,30;// Novice_Potion
-						getexp 16,0;
-						next;
-						mes "[Hun]";
-						mes "Criatura Academy is a good place to build up experience for the future.";
-						mes "And I'm not just saying this because I work here.";
-						next;
-						mes "[Hun]";
-						mes "I'm for real... haha";
-						close;
-					} else {
-						mes "[Hun]";
-						mes "How's the taste?";
-						mes "Pretty good-taste of sweet and sour, right? It might not be much but it also has healing properties.";
-						next;
-						mes "[Hun]";
-						mes "I want to give you more but that was the last of it";
-						mes "Anyways here's some potions. They'll come in handy when you start fighting.";
-						completequest 7473;
-						getitem 569,30;// Novice_Potion
-						getexp 16,0;
-						next;
-						mes "[Hun]";
-						mes "What do you plan to do from now on?";
-						mes "Have you found a place to stay?";
-						next;
-						switch(select("I need help with that", "Anything will do really.", "Don't worry.")) {
-						case 1:
-							mes "[Hun]";
-							mes "But still, though.";
-							mes "It's tough to be out alone in a new place.";
-							mes "That's why Criatura Academy is there.";
-							next;
-							mes "[Hun]";
-							mes "Carocc sent you to me probably for the same reason.";
-							mes "Even though I'm just a work-hand here, I could show you around.";
-							next;
-							mes "[Hun]";
-							mes "If you follow this road up to north, you can see";
-							mes "<NAVI>[the Academy building]<INFO>iz_ac01,100,39,</INFO></NAVI>.";
-							mes "Anybody can enroll, so take advantage of it.";
-							next;
-							emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
-							mes "[Information Staff]";
-							mes "Sorry to interrupt.";
-							mes "But ^4d4dffif you need location info, please ask me.^000000";
-							next;
-							mes "[Information Staff]";
-							mes "Hun's information has limits";
-							close;
-						case 2:
-							mes "[Hun]";
-							mes "How optimistic of you.";
-							mes "If you need help, feel free to visit Criatura Academy any time.";
-							next;
-							mes "[Hun]";
-							mes "There's no requirement or payment to enroll so it would be a great help to you.";
-							mes "When you go through this way to the north, you'll find";
-							mes "<NAVI>[the academy building]<INFO>iz_ac01,100,39,</INFO></NAVI>.";
-							next;
-							mes "[Hun]";
-							mes "If there are more adventurers like you, the future will be brighter.";
-							mes "Hahahaha.";
-							next;
-							emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
-							mes "[Information Staff]";
-							mes "Sorry to interrupt.";
-							mes "But ^4d4dffif you need location info, please ask me.^000000";
-							next;
-							mes "[Information Staff]";
-							mes "Hun's information has limits";
-							close;
-						case 3:
-							mes "[Hun]";
-							mes "You already have a plan laid out?";
-							mes "Well prepared.";
-							mes "But just in case, if you are curious about the Criatura Academy, make a visit.";
-							next;
-							mes "[Hun]";
-							mes "When you go through this way to the north, you'll find";
-							mes "<NAVI>[the academy building]<INFO>iz_ac01,100,39,</INFO></NAVI>.";
-							mes "What is well, is well- isn't it?";
-							next;
-							emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
-							mes "[Information Staff]";
-							mes "You are correct.";
-							mes "Preperation is the key.";
-							mes "But ^4d4dffif you need location info, please ask me.^000000";
-							next;
-							mes "[Information Staff]";
-							mes "Hun's information has limits.";
-							close;
-						}
-					}
 				}
+				mes "[Hun]";
+				mes "Great. That drink will help you in your first fights.";
+				next;
+				mes "[Hun]";
+				mes "Take these potions with you before you go.";
+				completequest 7473;
+				getitem 569,30;// Novice_Potion
+				getexp 16,0;
+				next;
+				mes "[Hun]";
+				mes "Now head to the Criatura Academy building to continue your training.";
+				mes "<NAVI>[Criatura Academy]<INFO>iz_ac01,100,39,</INFO></NAVI>";
+				close;
 			} else {
 				if (!isbegin_quest(4269)) {
 					mes "[Hun]";
@@ -1127,61 +872,43 @@ izlude_d,122,207,3	duplicate(Criatura Academy Staff#0)	Criatura Academy Staff#d	
 // -----------------------------------------------------------------------------
 izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 	if (!checkweight(1304,3)) {
-		mes "Quest cannot be continued due to the invenory being full.";
-		mes "Please try it again after re-organizing your items.";
+		mes "Quest cannot be continued because your inventory is full.";
+		mes "Please try again after organizing your items.";
 		close;
 	}
 
 	if (BaseLevel < 15 && !isbegin_quest(7474)) {
 		mes "[Information Staff]";
-		mes "Hi, how are you?";
-		mes "I am in charge of navigation directions for Izlude's key locations";
-		mes "I wish to propose a simple game along with the navigation, would that be ok?";
+		mes "Welcome to Izlude. I help new adventurers learn their way around the city.";
+		mes "Would you like a quick mini-map tutorial?";
 		next;
-		if (select("Sure, let's play!", "I already know them all.") == 1) {
+		if (select("Yes, show me", "No thanks") == 1) {
 			mes "[Information Staff]";
-			mes "First of all, how to check the mini-map.";
-			mes "You can check your location through the mini-map at the top right of the screen";
+			mes "The mini-map is at the top right of the screen.";
+			mes "Waypoints appear there when I mark locations for you.";
 			next;
 			mes "[Information Staff]";
-			mes "If you receive information on a town or a city, a waypoint ^4d4dff+^000000 can be marked on the map.";
+			mes "Press ^4d4dffCtrl + ~^000000 to open the world map.";
 			next;
 			mes "[Information Staff]";
-			mes "Press ^4d4dff[Ctrl] and [ ~ ] on your keyboard and you can see the world map^000000.";
+			mes "It shows your position, party members, and nearby monster levels.";
 			next;
 			mes "[Information Staff]";
-			mes "Through the ^4d4dffworld map you can check the location of you, your party members and the level of monsters in the area.^000000";
+			mes "Now I will mark three useful locations on the mini-map.";
+			mes "Visit them and return to me.";
 			next;
-			mes "[Information Staff]";
-			mes "This is useful info to remember.";
-			mes "Now then, should we play a simple game?";
-			next;
-			mes "[Information Staff]";
-			mes "I will ^4d4dffmark three specific locations on the mini-map.^000000";
-			mes "Please ^4d4dffvisit those locations ^000000using the waypoints as reference.";
-			next;
-			mes "[Information Staff]";
-			mes "Think of it as a treasure hunt and go.";
-			mes "I've hidden some useful items there.";
 			viewpoint 1,179,75,1,0xCCFFFF;
 			viewpoint 1,45,94,2,0x00FF00;
 			viewpoint 1,207,167,3,0xFFEB46;
 			setquest 7474;
 			next;
 			mes "[Information Staff]";
-			mes "Vist me again after going by all three locations.";
-			mes "I will check up on it.";
-			next;
-			mes "[Information Staff]";
-			mes "Ah, there' somebody who started out right before you!";
-			mes "If you don't hurry that person will take all the items!";
-			mes "So, run!";
-			npcskill "AL_INCAGI", 10, 10, 10;
+			mes "Return to me after you've visited all three spots.";
 			close;
 		}
 		mes "[Information Staff]";
-		mes "Do you need information on all the locations of Izlude?";
-		mes "By clicking on the introduced ^B9062F[base camp name]^000000, I will offer you guidance so follow the ^B9062FRed Arrows^000000.";
+		mes "Do you need information on any location in Izlude?";
+		mes "Click a place name to get a navigation guide and follow the red arrows.";
 		next;
 		while(1) {
 			switch(select("[ Main facilities ]", "[ Guide & Helper ]", "Mini map marking removal", "End Conversation")) {
@@ -1190,21 +917,21 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 					switch(select("[ Criatura Academy ]", "[ Wharf ]", "[ Airship (International) ]", "[ Arena ]", "[ Shop ]", "[ Swordman Guild ]", "[ Enchant Association ]", "[ Blacksmith's Workshop ]", "Go back to the previous menu")) {
 					case 1:
 						mes "[Information Staff]";
-						mes "If you are the first time adventurer,";
+						mes "If this is your first time adventuring,";
 						mes "<NAVI>[Criatura Academy]<INFO>iz_ac01,100,39,</INFO></NAVI>";
-						mes "can offer a lot of info and help.";
-						mes "Do you need additonal directions?";
+						mes "it can offer valuable training and guidance.";
+						mes "Do you need additional directions?";
 						viewpoint 1, 128, 260, 0, 0xFFD269;
 						next;
 						continue;
 					case 2:
 						mes "[Information Staff]";
-						mes "Through the <NAVI>[Wharf]<INFO>izlude,197,205,</INFO></NAVI> in the north east,";
-						mes "^8B4513Alberta^000000 or ^8B4513the Byalan Island^000000 can be visted.";
+						mes "Through the <NAVI>[Wharf]<INFO>izlude,197,205,</INFO></NAVI> to the northeast,";
+						mes "^8B4513Alberta^000000 or ^8B4513the Byalan Island^000000 can be visited.";
 						mes "you can go.";
 						next;
 						mes "[Information Staff]";
-						mes "Byalan Island is the scary place with ^8B4513Izlude dungeon^000000 in it.";
+						mes "Byalan Island is a dangerous dungeon with ^8B4513Izlude dungeon^000000 in it.";
 						mes "Do you need additional directions?";
 						viewpoint 1, 197, 205, 1, 0xFFFF00;
 						next;
@@ -1456,21 +1183,21 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 					switch(select("[ Criatura Academy ]:[ Wharf ]:[ Airship (International) ]:[ Arena ]:[ Shop ]:[ Swordman Guild ]:[ Enchant Association ]:[ Blacksmith's Workshop ]:Go back to the previous menu")) {
 					case 1:
 						mes "[Information Staff]";
-						mes "If you are the first time adventurer,";
+						mes "If this is your first time adventuring,";
 						mes "<NAVI>[Criatura Academy]<INFO>iz_ac01,100,39,</INFO></NAVI>";
-						mes "can offer a lot of info and help.";
-						mes "Do you need additonal directions?";
+						mes "it can offer valuable training and guidance.";
+						mes "Do you need additional directions?";
 						viewpoint 1, 128, 260, 0, 0xFFD269;
 						next;
 						continue;
 					case 2:
 						mes "[Information Staff]";
-						mes "Through the <NAVI>[Wharf]<INFO>izlude,197,205,</INFO></NAVI> in the north east,";
-						mes "^8B4513Alberta^000000 or ^8B4513the Byalan Island^000000 can be visted.";
+						mes "Through the <NAVI>[Wharf]<INFO>izlude,197,205,</INFO></NAVI> to the northeast,";
+						mes "^8B4513Alberta^000000 or ^8B4513the Byalan Island^000000 can be visited.";
 						mes "you can go.";
 						next;
 						mes "[Information Staff]";
-						mes "Byalan Island is the scary place with ^8B4513Izlude dungeon^000000 in it.";
+						mes "Byalan Island is a dangerous dungeon with ^8B4513Izlude dungeon^000000 in it.";
 						mes "Do you need additional directions?";
 						viewpoint 1, 197, 205, 1, 0xFFFF00;
 						next;

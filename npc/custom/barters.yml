@@ -130,7 +130,7 @@ Body:
         Item: Para_Team_Boots4
         RequiredItems:
           - Index: 0
-            Item: Para_Team_Boots4
+            Item: Para_Team_Boots3
             Amount: 1
       - Index: 4
         Item: Para_Team_Manteau
@@ -248,7 +248,120 @@ Body:
           - Index: 0
             Item: P_Sabre2
             Amount: 1
-          
+      - Index: 9
+        Item: P_Slayer1
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+      - Index: 10
+        Item: P_Slayer2
+        RequiredItems:
+          - Index: 0
+            Item: P_Slayer1
+            Amount: 1
+      - Index: 11
+        Item: P_Slayer3
+        RequiredItems:
+          - Index: 0
+            Item: P_Slayer2
+            Amount: 1
+      - Index: 12
+        Item: P_Katar1
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+      - Index: 13
+        Item: P_Two_Handed_Axe1
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+      - Index: 14
+        Item: P_Sphere1
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+      - Index: 15
+        Item: P_Dic1
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+      - Index: 16
+        Item: P_Bow1
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+      - Index: 17
+        Item: P_Bow2
+        RequiredItems:
+          - Index: 0
+            Item: P_Bow1
+            Amount: 1
+      - Index: 18
+        Item: P_Bow3
+        RequiredItems:
+          - Index: 0
+            Item: P_Bow2
+            Amount: 1
+      - Index: 19
+        Item: P_Knuckle1
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+      - Index: 20
+        Item: P_String_Inst1
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+      - Index: 21
+        Item: P_Tail1
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+      - Index: 22
+        Item: P_Dagger1
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+      - Index: 23
+        Item: P_Dagger2
+        RequiredItems:
+          - Index: 0
+            Item: P_Dagger1
+            Amount: 1
+      - Index: 24
+        Item: P_Dagger3
+        RequiredItems:
+          - Index: 0
+            Item: P_Dagger2
+            Amount: 1
+      - Index: 25
+        Item: P_Revolver1
+        RequiredItems:
+          - Index: 0
+            Item: Eden_Merit_Badge
+            Amount: 1
+      - Index: 26
+        Item: P_Revolver2
+        RequiredItems:
+          - Index: 0
+            Item: P_Revolver1
+            Amount: 1
+      - Index: 27
+        Item: P_Revolver3
+        RequiredItems:
+          - Index: 0
+            Item: P_Revolver2
+            Amount: 1
   - Name: Expedition Gear Dealer
     Map: mid_camp
     X: 223

@@ -816,7 +816,517 @@ Body:
       Right_Hand: true
     WeaponLevel: 2
     EquipLevelMin: 50
-    Refinable: false
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1192
+    AegisName: P_Slayer1
+    Name: Basic Academy Slayer
+    Type: Weapon
+    SubType: 2hSword
+    Attack: 162
+    Range: 1
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 26
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1193
+    AegisName: P_Slayer2
+    Name: Academy Slayer
+    Type: Weapon
+    SubType: 2hSword
+    Attack: 185
+    Range: 1
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 40
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1197
+    AegisName: P_Slayer3
+    Name: Superior Academy Slayer
+    Type: Weapon
+    SubType: 2hSword
+    Attack: 200
+    Range: 1
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 60
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1289
+    AegisName: P_Katar1
+    Name: Basic Academy Katar
+    Type: Weapon
+    SubType: Katar
+    Attack: 155
+    Range: 1
+    Jobs:
+      Assassin: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 60
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1391
+    AegisName: P_Two_Handed_Axe1
+    Name: Basic Academy Two-Handed Axe
+    Type: Weapon
+    SubType: 2hAxe
+    Attack: 195
+    Range: 1
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Swordman: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 60
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1434
+    AegisName: P_Sphere1
+    Name: Basic Academy Spear
+    Type: Weapon
+    SubType: 1hSpear
+    Attack: 165
+    Range: 3
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 60
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1583
+    AegisName: P_Dic1
+    Name: Basic Academy Book
+    Type: Weapon
+    SubType: Book
+    Attack: 135
+    MagicAttack: 110
+    Range: 1
+    Jobs:
+      Priest: true
+      Sage: true
+      StarGladiator: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 60
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1747
+    AegisName: P_Bow1
+    Name: Basic Academy Bow
+    Type: Weapon
+    SubType: Bow
+    Attack: 82
+    Range: 5
+    Jobs:
+      Archer: true
+      BardDancer: true
+      Hunter: true
+      Rogue: true
+      Thief: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 26
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1748
+    AegisName: P_Bow2
+    Name: Academy Bow
+    Type: Weapon
+    SubType: Bow
+    Attack: 120
+    Range: 5
+    Jobs:
+      Archer: true
+      BardDancer: true
+      Hunter: true
+      Rogue: true
+      Thief: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 40
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 18106
+    AegisName: P_Bow3
+    Name: Superior Academy Bow
+    Type: Weapon
+    SubType: Bow
+    Attack: 140
+    Range: 5
+    Jobs:
+      Archer: true
+      BardDancer: true
+      Hunter: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 60
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1831
+    AegisName: P_Knuckle1
+    Name: Basic Academy Knuckle
+    Type: Weapon
+    SubType: Knuckle
+    Attack: 120
+    Range: 1
+    Jobs:
+      Monk: true
+      Priest: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 60
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1931
+    AegisName: P_String_Inst1
+    Name: Basic Academy Guitar
+    Type: Weapon
+    SubType: Musical
+    Attack: 125
+    Range: 1
+    Jobs:
+      BardDancer: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 60
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1986
+    AegisName: P_Tail1
+    Name: Basic Academy Tail
+    Type: Weapon
+    SubType: Whip
+    Attack: 125
+    Range: 2
+    Jobs:
+      BardDancer: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 60
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 13050
+    AegisName: P_Dagger1
+    Name: Basic Academy Dagger
+    Type: Weapon
+    SubType: Dagger
+    Attack: 124
+    MagicAttack: 60
+    Range: 1
+    Jobs:
+      Alchemist: true
+      Archer: true
+      Assassin: true
+      BardDancer: true
+      Blacksmith: true
+      Crusader: true
+      Hunter: true
+      KagerouOboro: true
+      Knight: true
+      Mage: true
+      Merchant: true
+      Ninja: true
+      Novice: true
+      Rogue: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Swordman: true
+      Thief: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 26
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 13051
+    AegisName: P_Dagger2
+    Name: Academy Dagger
+    Type: Weapon
+    SubType: Dagger
+    Attack: 158
+    MagicAttack: 70
+    Range: 1
+    Jobs:
+      Alchemist: true
+      Archer: true
+      Assassin: true
+      BardDancer: true
+      Blacksmith: true
+      Crusader: true
+      Hunter: true
+      KagerouOboro: true
+      Knight: true
+      Mage: true
+      Merchant: true
+      Ninja: true
+      Novice: true
+      Rogue: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Swordman: true
+      Thief: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 40
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 13066
+    AegisName: P_Dagger3
+    Name: Superior Academy Dagger
+    Type: Weapon
+    SubType: Dagger
+    Attack: 165
+    MagicAttack: 80
+    Range: 1
+    Jobs:
+      Alchemist: true
+      Archer: true
+      Assassin: true
+      BardDancer: true
+      Blacksmith: true
+      Crusader: true
+      Hunter: true
+      KagerouOboro: true
+      Knight: true
+      Mage: true
+      Merchant: true
+      Ninja: true
+      Novice: true
+      Rogue: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Swordman: true
+      Thief: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 60
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 13112
+    AegisName: P_Revolver1
+    Name: Basic Academy Revolver
+    Type: Weapon
+    SubType: Revolver
+    Attack: 44
+    Range: 7
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 26
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 13113
+    AegisName: P_Revolver2
+    Name: Academy Revolver
+    Type: Weapon
+    SubType: Revolver
+    Attack: 60
+    Range: 7
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 40
+    Refineable: false
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 13114
+    AegisName: P_Revolver3
+    Name: Superior Academy Revolver
+    Type: Weapon
+    SubType: Revolver
+    Attack: 76
+    Range: 7
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 60
+    Refineable: false
     Trade:
       NoDrop: true
       NoTrade: true
