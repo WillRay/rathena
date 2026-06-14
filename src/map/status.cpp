@@ -5304,7 +5304,7 @@ void status_calc_regen(block_list *bl, struct status_data *status, struct regen_
 		if( (skill=pc_checkskill(sd,SM_RECOVERY)) > 0 )
 			val += skill*5 + skill*status->max_hp/500;
 
-		if (sc && sc->count) {
+		if (sc) {
 			if (sc->getSCE(SC_INCREASE_MAXHP))
 				val += val * sc->getSCE(SC_INCREASE_MAXHP)->val2 / 100;
 		}
@@ -6268,8 +6268,8 @@ void status_calc_bl_main(block_list& bl, std::bitset<SCB_MAX> flag)
 		matk_min = status_calc_pseudobuff_matk( sd, sc, matk_min );
 		matk_max = status_calc_pseudobuff_matk( sd, sc, matk_max );
 
-		status->matk_min = status_calc_matk(&bl, sc, status->matk_min);
-		status->matk_max = status_calc_matk(&bl, sc, status->matk_max);
+		matk_min = status_calc_consumablematk(sc, matk_min);
+		matk_max = status_calc_consumablematk(sc, matk_max);
 
 		int skill_level = pc_checkskill(sd, SA_ADVANCEDBOOK);
 		if (skill_level > 0 && sd->status.weapon == W_BOOK) {

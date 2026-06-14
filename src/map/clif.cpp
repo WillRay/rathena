@@ -10021,7 +10021,7 @@ void clif_name( const block_list* src, const block_list* bl, send_target target 
 		}
 			break;
 		case BL_MOB: {
-			const mob_data* md = static_cast<const mob_data*>(bl);
+			mob_data* md = const_cast<mob_data*>(static_cast<const mob_data*>(bl));
 
 			if( md->guardian_data && md->guardian_data->guild_id ){
 				PACKET_ZC_ACK_REQNAMEALL packet = { 0 };
@@ -10069,7 +10069,7 @@ void clif_name( const block_list* src, const block_list* bl, send_target target 
 				safestrncpy(packet.name, md->name, NAME_LENGTH);
 
 #if PACKETVER_MAIN_NUM >= 20180207 || PACKETVER_RE_NUM >= 20171129 || PACKETVER_ZERO_NUM >= 20171130
-				const unit_data* ud = unit_bl2ud(bl);
+				unit_data* ud = &md->ud;
 
 				int ele_group = -1;
 				char ele_name[8] = { 0 };
@@ -12058,9 +12058,10 @@ void clif_parse_TakeItem(int32 fd, map_session_data *sd)
 		if (pc_cant_act(sd))
 			break;
 
-		int range = 10;//battle_config.arealoot_range;
+		int range = 10; // battle_config.arealoot_range;
 
-		map_foreachinrange(skill_greed, &sd->bl, range, BL_ITEM, &sd->bl);
+		// `map_session_data` now inherits from `block_list`, pass `sd` directly
+		map_foreachinrange(skill_greed, sd, range, BL_ITEM, sd);
 
 		return;
 	} while (0);

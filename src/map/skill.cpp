@@ -10138,10 +10138,9 @@ int32 skill_castfix(block_list *bl, uint16 skill_id, uint16 skill_lv) {
 
 		// Calculate base cast time (reduced by dex)
 		if (!(flag&1)) {
-			int32 scale = battle_config.castrate_dex_scale - status_get_dex(bl);
+			int dex = status_get_dex(bl);
+			int32 scale = battle_config.castrate_dex_scale - dex;
 
-
-			int scale = battle_config.castrate_dex_scale - dex;
 			if (scale > 0) { // not instant cast
 				if (dex <= 40) {
 					int time1 = time - dex * (float)25;
