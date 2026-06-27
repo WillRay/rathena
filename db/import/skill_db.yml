@@ -333,6 +333,62 @@ Body:
           Amount: 42
         - Level: 5
           Amount: 50
+  # Payon Stories rebalance: Venom Dust now uses Venom Canines instead of Red Gemstone
+  - Id: 140
+    Name: AS_VENOMDUST
+    Requires:
+      ItemCost:
+        - Item: Posionous_Canine
+          Amount: 2
+  # Payon Stories rebalance: Venom Splasher detonation re-tuned to a linear 15s -> 6s curve
+  - Id: 141
+    Name: AS_SPLASHER
+    Duration1:
+      - Level: 1
+        Time: 15000
+      - Level: 2
+        Time: 14000
+      - Level: 3
+        Time: 13000
+      - Level: 4
+        Time: 12000
+      - Level: 5
+        Time: 11000
+      - Level: 6
+        Time: 10000
+      - Level: 7
+        Time: 9000
+      - Level: 8
+        Time: 8000
+      - Level: 9
+        Time: 7000
+      - Level: 10
+        Time: 6000
+  # Payon Stories rebalance: Back Stab is now a 3-cell gap closer with per-level cast delay
+  - Id: 212
+    Name: RG_BACKSTAP
+    Range: 3
+    AfterCastActDelay:
+      - Level: 1
+        Time: 3300
+      - Level: 2
+        Time: 3200
+      - Level: 3
+        Time: 3100
+      - Level: 4
+        Time: 3000
+      - Level: 5
+        Time: 2900
+      - Level: 6
+        Time: 2800
+      - Level: 7
+        Time: 2700
+      - Level: 8
+        Time: 2600
+      - Level: 9
+        Time: 2500
+      - Level: 10
+        Time: 2400
   - Id: 357
     Name: LK_CONCENTRATION
     Duration1:

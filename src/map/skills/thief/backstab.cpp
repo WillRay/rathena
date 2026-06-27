@@ -5,8 +5,12 @@
 
 #include <config/core.hpp>
 
+#include "map/battle.hpp"
+#include "map/clif.hpp"
+#include "map/map.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
+#include "map/unit.hpp"
 
 SkillBackStab::SkillBackStab() : SkillImpl(RG_BACKSTAP) {
 }
@@ -32,7 +36,10 @@ void SkillBackStab::calculateSkillRatio(const Damage *wd, const block_list *src,
 void SkillBackStab::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	map_session_data* sd = BL_CAST( BL_PC, src );
 
-#ifdef RENEWAL
+	// Payon Stories rebalance: Back Stab is now a gap closer. The caster
+	// jumps to the cell behind the target before striking, even in
+	// pre-renewal where the original required adjacency and the target
+	// to be facing away.
 	uint8 dir = map_calc_dir(src, target->x, target->y);
 	int16 x, y;
 
@@ -51,20 +58,10 @@ void SkillBackStab::castendDamageId(block_list *src, block_list *target, uint16 
 		y = 0;
 
 	if (battle_check_target(src, target, BCT_ENEMY) > 0 && unit_movepos(src, target->x + x, target->y + y, 2, true)) { // Display movement + animation.
-#else
-	if (check_distance_bl(src, target, 0))
-		return;
-
-	uint8 dir = map_calc_dir(src, target->x, target->y), t_dir = unit_getdir(target);
-
-	if (!map_check_dir(dir, t_dir) || target->type == BL_SKILL) {
-#endif
 		status_change_end(src, SC_HIDING);
 		dir = dir < 4 ? dir+4 : dir-4; // change direction [Celest]
 		unit_setdir(target,dir);
-#ifdef RENEWAL
 		clif_blown(src);
-#endif
 		skill_attack(BF_WEAPON, src, src, target, getSkillId(), skill_lv, tick, flag);
 	}
 	else if (sd)

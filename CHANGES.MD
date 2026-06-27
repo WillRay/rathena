@@ -11,8 +11,9 @@ below were discussed inside the team, tested in PvE and PvP, and are tracked in
 this file so that the difference between this server and stock rAthena is always
 explicit.
 
-Everything in this changelog is scoped to the **Swordsman, Knight and Crusader**
-trees. Other classes are untouched in this pass.
+This changelog currently covers the **Swordsman, Knight, Crusader, Thief,
+Assassin and Rogue** trees. Other classes are untouched so far and will be
+added in future passes.
 
 ---
 
@@ -85,6 +86,108 @@ trees. Other classes are untouched in this pass.
   other mastery reworks, this exists to make the skill points feel earned.
   (Verified — already in line with this rebalance on the live tree.)*
 
+### Thief Skill Changes
+
+- **Double Attack:** Activation chance raised from `5% per skill level` to
+  `7% per skill level` (70% at level 10). *Developer Comments: Thieves level
+  noticeably slower than the other first classes, and the bonus carries
+  forward into Assassin and Rogue builds that lean on auto-attacks.
+  (Verified — already in line with this rebalance on the live tree.)*
+
+- **Envenom:** SP cost reduced to a flat `8 SP`. Damage now scales with
+  weapon ATK at `100% + 15% per skill level` (250% at level 10) instead of
+  the old flat `+15 per level` mastery-style bonus. *Developer Comments:
+  Envenom pairs well with the reworked poison status, but the old SP cost
+  made it punishing to spam and the flat damage stopped mattering as soon as
+  players upgraded gear. The lower SP cost and ATK-based scaling fix both.
+  (Verified — already in line with this rebalance on the live tree.)*
+
+### Assassin Skill Changes
+
+- **Right Hand Mastery / Left Hand Mastery:** Both mastery curves are
+  shifted up by `+20%` at every rank — Right Hand goes from `60–100%` to
+  `80–120%`, Left Hand from `40–80%` to `60–100%`. *Developer Comments:
+  Auto-attack Assassins were falling behind skill-centric builds in raw
+  DPS. A flat +20% on both mastery curves brings dual-wield parity back
+  into striking distance without overhauling the formula.*
+
+- **Venom Dust:** Reagent changed from `1 Red Gemstone` to
+  `2 Venom Canines`. *Developer Comments: Red Gemstones are a shared
+  reagent across many classes, while Venom Canines are a more thematic and
+  more plentiful Assassin-flavored ingredient.*
+
+- **Venom Splasher:** The `75% target HP` requirement and the
+  `Red Gemstone` cost are both removed, and the detonation timer is
+  retuned to a clean linear curve of `15 seconds at level 1` down to
+  `6 seconds at level 10`. *Developer Comments: Poison is central to the
+  Assassin's identity, but Splasher was almost never pressed because of
+  the HP gate, the reagent and the inconsistent timer. Stripping all three
+  blockers and giving it a predictable detonation puts the skill on par
+  with the "finisher skills" other classes already have.*
+
+- **Enchant Poison:** Buff duration extended to `5 minutes` at every rank
+  and the poisoning proc chance scales up to `10% at rank 10`.
+  *Developer Comments: Poison sits at the center of the Assassin's kit, so
+  the buff that enables it should not be a chore to maintain. (Verified —
+  already in line with this rebalance on the live tree.)*
+
+- **Katar Mastery:** Continues to grant `+4 ATK per skill level`
+  (40 ATK at rank 10). Now also grants `+5% nominal CRIT at rank 10`,
+  which becomes roughly `+10% effective` once the katar's double crit
+  rate is applied. *Developer Comments: With the poison line now viable,
+  the CRIT-Assassin needed a matching bump so it stays competitive with
+  pure poison builds rather than being a strictly weaker option.*
+
+### Rogue Skill Changes
+
+- **Strip Weapon:** When it lands on a monster, ATK is reduced by `40%`
+  (up from 25%). *Developer Comments: Strip skills barely justify a slot
+  outside of PvP/GvG. A real PvE debuff value makes them worth the cast
+  in upcoming content. (Verified — already in line with this rebalance on
+  the live tree.)*
+
+- **Strip Shield:** When it lands on a monster, hard defense is reduced
+  by `30%` (up from 15%). *Developer Comments: Same motivation as Strip
+  Weapon — a usable PvE debuff value. (Verified — already in line with
+  this rebalance on the live tree.)*
+
+- **Strip Armor:** When it lands on a monster, soft defense (VIT) is
+  reduced by `70%` (up from 40%). *Developer Comments: Soft defense
+  shaves a real chunk off physical mitigation, which gives Rogues a
+  meaningful party contribution against tanky targets. (Verified —
+  already in line with this rebalance on the live tree.)*
+
+- **Strip Helm:** When it lands on a monster, INT is reduced by `30%`
+  (down from 40%) and MDEF is now also reduced by `20%`. *Developer
+  Comments: The trade — less INT, but a real MDEF cut — hurts high-MDEF
+  monsters substantially more than the old pure-INT reduction did. The
+  MDEF path required a small bug fix in `status.cpp` where the reduction
+  was reading from the wrong status entry and silently doing nothing.*
+
+- **Sword Mastery:** Each level of Sword Mastery now also grants a
+  `7% chance per skill level` of Double Attack with swords for Rogues
+  who have learned Double Attack at an equal or higher rank.
+  *Developer Comments: Lets Rogues build a sword-based auto-attack
+  meta without leaning on the Sidewinder card as the only entry point.
+  (Verified — already in line with this rebalance on the live tree.)*
+
+- **Back Stab:** Redesigned as a gap closer — castable from up to
+  `3 cells away`, with the Rogue jumping behind the target to deliver
+  the strike. Cast delay is now `3.4 sec − 0.1 sec per skill level`
+  (3.3 sec at level 1, 2.4 sec at level 10). The old facing/adjacency
+  requirements are gone. *Developer Comments: The original Back Stab was
+  fiddly to use even when it was strong; turning it into a clean gap
+  closer makes the kit feel more like the assassin-fantasy class it has
+  always wanted to be. A future toggle may restore the original behavior
+  for players who prefer it.*
+
+- **Preserve:** Now reachable on regular Rogues at `Plagiarism 10` for
+  `1 skill point`. *Developer Comments: Preserve is technically a
+  transcendent Stalker skill, but Plagiarism builds depend on it to stop
+  passively losing their copied skill mid-fight. Granting it early avoids
+  the awful loop of having to ask another player to recast something
+  every time you change maps.*
+
 ---
 
 ## Notes for server operators
@@ -100,7 +203,12 @@ trees. Other classes are untouched in this pass.
   - `src/map/skills/swordman/holycross.cpp` / `holycross.hpp`
   - `src/map/skills/swordman/smite.cpp` (Shield Charge / Smite)
   - `src/map/skills/swordman/bowlingbash.cpp`
-  - `src/map/status.cpp` (Two-Hand Quicken FLEE/CRIT, Spear Quicken split)
+  - `src/map/skills/thief/venomsplasher.cpp` (drops the 75% HP gate)
+  - `src/map/skills/thief/backstab.cpp` (gap-closer redesign)
+  - `src/map/status.cpp` (Two-Hand Quicken FLEE/CRIT, Spear Quicken split,
+    Katar Mastery CRIT bump at rank 10, Strip Helm MDEF reduction fix)
+- Tree changes live in `db/import/skill_tree.yml` (Rogue / Baby Rogue get
+  `ST_PRESERVE` from Plagiarism 10).
 
   All edits are guarded with `#ifndef RENEWAL` where appropriate, so renewal
   behavior is unchanged.

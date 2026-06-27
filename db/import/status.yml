@@ -51,3 +51,9 @@ Body:
       Aspd: true
       Cri: true
       Flee: true
+  # Payon Stories rebalance: Strip Helm now also reduces MDEF on monsters,
+  # so the status needs to recalc Mdef when it starts/ends.
+  - Status: Striphelm
+    CalcFlags:
+      Int: true
+      Mdef: true
