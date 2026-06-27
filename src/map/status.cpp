@@ -7513,8 +7513,9 @@ static int16 status_calc_critical(block_list *bl, status_change *sc, int32 criti
 		critical += critical;
 	if (sc->getSCE(SC_SPEARQUICKEN))
 		critical += 3*sc->getSCE(SC_SPEARQUICKEN)->val1*10;
+	// Payon Stories rebalance: +0.8% CRIT per level (CRIT is stored on a /10 scale)
 	if (sc->getSCE(SC_TWOHANDQUICKEN))
-		critical += (2 + sc->getSCE(SC_TWOHANDQUICKEN)->val1) * 10;
+		critical += sc->getSCE(SC_TWOHANDQUICKEN)->val1 * 8;
 	if (sc->getSCE(KN_TWOHANDQUICKEN))
 		critical += sc->getSCE(KN_TWOHANDQUICKEN)->val1 * 80 / 100;
 	if (sc->getSCE(SC__INVISIBILITY))
@@ -7579,8 +7580,7 @@ static int16 status_calc_hit(block_list *bl, status_change *sc, int32 hit)
 		hit -= sc->getSCE(SC_ILLUSIONDOPING)->val2;
 	if (sc->getSCE(SC_MTF_ASPD))
 		hit += sc->getSCE(SC_MTF_ASPD)->val2;
-	if (sc->getSCE(SC_TWOHANDQUICKEN))
-		hit += sc->getSCE(SC_TWOHANDQUICKEN)->val1 * 2;
+	// Payon Stories rebalance: Two-Hand Quicken no longer grants HIT (moved to FLEE)
 #ifdef RENEWAL
 	if (sc->getSCE(SC_BLESSING))
 		hit += sc->getSCE(SC_BLESSING)->val1 * 2;
@@ -7661,6 +7661,9 @@ static int16 status_calc_flee(block_list *bl, status_change *sc, int32 flee)
 		flee -= sc->getSCE(SC_C_MARKER)->val3;
 	if( sc->getSCE(SC_WILD_WALK) != nullptr )
 		flee += sc->getSCE(SC_WILD_WALK)->val3;
+	// Payon Stories rebalance: Two-Hand Quicken grants +1 FLEE per level
+	if (sc->getSCE(SC_TWOHANDQUICKEN))
+		flee += sc->getSCE(SC_TWOHANDQUICKEN)->val1;
 #ifdef RENEWAL
 	if( sc->getSCE(SC_SPEARQUICKEN) )
 		flee += 2 * sc->getSCE(SC_SPEARQUICKEN)->val1;
@@ -11065,7 +11068,13 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			break;
 #ifndef RENEWAL_ASPD
 		case SC_SPEARQUICKEN:
-			val2 = 200+10*val1;
+			// Payon Stories rebalance: weapon-aware ASPD bonus
+			// 2H spear: 20% + 1.5% per level
+			// 1H spear: 7.5% + 0.5% per level
+			if (sd != nullptr && sd->status.weapon == W_1HSPEAR)
+				val2 = 75 + 5*val1;
+			else
+				val2 = 200 + 15*val1;
 			break;
 #endif
 		case SC_DANCING:

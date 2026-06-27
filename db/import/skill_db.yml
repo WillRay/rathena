@@ -195,7 +195,7 @@ Body:
       SpCost: 18
   - Id: 253
     Name: CR_HOLYCROSS
-    Range: -4
+    Range: 3
     Requires:
       SpCost:
         - Level: 1

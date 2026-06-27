@@ -44,3 +44,10 @@
 Header:
   Type: STATUS_DB
   Version: 4
+Body:
+  # Payon Stories rebalance: Two-Hand Quicken now grants FLEE + CRIT
+  - Status: Twohandquicken
+    CalcFlags:
+      Aspd: true
+      Cri: true
+      Flee: true

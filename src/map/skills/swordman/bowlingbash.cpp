@@ -24,6 +24,8 @@ void SkillBowlingBash::modifyDamageData(Damage& dmg, const block_list& src, cons
 			dmg.div_ = 3;
 	}
 #else
+	// Payon Stories rebalance: skill hits twice (400% per hit, up to 800% total)
+	dmg.div_ = 2;
 	dmg.blewcount = 0;
 #endif
 }
