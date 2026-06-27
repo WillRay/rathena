@@ -40,3 +40,20 @@ Header:
   Type: SKILL_TREE_DB
   Version: 1
 
+Body:
+  # Payon Stories rebalance: Preserve is available early to non-transcendent Rogues
+  # so Plagiarism builds don't depend on a constant supply from other players.
+  - Job: Rogue
+    Tree:
+      - Name: ST_PRESERVE
+        MaxLevel: 1
+        Requires:
+          - Name: RG_PLAGIARISM
+            Level: 10
+  - Job: Baby_Rogue
+    Tree:
+      - Name: ST_PRESERVE
+        MaxLevel: 1
+        Requires:
+          - Name: RG_PLAGIARISM
+            Level: 10

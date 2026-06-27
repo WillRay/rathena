@@ -29,12 +29,9 @@ void SkillVenomSplasher::castendNoDamageId(block_list *src, block_list *target, 
 	sc_type type = skill_get_sc(getSkillId());
 	map_session_data* sd = BL_CAST( BL_PC, src );
 
-	if( status_has_mode(tstatus,MD_STATUSIMMUNE)
-	// Renewal dropped the 3/4 hp requirement
-#ifndef RENEWAL
-		|| tstatus-> hp > tstatus->max_hp*3/4
-#endif
-			) {
+	// Payon Stories rebalance: Venom Splasher no longer requires the target to be
+	// under 75% HP; pre-renewal now matches renewal in dropping that gate.
+	if( status_has_mode(tstatus,MD_STATUSIMMUNE) ) {
 		if (sd) {
 			clif_skill_fail( *sd, getSkillId() );
 		}

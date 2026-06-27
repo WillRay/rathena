@@ -4688,8 +4688,10 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		sd->indexed_bonus.magic_addrace[RC_DRAGON]+=dragon_matk;
 		sd->indexed_bonus.subrace[RC_DRAGON]+=skill;
 	}
-	if ((skill = pc_checkskill(sd, AS_KATAR) == 10)) {
-		base_status->cri += 25;
+	// Payon Stories rebalance: Katar Mastery grants +5% nominal CRIT at rank 10
+	// (effectively +10% with katar's double crit rate).
+	if ((skill = pc_checkskill(sd, AS_KATAR)) == 10) {
+		base_status->cri += 50;
 	}
 	if ((skill = pc_checkskill(sd, AB_EUCHARISTICA)) > 0) {
 		sd->right_weapon.addrace[RC_DEMON] += skill;
@@ -7973,8 +7975,8 @@ static defType status_calc_mdef(block_list *bl, status_change *sc, int32 mdef)
 		mdef += 100;
 	if (sc->getSCE(SC_M_DEFSCROLL))
 		mdef += sc->getSCE(SC_M_DEFSCROLL)->val2;
-	if (sc->getSCE(SC_STRIPHELM))
-		mdef -= mdef * sc->getSCE(SC_M_DEFSCROLL)->val3 / 100;
+	if (sc->getSCE(SC_STRIPHELM) && bl->type != BL_PC)
+		mdef -= mdef * sc->getSCE(SC_STRIPHELM)->val3 / 100;
 
 	return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 }
