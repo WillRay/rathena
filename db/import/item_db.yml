@@ -1362,9 +1362,103 @@ Body:
     Weight: 50
     Script: |
       pet 2398;
+  - Id: 2940
+    AegisName: Ninja_Manual
+    Name: Ninja Manual
+    Type: Armor
+    Weight: 100
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMax: 12
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxSP,100;
+      skill "NJ_UTSUSEMI",1;
+      skill "NJ_KOUENKA",1;
+      skill "NJ_SYURIKEN",1;
+  - Id: 2941
+    AegisName: Gunslinger_Manual
+    Name: Gunslinger Manual
+    Type: Armor
+    Weight: 100
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMax: 12
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxSP,100;
+      skill "GS_GLITTERING",1;
+      skill "GS_ADJUSTMENT",1;
+      skill "GS_MADNESSCANCEL",1;
+      skill "GS_INCREASING",1;
+  - Id: 2942
+    AegisName: Taekwon_Manual
+    Name: Taekwon Manual
+    Type: Armor
+    Weight: 100
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMax: 12
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxSP,100;
+      skill "TK_SEVENWIND",4;
+      skill "TK_JUMPKICK",5;
+  - Id: 13295
+    AegisName: Light_Shuriken
+    Name: Light Shuriken
+    Type: Ammo
+    SubType: Shuriken
+    Weight: 5
+    Attack: 5
+    Locations:
+      Ammo: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
 Footer:
   Imports:
   - Path: db/import/item_db_cards.yml
+    Mode: Prerenewal
+  - Path: db/import/item_db_card_shadows.yml
     Mode: Prerenewal
   - Path: db/import/item_db_armor_slots.yml
     Mode: Prerenewal

@@ -173,7 +173,7 @@ Body:
         Rate: 150
       - Item: Unripe_Apple
         Rate: 20
-      - Item: Poring_Card
+      - Item: S_Card_4001
         Rate: 1
         StealProtected: true
   - Id: 1004
@@ -361,7 +361,7 @@ Body:
         Rate: 600
       - Item: Iron_Ore
         Rate: 200
-      - Item: Pupa_Card
+      - Item: S_Card_4003
         Rate: 1
         StealProtected: true
   - Id: 1009
@@ -407,7 +407,7 @@ Body:
         Rate: 2000
       - Item: Orange
         Rate: 600
-      - Item: Condor_Card
+      - Item: S_Card_4015
         Rate: 1
         StealProtected: true
   - Id: 1010
@@ -454,7 +454,7 @@ Body:
         Rate: 2000
       - Item: Tree_Of_Archer_1
         Rate: 1000
-      - Item: Wilow_Card
+      - Item: S_Card_4010
         Rate: 1
         StealProtected: true
   - Id: 1011
@@ -503,7 +503,7 @@ Body:
         Rate: 5
       - Item: Iron_Ore
         Rate: 150
-      - Item: Chonchon_Card
+      - Item: S_Card_4009
         Rate: 1
         StealProtected: true
   - Id: 1012
@@ -545,7 +545,7 @@ Body:
         Rate: 7
       - Item: Empty_Bottle
         Rate: 2000
-      - Item: Roda_Frog_Card
+      - Item: S_Card_4014
         Rate: 1
         StealProtected: true
   - Id: 1013
@@ -679,7 +679,7 @@ Body:
         Rate: 50
       - Item: White_Jewel
         Rate: 70
-      - Item: Zombie_Card
+      - Item: S_Card_4038
         Rate: 1
         StealProtected: true
   - Id: 1016
@@ -820,7 +820,7 @@ Body:
         RandomOptionGroup: Magic_Level_2
       - Item: Orange
         Rate: 1000
-      - Item: Pecopeco_Card
+      - Item: S_Card_4031
         Rate: 1
         StealProtected: true
   - Id: 1020
@@ -920,7 +920,7 @@ Body:
       - Item: Axe
         Rate: 100
         RandomOptionGroup: Melee_Level_1
-      - Item: Orc_Warrior_Card
+      - Item: S_Card_4066
         Rate: 1
         StealProtected: true
   - Id: 1024
@@ -1063,7 +1063,7 @@ Body:
       - Item: Girl's_Diary
         Rate: 5
         RandomOptionGroup: Magic_Level_4
-      - Item: Munak_Card
+      - Item: S_Card_4090
         Rate: 1
         StealProtected: true
   - Id: 1028
@@ -1164,7 +1164,7 @@ Body:
         Rate: 1000
       - Item: Crystal_Jewel_
         Rate: 5
-      - Item: Isis_Card
+      - Item: S_Card_4116
         Rate: 1
         StealProtected: true
   - Id: 1030
@@ -1305,7 +1305,7 @@ Body:
         RandomOptionGroup: Accessory
       - Item: Armlet_Of_Obedience
         Rate: 20
-      - Item: Verit_Card
+      - Item: S_Card_4107
         Rate: 1
         StealProtected: true
   - Id: 1033
@@ -1353,7 +1353,7 @@ Body:
         Rate: 100
       - Item: Branch_Of_Dead_Tree
         Rate: 100
-      - Item: Elder_Wilow_Card
+      - Item: S_Card_4052
         Rate: 1
         StealProtected: true
   - Id: 1034
@@ -1397,7 +1397,7 @@ Body:
         Rate: 5
       - Item: Sticky_Webfoot
         Rate: 2000
-      - Item: Thara_Frog_Card
+      - Item: S_Card_4058
         Rate: 1
         StealProtected: true
   - Id: 1035
@@ -1497,7 +1497,7 @@ Body:
       - Item: Ghoul_Leg
         Rate: 1
         RandomOptionGroup: Melee_Level_3
-      - Item: Ghoul_Card
+      - Item: S_Card_4110
         Rate: 1
         StealProtected: true
   - Id: 1037
@@ -1812,7 +1812,7 @@ Body:
         Rate: 200
       - Item: Iron_Ore
         Rate: 300
-      - Item: Steel_Chonchon_Card
+      - Item: S_Card_4042
         Rate: 1
         StealProtected: true
   - Id: 1044
@@ -1906,7 +1906,7 @@ Body:
         Rate: 200
       - Item: White_Herb
         Rate: 700
-      - Item: Marc_Card
+      - Item: S_Card_4105
         Rate: 1
         StealProtected: true
   - Id: 1046
@@ -2057,7 +2057,7 @@ Body:
         Rate: 10
       - Item: Iron_Ore
         Rate: 250
-      - Item: Thief_Bug_Egg_Card
+      - Item: S_Card_4012
         Rate: 1
         StealProtected: true
   - Id: 1049
@@ -2101,7 +2101,7 @@ Body:
         Rate: 300
       - Item: Yellow_Gemstone
         Rate: 50
-      - Item: Picky_Card
+      - Item: S_Card_4008
         Rate: 1
         StealProtected: true
   - Id: 1050
@@ -2147,7 +2147,7 @@ Body:
         Rate: 50
       - Item: Tiny_Egg_Shell
         Rate: 10
-      - Item: Picky__Card
+      - Item: S_Card_4011
         Rate: 1
         StealProtected: true
   - Id: 1051
@@ -2195,7 +2195,7 @@ Body:
         RandomOptionGroup: Armor
       - Item: Iron_Ore
         Rate: 250
-      - Item: Thief_Bug_Card
+      - Item: S_Card_4016
         Rate: 1
         StealProtected: true
   - Id: 1052
@@ -2246,7 +2246,7 @@ Body:
         Rate: 10
       - Item: Hinalle
         Rate: 10
-      - Item: Rocker_Card
+      - Item: S_Card_4021
         Rate: 1
         StealProtected: true
   - Id: 1053
@@ -2347,7 +2347,7 @@ Body:
       - Item: Katana
         Rate: 50
         RandomOptionGroup: Melee_Level_1
-      - Item: Thief_Bug_Male_Card
+      - Item: S_Card_4050
         Rate: 1
         StealProtected: true
   - Id: 1055
@@ -2598,7 +2598,7 @@ Body:
       - Item: Red_Square_Bag
         Rate: 100
         RandomOptionGroup: Melee_Level_3
-      - Item: Mistress_Card
+      - Item: S_Card_4132
         Rate: 1
         StealProtected: true
   - Id: 1060
@@ -2644,7 +2644,7 @@ Body:
         Rate: 450
       - Item: Oridecon_Stone
         Rate: 43
-      - Item: BigFoot_Card
+      - Item: S_Card_4074
         Rate: 1
         StealProtected: true
   - Id: 1061
@@ -2694,7 +2694,7 @@ Body:
         RandomOptionGroup: Melee_Level_4
       - Item: Oridecon
         Rate: 60
-      - Item: Nightmare_Card
+      - Item: S_Card_4127
         Rate: 1
         StealProtected: true
   - Id: 1062
@@ -2829,7 +2829,7 @@ Body:
         Rate: 2
       - Item: Rotten_Fish
         Rate: 20
-      - Item: Megalodon_Card
+      - Item: S_Card_4067
         Rate: 1
         StealProtected: true
   - Id: 1065
@@ -2971,7 +2971,7 @@ Body:
         Rate: 1000
       - Item: Blue_Gemstone
         Rate: 100
-      - Item: Cornutus_Card
+      - Item: S_Card_4061
         Rate: 1
         StealProtected: true
   - Id: 1068
@@ -3063,7 +3063,7 @@ Body:
         RandomOptionGroup: Melee_Level_1
       - Item: Gill
         Rate: 600
-      - Item: Sword_Fish_Card
+      - Item: S_Card_4089
         Rate: 1
         StealProtected: true
   - Id: 1070
@@ -3844,7 +3844,7 @@ Body:
         Rate: 2000
       - Item: Enriched_Oridecon
         Rate: 1500
-      - Item: Golden_Bug_Card
+      - Item: S_Card_4128
         Rate: 1
         StealProtected: true
   - Id: 1087
@@ -3906,7 +3906,7 @@ Body:
       - Item: Giant_Axe
         Rate: 100
         RandomOptionGroup: Melee_Level_3
-      - Item: Orc_Hero_Card
+      - Item: S_Card_4143
         Rate: 1
         StealProtected: true
   - Id: 1088
@@ -3958,7 +3958,7 @@ Body:
       - Item: Guitar_Of_Gentle_Breeze
         Rate: 10
         RandomOptionGroup: Ranged_Level_3
-      - Item: Vocal_Card
+      - Item: S_Card_4211
         Rate: 1
         StealProtected: true
   - Id: 1089
@@ -4004,7 +4004,7 @@ Body:
         Rate: 100
       - Item: Kiss_Of_Angel
         Rate: 1000
-      - Item: Toad_Card
+      - Item: S_Card_4306
         Rate: 1
         StealProtected: true
   - Id: 1090
@@ -4052,7 +4052,7 @@ Body:
         Rate: 8000
       - Item: Apple_Juice
         Rate: 4000
-      - Item: Mastering_Card
+      - Item: S_Card_4197
         Rate: 1
         StealProtected: true
   - Id: 1091
@@ -4100,7 +4100,7 @@ Body:
         Rate: 50
       - Item: Grape_Juice
         Rate: 3000
-      - Item: Dragon_Fly_Card
+      - Item: S_Card_4179
         Rate: 1
         StealProtected: true
   - Id: 1092
@@ -4150,7 +4150,7 @@ Body:
         Rate: 10
       - Item: Monster_Juice
         Rate: 50
-      - Item: Vagabond_Wolf_Card
+      - Item: S_Card_4183
         Rate: 1
         StealProtected: true
   - Id: 1093
@@ -4198,7 +4198,7 @@ Body:
       - Item: Angel's_Protection
         Rate: 1000
         RandomOptionGroup: Armor
-      - Item: Eclipse_Card
+      - Item: S_Card_4266
         Rate: 1
         StealProtected: true
   - Id: 1094
@@ -4246,7 +4246,7 @@ Body:
         Rate: 14
       - Item: Iron_Ore
         Rate: 150
-      - Item: Ambernite_Card
+      - Item: S_Card_4032
         Rate: 1
         StealProtected: true
   - Id: 1095
@@ -4342,7 +4342,7 @@ Body:
         Rate: 28
       - Item: Emperium
         Rate: 40
-      - Item: Angeling_Card
+      - Item: S_Card_4054
         Rate: 1
         StealProtected: true
   - Id: 1097
@@ -4382,7 +4382,7 @@ Body:
         Rate: 2000
       - Item: Iron_Ore
         Rate: 200
-      - Item: Andre_Egg_Card
+      - Item: S_Card_4013
         Rate: 1
         StealProtected: true
   - Id: 1098
@@ -4433,7 +4433,7 @@ Body:
       - Item: Blessed_Wand
         Rate: 3
         RandomOptionGroup: Magic_Level_3
-      - Item: Anubis_Card
+      - Item: S_Card_4138
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -4483,7 +4483,7 @@ Body:
         Rate: 1500
       - Item: Violet_Jewel
         Rate: 10
-      - Item: Argiope_Card
+      - Item: S_Card_4114
         Rate: 1
         StealProtected: true
   - Id: 1100
@@ -4531,7 +4531,7 @@ Body:
         Rate: 250
       - Item: Bark_Shorts
         Rate: 15
-      - Item: Argos_Card
+      - Item: S_Card_4075
         Rate: 1
         StealProtected: true
   - Id: 1101
@@ -4581,7 +4581,7 @@ Body:
       - Item: Boots
         Rate: 50
         RandomOptionGroup: Shoes
-      - Item: Baphomet__Card
+      - Item: S_Card_4129
         Rate: 1
         StealProtected: true
   - Id: 1102
@@ -4628,7 +4628,7 @@ Body:
         Rate: 15
       - Item: Old_Broom
         Rate: 20
-      - Item: Bathory_Card
+      - Item: S_Card_4119
         Rate: 1
         StealProtected: true
   - Id: 1103
@@ -4726,7 +4726,7 @@ Body:
         RandomOptionGroup: Shoes
       - Item: Strawberry
         Rate: 600
-      - Item: Coco_Card
+      - Item: S_Card_4041
         Rate: 1
         StealProtected: true
   - Id: 1105
@@ -4873,7 +4873,7 @@ Body:
         RandomOptionGroup: Melee_Level_1
       - Item: Orange
         Rate: 1000
-      - Item: Desert_Wolf_Babe_Card
+      - Item: S_Card_4023
         Rate: 1
         StealProtected: true
   - Id: 1108
@@ -4971,7 +4971,7 @@ Body:
         Rate: 1500
       - Item: Oridecon_Stone
         Rate: 154
-      - Item: Deviruchi_Card
+      - Item: S_Card_4122
         Rate: 1
         StealProtected: true
   - Id: 1110
@@ -5023,7 +5023,7 @@ Body:
         RandomOptionGroup: Melee_Level_1
       - Item: Hammer_Of_Blacksmith
         Rate: 5
-      - Item: Dokebi_Card
+      - Item: S_Card_4098
         Rate: 1
         StealProtected: true
   - Id: 1111
@@ -5222,7 +5222,7 @@ Body:
         Rate: 10
       - Item: Red_Herb
         Rate: 1200
-      - Item: Dustiness_Card
+      - Item: S_Card_4056
         Rate: 1
         StealProtected: true
   - Id: 1115
@@ -5284,7 +5284,7 @@ Body:
       - Item: Krieg
         Rate: 100
         RandomOptionGroup: Melee_Level_2
-      - Item: Eddga_Card
+      - Item: S_Card_4123
         Rate: 1
         StealProtected: true
   - Id: 1116
@@ -5331,7 +5331,7 @@ Body:
         Rate: 250
       - Item: Elunium_Stone
         Rate: 57
-      - Item: Eggyra_Card
+      - Item: S_Card_4070
         Rate: 1
         StealProtected: true
   - Id: 1117
@@ -5381,7 +5381,7 @@ Body:
         Rate: 4
       - Item: White_Herb
         Rate: 2000
-      - Item: Evil_Druid_Card
+      - Item: S_Card_4141
         Rate: 1
         StealProtected: true
   - Id: 1118
@@ -5475,7 +5475,7 @@ Body:
         Rate: 800
       - Item: Zargon
         Rate: 120
-      - Item: Frilldora_Card
+      - Item: S_Card_4088
         Rate: 1
         StealProtected: true
   - Id: 1120
@@ -5524,7 +5524,7 @@ Body:
         Rate: 30
       - Item: Ghost_Scroll_1_5
         Rate: 100
-      - Item: Ghostring_Card
+      - Item: S_Card_4047
         Rate: 1
         StealProtected: true
   - Id: 1121
@@ -5572,7 +5572,7 @@ Body:
         Rate: 10
       - Item: Sparkling_Dust
         Rate: 100
-      - Item: Giearth_Card
+      - Item: S_Card_4087
         Rate: 1
         StealProtected: true
   - Id: 1122
@@ -5873,7 +5873,7 @@ Body:
         Rate: 1
       - Item: Fatty_Chubby_Earthworm
         Rate: 20
-      - Item: Hode_Card
+      - Item: S_Card_4081
         Rate: 1
         StealProtected: true
   - Id: 1128
@@ -5921,7 +5921,7 @@ Body:
         Rate: 5500
       - Item: Solid_Shell
         Rate: 70
-      - Item: Horn_Card
+      - Item: S_Card_4045
         Rate: 1
         StealProtected: true
   - Id: 1129
@@ -6014,7 +6014,7 @@ Body:
         Rate: 5
       - Item: Pumpkin
         Rate: 1000
-      - Item: Jakk_Card
+      - Item: S_Card_4109
         Rate: 1
         StealProtected: true
   - Id: 1131
@@ -6112,7 +6112,7 @@ Body:
       - Item: Saber_
         Rate: 2
         RandomOptionGroup: Melee_Level_3
-      - Item: Khalitzburg_Card
+      - Item: S_Card_4136
         Rate: 1
         StealProtected: true
   - Id: 1133
@@ -6407,7 +6407,7 @@ Body:
         Rate: 100
       - Item: Book_Of_Devil
         Rate: 20
-      - Item: Marduk_Card
+      - Item: S_Card_4112
         Rate: 1
         StealProtected: true
   - Id: 1141
@@ -6546,7 +6546,7 @@ Body:
         RandomOptionGroup: Shoes
       - Item: Marionette_Doll
         Rate: 3
-      - Item: Marionette_Card
+      - Item: S_Card_4113
         Rate: 1
         StealProtected: true
   - Id: 1144
@@ -6592,7 +6592,7 @@ Body:
         Rate: 5
       - Item: Grape
         Rate: 300
-      - Item: Marse_Card
+      - Item: S_Card_4095
         Rate: 1
         StealProtected: true
   - Id: 1145
@@ -6640,7 +6640,7 @@ Body:
         Rate: 10
       - Item: Goggle
         Rate: 15
-      - Item: Martin_Card
+      - Item: S_Card_4046
         Rate: 1
         StealProtected: true
   - Id: 1146
@@ -6684,7 +6684,7 @@ Body:
         Rate: 100
       - Item: Grape
         Rate: 200
-      - Item: Matyr_Card
+      - Item: S_Card_4097
         Rate: 1
         StealProtected: true
   - Id: 1147
@@ -6745,7 +6745,7 @@ Body:
       - Item: Dea_Staff
         Rate: 100
         RandomOptionGroup: Melee_Level_3
-      - Item: Maya_Card
+      - Item: S_Card_4146
         Rate: 1
         StealProtected: true
   - Id: 1148
@@ -6796,7 +6796,7 @@ Body:
         Rate: 3500
       - Item: Penetration
         Rate: 3
-      - Item: Medusa_Card
+      - Item: S_Card_4124
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -6912,7 +6912,7 @@ Body:
       - Item: Staff_Of_Bordeaux
         Rate: 100
         RandomOptionGroup: Magic_Level_4
-      - Item: Moonlight_Flower_Card
+      - Item: S_Card_4131
         Rate: 1
         StealProtected: true
   - Id: 1151
@@ -6958,7 +6958,7 @@ Body:
         Rate: 20
       - Item: Grape
         Rate: 35
-      - Item: Myst_Card
+      - Item: S_Card_4108
         Rate: 1
         StealProtected: true
   - Id: 1152
@@ -7047,7 +7047,7 @@ Body:
         Rate: 3000
       - Item: Emperium
         Rate: 1
-      - Item: Orc_Zombie_Card
+      - Item: S_Card_4071
         Rate: 1
         StealProtected: true
   - Id: 1154
@@ -7095,7 +7095,7 @@ Body:
       - Item: Undershirt
         Rate: 100
         RandomOptionGroup: Garment
-      - Item: Pasana_Card
+      - Item: S_Card_4099
         Rate: 1
         StealProtected: true
   - Id: 1155
@@ -7191,7 +7191,7 @@ Body:
         Rate: 1500
       - Item: Aloebera
         Rate: 15
-      - Item: Petit__Card
+      - Item: S_Card_4120
         Rate: 1
         StealProtected: true
   - Id: 1157
@@ -7253,7 +7253,7 @@ Body:
       - Item: Bazerald
         Rate: 80
         RandomOptionGroup: Melee_Level_4
-      - Item: Pharaoh_Card
+      - Item: S_Card_4148
         Rate: 1
         StealProtected: true
   - Id: 1158
@@ -7498,7 +7498,7 @@ Body:
         Rate: 550
       - Item: White_Herb
         Rate: 30
-      - Item: Rafflesia_Card
+      - Item: S_Card_4083
         Rate: 1
         StealProtected: true
   - Id: 1163
@@ -7549,7 +7549,7 @@ Body:
         Rate: 10
       - Item: Brigan
         Rate: 4850
-      - Item: Daydric_Card
+      - Item: S_Card_4133
         Rate: 1
         StealProtected: true
   - Id: 1164
@@ -7646,7 +7646,7 @@ Body:
       - Item: Hypnotist's_Staff_
         Rate: 5
         RandomOptionGroup: Magic_Level_3
-      - Item: Sand_Man_Card
+      - Item: S_Card_4101
         Rate: 1
         StealProtected: true
   - Id: 1166
@@ -7693,7 +7693,7 @@ Body:
         Rate: 70
       - Item: Royal_Jelly
         Rate: 2
-      - Item: Savage_Card
+      - Item: S_Card_4078
         Rate: 1
         StealProtected: true
   - Id: 1167
@@ -7835,7 +7835,7 @@ Body:
         Rate: 1000
       - Item: Inspector_Certificate
         Rate: 350
-      - Item: Sohee_Card
+      - Item: S_Card_4100
         Rate: 1
         StealProtected: true
   - Id: 1174
@@ -7883,7 +7883,7 @@ Body:
         Rate: 10
       - Item: Iron_Ore
         Rate: 300
-      - Item: Stainer_Card
+      - Item: S_Card_4039
         Rate: 1
         StealProtected: true
   - Id: 1175
@@ -8108,7 +8108,7 @@ Body:
       - Item: Silver_Robe_
         Rate: 10
         RandomOptionGroup: Armor
-      - Item: Whisper_Card
+      - Item: S_Card_4102
         Rate: 1
         StealProtected: true
   - Id: 1180
@@ -8154,7 +8154,7 @@ Body:
         Rate: 350
       - Item: Oridecon_Stone
         Rate: 100
-      - Item: Nine_Tail_Card
+      - Item: S_Card_4159
         Rate: 1
         StealProtected: true
   - Id: 1182
@@ -8238,7 +8238,7 @@ Body:
         Rate: 100
       - Item: Chonchon_Doll
         Rate: 5
-      - Item: Chonchon_Card
+      - Item: S_Card_4009
         Rate: 1
         StealProtected: true
   - Id: 1184
@@ -8359,7 +8359,7 @@ Body:
       - Item: Silver_Robe_
         Rate: 10
         RandomOptionGroup: Armor
-      - Item: Whisper_Boss_Card
+      - Item: S_Card_4303
         Rate: 1
         StealProtected: true
   - Id: 1187
@@ -8539,7 +8539,7 @@ Body:
       - Item: Erde
         Rate: 3100
         RandomOptionGroup: Melee_Level_3
-      - Item: Orc_Load_Card
+      - Item: S_Card_4135
         Rate: 1
         StealProtected: true
   - Id: 1191
@@ -8684,7 +8684,7 @@ Body:
         Rate: 20
       - Item: Zargon
         Rate: 1500
-      - Item: Alarm_Card
+      - Item: S_Card_4244
         Rate: 1
         StealProtected: true
   - Id: 1194
@@ -8734,7 +8734,7 @@ Body:
         Rate: 20
       - Item: Zargon
         Rate: 2500
-      - Item: Arclouse_Card
+      - Item: S_Card_4240
         Rate: 1
         StealProtected: true
   - Id: 1195
@@ -8786,7 +8786,7 @@ Body:
         Rate: 300
       - Item: Old_Magic_Book
         Rate: 20
-      - Item: Rideword_Card
+      - Item: S_Card_4185
         Rate: 1
         StealProtected: true
   - Id: 1196
@@ -8836,7 +8836,7 @@ Body:
         RandomOptionGroup: Shoes
       - Item: Mementos
         Rate: 1500
-      - Item: Skel_Prisoner_Card
+      - Item: S_Card_4222
         Rate: 1
         StealProtected: true
   - Id: 1197
@@ -8884,7 +8884,7 @@ Body:
         RandomOptionGroup: Shoes
       - Item: Elunium
         Rate: 112
-      - Item: Zombie_Prisoner_Card
+      - Item: S_Card_4275
         Rate: 1
         StealProtected: true
   - Id: 1198
@@ -8987,7 +8987,7 @@ Body:
       - Item: Hood_
         Rate: 15
         RandomOptionGroup: Garment
-      - Item: Punk_Card
+      - Item: S_Card_4313
         Rate: 1
         StealProtected: true
   - Id: 1200
@@ -9039,7 +9039,7 @@ Body:
         RandomOptionGroup: Ranged_Level_4
       - Item: Masquerade
         Rate: 3
-      - Item: Zherlthsh_Card
+      - Item: S_Card_4277
         Rate: 1
         StealProtected: true
   - Id: 1201
@@ -9088,7 +9088,7 @@ Body:
         Rate: 100
       - Item: Izidor
         Rate: 30
-      - Item: Rybio_Card
+      - Item: S_Card_4194
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -9190,7 +9190,7 @@ Body:
         Rate: 120
       - Item: Oridecon
         Rate: 243
-      - Item: Mysteltainn_Card
+      - Item: S_Card_4207
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -9245,7 +9245,7 @@ Body:
         Rate: 120
       - Item: Oridecon
         Rate: 189
-      - Item: Tirfing_Card
+      - Item: S_Card_4254
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -9300,7 +9300,7 @@ Body:
         Rate: 120
       - Item: Oridecon
         Rate: 145
-      - Item: Executioner_Card
+      - Item: S_Card_4250
         Rate: 1
         StealProtected: true
   - Id: 1206
@@ -9348,7 +9348,7 @@ Body:
         RandomOptionGroup: Accessory
       - Item: Oridecon
         Rate: 134
-      - Item: Anolian_Card
+      - Item: S_Card_4234
         Rate: 1
         StealProtected: true
   - Id: 1207
@@ -9397,7 +9397,7 @@ Body:
         Rate: 10
       - Item: Violet_Jewel
         Rate: 3
-      - Item: Sting_Card
+      - Item: S_Card_4226
         Rate: 1
         StealProtected: true
   - Id: 1208
@@ -9449,7 +9449,7 @@ Body:
       - Item: Muramasa
         Rate: 1
         RandomOptionGroup: Melee_Level_4
-      - Item: Wander_Man_Card
+      - Item: S_Card_4210
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -9498,7 +9498,7 @@ Body:
         Rate: 70
       - Item: Oridecon
         Rate: 95
-      - Item: Cramp_Card
+      - Item: S_Card_4296
         Rate: 1
         StealProtected: true
   - Id: 1211
@@ -9547,7 +9547,7 @@ Body:
         Rate: 250
       - Item: White_Herb
         Rate: 2600
-      - Item: Brilight_Card
+      - Item: S_Card_4213
         Rate: 1
         StealProtected: true
   - Id: 1212
@@ -9594,7 +9594,7 @@ Body:
         Rate: 180
       - Item: Iron
         Rate: 300
-      - Item: Iron_Fist_Card
+      - Item: S_Card_4239
         Rate: 1
         StealProtected: true
   - Id: 1213
@@ -9645,7 +9645,7 @@ Body:
         Rate: 196
       - Item: Yellow_Herb
         Rate: 900
-      - Item: High_Orc_Card
+      - Item: S_Card_4322
         Rate: 1
         StealProtected: true
   - Id: 1214
@@ -9693,7 +9693,7 @@ Body:
         Rate: 1000
       - Item: Yggdrasilberry
         Rate: 25
-      - Item: Choco_Card
+      - Item: S_Card_4285
         Rate: 1
         StealProtected: true
   - Id: 1215
@@ -9790,7 +9790,7 @@ Body:
         RandomOptionGroup: Melee_Level_3
       - Item: Red_Gemstone
         Rate: 550
-      - Item: Penomena_Card
+      - Item: S_Card_4314
         Rate: 1
         StealProtected: true
   - Id: 1219
@@ -9936,7 +9936,7 @@ Body:
         Rate: 15
       - Item: Elunium_Stone
         Rate: 70
-      - Item: Savage_Card
+      - Item: S_Card_4078
         Rate: 1
         StealProtected: true
   - Id: 1229
@@ -10030,7 +10030,7 @@ Body:
         Rate: 700
       - Item: Iron_Ore
         Rate: 300
-      - Item: Pupa_Card
+      - Item: S_Card_4003
         Rate: 1
         StealProtected: true
   - Id: 1231
@@ -10215,7 +10215,7 @@ Body:
       - Item: Axe
         Rate: 100
         RandomOptionGroup: Melee_Level_1
-      - Item: Orc_Warrior_Card
+      - Item: S_Card_4066
         Rate: 1
         StealProtected: true
   - Id: 1236
@@ -10255,7 +10255,7 @@ Body:
         Rate: 2000
       - Item: Iron_Ore
         Rate: 220
-      - Item: Andre_Egg_Card
+      - Item: S_Card_4013
         Rate: 1
         StealProtected: true
   - Id: 1237
@@ -10443,7 +10443,7 @@ Body:
         Rate: 350
       - Item: Yellow_Gemstone
         Rate: 60
-      - Item: Picky_Card
+      - Item: S_Card_4008
         Rate: 1
         StealProtected: true
   - Id: 1241
@@ -10487,7 +10487,7 @@ Body:
         Rate: 350
       - Item: Yellow_Gemstone
         Rate: 60
-      - Item: Picky__Card
+      - Item: S_Card_4011
         Rate: 1
         StealProtected: true
   - Id: 1242
@@ -10580,7 +10580,7 @@ Body:
         Rate: 30
       - Item: Elunium_Stone
         Rate: 90
-      - Item: Sasquatch_Card
+      - Item: S_Card_4216
         Rate: 1
         StealProtected: true
   - Id: 1244
@@ -10628,7 +10628,7 @@ Body:
         Rate: 1200
       - Item: Packing_Ribbon
         Rate: 1200
-      - Item: Jakk_Card
+      - Item: S_Card_4109
         Rate: 1
         StealProtected: true
   - Id: 1245
@@ -10724,7 +10724,7 @@ Body:
         Rate: 100
       - Item: Red_Herb
         Rate: 1700
-      - Item: Cookie_XMAS_Card
+      - Item: S_Card_4235
         Rate: 1
         StealProtected: true
   - Id: 1247
@@ -10773,7 +10773,7 @@ Body:
         Rate: 5500
       - Item: Santa's_Hat
         Rate: 250
-      - Item: Antonio_Card
+      - Item: S_Card_4243
         Rate: 1
         StealProtected: true
   - Id: 1248
@@ -10869,7 +10869,7 @@ Body:
         Rate: 5
       - Item: Candy
         Rate: 340
-      - Item: Mystcase_Card
+      - Item: S_Card_4206
         Rate: 1
         StealProtected: true
   - Id: 1250
@@ -11040,7 +11040,7 @@ Body:
         Rate: 3977
       - Item: Enriched_Oridecon
         Rate: 2900
-      - Item: Garm_Card
+      - Item: S_Card_4324
         Rate: 1
         StealProtected: true
   - Id: 1253
@@ -11134,7 +11134,7 @@ Body:
         Rate: 7
       - Item: Oridecon_Stone
         Rate: 32
-      - Item: Raggler_Card
+      - Item: S_Card_4186
         Rate: 1
         StealProtected: true
   - Id: 1255
@@ -11226,7 +11226,7 @@ Body:
         Rate: 250
       - Item: Oridecon_Stone
         Rate: 115
-      - Item: Pest_Card
+      - Item: S_Card_4315
         Rate: 1
         StealProtected: true
   - Id: 1257
@@ -11424,7 +11424,7 @@ Body:
         Rate: 80
       - Item: Crystal_Mirror
         Rate: 3
-      - Item: Dark_Frame_Card
+      - Item: S_Card_4170
         Rate: 1
         StealProtected: true
   - Id: 1261
@@ -11471,7 +11471,7 @@ Body:
         Rate: 600
       - Item: Big_Sis'_Ribbon
         Rate: 2
-      - Item: Wild_Rose_Card
+      - Item: S_Card_4257
         Rate: 1
         StealProtected: true
   - Id: 1262
@@ -11622,7 +11622,7 @@ Body:
         RandomOptionGroup: Melee_Level_3
       - Item: Oridecon_Stone
         Rate: 203
-      - Item: Merman_Card
+      - Item: S_Card_4199
         Rate: 1
         StealProtected: true
   - Id: 1265
@@ -11758,7 +11758,7 @@ Body:
         Rate: 1
       - Item: White_Herb
         Rate: 1450
-      - Item: Carat_Card
+      - Item: S_Card_4288
         Rate: 1
         StealProtected: true
   - Id: 1268
@@ -11860,7 +11860,7 @@ Body:
         Rate: 30
       - Item: Elunium
         Rate: 163
-      - Item: Clock_Card
+      - Item: S_Card_4299
         Rate: 1
         StealProtected: true
   - Id: 1270
@@ -11908,7 +11908,7 @@ Body:
         Rate: 2000
       - Item: Underground_Key
         Rate: 2000
-      - Item: C_Tower_Manager_Card
+      - Item: S_Card_4229
         Rate: 1
         StealProtected: true
   - Id: 1271
@@ -12014,7 +12014,7 @@ Body:
         Rate: 5141
       - Item: Bone_Helm_
         Rate: 10
-      - Item: Dark_Lord_Card
+      - Item: S_Card_4168
         Rate: 1
         StealProtected: true
   - Id: 1273
@@ -12109,7 +12109,7 @@ Body:
         Rate: 61
       - Item: Elunium_Stone
         Rate: 207
-      - Item: Megalith_Card
+      - Item: S_Card_4200
         Rate: 1
         StealProtected: true
   - Id: 1275
@@ -12158,7 +12158,7 @@ Body:
         Rate: 10
       - Item: Holy_Scroll_1_5
         Rate: 100
-      - Item: Alice_Card
+      - Item: S_Card_4253
         Rate: 1
         StealProtected: true
   - Id: 1276
@@ -12305,7 +12305,7 @@ Body:
         Rate: 250
       - Item: Elunium
         Rate: 163
-      - Item: Stalactic_Golem_Card
+      - Item: S_Card_4223
         Rate: 1
         StealProtected: true
   - Id: 1279
@@ -12550,7 +12550,7 @@ Body:
         RandomOptionGroup: Melee_Level_4
       - Item: Oridecon
         Rate: 160
-      - Item: Chimera_Card
+      - Item: S_Card_4300
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -12720,7 +12720,7 @@ Body:
         Rate: 1
       - Item: Cookbook10
         Rate: 2
-      - Item: Maya_Puple_Card
+      - Item: S_Card_4198
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -12774,7 +12774,7 @@ Body:
         RandomOptionGroup: Melee_Level_2
       - Item: Ghost_Bandana
         Rate: 1
-      - Item: Skeleton_General_Card
+      - Item: S_Card_4221
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -12826,7 +12826,7 @@ Body:
         Rate: 100
       - Item: Lemon
         Rate: 300
-      - Item: Wraith_Dead_Card
+      - Item: S_Card_4189
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -12880,7 +12880,7 @@ Body:
       - Item: Ahlspiess
         Rate: 5
         RandomOptionGroup: Melee_Level_4
-      - Item: Mini_Demon_Card
+      - Item: S_Card_4204
         Rate: 1
         StealProtected: true
   - Id: 1293
@@ -12933,7 +12933,7 @@ Body:
         RandomOptionGroup: Accessory
       - Item: Fruit_Of_Mastela
         Rate: 50
-      - Item: Cremy_Fear_Card
+      - Item: S_Card_4298
         Rate: 1
         StealProtected: true
   - Id: 1294
@@ -12985,7 +12985,7 @@ Body:
       - Item: Mirror_Shield_
         Rate: 1
         RandomOptionGroup: Shield
-      - Item: Killer_Mantis_Card
+      - Item: S_Card_4301
         Rate: 1
         StealProtected: true
   - Id: 1295
@@ -13142,7 +13142,7 @@ Body:
         Rate: 150
       - Item: Elunium_Stone
         Rate: 100
-      - Item: Ancient_Mummy_Card
+      - Item: S_Card_4248
         Rate: 1
         StealProtected: true
   - Id: 1298
@@ -13345,7 +13345,7 @@ Body:
         Rate: 1
       - Item: Glass_Bead
         Rate: 250
-      - Item: Am_Mut_Card
+      - Item: S_Card_4245
         Rate: 1
         StealProtected: true
   - Id: 1302
@@ -13397,7 +13397,7 @@ Body:
       - Item: Broad_Sword_
         Rate: 2
         RandomOptionGroup: Melee_Level_3
-      - Item: Dark_Illusion_Card
+      - Item: S_Card_4169
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -13452,7 +13452,7 @@ Body:
       - Item: Double_Bound
         Rate: 15
         RandomOptionGroup: Ranged_Level_3
-      - Item: Giant_Honet_Card
+      - Item: S_Card_4271
         Rate: 1
         StealProtected: true
   - Id: 1304
@@ -13502,7 +13502,7 @@ Body:
         Rate: 680
       - Item: Cyfar
         Rate: 800
-      - Item: Giant_Spider_Card
+      - Item: S_Card_4270
         Rate: 1
         StealProtected: true
   - Id: 1305
@@ -13554,7 +13554,7 @@ Body:
         Rate: 3500
       - Item: Brigan
         Rate: 2500
-      - Item: Ancient_Worm_Card
+      - Item: S_Card_4249
         Rate: 1
         StealProtected: true
   - Id: 1306
@@ -13603,7 +13603,7 @@ Body:
         Rate: 5
       - Item: Cyfar
         Rate: 800
-      - Item: Leib_Olmai_Card
+      - Item: S_Card_4188
         Rate: 1
         StealProtected: true
   - Id: 1307
@@ -13652,7 +13652,7 @@ Body:
         Rate: 6
       - Item: Old_Violet_Box
         Rate: 1
-      - Item: Cat_O_Nine_Tail_Card
+      - Item: S_Card_4290
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -13753,7 +13753,7 @@ Body:
         RandomOptionGroup: Shield
       - Item: Flame_Heart
         Rate: 180
-      - Item: Gajomart_Card
+      - Item: S_Card_4151
         Rate: 1
         StealProtected: true
   - Id: 1310
@@ -13803,7 +13803,7 @@ Body:
         RandomOptionGroup: Accessory
       - Item: Star_Crumb
         Rate: 250
-      - Item: Majoruros_Card
+      - Item: S_Card_4201
         Rate: 1
         StealProtected: true
   - Id: 1311
@@ -13852,7 +13852,7 @@ Body:
         RandomOptionGroup: Accessory
       - Item: Zargon
         Rate: 160
-      - Item: Gullinbursti_Card
+      - Item: S_Card_4164
         Rate: 1
         StealProtected: true
   - Id: 1312
@@ -14013,7 +14013,7 @@ Body:
         Rate: 25
       - Item: Anodyne
         Rate: 1
-      - Item: Permeter_Card
+      - Item: S_Card_4311
         Rate: 1
         StealProtected: true
   - Id: 1315
@@ -14116,7 +14116,7 @@ Body:
       - Item: Chain
         Rate: 1
         RandomOptionGroup: Melee_Level_2
-      - Item: Solider_Card
+      - Item: S_Card_4220
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -14266,7 +14266,7 @@ Body:
         Rate: 600
       - Item: Cold_Scroll_1_5
         Rate: 100
-      - Item: Freezer_Card
+      - Item: S_Card_4319
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -14373,7 +14373,7 @@ Body:
         Rate: 300
       - Item: Wing_Of_Butterfly
         Rate: 150
-      - Item: Dragon_Tail_Card
+      - Item: S_Card_4178
         Rate: 1
         StealProtected: true
   - Id: 1322
@@ -16191,7 +16191,7 @@ Body:
         RandomOptionGroup: Garment
       - Item: Steel
         Rate: 2500
-      - Item: Apocalips_Card
+      - Item: S_Card_4242
         Rate: 1
         StealProtected: true
   - Id: 1366
@@ -16328,7 +16328,7 @@ Body:
         Rate: 50
       - Item: Holy_Scroll_1_5
         Rate: 100
-      - Item: Geographer_Card
+      - Item: S_Card_4280
         Rate: 1
         StealProtected: true
   - Id: 1369
@@ -16371,7 +16371,7 @@ Body:
         Rate: 1
       - Item: Orange
         Rate: 500
-      - Item: Grand_Peco_Card
+      - Item: S_Card_4161
         Rate: 1
         StealProtected: true
   - Id: 1370
@@ -16423,7 +16423,7 @@ Body:
         RandomOptionGroup: Melee_Level_3
       - Item: Blue_Potion
         Rate: 1000
-      - Item: Succubus_Card
+      - Item: S_Card_4218
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -16518,7 +16518,7 @@ Body:
         Rate: 2500
       - Item: Green_Herb
         Rate: 5500
-      - Item: Goat_Card
+      - Item: S_Card_4150
         Rate: 1
         StealProtected: true
   - Id: 1373
@@ -16634,7 +16634,7 @@ Body:
         RandomOptionGroup: Accessory
       - Item: White_Herb
         Rate: 2200
-      - Item: Incubus_Card
+      - Item: S_Card_4269
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -16729,7 +16729,7 @@ Body:
       - Item: Electric_Fist
         Rate: 20
         RandomOptionGroup: Melee_Level_3
-      - Item: Harpy_Card
+      - Item: S_Card_4325
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -16824,7 +16824,7 @@ Body:
         Rate: 3880
       - Item: Starsand_Of_Witch
         Rate: 5000
-      - Item: Demon_Pungus_Card
+      - Item: S_Card_4173
         Rate: 1
         StealProtected: true
   - Id: 1379
@@ -16876,7 +16876,7 @@ Body:
       - Item: Infiltrator
         Rate: 1
         RandomOptionGroup: Melee_Level_4
-      - Item: Nightmare_Terror_Card
+      - Item: S_Card_4166
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -16957,7 +16957,7 @@ Body:
         Rate: 5000
       - Item: Nice_Sweet_Potato
         Rate: 2500
-      - Item: Grizzly_Card
+      - Item: S_Card_4162
         Rate: 1
         StealProtected: true
   - Id: 1382
@@ -17047,7 +17047,7 @@ Body:
         Rate: 800
       - Item: Fruit_Of_Mastela
         Rate: 400
-      - Item: Explosion_Card
+      - Item: S_Card_4267
         Rate: 1
         StealProtected: true
   - Id: 1384
@@ -17088,7 +17088,7 @@ Body:
         Rate: 3880
       - Item: Dragon_Scale
         Rate: 3589
-      - Item: Flying_Deleter_Card
+      - Item: S_Card_4158
         Rate: 1
         StealProtected: true
   - Id: 1385
@@ -17129,7 +17129,7 @@ Body:
         Rate: 3880
       - Item: Dragon_Scale
         Rate: 3589
-      - Item: Deleter_Card
+      - Item: S_Card_4279
         Rate: 1
         StealProtected: true
   - Id: 1386
@@ -17271,7 +17271,7 @@ Body:
         RandomOptionGroup: Armor
       - Item: Turquoise
         Rate: 1500
-      - Item: Archangeling_Card
+      - Item: S_Card_4241
         Rate: 1
         StealProtected: true
   - Id: 1389
@@ -17801,7 +17801,7 @@ Body:
       - Item: Murasame
         Rate: 5
         RandomOptionGroup: Melee_Level_2
-      - Item: Karakasa_Card
+      - Item: S_Card_4286
         Rate: 1
         StealProtected: true
   - Id: 1401
@@ -17955,7 +17955,7 @@ Body:
       - Item: The_Cyclone_
         Rate: 5
         RandomOptionGroup: Melee_Level_2
-      - Item: Antique_Firelock_Card
+      - Item: S_Card_4160
         Rate: 1
         StealProtected: true
   - Id: 1404
@@ -18007,7 +18007,7 @@ Body:
       - Item: Mandolin_
         Rate: 2
         RandomOptionGroup: Ranged_Level_2
-      - Item: Miyabi_Ningyo_Card
+      - Item: S_Card_4208
         Rate: 1
         StealProtected: true
   - Id: 1405
@@ -18109,7 +18109,7 @@ Body:
       - Item: Jitte_
         Rate: 5
         RandomOptionGroup: Melee_Level_2
-      - Item: Kapha_Card
+      - Item: S_Card_4287
         Rate: 1
         StealProtected: true
   - Id: 1408
@@ -18249,7 +18249,7 @@ Body:
         Rate: 100
       - Item: Old_Blue_Box
         Rate: 5
-      - Item: Live_Peach_Tree_Card
+      - Item: S_Card_4217
         Rate: 1
         StealProtected: true
   - Id: 1412
@@ -18394,7 +18394,7 @@ Body:
         RandomOptionGroup: Melee_Level_2
       - Item: Pet_Food
         Rate: 500
-      - Item: Baby_Leopard_Card
+      - Item: S_Card_4233
         Rate: 1
         StealProtected: true
   - Id: 1416
@@ -18447,7 +18447,7 @@ Body:
       - Item: Oriental_Lute
         Rate: 10
         RandomOptionGroup: Ranged_Level_4
-      - Item: Wicked_Nymph_Card
+      - Item: S_Card_4258
         Rate: 1
         StealProtected: true
   - Id: 1417
@@ -18552,7 +18552,7 @@ Body:
         Rate: 900
       - Item: Sway_Apron
         Rate: 2000
-      - Item: Dark_Snake_Lord_Card
+      - Item: S_Card_4330
         Rate: 1
         StealProtected: true
   - Id: 1419
@@ -20672,7 +20672,7 @@ Body:
         Rate: 10
       - Item: Sharp_Leaf
         Rate: 3000
-      - Item: Dryad_Card
+      - Item: S_Card_4177
         Rate: 1
         StealProtected: true
   - Id: 1494
@@ -20812,7 +20812,7 @@ Body:
         Rate: 5000
       - Item: Mushroom_Spore
         Rate: 1000
-      - Item: Wooden_Golem_Card
+      - Item: S_Card_4259
         Rate: 1
         StealProtected: true
   - Id: 1498
@@ -20860,7 +20860,7 @@ Body:
         Rate: 100
       - Item: Banana_Hat
         Rate: 10
-      - Item: Wootan_Shooter_Card
+      - Item: S_Card_4260
         Rate: 1
         StealProtected: true
   - Id: 1499
@@ -20909,7 +20909,7 @@ Body:
         Rate: 1000
       - Item: Banana_Hat
         Rate: 5
-      - Item: Wootan_Fighter_Card
+      - Item: S_Card_4261
         Rate: 1
         StealProtected: true
   - Id: 1500
@@ -20958,7 +20958,7 @@ Body:
         RandomOptionGroup: Ranged_Level_4
       - Item: Shoot
         Rate: 500
-      - Item: Parasite_Card
+      - Item: S_Card_4309
         Rate: 1
         StealProtected: true
   - Id: 1502
@@ -21071,7 +21071,7 @@ Body:
         Rate: 100
       - Item: Branch_Of_Dead_Tree
         Rate: 10
-      - Item: Gibbet_Card
+      - Item: S_Card_4278
         Rate: 1
         StealProtected: true
   - Id: 1504
@@ -21167,7 +21167,7 @@ Body:
       - Item: Lunatic_Brooch
         Rate: 5
         RandomOptionGroup: Accessory
-      - Item: Loli_Ruri_Card
+      - Item: S_Card_4191
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -21224,7 +21224,7 @@ Body:
       - Item: Rider_Insignia
         Rate: 5
         RandomOptionGroup: Garment
-      - Item: Disguise_Card
+      - Item: S_Card_4181
         Rate: 1
         StealProtected: true
   - Id: 1507
@@ -21478,7 +21478,7 @@ Body:
         RandomOptionGroup: Magic_Level_3
       - Item: Yggdrasilberry
         Rate: 3000
-      - Item: Amon_Ra_Card
+      - Item: S_Card_4236
         Rate: 1
         StealProtected: true
   - Id: 1512
@@ -21524,7 +21524,7 @@ Body:
         RandomOptionGroup: Shoes
       - Item: Munak_Doll
         Rate: 300
-      - Item: Hyegun_Card
+      - Item: S_Card_4328
         Rate: 1
         StealProtected: true
   - Id: 1513
@@ -21702,7 +21702,7 @@ Body:
         Rate: 10
       - Item: Gold
         Rate: 2
-      - Item: Increase_Soil_Card
+      - Item: S_Card_4231
         Rate: 1
         StealProtected: true
   - Id: 1517
@@ -23620,7 +23620,7 @@ Body:
         Rate: 100
       - Item: Ghost_Scroll_1_3
         Rate: 100
-      - Item: Deviling_Card
+      - Item: S_Card_4174
         Rate: 1
         StealProtected: true
   - Id: 1583
@@ -23678,7 +23678,7 @@ Body:
         Rate: 1000
       - Item: Gemmed_Sallet_
         Rate: 5
-      - Item: Tao_Gunka_Card
+      - Item: S_Card_4302
         Rate: 1
         StealProtected: true
   - Id: 1584
@@ -23727,7 +23727,7 @@ Body:
       - Item: Chain_Mail_
         Rate: 3
         RandomOptionGroup: Armor
-      - Item: Tamruan_Card
+      - Item: S_Card_4304
         Rate: 1
         StealProtected: true
   - Id: 1585
@@ -23820,7 +23820,7 @@ Body:
         Rate: 500
       - Item: Leaf_Clothes
         Rate: 5335
-      - Item: Leaf_Cat_Card
+      - Item: S_Card_4195
         Rate: 1
         StealProtected: true
   - Id: 1587
@@ -23868,7 +23868,7 @@ Body:
         Rate: 1000
       - Item: Old_Blue_Box
         Rate: 10
-      - Item: Kraben_Card
+      - Item: S_Card_4295
         Rate: 1
         StealProtected: true
   - Id: 1588
@@ -23916,7 +23916,7 @@ Body:
         Rate: 15
       - Item: Packing_Ribbon
         Rate: 1600
-      - Item: Orc_Warrior_Card
+      - Item: S_Card_4066
         Rate: 1
         StealProtected: true
   - Id: 1589
@@ -24747,7 +24747,7 @@ Body:
         Rate: 100
       - Item: Gold
         Rate: 2
-      - Item: Mineral_Card
+      - Item: S_Card_4339
         Rate: 1
         StealProtected: true
   - Id: 1615
@@ -24794,7 +24794,7 @@ Body:
       - Item: Unholy_Touch
         Rate: 10
         RandomOptionGroup: Melee_Level_4
-      - Item: Obsidian_Card
+      - Item: S_Card_4338
         Rate: 1
         StealProtected: true
   - Id: 1616
@@ -24891,7 +24891,7 @@ Body:
         Rate: 50
       - Item: Old_Steel_Plate
         Rate: 3800
-      - Item: Waste_Stove_Card
+      - Item: S_Card_4332
         Rate: 1
         StealProtected: true
   - Id: 1618
@@ -24942,7 +24942,7 @@ Body:
       - Item: Boots_
         Rate: 500
         RandomOptionGroup: Shoes
-      - Item: Ungoliant_Card
+      - Item: S_Card_4336
         Rate: 1
         StealProtected: true
   - Id: 1619
@@ -24990,7 +24990,7 @@ Body:
         Rate: 2
       - Item: Fluorescent_Liquid
         Rate: 30
-      - Item: Porcellio_Card
+      - Item: S_Card_4337
         Rate: 1
         StealProtected: true
   - Id: 1620
@@ -25033,7 +25033,7 @@ Body:
         Rate: 3000
       - Item: Old_Blue_Box
         Rate: 1
-      - Item: Noxious_Card
+      - Item: S_Card_4334
         Rate: 1
         StealProtected: true
   - Id: 1621
@@ -25075,7 +25075,7 @@ Body:
         Rate: 2000
       - Item: Old_Blue_Box
         Rate: 1
-      - Item: Venomous_Card
+      - Item: S_Card_4333
         Rate: 1
         StealProtected: true
   - Id: 1622
@@ -25125,7 +25125,7 @@ Body:
         RandomOptionGroup: Accessory
       - Item: Elunium
         Rate: 100
-      - Item: Teddy_Bear_Card
+      - Item: S_Card_4340
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -25192,7 +25192,7 @@ Body:
       - Item: Spanner
         Rate: 20
         RandomOptionGroup: Melee_Level_3
-      - Item: Rsx_0806_Card
+      - Item: S_Card_4342
         Rate: 1
         StealProtected: true
   - Id: 1624
@@ -25379,7 +25379,7 @@ Body:
       - Item: Six_Shooter_
         Rate: 5
         RandomOptionGroup: Melee_Level_1
-      - Item: Mole_Card
+      - Item: S_Card_4343
         Rate: 1
         StealProtected: true
   - Id: 1629
@@ -25478,7 +25478,7 @@ Body:
         RandomOptionGroup: Accessory
       - Item: Tiara
         Rate: 10
-      - Item: Bacsojin_Card
+      - Item: S_Card_4372
         Rate: 1
         StealProtected: true
   - Id: 1631
@@ -25526,7 +25526,7 @@ Body:
         Rate: 10
       - Item: Hair_Protector
         Rate: 50
-      - Item: Chung_E_Card
+      - Item: S_Card_4373
         Rate: 1
         StealProtected: true
   - Id: 1632
@@ -25675,7 +25675,7 @@ Body:
       - Item: Ruber
         Rate: 1
         RandomOptionGroup: Melee_Level_3
-      - Item: Seyren_Card
+      - Item: S_Card_4358
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -25847,7 +25847,7 @@ Body:
       - Item: Muffler_
         Rate: 10
         RandomOptionGroup: Garment
-      - Item: Magaleta_Card
+      - Item: S_Card_4364
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -25956,7 +25956,7 @@ Body:
       - Item: Shoes_
         Rate: 20
         RandomOptionGroup: Shoes
-      - Item: Katrinn_Card
+      - Item: S_Card_4366
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -26254,7 +26254,7 @@ Body:
       - Item: Skewer
         Rate: 1500
         RandomOptionGroup: Melee_Level_4
-      - Item: B_Seyren_Card
+      - Item: S_Card_4357
         Rate: 1
         StealProtected: true
   - Id: 1647
@@ -26320,7 +26320,7 @@ Body:
       - Item: Ginnungagap
         Rate: 3500
         RandomOptionGroup: Melee_Level_4
-      - Item: B_Eremes_Card
+      - Item: S_Card_4359
         Rate: 1
         StealProtected: true
   - Id: 1648
@@ -26453,7 +26453,7 @@ Body:
       - Item: Diary_Of_Great_Sage
         Rate: 3500
         RandomOptionGroup: Magic_Level_3
-      - Item: B_Magaleta_Card
+      - Item: S_Card_4363
         Rate: 1
         StealProtected: true
   - Id: 1650
@@ -26584,7 +26584,7 @@ Body:
       - Item: Glittering_Clothes
         Rate: 3500
         RandomOptionGroup: Armor
-      - Item: B_Katrinn_Card
+      - Item: S_Card_4365
         Rate: 1
         StealProtected: true
   - Id: 1652
@@ -26639,7 +26639,7 @@ Body:
       - Item: Plate_Armor_
         Rate: 1
         RandomOptionGroup: Armor
-      - Item: Ygnizem_Card
+      - Item: S_Card_4346
         Rate: 1
         StealProtected: true
   - Id: 1653
@@ -26855,7 +26855,7 @@ Body:
       - Item: Shoes_
         Rate: 2
         RandomOptionGroup: Shoes
-      - Item: Kavac_Card
+      - Item: S_Card_4351
         Rate: 1
         StealProtected: true
   - Id: 1657
@@ -26974,7 +26974,7 @@ Body:
       - Item: Nagan
         Rate: 1000
         RandomOptionGroup: Melee_Level_4
-      - Item: B_Ygnizem_Card
+      - Item: S_Card_4352
         Rate: 1
         StealProtected: true
   - Id: 1659
@@ -27326,7 +27326,7 @@ Body:
       - Item: Gate_KeeperDD
         Rate: 5
         RandomOptionGroup: Melee_Level_4
-      - Item: Archdam_Card
+      - Item: S_Card_4371
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -27361,7 +27361,7 @@ Body:
     DamageMotion: 432
     Ai: 04
     Drops:
-      - Item: Dimik_Card
+      - Item: S_Card_4370
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -27413,7 +27413,7 @@ Body:
         Rate: 10
       - Item: Imperial_Cooking_Kits
         Rate: 50
-      - Item: Dimik_Card
+      - Item: S_Card_4370
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -27465,7 +27465,7 @@ Body:
         Rate: 10
       - Item: Imperial_Cooking_Kits
         Rate: 50
-      - Item: Dimik_Card
+      - Item: S_Card_4370
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -27517,7 +27517,7 @@ Body:
         Rate: 10
       - Item: Imperial_Cooking_Kits
         Rate: 50
-      - Item: Dimik_Card
+      - Item: S_Card_4370
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -27569,7 +27569,7 @@ Body:
         Rate: 10
       - Item: Imperial_Cooking_Kits
         Rate: 50
-      - Item: Dimik_Card
+      - Item: S_Card_4370
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -27640,7 +27640,7 @@ Body:
     DamageMotion: 360
     Ai: 04
     Drops:
-      - Item: Venatu_Card
+      - Item: S_Card_4369
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -27692,7 +27692,7 @@ Body:
         Rate: 10
       - Item: High_end_Cooking_Kits
         Rate: 100
-      - Item: Venatu_Card
+      - Item: S_Card_4369
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -27744,7 +27744,7 @@ Body:
         Rate: 10
       - Item: High_end_Cooking_Kits
         Rate: 100
-      - Item: Venatu_Card
+      - Item: S_Card_4369
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -27796,7 +27796,7 @@ Body:
         Rate: 10
       - Item: High_end_Cooking_Kits
         Rate: 100
-      - Item: Venatu_Card
+      - Item: S_Card_4369
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -27848,7 +27848,7 @@ Body:
         Rate: 10
       - Item: High_end_Cooking_Kits
         Rate: 100
-      - Item: Venatu_Card
+      - Item: S_Card_4369
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -27943,7 +27943,7 @@ Body:
         Rate: 6
       - Item: Stone_Of_Intelligence_
         Rate: 300
-      - Item: Gemini_Card
+      - Item: S_Card_4354
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -27994,7 +27994,7 @@ Body:
         Rate: 100
       - Item: Fedora_
         Rate: 6
-      - Item: Removal_Card
+      - Item: S_Card_4353
         Rate: 1
         StealProtected: true
   - Id: 1683
@@ -28112,7 +28112,7 @@ Body:
       - Item: Vesper_Core04
         Rate: 100
         RandomOptionGroup: Accessory
-      - Item: Apocalips_H_Card
+      - Item: S_Card_4374
         Rate: 1
         StealProtected: true
   - Id: 1686
@@ -28158,7 +28158,7 @@ Body:
         Rate: 200
       - Item: Bib
         Rate: 100
-      - Item: Orc_Baby_Card
+      - Item: S_Card_4375
         Rate: 1
         StealProtected: true
   - Id: 1687
@@ -28264,7 +28264,7 @@ Body:
       - Item: Kakkung_
         Rate: 6000
         RandomOptionGroup: Ranged_Level_3
-      - Item: Lady_Tanee_Card
+      - Item: S_Card_4376
         Rate: 1
         StealProtected: true
   - Id: 1689
@@ -28735,7 +28735,7 @@ Body:
       - Item: Gold_Ring
         Rate: 100
         RandomOptionGroup: Accessory
-      - Item: Ancient_Mimic_Card
+      - Item: S_Card_4387
         Rate: 1
         StealProtected: true
   - Id: 1700
@@ -28786,7 +28786,7 @@ Body:
         Rate: 10
       - Item: Golden_Bracelet
         Rate: 100
-      - Item: Observation_Card
+      - Item: S_Card_4392
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -28837,7 +28837,7 @@ Body:
         Rate: 1000
       - Item: Cursed_Seal
         Rate: 50
-      - Item: Shelter_Card
+      - Item: S_Card_4393
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -29001,7 +29001,7 @@ Body:
       - Item: Goibne's_Shoulder_Arms
         Rate: 1000
         RandomOptionGroup: Garment
-      - Item: Tha_Odium_Card
+      - Item: S_Card_4396
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -29053,7 +29053,7 @@ Body:
       - Item: Goibne's_Combat_Boots
         Rate: 1000
         RandomOptionGroup: Shoes
-      - Item: Tha_Despero_Card
+      - Item: S_Card_4397
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -29441,7 +29441,7 @@ Body:
       - Item: Stone_Buckler
         Rate: 50
         RandomOptionGroup: Shield
-      - Item: Acidus_Card
+      - Item: S_Card_4378
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -29533,7 +29533,7 @@ Body:
         Rate: 1035
       - Item: Dragon_Scale
         Rate: 589
-      - Item: Novus_Card
+      - Item: S_Card_4383
         Rate: 1
         StealProtected: true
   - Id: 1716
@@ -29580,7 +29580,7 @@ Body:
         Rate: 20
       - Item: Dragonball_Blue
         Rate: 100
-      - Item: Acidus__Card
+      - Item: S_Card_4379
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -29628,7 +29628,7 @@ Body:
         Rate: 20
       - Item: Dragonball_Green
         Rate: 100
-      - Item: Ferus__Card
+      - Item: S_Card_4381
         Rate: 1
         StealProtected: true
   - Id: 1718
@@ -29667,7 +29667,7 @@ Body:
         Rate: 1035
       - Item: Dragon_Scale
         Rate: 589
-      - Item: Novus__Card
+      - Item: S_Card_4382
         Rate: 1
         StealProtected: true
   - Id: 1719
@@ -29730,7 +29730,7 @@ Body:
         RandomOptionGroup: Melee_Level_3
       - Item: Gemmed_Crown
         Rate: 500
-      - Item: Detale_Card
+      - Item: S_Card_4386
         Rate: 1
         StealProtected: true
   - Id: 1720
@@ -30239,7 +30239,7 @@ Body:
       - Item: Morrigane's_Belt
         Rate: 1000
         RandomOptionGroup: Accessory
-      - Item: Kiel_Card
+      - Item: S_Card_4403
         Rate: 1
         StealProtected: true
   - Id: 1735
@@ -30291,7 +30291,7 @@ Body:
       - Item: Vali's_Manteau
         Rate: 20
         RandomOptionGroup: Garment
-      - Item: Alicel_Card
+      - Item: S_Card_4401
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -30347,7 +30347,7 @@ Body:
       - Item: Curved_Sword
         Rate: 15
         RandomOptionGroup: Melee_Level_4
-      - Item: Aliot_Card
+      - Item: S_Card_4402
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -30401,7 +30401,7 @@ Body:
       - Item: Orleans_Server
         Rate: 5
         RandomOptionGroup: Shield
-      - Item: Aliza_Card
+      - Item: S_Card_4400
         Rate: 1
         StealProtected: true
   - Id: 1738
@@ -30910,7 +30910,7 @@ Body:
       - Item: Blood_Tears
         Rate: 5
         RandomOptionGroup: Melee_Level_4
-      - Item: Skogul_Card
+      - Item: S_Card_4404
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -30962,7 +30962,7 @@ Body:
         RandomOptionGroup: Armor
       - Item: Elunium_Stone
         Rate: 500
-      - Item: Frus_Card
+      - Item: S_Card_4405
         Rate: 1
         StealProtected: true
   - Id: 1754
@@ -31521,7 +31521,7 @@ Body:
       - Item: Hurricane_Fury
         Rate: 100
         RandomOptionGroup: Melee_Level_4
-      - Item: Gloom_Under_Night_Card
+      - Item: S_Card_4408
         Rate: 1
         StealProtected: true
   - Id: 1769
@@ -31568,7 +31568,7 @@ Body:
         Rate: 50
       - Item: Bloody_Rune
         Rate: 100
-      - Item: Agav_Card
+      - Item: S_Card_4409
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -31620,7 +31620,7 @@ Body:
       - Item: Divine_Cloth
         Rate: 20
         RandomOptionGroup: Armor
-      - Item: Echio_Card
+      - Item: S_Card_4410
         Rate: 1
         StealProtected: true
   - Id: 1771
@@ -31667,7 +31667,7 @@ Body:
         RandomOptionGroup: Melee_Level_4
       - Item: Bloody_Rune
         Rate: 100
-      - Item: Vanberk_Card
+      - Item: S_Card_4411
         Rate: 1
         StealProtected: true
   - Id: 1772
@@ -31715,7 +31715,7 @@ Body:
         RandomOptionGroup: Accessory
       - Item: Bloody_Rune
         Rate: 100
-      - Item: Isilla_Card
+      - Item: S_Card_4412
         Rate: 1
         StealProtected: true
   - Id: 1773
@@ -31767,7 +31767,7 @@ Body:
       - Item: Shadow_Walk
         Rate: 10
         RandomOptionGroup: Shoes
-      - Item: Hodremlin_Card
+      - Item: S_Card_4413
         Rate: 1
         StealProtected: true
   - Id: 1774
@@ -31814,7 +31814,7 @@ Body:
       - Item: Berdysz
         Rate: 20
         RandomOptionGroup: Melee_Level_3
-      - Item: Seeker_Card
+      - Item: S_Card_4414
         Rate: 1
         StealProtected: true
   - Id: 1775
@@ -31951,7 +31951,7 @@ Body:
         Rate: 30
       - Item: Mistic_Frozen
         Rate: 100
-      - Item: Ice_Titan_Card
+      - Item: S_Card_4417
         Rate: 1
         StealProtected: true
   - Id: 1778
@@ -32054,7 +32054,7 @@ Body:
         Rate: 5000
       - Item: Yggdrasilberry
         Rate: 5000
-      - Item: Ktullanux_Card
+      - Item: S_Card_4419
         Rate: 1
         StealProtected: true
   - Id: 1780
@@ -32099,7 +32099,7 @@ Body:
         Rate: 1000
       - Item: Deadly_Noxious_Herb
         Rate: 3
-      - Item: Muscipular_Card
+      - Item: S_Card_4420
         Rate: 1
         StealProtected: true
   - Id: 1781
@@ -32186,7 +32186,7 @@ Body:
       - Item: Combo_Battle_Glove
         Rate: 2
         RandomOptionGroup: Melee_Level_3
-      - Item: Roween_Card
+      - Item: S_Card_4422
         Rate: 1
         StealProtected: true
   - Id: 1783
@@ -34010,7 +34010,7 @@ Body:
       - Item: Meteo_Plate_Armor
         Rate: 20
         RandomOptionGroup: Armor
-      - Item: Salamander_Card
+      - Item: S_Card_4429
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -34131,7 +34131,7 @@ Body:
       - Item: Piercing_Staff
         Rate: 10
         RandomOptionGroup: Magic_Level_3
-      - Item: Kasa_Card
+      - Item: S_Card_4431
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -34230,7 +34230,7 @@ Body:
         Rate: 3000
       - Item: Elunium_Stone
         Rate: 34
-      - Item: Magmaring_Card
+      - Item: S_Card_4432
         Rate: 1
         StealProtected: true
   - Id: 1837
@@ -34337,7 +34337,7 @@ Body:
       - Item: Earth_Bow
         Rate: 5
         RandomOptionGroup: Ranged_Level_3
-      - Item: Knocker_Card
+      - Item: S_Card_4434
         Rate: 1
         StealProtected: true
   - Id: 1839
@@ -34389,7 +34389,7 @@ Body:
         RandomOptionGroup: Garment
       - Item: Vroken_Sword
         Rate: 4365
-      - Item: Byorgue_Card
+      - Item: S_Card_4426
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -35219,7 +35219,7 @@ Body:
         RandomOptionGroup: Shoes
       - Item: Sweet_Bean
         Rate: 600
-      - Item: Coco_Card
+      - Item: S_Card_4041
         Rate: 1
         StealProtected: true
   - Id: 1861
@@ -35267,7 +35267,7 @@ Body:
         Rate: 1000
       - Item: Yggdrasilberry
         Rate: 25
-      - Item: Choco_Card
+      - Item: S_Card_4285
         Rate: 1
         StealProtected: true
   - Id: 1862
@@ -35315,7 +35315,7 @@ Body:
         Rate: 10
       - Item: Goggle
         Rate: 15
-      - Item: Martin_Card
+      - Item: S_Card_4046
         Rate: 1
         StealProtected: true
   - Id: 1863
@@ -35393,7 +35393,7 @@ Body:
         Rate: 3000
       - Item: Sticky_Mucus
         Rate: 3000
-      - Item: Zombie_Slaughter_Card
+      - Item: S_Card_4435
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -35551,7 +35551,7 @@ Body:
         Rate: 1500
       - Item: Brigan
         Rate: 5335
-      - Item: Banshee_Card
+      - Item: S_Card_4438
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -35628,7 +35628,7 @@ Body:
         RandomOptionGroup: Melee_Level_3
       - Item: Horrendous_Mouth
         Rate: 6000
-      - Item: Flame_Skull_Card
+      - Item: S_Card_4439
         Rate: 1
         StealProtected: true
   - Id: 1870
@@ -35739,7 +35739,7 @@ Body:
       - Item: Blessed_Wand
         Rate: 2000
         RandomOptionGroup: Magic_Level_3
-      - Item: Fallen_Bishop_Card
+      - Item: S_Card_4441
         Rate: 1
         StealProtected: true
   - Id: 1872
@@ -38658,7 +38658,7 @@ Body:
         RandomOptionGroup: Magic_Level_3
       - Item: Agate
         Rate: 9000
-      - Item: Ant_Buyanne_Card
+      - Item: S_Card_4451
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -39032,7 +39032,7 @@ Body:
         Rate: 200
       - Item: White_Herb
         Rate: 700
-      - Item: Marc_Card
+      - Item: S_Card_4105
         Rate: 1
         StealProtected: true
   - Id: 1970
@@ -39255,7 +39255,7 @@ Body:
       - Item: Shadow_Guard
         Rate: 20
         RandomOptionGroup: Shield
-      - Item: Banshee_Master_Card
+      - Item: S_Card_4450
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -39759,7 +39759,7 @@ Body:
         Rate: 3100
       - Item: Sweet_Potato
         Rate: 3000
-      - Item: Tatacho_Card
+      - Item: S_Card_4442
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -39817,7 +39817,7 @@ Body:
         Rate: 9000
       - Item: Solid_Shell
         Rate: 2500
-      - Item: Centipede_Card
+      - Item: S_Card_4447
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -40089,7 +40089,7 @@ Body:
       - Item: Long_Horn
         Rate: 1
         RandomOptionGroup: Melee_Level_4
-      - Item: Cornus_Card
+      - Item: S_Card_4448
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -40199,7 +40199,7 @@ Body:
         Rate: 200
       - Item: Solid_Shell
         Rate: 3000
-      - Item: Luciola_Vespa_Card
+      - Item: S_Card_4445
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -40509,7 +40509,7 @@ Body:
         Rate: 1000
       - Item: Honey
         Rate: 500
-      - Item: Draco_Card
+      - Item: S_Card_4444
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -40624,7 +40624,7 @@ Body:
         Rate: 5000
       - Item: Tiny_Waterbottle
         Rate: 100
-      - Item: Aqua_Elemental_Card
+      - Item: S_Card_4443
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
@@ -40951,7 +40951,7 @@ Body:
       - Item: Bradium_Stonehammer
         Rate: 10
         RandomOptionGroup: Melee_Level_4
-      - Item: Dark_Shadow_Card
+      - Item: S_Card_4449
         Rate: 1
         StealProtected: true
       - Item: Dawn_Essence
