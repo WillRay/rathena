@@ -199,7 +199,8 @@ function	script	GetRandomOptId	{
 
 				if (callfunc("IsRandomChanceOf", 30)) {
 					setarray @optIds[0], RDMOPT_MELEE_ATTACK_DAMAGE_TARGET, RDMOPT_VAR_ATKPERCENT;
-					return @optIds[rand(0,getarraysize(@optIds)-1)];
+					// return @optIds[rand(0,getarraysize(@optIds)-1)];
+					return RDMOPT_MELEE_ATTACK_DAMAGE_TARGET;
 				}
 
 				if (callfunc("IsRandomChanceOf", 50)) {

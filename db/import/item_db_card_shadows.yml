@@ -1,0 +1,2868 @@
+Header:
+  Type: ITEM_DB
+  Version: 3
+Body:
+  - Id: 30001
+    AegisName: S_Card_4001
+    Name: Shadow Poring Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bLuk,2;
+      bonus bFlee2,1;
+  - Id: 30003
+    AegisName: S_Card_4003
+    Name: Shadow Pupa Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxHP,700;
+  - Id: 30008
+    AegisName: S_Card_4008
+    Name: Shadow Picky Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bStr,1;
+      bonus bBaseAtk,10;
+  - Id: 30009
+    AegisName: S_Card_4009
+    Name: Shadow Chonchon Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bAgi,1;
+      bonus bFlee,2;
+  - Id: 30010
+    AegisName: S_Card_4010
+    Name: Shadow Willow Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxSP,80;
+  - Id: 30011
+    AegisName: S_Card_4011
+    Name: Shadow Picky Egg Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bVit,1;
+      bonus bMaxHP,100;
+  - Id: 30012
+    AegisName: S_Card_4012
+    Name: Shadow Thief Bug Egg Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxHP,400;
+  - Id: 30013
+    AegisName: S_Card_4013
+    Name: Shadow Andre Egg Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxHPrate,5;
+  - Id: 30014
+    AegisName: S_Card_4014
+    Name: Shadow Roda Frog Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxHP,400;
+      bonus bMaxSP,50;
+  - Id: 30015
+    AegisName: S_Card_4015
+    Name: Shadow Condor Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bFlee,10;
+  - Id: 30016
+    AegisName: S_Card_4016
+    Name: Shadow Thief Bug Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bAgi,1;
+  - Id: 30021
+    AegisName: S_Card_4021
+    Name: Shadow Rocker Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDex,1;
+      bonus bBaseAtk,5;
+  - Id: 30023
+    AegisName: S_Card_4023
+    Name: Shadow Baby Desert Wolf Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bInt,1;
+  - Id: 30031
+    AegisName: S_Card_4031
+    Name: Shadow Peco Peco Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxHPrate,10;
+  - Id: 30032
+    AegisName: S_Card_4032
+    Name: Shadow Ambernite Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDef,2;
+  - Id: 30038
+    AegisName: S_Card_4038
+    Name: Shadow Zombie Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bHPrecovRate,20;
+  - Id: 30039
+    AegisName: S_Card_4039
+    Name: Shadow Stainer Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bResEff,Eff_Silence,2000;
+      bonus bDef,1;
+  - Id: 30041
+    AegisName: S_Card_4041
+    Name: Shadow Coco Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bResEff,Eff_Sleep,2000;
+      bonus bDef,1;
+  - Id: 30042
+    AegisName: S_Card_4042
+    Name: Shadow Steel Chonchon Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Wind,10;
+      bonus bDef,2;
+  - Id: 30045
+    AegisName: S_Card_4045
+    Name: Shadow Horn Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bLongAtkDef,35;
+  - Id: 30046
+    AegisName: S_Card_4046
+    Name: Shadow Martin Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bResEff,Eff_Blind,2000;
+      bonus bDef,1;
+  - Id: 30047
+    AegisName: S_Card_4047
+    Name: Shadow Ghostring Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDefEle,Ele_Ghost;
+      bonus bHPrecovRate,-25;
+  - Id: 30050
+    AegisName: S_Card_4050
+    Name: Shadow Male Thief Bug Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bAgi,2;
+  - Id: 30052
+    AegisName: S_Card_4052
+    Name: Shadow Elder Willow Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bInt,2;
+  - Id: 30054
+    AegisName: S_Card_4054
+    Name: Shadow Angeling Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDefEle,Ele_Holy;
+  - Id: 30056
+    AegisName: S_Card_4056
+    Name: Shadow Dustiness Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Wind,30;
+      bonus bFlee,5;
+  - Id: 30058
+    AegisName: S_Card_4058
+    Name: Shadow Thara Frog Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_DemiHuman,30;
+      bonus2 bSubRace,RC_Player_Human,30;
+  - Id: 30059
+    AegisName: S_Card_4059
+    Name: Shadow Soldier Andre Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Plant,30;
+  - Id: 30061
+    AegisName: S_Card_4061
+    Name: Shadow Cornutus Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bUnbreakableArmor;
+      bonus bDef,1;
+  - Id: 30066
+    AegisName: S_Card_4066
+    Name: Shadow Orc Warrior Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Brute,30;
+      bonus2 bSubRace,RC_Player_Doram,30;
+  - Id: 30067
+    AegisName: S_Card_4067
+    Name: Shadow Megalodon Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bResEff,Eff_Freeze,2000;
+      bonus bDef,1;
+  - Id: 30070
+    AegisName: S_Card_4070
+    Name: Shadow Eggyra Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bSPrecovRate,15;
+  - Id: 30071
+    AegisName: S_Card_4071
+    Name: Shadow Orc Zombie Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Undead,30;
+      bonus bFlee,5;
+  - Id: 30074
+    AegisName: S_Card_4074
+    Name: Shadow Bigfoot Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Insect,30;
+  - Id: 30075
+    AegisName: S_Card_4075
+    Name: Shadow Argos Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bResEff,Eff_Stone,2000;
+      bonus bDef,1;
+  - Id: 30078
+    AegisName: S_Card_4078
+    Name: Shadow Savage Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bVit,3;
+  - Id: 30081
+    AegisName: S_Card_4081
+    Name: Shadow Hode Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Earth,30;
+      bonus bFlee,5;
+  - Id: 30083
+    AegisName: S_Card_4083
+    Name: Shadow Rafflesia Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Fish,30;
+  - Id: 30087
+    AegisName: S_Card_4087
+    Name: Shadow Giearth Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bResEff,Eff_Confusion,10000;
+      bonus2 bSubEle,Ele_Earth,15;
+  - Id: 30088
+    AegisName: S_Card_4088
+    Name: Shadow Frilldora Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      skill "AS_CLOAKING",1;
+  - Id: 30089
+    AegisName: S_Card_4089
+    Name: Shadow Swordfish Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDefEle,Ele_Water;
+      bonus bDef,1;
+  - Id: 30090
+    AegisName: S_Card_4090
+    Name: Shadow Munak Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bResEff,Eff_Stone,1500;
+      bonus2 bSubEle,Ele_Earth,5;
+      bonus bDef,1;
+  - Id: 30095
+    AegisName: S_Card_4095
+    Name: Shadow Marse Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Water,30;
+      bonus bFlee,5;
+  - Id: 30097
+    AegisName: S_Card_4097
+    Name: Shadow Matyr Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxHPrate,10;
+      bonus bAgi,1;
+  - Id: 30098
+    AegisName: S_Card_4098
+    Name: Shadow Dokebi Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDefEle,Ele_Wind;
+      bonus bDef,1;
+  - Id: 30099
+    AegisName: S_Card_4099
+    Name: Shadow Pasana Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDefEle,Ele_Fire;
+      bonus bDef,1;
+  - Id: 30100
+    AegisName: S_Card_4100
+    Name: Shadow Sohee Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxSPrate,15;
+      bonus bSPrecovRate,3;
+  - Id: 30101
+    AegisName: S_Card_4101
+    Name: Shadow Sandman Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDefEle,Ele_Earth;
+      bonus bDef,1;
+  - Id: 30102
+    AegisName: S_Card_4102
+    Name: Shadow Whisper Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bFlee,20;
+      bonus2 bSubEle,Ele_Ghost,-50;
+  - Id: 30105
+    AegisName: S_Card_4105
+    Name: Shadow Marc Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Water,5;
+      bonus2 bResEff,Eff_Freeze,10000;
+  - Id: 30107
+    AegisName: S_Card_4107
+    Name: Shadow Verit Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxHPrate,8;
+      bonus bMaxSPrate,8;
+  - Id: 30108
+    AegisName: S_Card_4108
+    Name: Shadow Myst Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Poison,30;
+      bonus bFlee,5;
+  - Id: 30109
+    AegisName: S_Card_4109
+    Name: Shadow Jakk Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Fire,30;
+      bonus bFlee,5;
+  - Id: 30110
+    AegisName: S_Card_4110
+    Name: Shadow Ghoul Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bResEff,Eff_Poison,2000;
+      bonus bDef,1;
+  - Id: 30112
+    AegisName: S_Card_4112
+    Name: Shadow Marduk Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bResEff,Eff_Silence,10000;
+  - Id: 30113
+    AegisName: S_Card_4113
+    Name: Shadow Marionette Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Ghost,30;
+      bonus bFlee,5;
+  - Id: 30114
+    AegisName: S_Card_4114
+    Name: Shadow Argiope Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDefEle,Ele_Poison;
+      bonus bDef,1;
+  - Id: 30116
+    AegisName: S_Card_4116
+    Name: Shadow Isis Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Dark,30;
+      bonus bFlee,5;
+  - Id: 30119
+    AegisName: S_Card_4119
+    Name: Shadow Bathory Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDefEle,Ele_Dark;
+  - Id: 30120
+    AegisName: S_Card_4120
+    Name: Shadow Sky Petite Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Dragon,30;
+  - Id: 30122
+    AegisName: S_Card_4122
+    Name: Shadow Deviruchi Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bStr,1;
+      bonus2 bResEff,Eff_Blind,10000;
+  - Id: 30123
+    AegisName: S_Card_4123
+    Name: Shadow Eddga Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxHPrate,-25;
+      bonus bNoWalkDelay;
+  - Id: 30124
+    AegisName: S_Card_4124
+    Name: Shadow Medusa Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Demon,15;
+      bonus2 bResEff,Eff_Stone,10000;
+  - Id: 30127
+    AegisName: S_Card_4127
+    Name: Shadow Nightmare Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bResEff,Eff_Sleep,10000;
+      bonus bAgi,1;
+  - Id: 30128
+    AegisName: S_Card_4128
+    Name: Shadow Golden Thief Bug Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bNoMagicDamage,100;
+      bonus bUseSPrate,100;
+  - Id: 30129
+    AegisName: S_Card_4129
+    Name: Shadow Bapho Jr. Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bAgi,3;
+      bonus bCritical,1;
+  - Id: 30131
+    AegisName: S_Card_4131
+    Name: Shadow Moonlight Flower Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bSpeedRate,25;
+  - Id: 30132
+    AegisName: S_Card_4132
+    Name: Shadow Mistress Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bNoGemStone;
+      bonus bUseSPrate,25;
+  - Id: 30133
+    AegisName: S_Card_4133
+    Name: Shadow Raydric Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,20;
+  - Id: 30135
+    AegisName: S_Card_4135
+    Name: Shadow Orc Lord Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bShortWeaponDamageReturn,30;
+  - Id: 30136
+    AegisName: S_Card_4136
+    Name: Shadow Khalitzburg Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Demon,30;
+  - Id: 30138
+    AegisName: S_Card_4138
+    Name: Shadow Anubis Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Angel,30;
+  - Id: 30141
+    AegisName: S_Card_4141
+    Name: Shadow Evil Druid Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDefEle,Ele_Undead;
+      bonus bInt,1;
+      bonus bDef,1;
+  - Id: 30143
+    AegisName: S_Card_4143
+    Name: Shadow Orc Hero Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bVit,3;
+      bonus2 bResEff,Eff_Stun,10000;
+  - Id: 30146
+    AegisName: S_Card_4146
+    Name: Shadow Maya Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMagicDamageReturn,50;
+  - Id: 30148
+    AegisName: S_Card_4148
+    Name: Shadow Pharaoh Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bUseSPrate,-30;
+  - Id: 30150
+    AegisName: S_Card_4150
+    Name: Shadow Goat Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      if (getrefine()<6) {
+         bonus bDef,2;
+         bonus bMdef,5;
+      }
+  - Id: 30151
+    AegisName: S_Card_4151
+    Name: Shadow Gajomart Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Plant,-20;
+      bonus2 bExpAddRace,RC_Plant,10;
+  - Id: 30158
+    AegisName: S_Card_4158
+    Name: Shadow Sky Deleter Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bHPrecovRate,-100;
+      bonus bHPGainValue,100;
+  - Id: 30159
+    AegisName: S_Card_4159
+    Name: Shadow Nine Tail Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bAgi,2;
+      if (getrefine()>8)
+         bonus bFlee,20;
+  - Id: 30160
+    AegisName: S_Card_4160
+    Name: Shadow Firelock Soldier Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bStr,2;
+      if (getrefine()>8) {
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
+      }
+  - Id: 30161
+    AegisName: S_Card_4161
+    Name: Shadow Grand Peco Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus3 bAutoSpellWhenHit,"PR_GLORIA",1,50;
+  - Id: 30162
+    AegisName: S_Card_4162
+    Name: Shadow Grizzly Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEffWhenHit,Eff_Blind,300;
+  - Id: 30164
+    AegisName: S_Card_4164
+    Name: Shadow Gullinbursti Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Fish,-20;
+      bonus2 bExpAddRace,RC_Fish,10;
+  - Id: 30166
+    AegisName: S_Card_4166
+    Name: Shadow Nightmare Terror Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEffWhenHit,Eff_Curse,300;
+  - Id: 30168
+    AegisName: S_Card_4168
+    Name: Shadow Dark Lord Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus3 bAutoSpellWhenHit,"WZ_METEOR",5,100;
+  - Id: 30169
+    AegisName: S_Card_4169
+    Name: Shadow Dark Illusion Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxHPrate,-10;
+      bonus bMaxSPrate,-10;
+      bonus bCastrate,-10;
+  - Id: 30170
+    AegisName: S_Card_4170
+    Name: Shadow Dark Frame Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEffWhenHit,Eff_Stone,600;
+  - Id: 30173
+    AegisName: S_Card_4173
+    Name: Shadow Demon Pungus Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEffWhenHit,Eff_Sleep,600;
+  - Id: 30174
+    AegisName: S_Card_4174
+    Name: Shadow Deviling Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,50;
+      bonus2 bSubEle,Ele_Water,-50;
+      bonus2 bSubEle,Ele_Earth,-50;
+      bonus2 bSubEle,Ele_Fire,-50;
+      bonus2 bSubEle,Ele_Wind,-50;
+      bonus2 bSubEle,Ele_Poison,-50;
+      bonus2 bSubEle,Ele_Holy,-50;
+      bonus2 bSubEle,Ele_Dark,-50;
+      bonus2 bSubEle,Ele_Ghost,-50;
+      bonus2 bSubEle,Ele_Undead,-50;
+  - Id: 30177
+    AegisName: S_Card_4177
+    Name: Shadow Dryad Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus3 bAddMonsterDropItem,993,RC_Plant,100;
+      bonus2 bSubEle,Ele_Earth,10;
+  - Id: 30178
+    AegisName: S_Card_4178
+    Name: Shadow Dragon Tail Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bAgi,1;
+      bonus bFlee,10;
+      bonus2 bSkillAtk,"AC_DOUBLE",5;
+      bonus2 bSkillAtk,"AC_SHOWER",5;
+  - Id: 30179
+    AegisName: S_Card_4179
+    Name: Shadow Dragon Fly Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bAgi,1;
+  - Id: 30181
+    AegisName: S_Card_4181
+    Name: Shadow Disguise Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEffWhenHit,Eff_Silence,300+600*(readparam(bVit)>=77);
+  - Id: 30183
+    AegisName: S_Card_4183
+    Name: Shadow Vagabond Wolf Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bStr,1;
+  - Id: 30185
+    AegisName: S_Card_4185
+    Name: Shadow Rideword Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bInt,1;
+      if (BaseClass == Job_Acolyte) {
+         bonus bInt,1;
+         bonus bMdef,1;
+      }
+  - Id: 30186
+    AegisName: S_Card_4186
+    Name: Shadow Raggler Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bStr,1;
+      bonus bVit,1;
+  - Id: 30188
+    AegisName: S_Card_4188
+    Name: Shadow Leib Olmai Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Fire,10;
+      bonus3 bAddMonsterDropItem,990,RC_Brute,100;
+  - Id: 30189
+    AegisName: S_Card_4189
+    Name: Shadow Wraith Dead Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEffWhenHit,Eff_Curse,600;
+  - Id: 30191
+    AegisName: S_Card_4191
+    Name: Shadow Loli Ruri Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus3 bAutoSpellWhenHit,"AL_HEAL",3,50;
+  - Id: 30194
+    AegisName: S_Card_4194
+    Name: Shadow Rybio Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEffWhenHit,Eff_Stun,300+600*(readparam(bDex)>=77);
+  - Id: 30195
+    AegisName: S_Card_4195
+    Name: Shadow Leaf Cat Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Water,10;
+      bonus3 bAddMonsterDropItem,991,RC_Fish,100;
+  - Id: 30197
+    AegisName: S_Card_4197
+    Name: Shadow Mastering Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bLuk,1;
+  - Id: 30198
+    AegisName: S_Card_4198
+    Name: Shadow Maya Purple Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bIntravision;
+  - Id: 30199
+    AegisName: S_Card_4199
+    Name: Shadow Merman Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bHPrecovRate,10;
+      bonus bSPrecovRate,10;
+  - Id: 30200
+    AegisName: S_Card_4200
+    Name: Shadow Megalith Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      if (getrefine()<6)
+         bonus bMdef,7;
+  - Id: 30201
+    AegisName: S_Card_4201
+    Name: Shadow Majoruros Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEffWhenHit,Eff_Stun,600;
+  - Id: 30204
+    AegisName: S_Card_4204
+    Name: Shadow Mini Demon Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Brute,-20;
+      bonus2 bSubRace,RC_Player_Doram,-20;
+      bonus2 bExpAddRace,RC_Brute,10;
+  - Id: 30206
+    AegisName: S_Card_4206
+    Name: Shadow Myst Case Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddMonsterDropItem,644,30;
+  - Id: 30207
+    AegisName: S_Card_4207
+    Name: Shadow Mysteltainn Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubSize,Size_Small,25;
+      bonus bDef,1;
+  - Id: 30208
+    AegisName: S_Card_4208
+    Name: Shadow Miyabi Doll Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxSPrate,10;
+      bonus2 bSkillAtk,"MG_FROSTDIVER",5;
+  - Id: 30210
+    AegisName: S_Card_4210
+    Name: Shadow Wanderer Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      if (!isequipped(4172,4257,4230,4272))
+         bonus3 bAutoSpell,"RG_INTIMIDATE",1,20;
+      if (BaseClass == Job_Thief)
+         bonus bFlee,20;
+  - Id: 30211
+    AegisName: S_Card_4211
+    Name: Shadow Vocal Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMdef,3;
+  - Id: 30213
+    AegisName: S_Card_4213
+    Name: Shadow Brilight Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEffWhenHit,Eff_Silence,600;
+  - Id: 30216
+    AegisName: S_Card_4216
+    Name: Shadow Sasquatch Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEffWhenHit,Eff_Freeze,600;
+  - Id: 30217
+    AegisName: S_Card_4217
+    Name: Shadow Enchanted Peach Tree Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus3 bAutoSpell,"AL_HEAL",1+9*(getskilllv("AL_HEAL") == 10),20;
+  - Id: 30218
+    AegisName: S_Card_4218
+    Name: Shadow Succubus Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bVit,-3;
+      bonus bHPrecovRate,-20;
+      bonus bMaxHP,1000;
+  - Id: 30220
+    AegisName: S_Card_4220
+    Name: Shadow Solider Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDef,2;
+      bonus bMdef,2;
+  - Id: 30221
+    AegisName: S_Card_4221
+    Name: Shadow Skeleton General Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Insect,-20;
+      bonus2 bExpAddRace,RC_Insect,10;
+  - Id: 30222
+    AegisName: S_Card_4222
+    Name: Shadow Skeleton Prisoner Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEffWhenHit,Eff_Sleep,300;
+  - Id: 30223
+    AegisName: S_Card_4223
+    Name: Shadow Stalactic Golem Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDef,1;
+      bonus2 bResEff,Eff_Stun,2000;
+  - Id: 30226
+    AegisName: S_Card_4226
+    Name: Shadow Sting Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDef,2;
+      if (getrefine()>8)
+         bonus bMdef,5;
+  - Id: 30229
+    AegisName: S_Card_4229
+    Name: Shadow Tower Keeper Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bInt,1;
+      bonus bCastrate,-5;
+  - Id: 30231
+    AegisName: S_Card_4231
+    Name: Shadow Mi Gao Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddDefMonster,1285,-50;
+      bonus2 bAddDefMonster,1286,-50;
+      bonus2 bAddDefMonster,1287,-50;
+      bonus2 bAddDefMonster,1899,-50;
+      bonus2 bAddDefMonster,1900,-50;
+  - Id: 30233
+    AegisName: S_Card_4233
+    Name: Shadow Baby Leopard Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bLuk,3;
+      if (BaseClass == Job_Merchant)
+         bonus bUnbreakableArmor;
+  - Id: 30234
+    AegisName: S_Card_4234
+    Name: Shadow Anolian Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus3 bAutoSpellWhenHit,"AC_CONCENTRATION",1+9*(getskilllv("AC_CONCENTRATION") == 10),30;
+  - Id: 30235
+    AegisName: S_Card_4235
+    Name: Shadow Christmas Cookie Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Angel,-20;
+      bonus2 bExpAddRace,RC_Angel,10;
+  - Id: 30236
+    AegisName: S_Card_4236
+    Name: Shadow Amon Ra Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bAllStats,1;
+      bonus3 bAutoSpellWhenHit,"PR_KYRIE",10,(30+70*(readparam(bInt)>=99));
+  - Id: 30239
+    AegisName: S_Card_4239
+    Name: Shadow Iron Fist Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Formless,-20;
+      bonus2 bExpAddRace,RC_Formless,10;
+  - Id: 30240
+    AegisName: S_Card_4240
+    Name: Shadow Arclouze Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      if (getrefine()<6) {
+         bonus bDef,2;
+         bonus bMdef,3;
+      }
+  - Id: 30241
+    AegisName: S_Card_4241
+    Name: Shadow Arc Angeling Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxHP,300;
+      if (readparam(bLuk)>=77) {
+         bonus bHPrecovRate,100;
+         bonus bSPrecovRate,100;
+      }
+  - Id: 30242
+    AegisName: S_Card_4242
+    Name: Shadow Apocalipse Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bVit,2;
+      if (getrefine()>8)
+         bonus bMaxHP,800;
+  - Id: 30243
+    AegisName: S_Card_4243
+    Name: Shadow Antonio Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus3 bAutoSpellWhenHit,"AL_TELEPORT",1,500;
+  - Id: 30244
+    AegisName: S_Card_4244
+    Name: Shadow Alarm Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus3 bAutoSpellWhenHit,"MG_SIGHT",1,200;
+      bonus bMaxHP,300;
+      bonus bVit,1;
+  - Id: 30245
+    AegisName: S_Card_4245
+    Name: Shadow Am Mut Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_DemiHuman,-20;
+      bonus2 bSubRace,RC_Player_Human,-20;
+      bonus2 bExpAddRace,RC_DemiHuman,10;
+  - Id: 30248
+    AegisName: S_Card_4248
+    Name: Shadow Ancient Mummy Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus3 bAutoSpellWhenHit,"AL_CRUCIS",5,30;
+  - Id: 30249
+    AegisName: S_Card_4249
+    Name: Shadow Ancient Worm Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Demon,-20;
+      bonus2 bExpAddRace,RC_Demon,10;
+  - Id: 30250
+    AegisName: S_Card_4250
+    Name: Shadow Executioner Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubSize,Size_Large,25;
+      bonus bDef,1;
+  - Id: 30253
+    AegisName: S_Card_4253
+    Name: Shadow Alice Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubClass,Class_Boss,40;
+      bonus2 bSubClass,Class_Normal,-40;
+  - Id: 30254
+    AegisName: S_Card_4254
+    Name: Shadow Ogretooth Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubSize,Size_Medium,25;
+      bonus bDef,1;
+  - Id: 30257
+    AegisName: S_Card_4257
+    Name: Shadow Wild Rose Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bAgi,1;
+      if (BaseClass == Job_Thief)
+         bonus bFlee2,5;
+  - Id: 30258
+    AegisName: S_Card_4258
+    Name: Shadow Evil Nymph Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bInt,1;
+      bonus bMaxSP,50;
+  - Id: 30259
+    AegisName: S_Card_4259
+    Name: Shadow Wooden Golem Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDef,1;
+      bonus bHPrecovRate,30;
+  - Id: 30260
+    AegisName: S_Card_4260
+    Name: Shadow Wootan Shooter Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDef,1;
+      bonus2 bResEff,Eff_Confusion,2000;
+  - Id: 30261
+    AegisName: S_Card_4261
+    Name: Shadow Wootan Fighter Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDef,1;
+      bonus2 bResEff,Eff_Bleeding,2000;
+  - Id: 30266
+    AegisName: S_Card_4266
+    Name: Shadow Eclipse Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bVit,1;
+  - Id: 30267
+    AegisName: S_Card_4267
+    Name: Shadow Explosion Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Dragon,-20;
+      bonus2 bExpAddRace,RC_Dragon,10;
+  - Id: 30269
+    AegisName: S_Card_4269
+    Name: Shadow Incubus Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bInt,-3;
+      bonus bSPrecovRate,-20;
+      bonus bMaxSP,150;
+  - Id: 30270
+    AegisName: S_Card_4270
+    Name: Shadow Giant Spider Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEffWhenHit,Eff_Poison,600;
+  - Id: 30271
+    AegisName: S_Card_4271
+    Name: Shadow Giant Hornet Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Wind,10;
+      bonus3 bAddMonsterDropItem,992,RC_Insect,100;
+  - Id: 30275
+    AegisName: S_Card_4275
+    Name: Shadow Zombie Prisoner Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Undead,-20;
+      bonus2 bExpAddRace,RC_Undead,10;
+  - Id: 30277
+    AegisName: S_Card_4277
+    Name: Shadow Zealotus Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bLuk,2;
+      bonus2 bSkillAtk,"BA_MUSICALSTRIKE",10;
+      bonus2 bSkillAtk,"DC_THROWARROW",10;
+  - Id: 30278
+    AegisName: S_Card_4278
+    Name: Shadow Gibbet Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      if (getrefine()<6)
+         bonus bMdef,5;
+  - Id: 30279
+    AegisName: S_Card_4279
+    Name: Shadow Earth Deleter Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bSPrecovRate,-100;
+      bonus bSPGainValue,10;
+  - Id: 30280
+    AegisName: S_Card_4280
+    Name: Shadow Geographer Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus3 bAutoSpellWhenHit,"AL_BLESSING",2+8*(getskilllv("AL_BLESSING") == 10),30;
+  - Id: 30285
+    AegisName: S_Card_4285
+    Name: Shadow Choco Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bFlee2,5;
+      bonus bFlee,10;
+  - Id: 30286
+    AegisName: S_Card_4286
+    Name: Shadow Karakasa Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEffWhenHit,Eff_Confusion,300+600*(readparam(bStr)>=77);
+  - Id: 30287
+    AegisName: S_Card_4287
+    Name: Shadow Kapha Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      if (getrefine()<6)
+         bonus bMdef,8;
+  - Id: 30288
+    AegisName: S_Card_4288
+    Name: Shadow Carat Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bInt,2;
+      if (getrefine()>8)
+         bonus bMaxSP,150;
+  - Id: 30290
+    AegisName: S_Card_4290
+    Name: Shadow Cat O' Nine Tails Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMdef,3;
+      bonus bMagicDamageReturn,5;
+  - Id: 30295
+    AegisName: S_Card_4295
+    Name: Shadow Kraben Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEffWhenHit,Eff_Blind,600;
+  - Id: 30296
+    AegisName: S_Card_4296
+    Name: Shadow Cramp Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bGetZenyNum,500,1;
+  - Id: 30298
+    AegisName: S_Card_4298
+    Name: Shadow Creamy Fear Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEffWhenHit,Eff_Confusion,600;
+  - Id: 30299
+    AegisName: S_Card_4299
+    Name: Shadow Clock Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus3 bAutoSpellWhenHit,"CR_AUTOGUARD",3+7*(getskilllv("CR_AUTOGUARD") == 10),30;
+  - Id: 30300
+    AegisName: S_Card_4300
+    Name: Shadow Chimera Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEffWhenHit,Eff_Poison,300+600*(BaseJob == Job_Assassin);
+  - Id: 30301
+    AegisName: S_Card_4301
+    Name: Shadow Killer Mantis Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEffWhenHit,Eff_Bleeding,600;
+  - Id: 30302
+    AegisName: S_Card_4302
+    Name: Shadow Tao Gunka Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxHPrate,100;
+      bonus bDef,-50;
+      bonus bMdef,-50;
+  - Id: 30303
+    AegisName: S_Card_4303
+    Name: Shadow Giant Whisper Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bFlee,10;
+      if (readparam(bStr)>=80) bonus bBaseAtk,20;
+      if (readparam(bVit)>=80) bonus bMaxHPrate,3;
+      if (readparam(bLuk)>=80) bonus bCritical,3;
+  - Id: 30304
+    AegisName: S_Card_4304
+    Name: Shadow Tamruan Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDef,2;
+      bonus2 bSkillAtk,"CR_SHIELDCHARGE",10;
+      bonus2 bSkillAtk,"CR_SHIELDBOOMERANG",10;
+  - Id: 30306
+    AegisName: S_Card_4306
+    Name: Shadow Toad Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bFlee2,1;
+  - Id: 30309
+    AegisName: S_Card_4309
+    Name: Shadow Parasite Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDef,1;
+      bonus2 bSubRace,RC_Formless,5;
+  - Id: 30311
+    AegisName: S_Card_4311
+    Name: Shadow Permeter Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Dark,15;
+      bonus2 bSubEle,Ele_Undead,15;
+  - Id: 30313
+    AegisName: S_Card_4313
+    Name: Shadow Punk Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus4 bAutoSpellWhenHit,"WZ_QUAGMIRE",1+4*(getskilllv("WZ_QUAGMIRE") == 5),50,0;
+  - Id: 30314
+    AegisName: S_Card_4314
+    Name: Shadow Penomena Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Formless,30;
+  - Id: 30315
+    AegisName: S_Card_4315
+    Name: Shadow Pest Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEffWhenHit,Eff_Stone,300+600*(readparam(bInt)>=77);
+  - Id: 30319
+    AegisName: S_Card_4319
+    Name: Shadow Freezer Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxHP,300;
+      if (getrefine()>=9)
+         bonus2 bSkillAtk,"SM_BASH",10;
+  - Id: 30322
+    AegisName: S_Card_4322
+    Name: Shadow High Orc Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDef,1;
+      bonus bShortWeaponDamageReturn,5;
+  - Id: 30324
+    AegisName: S_Card_4324
+    Name: Shadow Hatii Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEffWhenHit,Eff_Freeze,5000;
+  - Id: 30325
+    AegisName: S_Card_4325
+    Name: Shadow Harpy Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,15;
+      bonus2 bSkillAtk,"MG_NAPALMBEAT",5;
+  - Id: 30328
+    AegisName: S_Card_4328
+    Name: Shadow Yao Jun Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bFlee,15;
+      bonus bCritical,1;
+  - Id: 30330
+    AegisName: S_Card_4330
+    Name: Shadow Evil Snake Lord Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bInt,3;
+      bonus2 bResEff,Eff_Blind,10000;
+      bonus2 bResEff,Eff_Curse,10000;
+  - Id: 30332
+    AegisName: S_Card_4332
+    Name: Shadow Waste Stove Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bBaseAtk,5;
+      bonus bInt,1;
+  - Id: 30333
+    AegisName: S_Card_4333
+    Name: Shadow Venomous Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus3 bAddEffWhenHit,Eff_Poison,3000,ATF_TARGET|ATF_SELF;
+  - Id: 30334
+    AegisName: S_Card_4334
+    Name: Shadow Noxious Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bLongAtkDef,10;
+      bonus2 bSubEle,Ele_Neutral,10;
+  - Id: 30336
+    AegisName: S_Card_4336
+    Name: Shadow Ungoliant Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bHPrecovRate,10;
+      bonus2 bResEff,Eff_Bleeding,10000;
+  - Id: 30337
+    AegisName: S_Card_4337
+    Name: Shadow Porcellio Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bBaseAtk,25;
+      bonus bDef,-5;
+  - Id: 30338
+    AegisName: S_Card_4338
+    Name: Shadow Obsidian Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bVit,readparam(bDex)/18;
+  - Id: 30339
+    AegisName: S_Card_4339
+    Name: Shadow Mineral Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bBaseAtk,-25;
+      bonus bDef,3;
+  - Id: 30340
+    AegisName: S_Card_4340
+    Name: Shadow Teddy Bear Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Undead,30;
+  - Id: 30342
+    AegisName: S_Card_4342
+    Name: Shadow RSX-0806 Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bVit,3;
+      bonus bUnbreakableArmor;
+      bonus bNoKnockback;
+  - Id: 30343
+    AegisName: S_Card_4343
+    Name: Shadow Holden Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bLuk,2;
+  - Id: 30346
+    AegisName: S_Card_4346
+    Name: Shadow Egnigem Cenia Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bStr,readparam(bInt)/18;
+  - Id: 30351
+    AegisName: S_Card_4351
+    Name: Shadow Kavach Icarus Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      if (getrefine()<=4) {
+         bonus bFlee,20;
+         bonus bFlee2,1;
+      }
+      else {
+         bonus bFlee,10;
+      }
+  - Id: 30352
+    AegisName: S_Card_4352
+    Name: Shadow General Egnigem Cenia Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+      bonus2 bHPRegenRate,50,10000;
+      bonus2 bSPRegenRate,10,10000;
+  - Id: 30353
+    AegisName: S_Card_4353
+    Name: Shadow Remover Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxHP,800-40*getrefine();
+      bonus bHPrecovRate,10;
+  - Id: 30354
+    AegisName: S_Card_4354
+    Name: Shadow Gemini-S58 Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      if (readparam(bAgi)>=90) {
+         bonus2 bResEff,Eff_Silence,3000;
+         bonus2 bResEff,Eff_Stun,3000;
+      }
+      if (readparam(bVit)>=80) {
+         bonus2 bResEff,Eff_Stone,5000;
+         bonus2 bResEff,Eff_Sleep,5000;
+      }
+  - Id: 30357
+    AegisName: S_Card_4357
+    Name: Shadow Lord Knight Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      skill "LK_BERSERK",1;
+      bonus bMaxHPrate,-50;
+  - Id: 30358
+    AegisName: S_Card_4358
+    Name: Shadow Seyren Windsor Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bStr,getrefine()-6;
+  - Id: 30359
+    AegisName: S_Card_4359
+    Name: Shadow Assassin Cross Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      skill "AS_CLOAKING",3;
+  - Id: 30363
+    AegisName: S_Card_4363
+    Name: Shadow High Priest Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus5 bAutoSpellWhenHit,"HP_ASSUMPTIO",1,50,BF_WEAPON|BF_MAGIC,0;
+  - Id: 30364
+    AegisName: S_Card_4364
+    Name: Shadow Margaretha Sorin Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bInt,1;
+      bonus5 bAutoSpellWhenHit,"PR_LEXDIVINA",5,150,BF_MAGIC,1;
+  - Id: 30365
+    AegisName: S_Card_4365
+    Name: Shadow High Wizard Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bIgnoreMdefClassRate,Class_Normal,100;
+      bonus bCastrate,100;
+      bonus bSPrecovRate,-100;
+  - Id: 30366
+    AegisName: S_Card_4366
+    Name: Shadow Kathryne Keyron Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bCastrate,getrefine()*-1;
+      if (getrefine()>=9) {
+         bonus bMatkRate,2;
+      }
+  - Id: 30369
+    AegisName: S_Card_4369
+    Name: Shadow Venatu Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bLuk,readparam(bAgi)/18;
+  - Id: 30370
+    AegisName: S_Card_4370
+    Name: Shadow Dimik Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bVit,getrefine()-5;
+  - Id: 30371
+    AegisName: S_Card_4371
+    Name: Shadow Archdam Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bCastrate,20;
+  - Id: 30372
+    AegisName: S_Card_4372
+    Name: Shadow White Lady Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bHealPower,30;
+      bonus bUseSPrate,15;
+  - Id: 30373
+    AegisName: S_Card_4373
+    Name: Shadow Green Maiden Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bLuk,getrefine()-5;
+      bonus bCritical,getrefine();
+  - Id: 30374
+    AegisName: S_Card_4374
+    Name: Shadow Vesper Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDex,2;
+      bonus2 bIgnoreMdefClassRate,Class_Boss,30;
+  - Id: 30375
+    AegisName: S_Card_4375
+    Name: Shadow Orc Baby Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      if (getrefine()>=9) {
+         bonus2 bSubEle,Ele_Neutral,15;
+         bonus bFlee,15;
+      }
+      else {
+         bonus2 bSubEle,Ele_Neutral,10;
+         bonus bFlee,10;
+      }
+  - Id: 30376
+    AegisName: S_Card_4376
+    Name: Shadow Lady Tanee Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxHPrate,-40;
+      bonus bMaxSPrate,50;
+      bonus2 bAddMonsterDropItem,513,200;
+      bonus2 bAddItemHealRate,513,100;
+  - Id: 30378
+    AegisName: S_Card_4378
+    Name: Shadow Gold Acidus Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      if (getrefine()<=4) {
+         bonus bMaxHPrate,8;
+         bonus bMaxSPrate,8;
+         bonus bHPrecovRate,5;
+         bonus bSPrecovRate,5;
+      }
+      else {
+         bonus bMaxHPrate,4;
+         bonus bMaxSPrate,4;
+      }
+  - Id: 30379
+    AegisName: S_Card_4379
+    Name: Shadow Blue Acidus Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      if (getrefine()<=4) {
+         bonus bSPrecovRate,5;
+         bonus bMaxSP,80;
+      }
+      else {
+         bonus bMaxSP,40;
+      }
+  - Id: 30381
+    AegisName: S_Card_4381
+    Name: Shadow Green Ferus Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bVit,1;
+      bonus bMaxHPrate,10;
+  - Id: 30382
+    AegisName: S_Card_4382
+    Name: Shadow Yellow Novus Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxHP,500;
+      bonus bHPrecovRate,10;
+  - Id: 30383
+    AegisName: S_Card_4383
+    Name: Shadow Red Novus Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus3 bAddEffWhenHit,Eff_Confusion,3000,ATF_TARGET|ATF_SELF;
+  - Id: 30386
+    AegisName: S_Card_4386
+    Name: Shadow Detardeurus Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMdef,-20;
+      bonus2 bResEff,Eff_Freeze,10000;
+      bonus5 bAutoSpellWhenHit,"SA_LANDPROTECTOR",1,70,BF_MAGIC,0;
+  - Id: 30387
+    AegisName: S_Card_4387
+    Name: Shadow Ancient Mimic Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bAgi,readparam(bLuk)/18;
+  - Id: 30392
+    AegisName: S_Card_4392
+    Name: Shadow Dame of Sentinel Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDex,readparam(bVit)/18;
+  - Id: 30393
+    AegisName: S_Card_4393
+    Name: Shadow Mistress of Shelter Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bInt,readparam(bStr)/18;
+  - Id: 30396
+    AegisName: S_Card_4396
+    Name: Shadow Odium of Thanatos Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bAgi,getrefine()-5;
+  - Id: 30397
+    AegisName: S_Card_4397
+    Name: Shadow Despero of Thanatos Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bInt,getrefine()-6;
+  - Id: 30400
+    AegisName: S_Card_4400
+    Name: Shadow Aliza Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus3 bAutoSpellWhenHit,"DC_WINKCHARM",1,50+50*(BaseJob == Job_Dancer);
+  - Id: 30401
+    AegisName: S_Card_4401
+    Name: Shadow Alicel Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bFlee,10;
+      bonus bDef,-5;
+  - Id: 30402
+    AegisName: S_Card_4402
+    Name: Shadow Aliot Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      if (BaseClass == Job_Swordman || BaseClass == Job_Merchant || BaseClass == Job_Thief) {
+         bonus bStr,2;
+         bonus bMaxHPrate,5;
+      }
+      if (BaseClass == Job_Mage || BaseClass == Job_Archer || BaseClass == Job_Acolyte) {
+         bonus bInt,2;
+         bonus bMaxSPrate,5;
+      }
+  - Id: 30403
+    AegisName: S_Card_4403
+    Name: Shadow Kiel-D-01 Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDelayRate,-30;
+  - Id: 30404
+    AegisName: S_Card_4404
+    Name: Shadow Skogul Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus3 bAddEffWhenHit,Eff_Bleeding,3000,ATF_TARGET|ATF_SELF;
+  - Id: 30405
+    AegisName: S_Card_4405
+    Name: Shadow Frus Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMagicDamageReturn,getrefine()*2;
+      if (BaseClass == Job_Mage)
+         bonus bMdef,3;
+  - Id: 30408
+    AegisName: S_Card_4408
+    Name: Shadow Gloom Under Night Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEle,Ele_Holy,40;
+      bonus2 bAddEle,Ele_Dark,40;
+      bonus2 bAddRace,RC_Angel,40;
+      bonus2 bAddRace,RC_Demon,40;
+  - Id: 30409
+    AegisName: S_Card_4409
+    Name: Shadow Agav Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMatkRate,5;
+      bonus bDef,-10;
+      if (BaseClass == Job_Mage)
+         bonus bMaxSP,100;
+  - Id: 30410
+    AegisName: S_Card_4410
+    Name: Shadow Echio Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bBaseAtk,15;
+      if (BaseClass == Job_Swordman)
+         bonus bMaxHP,500;
+  - Id: 30411
+    AegisName: S_Card_4411
+    Name: Shadow Vanberk Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bStr,2;
+      autobonus "{ bonus bCritical,100; }",5,5000,0,"{ specialeffect2 EF_ENHANCE; }";
+  - Id: 30412
+    AegisName: S_Card_4412
+    Name: Shadow Isilla Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bInt,2;
+      autobonus "{ bonus bCastrate,-50; bonus bFlee,30; }",50,5000,BF_MAGIC,"{ specialeffect2 EF_SUFFRAGIUM; }";
+  - Id: 30413
+    AegisName: S_Card_4413
+    Name: Shadow Hodremlin Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubSize,Size_All,15;
+      autobonus2 "{ bonus bFlee2,30; }",3,10000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_WIND; }";
+  - Id: 30414
+    AegisName: S_Card_4414
+    Name: Shadow Seeker Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      skill "MG_STONECURSE",1;
+      bonus2 bResEff,Eff_Stone,3000;
+      bonus bMdef,10;
+  - Id: 30417
+    AegisName: S_Card_4417
+    Name: Shadow Ice Titan Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bVit,2;
+      autobonus2 "{ bonus bDef,10; }",3,10000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_FREEZED; }";
+  - Id: 30419
+    AegisName: S_Card_4419
+    Name: Shadow Ktullanux Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddEle,Ele_Fire,50;
+      bonus5 bAutoSpellWhenHit,"WZ_FROSTNOVA",10,20,BF_WEAPON|BF_MAGIC,0;
+  - Id: 30420
+    AegisName: S_Card_4420
+    Name: Shadow Muscipular Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus3 bAutoSpellWhenHit,"AL_HEAL",1,100;
+      bonus3 bAutoSpellWhenHit,"AL_INCAGI",1,100;
+  - Id: 30422
+    AegisName: S_Card_4422
+    Name: Shadow Roween Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bFlee,5;
+      bonus bFlee2,3;
+      bonus2 bAddEle,Ele_Water,10;
+      bonus2 bCriticalAddRace,RC_Fish,15;
+  - Id: 30426
+    AegisName: S_Card_4426
+    Name: Shadow Byorgue Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      if (BaseJob == Job_Rogue) {
+         bonus bMatkRate,10;
+         bonus2 bAddClass,Class_All,10;
+      }
+  - Id: 30429
+    AegisName: S_Card_4429
+    Name: Shadow Salamander Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSkillAtk,"WZ_FIREPILLAR",40;
+      bonus2 bSkillAtk,"WZ_METEOR",40;
+  - Id: 30431
+    AegisName: S_Card_4431
+    Name: Shadow Kasa Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus3 bAutoSpell,"MG_FIREBALL",5,20;
+      bonus3 bAutoSpell,"MG_FIREBOLT",5,20;
+  - Id: 30432
+    AegisName: S_Card_4432
+    Name: Shadow Magmaring Card
+    Type: Shadowgear
+    Locations:
+      Costume_Garment: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bBaseAtk,5;
+      bonus2 bAddEle,Ele_Earth,10;
+      bonus2 bCriticalAddRace,RC_Brute,15;
+      bonus2 bCriticalAddRace,RC_Player_Doram,15;
+      bonus2 bCriticalAddRace,RC_Plant,15;
+  - Id: 30434
+    AegisName: S_Card_4434
+    Name: Shadow Knocker Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddRace,RC_Formless,5;
+      bonus3 bAddMonsterDropItem,756,RC_Formless,10;
+      bonus3 bAddMonsterDropItem,757,RC_Formless,10;
+  - Id: 30435
+    AegisName: S_Card_4435
+    Name: Shadow Zombie Slaughter Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bAddRace,RC_DemiHuman,1;
+      bonus2 bAddRace,RC_Player_Human,1;
+      bonus2 bMagicAddRace,RC_DemiHuman,1;
+      bonus2 bMagicAddRace,RC_Player_Human,1;
+      bonus bHPGainValue,50;
+  - Id: 30438
+    AegisName: S_Card_4438
+    Name: Shadow Banshee Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      if (BaseClass == Job_Mage) {
+         bonus bMaxSP,100;
+         bonus bMaxHP,-100;
+         bonus2 bSkillAtk,"MG_NAPALMBEAT",20;
+         bonus2 bSkillAtk,"MG_SOULSTRIKE",20;
+         bonus2 bSkillAtk,"HW_NAPALMVULCAN",20;
+      }
+  - Id: 30439
+    AegisName: S_Card_4439
+    Name: Shadow Flame Skull Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bResEff,Eff_Blind,3000;
+      bonus2 bResEff,Eff_Stun,3000;
+      bonus2 bResEff,Eff_Curse,3000;
+      bonus2 bResEff,Eff_Stone,3000;
+      bonus2 bAddEffWhenHit,Eff_Blind,500;
+      bonus2 bAddEffWhenHit,Eff_Stun,500;
+      bonus2 bAddEffWhenHit,Eff_Curse,500;
+      bonus2 bAddEffWhenHit,Eff_Stone,500;
+  - Id: 30441
+    AegisName: S_Card_4441
+    Name: Shadow Fallen Bishop Hibram Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMatkRate,10;
+      bonus bMaxSPrate,-50;
+      bonus2 bMagicAddRace,RC_Angel,50;
+      bonus2 bMagicAddRace,RC_DemiHuman,50;
+      bonus2 bMagicAddRace,RC_Player_Human,50;
+  - Id: 30442
+    AegisName: S_Card_4442
+    Name: Shadow Tatacho Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,20;
+      bonus2 bAddEle,Ele_Neutral,5;
+  - Id: 30443
+    AegisName: S_Card_4443
+    Name: Shadow Aqua Elemental Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Water,20;
+      bonus2 bAddEle,Ele_Water,5;
+  - Id: 30444
+    AegisName: S_Card_4444
+    Name: Shadow Draco Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Earth,20;
+      bonus2 bAddEle,Ele_Earth,5;
+  - Id: 30445
+    AegisName: S_Card_4445
+    Name: Shadow Luciola Vespa Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Wind,20;
+      bonus2 bAddEle,Ele_Wind,5;
+  - Id: 30447
+    AegisName: S_Card_4447
+    Name: Shadow Centipede Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Poison,20;
+      bonus2 bAddEle,Ele_Poison,5;
+  - Id: 30448
+    AegisName: S_Card_4448
+    Name: Shadow Cornus Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Holy,20;
+      bonus2 bAddEle,Ele_Holy,5;
+  - Id: 30449
+    AegisName: S_Card_4449
+    Name: Shadow Dark Shadow Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubEle,Ele_Dark,20;
+      bonus2 bAddEle,Ele_Dark,5;
+  - Id: 30450
+    AegisName: S_Card_4450
+    Name: Shadow Banshee Master Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bInt,1;
+      bonus bMatk,10;
+  - Id: 30451
+    AegisName: S_Card_4451
+    Name: Shadow Entweihen Crothen Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMatk,100;

@@ -1,6 +1,8 @@
 autom4te.cache/
 
 #Global
+.cache
+.idea
 .vscode
 .Apple*
 .DS_Store
@@ -113,6 +115,7 @@ Thumbs.db
 .vs
 *.VC.db
 *.VC.opendb
+*.slnLaunch.user
 
 /.idea/.name
 /.idea/misc.xml
