@@ -1446,6 +1446,10 @@ enum sc_type : int16 {
 	SC_WIND_CHARM_POWER,
 	SC_GROUND_CHARM_POWER,
 
+	// Payon Stories — Spear Knight rework markers
+	SC_EXPOSED,    // Spear Boomerang mark: +20% damage from spear attacks
+	SC_OFFBALANCE, // Brief tag applied whenever a unit is knocked back; read by Spear Stab
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 

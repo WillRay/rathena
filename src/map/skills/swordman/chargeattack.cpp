@@ -8,6 +8,7 @@
 #include "map/clif.hpp"
 #include "map/map.hpp"
 #include "map/path.hpp"
+#include "map/status.hpp"
 #include "map/unit.hpp"
 
 SkillChargeAttack::SkillChargeAttack() : SkillImpl(KN_CHARGEATK) {
@@ -35,6 +36,13 @@ void SkillChargeAttack::castendDamageId(block_list* src, block_list* target, uin
 				dist += 2; // Knockback is 4 on PvP maps
 #endif
 			skill_blown(src, target, dist, dir, BLOWN_NONE);
+#ifndef RENEWAL
+			// Payon Stories Spear Knight rework: tag the charged target as
+			// Off-Balance for 4 s so a follow-up Spear Stab punishes the
+			// knockback. Only Brandish Spear and Charge Attack apply this
+			// status — generic knockbacks elsewhere in the game don't.
+			sc_start(src, target, SC_OFFBALANCE, 100, 1, 4000);
+#endif
 		}
 	}
 }

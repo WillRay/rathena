@@ -58,6 +58,53 @@ added in future passes.
   up with, but the skill now hits twice and behaves the same way on every map,
   every cell.*
 
+- **Pierce:** Hit count per target size raised by 1 (Small: 2, Medium: 3,
+  Large: 4). Per-hit ratio raised from `100% + 10% per level` to
+  `100% + 25% per level`, and the skill now ignores `3% of the target's DEF
+  per skill level` (30% at level 10). *Developer Comments: Pierce was the
+  spear line's "main button" in name only — it lost the DPS race to Bowling
+  Bash on every target size. Extra hits, a stronger thrust, and real armor
+  penetration give Spear Knights a single-target answer that scales with
+  exactly the monsters that hurt the most.*
+
+- **Spear Boomerang:** Damage now scales with weapon weight (smaller
+  coefficient than Shield Boomerang). On hit, targets become `Exposed` for 4
+  seconds, taking `+20% damage from spear-weapon attacks`. The mark does not
+  stack or refresh — throw once, follow up once. *Developer Comments: Spear
+  Knight had no real engagement tool. A weight-scaling ranged opener gives
+  heavy spears a flashy use, and the short Exposed window rewards the natural
+  Boomerang → Charge → Pierce rotation without turning it into a debuff
+  treadmill.*
+
+- **Brandish Spear:** Damage unchanged. After the splash resolves, every
+  enemy caught in the fan is pulled 2 cells toward the caster. *Developer
+  Comments: Brandish was a damage button in search of utility. The pull turns
+  it into the spear line's "gather" tool — a Peco Knight can now set up Spiral
+  Pierce or a follow-up Stab on a clean cluster instead of chasing scattered
+  mobs.*
+
+- **Spear Stab:** Knockback removed (Charge Attack already owns that role).
+  Standalone damage unchanged; against targets left Off-Balance by **Brandish
+  Spear's pull** or **Charge Attack's knockback** (4-second window), damage
+  is boosted by `+100% + 10% per skill level` (roughly doubled at level 10).
+  *Developer Comments: Spear Stab was a strictly-worse Charge Attack. Tying
+  the punish window to just the two spear-line engagement skills — rather
+  than to any generic knockback in the game — makes Charge → Stab and
+  Brandish → Stab the signature spear combos without painting half the map
+  gray every time someone casts Magnum Break.*
+
+### Lord Knight Skill Changes
+
+- **Spiral Pierce:** Reworked into a line attack that pierces through up to
+  3 targets directly in front of the caster. Each target struck takes the
+  same Pierce-style multi-hit treatment based on its size (Small: 2, Medium:
+  3, Large: 4 hits), with a per-hit ratio of `150% + 30% per level`. The
+  previous weapon-weight scaling is removed. *Developer Comments: Spiral
+  Pierce used to be Pierce's stat cousin — same target, same animation feel,
+  just bigger numbers. As a line attack it becomes the obvious evolution of
+  Pierce: same thrust, but the spear keeps going. Corridor maps and pulled
+  mob clusters finally have a signature Lord Knight answer.*
+
 ### Crusader Skill Changes
 
 - **Holy Cross:** Damage raised from `100% + 35% per level` to

@@ -224,6 +224,12 @@ Body:
       Weapon:
         1hSpear: true
         2hSpear: true
+  # Payon Stories Spear Knight rework: Brandish Spear no longer knocks back —
+  # the post-damage pull (in src/map/skills/swordman/brandishspear.cpp) does
+  # the opposite, gathering enemies toward the caster.
+  - Id: 57
+    Name: KN_BRANDISHSPEAR
+    Knockback: 0
   - Id: 492
     Name: ITEM_ENCHANTARMS
     Duration1: 1800000

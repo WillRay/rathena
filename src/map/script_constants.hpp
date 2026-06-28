@@ -2005,6 +2005,10 @@
 	export_constant(SC_WIND_CHARM_POWER);
 	export_constant(SC_GROUND_CHARM_POWER);
 
+	// Payon Stories Spear Knight rework
+	export_constant(SC_EXPOSED);
+	export_constant(SC_OFFBALANCE);
+
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)
 	export_constant(EFST_BLANK);

@@ -210,7 +210,7 @@ Body:
       bonus bIgnoreDefClass,Class_Boss;
       bonus2 bAddRace,RC_DemiHuman,10;
       bonus2 bAddRace,RC_Player_Human,10;
-      bonus3 bAutoSpell,"KN_PIERCE",5,250;
+      bonus3 bAutoSpell,"KN_PIERCE",5,100;
   - Id: 501
     Name: Red Potion
     Buy: 25

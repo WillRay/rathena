@@ -57,3 +57,26 @@ Body:
     CalcFlags:
       Int: true
       Mdef: true
+  # Payon Stories Spear Knight rework: Spear Boomerang mark. Red blood drips
+  # (Opt2 Bleeding) visibly tag the target as wounded/exposed; the EFST_CRUCIS
+  # icon adds the overhead cross for PCs whose clients render it. (Opt3 is not
+  # sent on SC start by the engine — only Opt1/Opt2/option go out via
+  # clif_changeoption, so Opt2 is the right knob for live visuals.)
+  - Status: Exposed
+    Icon: EFST_CRUCIS
+    Opt2:
+      Poison: true
+    Flags:
+      SendOption: true
+      NoWarning: true
+  # Payon Stories Spear Knight rework: short-lived tag set whenever a unit is
+  # knocked back; read by Spear Stab to punish off-balance targets. Curse
+  # tint (Opt2) grays out the target for the 4 s punish window — visible on
+  # mobs and PCs without spamming a one-shot effect on every knockback.
+  - Status: Offbalance
+    Icon: EFST_BLANK
+    Opt2:
+      Curse: true
+    Flags:
+      SendOption: true
+      NoWarning: true

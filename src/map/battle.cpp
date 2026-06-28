@@ -4709,6 +4709,19 @@ static void battle_attack_sc_bonus(struct Damage* wd, block_list *src, block_lis
 		RE_ALLATK_ADDRATE(wd, skillratio);
 #endif
 	}
+
+#ifndef RENEWAL
+	// Payon Stories Spear Knight rework: Exposed targets take +20% damage
+	// from spear-weapon attacks (any spear skill, or auto-attack with a spear).
+	{
+		status_change* tsc = status_get_sc(target);
+		if (tsc != nullptr && tsc->getSCE(SC_EXPOSED) && sd != nullptr) {
+			uint8 w = sd->status.weapon;
+			if (w == W_1HSPEAR || w == W_2HSPEAR)
+				ATK_ADDRATE(wd->damage, wd->damage2, 20);
+		}
+	}
+#endif
 }
 
 /*====================================
@@ -4756,6 +4769,16 @@ static void battle_calc_defense_reduction( Damage* wd, block_list* src, block_li
 		def1 = (def1*(100-i))/100;
 		def2 = (def2*(100-i))/100;
 	}
+
+#ifndef RENEWAL
+	// Payon Stories Spear Knight rework: Pierce ignores 3% of target DEF per skill level
+	if (skill_id == KN_PIERCE && skill_lv > 0) {
+		int16 i = static_cast<int16>(3 * skill_lv);
+		if (i > 100) i = 100;
+		def1 = (def1 * (100 - i)) / 100;
+		def2 = (def2 * (100 - i)) / 100;
+	}
+#endif
 
 	if (tsc) {
 		if (tsc->getSCE(SC_FORCEOFVANGUARD)) {
