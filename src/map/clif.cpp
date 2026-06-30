@@ -12902,6 +12902,72 @@ static void clif_parse_UseSkillToPos_mercenary(s_mercenary_data *md, map_session
 		unit_skilluse_pos(md, x, y, skill_id, skill_lv);
 }
 
+static TIMER_FUNC(clif_pending_skill_fire);
+
+/// Cancels any deferred skill request queued by the skill-input buffer.
+/// Safe to call when nothing is queued. Called on logout, death, etc.
+void clif_pending_skill_clear(map_session_data* sd)
+{
+	if (sd == nullptr || sd->pending_skill.timer == INVALID_TIMER)
+		return;
+	delete_timer(sd->pending_skill.timer, clif_pending_skill_fire);
+	sd->pending_skill.timer = INVALID_TIMER;
+}
+
+/// Fires a previously-queued skill request once canact_tick has elapsed.
+/// See battle_config.skill_input_buffer_window.
+static TIMER_FUNC(clif_pending_skill_fire){
+	map_session_data* sd = map_id2sd(id);
+	if (sd == nullptr || sd->pending_skill.timer != tid)
+		return 0;
+
+	sd->pending_skill.timer = INVALID_TIMER;
+
+	// Bail if the player can't act now (dead, stunned, in dialog, etc.).
+	// We don't want the buffered keystroke to fire long after intent.
+	if (pc_isdead(sd) || pc_cant_act2(sd))
+		return 0;
+
+	if (sd->pending_skill.is_ground) {
+		unit_skilluse_pos(sd, sd->pending_skill.x, sd->pending_skill.y,
+			sd->pending_skill.skill_id, sd->pending_skill.skill_lv);
+	} else {
+		unit_skilluse_id(sd, sd->pending_skill.target_id,
+			sd->pending_skill.skill_id, sd->pending_skill.skill_lv);
+	}
+	return 0;
+}
+
+/// Returns true if the skill request was queued for deferred firing.
+/// Caller should return immediately when this returns true.
+static bool clif_pending_skill_try_queue(map_session_data* sd, t_tick tick,
+	uint16 skill_id, uint16 skill_lv, int32 target_id,
+	int16 x, int16 y, bool is_ground)
+{
+	if (battle_config.skill_input_buffer_window <= 0)
+		return false;
+
+	t_tick wait = DIFF_TICK(sd->ud.canact_tick, tick);
+	if (wait <= 0 || wait > battle_config.skill_input_buffer_window)
+		return false;
+
+	// Drop any previously-queued request; the newest keypress wins.
+	if (sd->pending_skill.timer != INVALID_TIMER) {
+		delete_timer(sd->pending_skill.timer, clif_pending_skill_fire);
+		sd->pending_skill.timer = INVALID_TIMER;
+	}
+
+	sd->pending_skill.skill_id  = skill_id;
+	sd->pending_skill.skill_lv  = skill_lv;
+	sd->pending_skill.target_id = target_id;
+	sd->pending_skill.x         = x;
+	sd->pending_skill.y         = y;
+	sd->pending_skill.is_ground = is_ground;
+	sd->pending_skill.timer     = add_timer(sd->ud.canact_tick,
+		clif_pending_skill_fire, sd->id, 0);
+	return true;
+}
+
 void clif_parse_skill_toid( map_session_data* sd, uint16 skill_id, uint16 skill_lv, int32 target_id ){
 	if( sd == nullptr ){
 		return;
@@ -12971,6 +13037,9 @@ void clif_parse_skill_toid( map_session_data* sd, uint16 skill_id, uint16 skill_
 			return;
 	} else if( DIFF_TICK(tick, sd->ud.canact_tick) < 0 ) {
 		if( sd->skillitem != skill_id ) {
+			// Within the buffer window? Queue and let it auto-fire at canact_tick.
+			if (clif_pending_skill_try_queue(sd, tick, skill_id, skill_lv, target_id, 0, 0, false))
+				return;
 			clif_skill_fail( *sd, skill_id, USESKILL_FAIL_SKILLINTERVAL );
 			return;
 		}
@@ -13087,6 +13156,8 @@ static void clif_parse_UseSkillToPosSub( int32 fd, map_session_data& sd, uint16 
 
 	if( DIFF_TICK(tick, sd.ud.canact_tick) < 0 ) {
 		if( sd.skillitem != skill_id ) {
+			if (clif_pending_skill_try_queue(&sd, tick, skill_id, skill_lv, 0, x, y, true))
+				return;
 			clif_skill_fail( sd, skill_id, USESKILL_FAIL_SKILLINTERVAL );
 			return;
 		}

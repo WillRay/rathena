@@ -4265,6 +4265,22 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		// perform skill requirement consumption
 		if (!(flag&SKILL_NOCONSUME_REQ))
 			skill_consume_requirement(sd,skill_id,skill_lv,2);
+
+		// Auto-resume auto-attack after instant-cast weapon skills.
+		// When a player weaves a skill mid-auto-attack, unit_stop_attack()
+		// clears the attack target but leaves ud.state.attack_continue set.
+		// If the skill was instant-cast and the target is still alive, we
+		// re-engage the same target so the player doesn't have to re-click.
+		bool instant_cast = skill_get_cast(skill_id, skill_lv) == 0;
+#ifdef RENEWAL_CAST
+		instant_cast = instant_cast && skill_get_fixed_cast(skill_id, skill_lv) == 0;
+#endif
+		if (instant_cast
+			&& sd->ud.state.attack_continue
+			&& bl != nullptr && !status_isdead(*bl))
+		{
+			unit_attack(src, bl->id, 1);
+		}
 	}
 
 	return 0;

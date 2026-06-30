@@ -528,6 +528,19 @@ public:
 
 	int16 skillitem,skillitemlv;
 	bool skillitem_keep_requirement;
+
+	// Skill input buffer: when the client sends a skill request slightly before
+	// canact_tick (typically because they queued a key during attack motion),
+	// instead of replying USESKILL_FAIL_SKILLINTERVAL we stash the request here
+	// and replay it via pending_skill_timer when canact_tick elapses.
+	struct {
+		int32 timer;        // INVALID_TIMER when no request is queued
+		uint16 skill_id;
+		uint16 skill_lv;
+		int32 target_id;    // ignored when is_ground
+		int16 x, y;         // only used when is_ground
+		bool is_ground;
+	} pending_skill;
 	uint16 skill_id_old,skill_lv_old;
 	uint16 skill_id_dance,skill_lv_dance;
 	uint16 skill_id_song, skill_lv_song;

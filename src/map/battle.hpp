@@ -174,6 +174,7 @@ struct Battle_Config
 	int32 skill_add_range;
 	int32 skill_out_range_consume;
 	int32 skill_amotion_leniency;
+	int32 skill_input_buffer_window;
 	int32 skillrange_by_distance; //[Skotlex]
 	int32 use_weapon_skill_range; //[Skotlex]
 	int32 pc_damage_delay_rate;

@@ -6,21 +6,8 @@
 #include "map/clif.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
-#include "map/unit.hpp"
 
 SkillEnvenom::SkillEnvenom() : WeaponSkillImpl(TF_POISON) {
-}
-
-void SkillEnvenom::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	// Capture whether the caster was auto-attacking before the skill cast cleared the target.
-	// unit_stop_attack() (called when the skill begins) nulls the target but leaves attack_continue set.
-	unit_data* ud = unit_bl2ud(src);
-	bool resume_attack = src->type == BL_PC && ud != nullptr && ud->state.attack_continue != 0;
-
-	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
-
-	if (resume_attack && target != nullptr && !status_isdead(*target))
-		unit_attack(src, target->id, 1);
 }
 
 void SkillEnvenom::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
