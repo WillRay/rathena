@@ -9630,6 +9630,18 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 					sd->skill_id_old = 0;
 			break;
 		}
+		// Thief passive rebalance: Opportunist (Improve Dodge).
+		// If the caster has a banked Opportunist charge, halve the SP cost
+		// of this skill and consume the charge. Damaging skills only — non-
+		// damaging skills (Cloaking, Hiding, etc.) preserve the charge so
+		// it isn't wasted on utility presses. Auto-casts (state.autocast)
+		// already zero SP above, so this branch naturally doesn't fire.
+		if (require.sp > 0 && sd->sc.getSCE(SC_OPPORTUNIST) != nullptr
+			&& (skill_get_inf(skill_id) & INF_ATTACK_SKILL) != 0) {
+			require.sp = require.sp / 2;
+			status_change_end(sd, SC_OPPORTUNIST);
+		}
+
 		if(require.hp || require.sp || require.ap)
 			skill_consume_hpspap(sd, skill_id, require.hp, require.sp, require.ap);
 

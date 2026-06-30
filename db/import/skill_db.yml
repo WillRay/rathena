@@ -227,6 +227,12 @@ Body:
   - Id: 492
     Name: ITEM_ENCHANTARMS
     Duration1: 1800000
+  # Payon Stories rebalance: First Aid now heals 2% MaxHP for 2% MaxSP
+  - Id: 142
+    Name: NV_FIRSTAID
+    Requires:
+      SpCost: 0
+      SpRateCost: -2
   - Id: 48
     Name: TF_DOUBLE
   - Id: 56

@@ -57,3 +57,20 @@ Body:
     CalcFlags:
       Int: true
       Mdef: true
+  # Payon Stories Thief passive rebalance: Double Attack momentum buff.
+  # Each Double Attack proc grants a stack (max 3); next damaging skill
+  # consumes all stacks for +8% damage per stack. Buff is invisible to
+  # the standard CalcFlags machinery — bonus is applied in battle.cpp.
+  - Status: Da_Momentum
+    Flags:
+      NoWarning: true
+  # Payon Stories Thief passive rebalance: Opportunist (Improve Dodge buff).
+  # Granted on a successful flee-dodge in PvE; halves the SP cost of the
+  # next damaging skill cast, then ends. Disabled in PvP/WoE at the
+  # proc site in battle.cpp. Repurposes EFST_FIGHTINGSPIRIT — the
+  # original SC_FIGHTINGSPIRIT (RK skill) is unreachable on this pre-re
+  # server, so the icon collision is theoretical.
+  - Status: Opportunist
+    Icon: EFST_FIGHTINGSPIRIT
+    Flags:
+      NoWarning: true

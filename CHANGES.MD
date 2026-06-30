@@ -19,6 +19,16 @@ added in future passes.
 
 ## Class Changes
 
+### Novice Skill Changes
+
+- **First Aid:** Now restores `2% of Max HP` and costs `2% of Max SP` instead of
+  the flat `5 HP for 3 SP`. *Developer Comments: The old flat numbers stop
+  mattering the moment a Novice has more than a few hundred HP, so the skill
+  quietly retires the moment it should start being useful. Scaling both sides to
+  a percentage keeps it relevant on any character that still has the skill in
+  their bar — and the matching SP cost stops it from being a free heal-spam
+  button.*
+
 ### Swordsman Skill Changes
 
 - **Bash:** SP cost reduced to a smooth `3 + 1 per skill level` (4 SP at level 1
@@ -94,6 +104,18 @@ added in future passes.
   forward into Assassin and Rogue builds that lean on auto-attacks.
   (Verified — already in line with this rebalance on the live tree.)*
 
+
+- **Increase Dodge — Opportunist:** A successful FLEE dodge in PvE has
+  a `5%` chance to refund `8 SP` and grant `Opportunist`, an opening
+  that halves the SP cost of your next damaging skill (`8 second`
+  duration). Fully disabled in PvP and WoE. *Developer Comments: Auto-attacking
+  evasion-tanks now get a small, occasional resource payoff instead of
+  the passive being pure stats. The `5%` rate keeps it from demanding
+  attention — it's a pleasant surprise, not a rotation. PvP and WoE are
+  gated entirely off because the existing reduced multi-attacker FLEE
+  penalty already softens the swarm-targeting concern there, and adding
+  SP sustain on top of high evasion would warp duels.*
+
 - **Envenom:** SP cost reduced to a flat `8 SP`. Damage now scales with
   weapon ATK at `100% + 15% per skill level` (250% at level 10) instead of
   the old flat `+15 per level` mastery-style bonus. *Developer Comments:
@@ -101,6 +123,31 @@ added in future passes.
   made it punishing to spam and the flat damage stopped mattering as soon as
   players upgraded gear. The lower SP cost and ATK-based scaling fix both.
   (Verified — already in line with this rebalance on the live tree.)*
+
+- **Envenom — Element Floor:** The cumulative elemental modifier applied to
+  Envenom's damage is now floored at `50%`. Against Poison-element targets
+  (normally `0%` in the defense-element table) the skill now lands for half
+  damage instead of being shut out entirely; matchups that already resolve
+  above `50%` are unchanged. *Developer Comments: With the new weapon-ATK-based
+  scaling, a hard `0%` against Poison defenders turned the most thematic
+  matchup (poisoning the poisonous) into a no-op. `50%` keeps poison-weak
+  targets like Plants clearly the better place to press Envenom, so
+  elemental advantage is still a real design knob — `25%` was rejected as
+  too low and a higher floor would have erased immunity as a lever.*
+
+- **Envenom — Auto-Attack Resume:** If Envenom is cast while the player is
+  already auto-attacking, the auto-attack now resumes on the same target
+  the moment the skill finishes resolving. *Developer Comments: Envenom is
+  the canonical "weave it into your auto-attacks" Thief skill, but the
+  client's cast handling cleared the lock-on so players had to right-click
+  the target a second time to keep swinging. Restoring the lock keeps the
+  intended rhythm of the skill — one keystroke, no babysitting — and lines
+  up with how Double Attack's Momentum stacks are meant to be consumed
+  inside an auto-attack chain. Note: for the smoothest weave on a slow
+  dagger, leave the client's `No Control` (right-click-attack) toggle
+  off — the client itself throttles skill input while a continuous attack
+  is queued, which the server cannot bypass; the resume here keeps your
+  auto-attacks going either way.*
 
 ### Assassin Skill Changes
 

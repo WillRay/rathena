@@ -1446,6 +1446,9 @@ enum sc_type : int16 {
 	SC_WIND_CHARM_POWER,
 	SC_GROUND_CHARM_POWER,
 
+	// Thief passive rebalance
+	SC_OPPORTUNIST,   // Granted on flee-dodge (PvE only); halves SP cost of next damaging skill
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 

@@ -3666,6 +3666,10 @@ static void battle_calc_element_damage(struct Damage* wd, block_list *src, block
 					wd->damage2 = battle_attr_fix(src, target, wd->damage2, left_element, tstatus->def_ele, tstatus->ele_lv, 1);
 				break;
 			default:
+				// Envenom: skip the generic attribute fix here so the TF_POISON post-mastery block
+				// can capture the pre-attribute-fix damage and enforce the 50% element-effectiveness floor.
+				if (skill_id == TF_POISON)
+					break;
 				if (skill_id == 0 && (battle_config.attack_attr_none & src->type))
 					return; // Non-player basic attacks are non-elemental, they deal 100% against all defense elements
 #ifdef RENEWAL
@@ -3717,12 +3721,19 @@ static void battle_calc_element_damage(struct Damage* wd, block_list *src, block
 
 		// Skill-specific bonuses
 		switch(skill_id) {
-			case TF_POISON:
+			case TF_POISON: {
 				//ATK_ADD(wd->damage, wd->damage2, 15 * skill_lv);
 				ATK_ADDRATE(wd->damage, wd->damage2, 15 * skill_lv);
-				// Envenom applies the attribute table to the base damage and then again to the final damage
+				// Envenom applies the attribute table to the base damage and then again to the final damage,
+				// but the cumulative elemental modifier is floored at 50% so Poison-element targets
+				// (0% in the defense-element table) still take meaningful damage.
+				int64 envenom_floor = wd->damage / 2;
 				wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv, 1);
+				wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv, 1);
+				if (wd->damage < envenom_floor)
+					wd->damage = envenom_floor;
 				break;
+			}
 			case NJ_SYURIKEN:
 				ATK_ADD(wd->damage, wd->damage2, 4 * skill_lv);
 				if (sd) {
@@ -5449,8 +5460,21 @@ static struct Damage battle_calc_weapon_attack(block_list *src, block_list *targ
 	std::bitset<NK_MAX> nk = battle_skill_get_damage_properties(skill_id, wd.miscflag);
 
 	// check if we're landing a hit
-	if(!is_attack_hitting(&wd, src, target, skill_id, skill_lv, true))
+	if(!is_attack_hitting(&wd, src, target, skill_id, skill_lv, true)) {
 		wd.dmg_lv = ATK_FLEE;
+		// Thief passive rebalance: Improve Dodge resource loop.
+		// On a successful flee-dodge, a player who has learned TF_MISS has a
+		// 5% chance to refund 8 SP and gain SC_OPPORTUNIST (halves SP cost
+		// of the next damaging skill cast). PvE only — fully disabled in PvP
+		// and WoE per design.
+		if (target->type == BL_PC && !map_flag_vs(target->m)) {
+			map_session_data *tsd = BL_CAST(BL_PC, target);
+			if (tsd != nullptr && pc_checkskill(tsd, TF_MISS) > 0 && rnd()%100 < 5) {
+				status_heal(target, 0, 8, battle_config.show_hp_sp_gain ? 3 : 1);
+				sc_start(target, target, SC_OPPORTUNIST, 100, 1, 8000);
+			}
+		}
+	}
 	else if(!(infdef = is_infinite_defense(target, wd.flag))) { //no need for math against plants
 
 #ifndef RENEWAL

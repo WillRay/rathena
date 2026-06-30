@@ -11,5 +11,9 @@ SkillFirstAid::SkillFirstAid() : SkillImpl(NV_FIRSTAID) {
 
 void SkillFirstAid::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	clif_skill_nodamage(src, *target, getSkillId(), 5);
+#ifndef RENEWAL
+	status_percent_heal(target, 2, 0);
+#else
 	status_heal(target, 5, 0, 0);
+#endif
 }
