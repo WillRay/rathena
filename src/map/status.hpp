@@ -1449,6 +1449,9 @@ enum sc_type : int16 {
 	// Thief passive rebalance
 	SC_OPPORTUNIST,   // Granted on flee-dodge (PvE only); halves SP cost of next damaging skill
 
+	// Thief quest skill stone economy
+	SC_PICK_STONE,    // "Holding Stone" flag granted by Find Stone; consumed by Stone Fling / Sand Attack
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 

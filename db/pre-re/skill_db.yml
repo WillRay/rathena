@@ -5224,9 +5224,13 @@ Body:
     Duration2: 30000
     Requires:
       SpCost: 2
-      ItemCost:
-        - Item: Stone
-          Amount: 1
+      # Stone economy redesign: the physical Stone item requirement was removed
+      # because Find Stone no longer produces a Stone item — it grants the
+      # SC_PICK_STONE ("Holding Stone") status, which now gates this skill via
+      # the Requires: Status override in db/import/skill_db.yml. Requirement
+      # *removal* is the one thing the import loader cannot express (its parse
+      # loop only overwrites item slots, never clears them), so this single
+      # deletion lives in the base file. See CHANGES.MD.
     Status: Stun
   - Id: 153
     Name: MC_CARTREVOLUTION

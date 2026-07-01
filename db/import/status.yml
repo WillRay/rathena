@@ -67,3 +67,13 @@ Body:
     Icon: EFST_FIGHTINGSPIRIT
     Flags:
       NoWarning: true
+  # Thief quest skill stone economy: "Holding Stone" flag granted by Find
+  # Stone and consumed by Stone Fling / Sand Attack. Pure flag — no stat
+  # bonus, no CalcFlags. Indefinite duration (started with INFINITE_TICK).
+  # No NoRemoveOnDead flag, so it clears on death by default; map changes
+  # and relog leave it intact. Reuses the Lux Anima icon (EFST_LUXANIMA);
+  # no new sprite asset is required.
+  - Status: Pick_Stone
+    Icon: EFST_LUXANIMA
+    Flags:
+      NoWarning: true

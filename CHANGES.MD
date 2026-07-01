@@ -161,6 +161,44 @@ added in future passes.
   Argiope, PvP Enchant Poison pressure) without making it a general-purpose
   heal — the poison gate keeps it honest.*
 
+- **Find Stone:** Now grants a persistent `Holding Stone` status buff instead
+  of placing a physical `Stone` item in the player's inventory. The status has
+  no timer, persists through map changes and relog, and is cleared only on
+  death. Casting again while already holding a stone is a silent no-op (it does
+  not stack or reset). Re-tuned to a `1 second` (DEX-reducible) cast time and a
+  `1 SP` cost, and given a `10 second` cooldown. *Developer Comments: The
+  inventory-item model created bag-management friction that made the skill feel
+  like a chore. Treating the stone as a consumed status removes that friction
+  and sets up a real spend decision between Stone Fling and Sand Attack. The
+  cooldown lives on the stone generator rather than on Stone Fling: because a
+  stone is required to throw, gating Find Stone at `10 seconds` closes the
+  `Find Stone -> Stone Fling` perma-stun loop just as effectively while leaving
+  Stone Fling free to fire the instant a stone is in hand.*
+
+- **Stone Fling:** Now requires the `Holding Stone` status to cast; without it
+  the skill fails with the standard skill-fail message and costs no SP (the
+  requirement is checked before SP is deducted). On a successful hit it consumes
+  the stone and stuns the target for `2 seconds` at a guaranteed rate that
+  bypasses status resistance. SP cost raised to `8`, and the old `Stone` item
+  requirement was removed. The skill itself has no cooldown — the
+  `Find Stone -> Stone Fling` perma-stun loop is instead gated by Find Stone's
+  `10 second` cooldown, since a stone must be generated before it can be thrown.
+  *Developer Comments: A guaranteed stun on a `7`-cell
+  ranged skill is strong, so the stone is the cost. Rogues and Stalkers now have
+  a reliable ranged CC opener that stays relevant past the early game. The item
+  requirement had to be deleted from the base skill DB — requirement removal is
+  the one thing the import loader cannot express — since Find Stone no longer
+  produces a Stone item.*
+
+- **Sand Attack:** Now requires the `Holding Stone` status to cast; without it
+  the skill fails with the standard skill-fail message and costs no SP. On a
+  successful hit it consumes the stone and blinds the target for `30 seconds` at
+  a guaranteed `100%` rate that bypasses status resistance (previously a `20%`
+  chance for players). *Developer Comments: The original partial-chance blind
+  was too unreliable to build around. Making it 100% but stone-gated creates
+  genuine resource tension — spend the stone for a stun (Stone Fling) or a
+  guaranteed blind (Sand Attack) — while keeping unreliable CC off the table.*
+
 ### Assassin Skill Changes
 
 - **Right Hand Mastery / Left Hand Mastery:** Both mastery curves are

@@ -420,3 +420,37 @@ Body:
           Amount: 42
         - Level: 5
           Amount: 50
+  # Thief quest skill stone economy rebalance ---------------------------------
+  # Find Stone: now an instant, cheap resource generator. Grants the
+  # SC_PICK_STONE ("Holding Stone") status in castendNoDamageId instead of a
+  # physical Stone item. 1s (DEX-reducible) cast, 1 SP, and a 10s cooldown.
+  # The cooldown lives here rather than on Stone Fling: a stone is required to
+  # throw, so gating the generator closes the Find Stone -> Stone Fling
+  # perma-stun loop (a fresh stone can't be produced until the 2s stun has
+  # long expired) while leaving Stone Fling itself free to fire the moment a
+  # stone is in hand.
+  - Id: 151
+    Name: TF_PICKSTONE
+    CastTime: 1000
+    Cooldown: 10000
+    Requires:
+      SpCost: 1
+  # Stone Fling: requires Holding Stone to cast (fails pre-SP without it),
+  # consumes it on hit and stuns for 2s (Duration1). SP raised to 8; the base
+  # Stone item requirement was removed in db/pre-re/skill_db.yml. No cooldown
+  # of its own — the perma-stun loop is gated by Find Stone's 10s cooldown.
+  - Id: 152
+    Name: TF_THROWSTONE
+    Duration1: 2000
+    Requires:
+      SpCost: 8
+      Status:
+        Pick_Stone: true
+  # Sand Attack: requires Holding Stone to cast (fails pre-SP without it),
+  # consumes it on hit and blinds for 30s (Duration2) at 100% in C++.
+  - Id: 149
+    Name: TF_SPRINKLESAND
+    Requires:
+      SpCost: 9
+      Status:
+        Pick_Stone: true
