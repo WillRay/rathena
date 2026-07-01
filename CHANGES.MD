@@ -149,6 +149,18 @@ added in future passes.
   is queued, which the server cannot bypass; the resume here keeps your
   auto-attacks going either way.*
 
+- **Detoxify:** On a successful cast that actually removes a `Poison` or
+  `Deadly Poison` status from the target, Detoxify now also heals the
+  target for `10% of their Max HP`. If the target had no poison to cure,
+  no heal is granted. *Developer Comments: Detoxify has always been a
+  situational one-point wonder — you take it, it sits on your bar, and
+  most parties would rather down a Green Potion than wait for a Thief to
+  cast. Attaching a real `10% Max HP` payoff to a successful cleanse gives
+  the skill a reason to exist in a rotation and turns the Thief into a
+  small but meaningful emergency responder for poison-heavy fights (Rafflesia,
+  Argiope, PvP Enchant Poison pressure) without making it a general-purpose
+  heal — the poison gate keeps it honest.*
+
 ### Assassin Skill Changes
 
 - **Right Hand Mastery / Left Hand Mastery:** Both mastery curves are
