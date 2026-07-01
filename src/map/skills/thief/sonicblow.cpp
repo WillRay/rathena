@@ -34,6 +34,19 @@ void SkillSonicBlow::applyAdditionalEffects(block_list *src, block_list *target,
 		sc_start(src, target, SC_STUN, (4 * skill_lv + 20), skill_lv, skill_get_time2(getSkillId(), skill_lv)); //Link gives double stun chance outside GVG/BG
 	else
 		sc_start(src, target, SC_STUN, (2 * skill_lv + 10), skill_lv, skill_get_time2(getSkillId(), skill_lv));
+
+#ifndef RENEWAL
+	// Thief passive rebalance: Sonic Blow feeds the Opportunist loop. A
+	// successful hit in PvE has a 25% chance to grant the caster SC_OPPORTUNIST
+	// (the same opening earned from Improve Dodge or leaving Hiding), which
+	// halves the SP cost of the next damaging skill and lets Grimtooth be cast
+	// out of Hiding as a single-target burst. Fully disabled in PvP and WoE,
+	// matching the flee-dodge and Hiding proc sites.
+	map_session_data* sd = BL_CAST(BL_PC, src);
+
+	if (sd != nullptr && !map_flag_vs(src->m) && rnd() % 100 < 25)
+		sc_start(src, src, SC_OPPORTUNIST, 100, 1, 8000);
+#endif
 }
 
 void SkillSonicBlow::modifyHitRate(int16& hit_rate, const block_list* src, const block_list* target, uint16 skill_lv) const {

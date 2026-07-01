@@ -116,6 +116,16 @@ added in future passes.
   penalty already softens the swarm-targeting concern there, and adding
   SP sustain on top of high evasion would warp duels.*
 
+- **Hiding — Opportunist:** Coming out of `Hiding` now grants `Opportunist`,
+  the same opening earned from Improve Dodge — it halves the SP cost of your
+  next damaging skill (`8 second` duration). Like the flee-dodge proc, it is
+  fully disabled in PvP and WoE. *Developer Comments: This closes the stealth
+  loop the Opportunist buff was built for — duck into Hiding, then emerge into
+  a discounted opener. Unlike the `5%` flee-dodge roll this is a guaranteed
+  grant, since committing to Hiding already costs a turn and the SP upkeep, so
+  the payoff should be reliable. PvP and WoE stay gated for the same reason as
+  the dodge proc: SP sustain layered on stealth would warp duels.*
+
 - **Envenom:** SP cost reduced to a flat `8 SP`. Damage now scales with
   weapon ATK at `100% + 15% per skill level` (250% at level 10) instead of
   the old flat `+15 per level` mastery-style bonus. *Developer Comments:
@@ -208,25 +218,96 @@ added in future passes.
   DPS. A flat +20% on both mastery curves brings dual-wield parity back
   into striking distance without overhauling the formula.*
 
-- **Venom Dust:** Reagent changed from `1 Red Gemstone` to
-  `2 Venom Canines`. *Developer Comments: Red Gemstones are a shared
-  reagent across many classes, while Venom Canines are a more thematic and
-  more plentiful Assassin-flavored ingredient.*
+- **Grimtooth:** Reworked into the Assassin's stealth burst window. Damage
+  raised from `100% + 20% per level` to `300% + 50% per level` (350% at
+  level 1 up to 550% at level 5), the attack now always hits (ignores the
+  target's Flee), and it is gated by a `2 second cooldown` so it is a
+  window rather than a spam. Splash grows with level — `3x3` at levels 1–2,
+  `5x5` at levels 3–4 and `7x7` at level 5 — and the skill is now usable with
+  Daggers as well as Katars. Hiding is the primary way to open it, though an
+  `Opportunist` charge can now substitute for it (see the Opportunist entry
+  below).
+  *Developer Comments: Grimtooth was a weak, niche payoff that rarely
+  justified the Hiding setup. Giving it a real damage floor, guaranteed hits
+  and a short cooldown turns it into the shared stealth burst for both Katar
+  and dual-dagger builds; unlocking Daggers (alongside the matching change to
+  Sonic Blow) is what lets a double-dagger stealth Assassin have a real burst.
+  The guaranteed hit lets daggers spend their card slots on damage instead of an
+  accuracy tax.*
 
-- **Venom Splasher:** The `75% target HP` requirement and the
-  `Red Gemstone` cost are both removed, and the detonation timer is
-  retuned to a clean linear curve of `15 seconds at level 1` down to
-  `6 seconds at level 10`. *Developer Comments: Poison is central to the
-  Assassin's identity, but Splasher was almost never pressed because of
-  the HP gate, the reagent and the inconsistent timer. Stripping all three
-  blockers and giving it a predictable detonation puts the skill on par
-  with the "finisher skills" other classes already have.*
+- **Sonic Blow — Dagger Support:** Sonic Blow can now be cast with `Daggers` as
+  well as `Katars`, and it no longer requires `Katar Mastery 4` to learn — the
+  skill-tree prerequisite is removed, so it can be picked up directly. The
+  per-level SP cost (`16` at level 1 up to `34` at level 10) and every other
+  property are unchanged. *Developer Comments: The Opportunist loop leans on
+  landing Sonic Blow to bank a charge, but a dual-dagger stealth Assassin could
+  never press the skill — it was Katar-only to cast and gated behind Katar
+  Mastery, a skill dagger builds have no reason to take. Opening Sonic Blow to
+  Daggers and dropping the Katar Mastery gate lets dagger builds run the same
+  Sonic Blow -> Opportunist -> Grimtooth rotation the rework was designed
+  around, and pairs with Grimtooth's own Dagger unlock so the whole dagger
+  stealth kit is coherent rather than half-locked to Katars.*
 
-- **Enchant Poison:** Buff duration extended to `5 minutes` at every rank
-  and the poisoning proc chance scales up to `10% at rank 10`.
+- **Opportunist — Sonic Blow & Grimtooth:** The `Opportunist` opening earned
+  from Improve Dodge (a `5%` flee-dodge roll) and from leaving Hiding now has a
+  third source and a second use, closing the stealth loop into a full rotation.
+  Sonic Blow gains a `25% chance` on a successful hit (PvE only) to grant
+  `Opportunist` — the same `8 second` charge that halves the SP cost of your
+  next damaging skill. Grimtooth can now spend that charge instead of requiring
+  Hiding: opened while not hidden it consumes the charge and lands as a
+  single-target strike (the splash is suppressed) that still always hits, and
+  opened from Hiding it keeps its full splash exactly as before. Like the other
+  Opportunist sources, the Sonic Blow proc is fully disabled in PvP and WoE.
+  *Developer Comments: Opportunist started life as a small flee-dodge reward,
+  but with Hiding and now Sonic Blow feeding it, it becomes the connective
+  tissue of the stealth Assassin's rotation — land a Sonic Blow, bank the
+  charge, and either discount your next nuke or fire a Grimtooth out of stealth
+  without paying the Hiding tax. Grimtooth's charge-cast is deliberately
+  single-target so the out-of-Hiding option is a precision opener, not a free
+  AoE: the full splash stays the reward for actually committing to Hiding. The
+  `25%` rate is high enough to be part of the plan without being guaranteed, and
+  the PvP/WoE gate matches the other Opportunist sources so stacked SP sustain
+  never warps duels.*
+
+- **Venom Dust:** Reworked from a poison-status trap into a damaging poison
+  cloud. The `2 Venom Canines` reagent is removed; the cloud now lasts a flat
+  `10 seconds` and is gated by a `20 second cooldown`. Its element is switched
+  from Poison to Weapon and it now deals a direct `50% + 10% per level`
+  weapon-damage tick every second (60% at level 1 up to 150% at level 10), on
+  top of the existing `Poison` status chance. *Developer Comments: The old cloud did nothing but a
+  poison-status DoT, so it was dead weight against the poison-immune MVPs
+  this pass is aimed at. Routing venom power into a direct, Weapon-element
+  tick — rather than the poison status — is what makes it contribute on
+  bosses; the poison is now gravy. The reagent gave way to a cooldown so
+  the only economy is timing.*
+
+- **Venom Splasher:** The `75% target HP` requirement, the `Red Gemstone`
+  cost, and the `boss / status-immune` cast gate are all removed. The skill is
+  gated by a `7.5s → 12s per-level cooldown`, it always hits (`IgnoreFlee`),
+  and it deals direct `400% + 50% per level` Weapon-element splash damage
+  (550% at level 1 up to 1000% at level 10) rather than poison-status damage.
+  The detonation timer is a clean linear `8 seconds at level 1` down to
+  `2 seconds at level 10` so the bomb detonates sooner. *Developer Comments: This is the venom burst
+  finisher, so it has to be usable on the MVPs this pass targets. The bomb
+  planted the SC_SPLASHER timer status via a hardcoded `MD_STATUSIMMUNE`
+  check that failed the cast outright on every boss — the exact monsters the
+  skill exists to finish. Because the SC_SPLASHER status carries no BossResist
+  flag and detonation deals pure direct weapon damage (not poison-status
+  damage), dropping that gate lets the bomb stick to bosses and blow up for
+  full damage. The `400% + 50%` ratio (capping at `1000%`) is kept, and the
+  fuse was shortened to an `8s → 2s` curve so the finisher pays off quickly.*
+
+- **Enchant Poison:** Buff duration extended to `5 minutes` at every rank and
+  the poisoning proc chance scales up to `10% at rank 10`. It now also grants
+  a flat ATK bonus of `+5 per skill level` (`+50 ATK at rank 10`) for its
+  duration, which applies even against poison-immune targets.
   *Developer Comments: Poison sits at the center of the Assassin's kit, so
-  the buff that enables it should not be a chore to maintain. (Verified —
-  already in line with this rebalance on the live tree.)*
+  the buff that enables it should not be a chore to maintain — and it should
+  do something on the bosses that shrug off the poison status. The flat ATK
+  is the venom analog to Cloaking's ambush setup: a deliberate damage window
+  that is not conditional on the enemy actually being poisoned. No cooldown
+  was added: with a maintainable 5-minute buff a cooldown would be inert
+  clutter, so the "window" here is simply keeping the buff up.*
 
 - **Katar Mastery:** Continues to grant `+4 ATK per skill level`
   (40 ATK at rank 10). Now also grants `+5% nominal CRIT at rank 10`,
@@ -234,6 +315,29 @@ added in future passes.
   rate is applied. *Developer Comments: With the poison line now viable,
   the CRIT-Assassin needed a matching bump so it stays competitive with
   pure poison builds rather than being a strictly weaker option.*
+
+- **Poison React:** Reduced to `5 levels`, and its bespoke damage mechanics are
+  removed. It no longer empowers the caster's next attack with a `+30% per level`
+  ATK boost, and the reactive Envenom autocast is no longer locked to level 5 —
+  when the buffed caster is struck it now simply autocasts `Envenom` on the
+  attacker at the caster's own learned Envenom level, consuming one counter per
+  reaction. Counters were doubled to `one per skill level` (1 at level 1 up to
+  5 at level 5). The poison-element attack block / retaliation mode was dropped
+  along with the damage boost. *Developer Comments: Poison React carried its own one-off damage
+  formula and a hardcoded level-5 Envenom that ignored how much the player had
+  actually invested in Envenom. Collapsing it to "cast your Envenom at your
+  level when hit" makes it a clean extension of the reworked Envenom rather than
+  a separate damage table to balance. Note: this removes the old poison-attack
+  block, so Poison React is now purely offensive reactive pressure.*
+
+- **Venom Knife:** No longer consumes a thrown `Dagger`; instead it is gated
+  by a short `2 second cooldown`. In pre-renewal it now deals direct
+  `150% + 30% per level` ranged damage (`180% ATK` at its single level)
+  instead of a flat `100% ATK`, and keeps its high poison chance.
+  *Developer Comments: Venom Knife was a flavour poke that cost a real Dagger
+  every throw for almost no damage. Turning the ammo cost into a cooldown and
+  giving it a genuine direct-damage ratio makes it a usable ranged venom
+  opener for dagger-venom Assassins without the inventory drain.*
 
 ### Rogue Skill Changes
 
@@ -290,9 +394,14 @@ added in future passes.
 ## Notes for server operators
 
 - The skill database changes are layered on top of the stock pre-renewal data
-  via `db/import/skill_db.yml` and `db/import/status.yml`. The base
-  `db/pre-re/*.yml` files are left untouched, so future upstream merges of
-  rAthena will not silently revert this balance pass.
+  via `db/import/skill_db.yml` and `db/import/status.yml` wherever the change is
+  expressible there, so future upstream merges of rAthena will not silently
+  revert this balance pass. The one exception is requirement/flag *removals*,
+  which the import loader cannot express and therefore live in
+  `db/pre-re/skill_db.yml` (each marked with a `Payon Stories rebalance`
+  comment): Venom Dust's `NoDamage` flag (cleared so the cloud can deal direct
+  ticks) and Venom Knife's `Ammo` requirement (the thrown Dagger cost). These
+  match the precedent already set by Stone Fling's item-requirement removal.
 - The Bowling Bash configuration in `conf/battle/skill.conf` now defaults to
   `bowling_bash_area: 2` (area around caster). Restoring the legacy gutter-line
   behavior is still possible by setting it back to `0`.
@@ -300,10 +409,18 @@ added in future passes.
   - `src/map/skills/swordman/holycross.cpp` / `holycross.hpp`
   - `src/map/skills/swordman/smite.cpp` (Shield Charge / Smite)
   - `src/map/skills/swordman/bowlingbash.cpp`
-  - `src/map/skills/thief/venomsplasher.cpp` (drops the 75% HP gate)
+  - `src/map/skills/thief/venomsplasher.cpp` (drops the 75% HP gate and the
+    boss / status-immune cast gate)
+  - `src/map/skills/thief/grimtooth.cpp` (stealth-burst damage floor)
+  - `src/map/skills/thief/venomdust.cpp` (per-tick direct-damage ratio)
+  - `src/map/skills/thief/throwvenomknife.cpp` (pre-re direct ranged damage)
+  - `src/map/skill.cpp` (`UNT_VENOMDUST` now deals a direct weapon-damage tick)
   - `src/map/skills/thief/backstab.cpp` (gap-closer redesign)
+  - `src/map/battle.cpp` (Poison React: learned-level Envenom autocast, removal
+    of the +30%/level damage boost and the poison-attack block mode)
   - `src/map/status.cpp` (Two-Hand Quicken FLEE/CRIT, Spear Quicken split,
-    Katar Mastery CRIT bump at rank 10, Strip Helm MDEF reduction fix)
+    Katar Mastery CRIT bump at rank 10, Strip Helm MDEF reduction fix,
+    Enchant Poison flat ATK bonus)
 - Tree changes live in `db/import/skill_tree.yml` (Rogue / Baby Rogue get
   `ST_PRESERVE` from Plagiarism 10).
 

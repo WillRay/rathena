@@ -7303,6 +7303,9 @@ static int32 status_calc_batk(block_list *bl, status_change *sc, int32 batk)
 		batk += sc->getSCE(SC_GATLINGFEVER)->val3;
 	if(sc->getSCE(SC_MADNESSCANCEL))
 		batk += 100;
+	// Payon Stories rebalance: Enchant Poison grants flat ATK during the buff.
+	if(sc->getSCE(SC_ENCPOISON))
+		batk += sc->getSCE(SC_ENCPOISON)->val3;
 #endif
 	if(sc->getSCE(SC_ASH))
 		batk -= batk * sc->getSCE(SC_ASH)->val4 / 100;
@@ -10914,7 +10917,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			}
 			break;
 		case SC_POISONREACT:
-			val2 = val1 / 2; // Number of Envenom autocasts
+			val2 = val1; // Number of Envenom autocasts (Payon Stories: doubled from val1/2, so one per skill level)
 			val3 = 50; // Chance to autocast Envenom on hit / Poison chance of attack after block
 			val4 = 0; // 0: Poison Block Mode; 1: Damage Boost Mode
 			break;
@@ -10943,6 +10946,12 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			break;
 		case SC_ENCPOISON:
 			val2= 500+50*val1; // Poisoning Chance (5+0.5%) in 1/10000 rate
+#ifndef RENEWAL
+			// Payon Stories rebalance: flat ATK bonus (+5 per skill level) that
+			// applies even against poison-immune targets, turning the buff into
+			// the venom "damage window". See status_calc_batk.
+			val3= 5*val1;
+#endif
 			break;
 		case SC_ELEMENTALCHANGE:
 			// val1 : Element Lvl (if called by skill lvl 1, takes random value between 1 and 4)
@@ -13579,6 +13588,14 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 				sc_start(bl,bl,SC_SPURT,100,val1,skill_get_time2(scdb->skill_id, val1));
 		}
 		break;
+		case SC_HIDING:
+			// Thief passive rebalance: Opportunist (Improve Dodge / stealth loop).
+			// Coming out of Hiding grants Opportunist (halves the SP cost of the
+			// next damaging skill, 8 second duration). PvE only — fully disabled
+			// in PvP and WoE, matching the flee-dodge proc site in battle.cpp.
+			if (sd != nullptr && !map_flag_vs(bl->m))
+				sc_start(bl, bl, SC_OPPORTUNIST, 100, 1, 8000);
+			break;
 		case SC_AUTOBERSERK:
 			if (sc->getSCE(SC_PROVOKE) && sc->getSCE(SC_PROVOKE)->val4 == 1)
 				status_change_end(bl, SC_PROVOKE);

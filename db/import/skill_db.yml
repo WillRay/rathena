@@ -339,37 +339,121 @@ Body:
           Amount: 42
         - Level: 5
           Amount: 50
-  # Payon Stories rebalance: Venom Dust now uses Venom Canines instead of Red Gemstone
+  # Payon Stories rebalance: Venom Dust reworked into a damaging poison cloud.
+  # The reagent (previously 2 Venom Canines) is dropped in favour of a cooldown,
+  # and the cloud's element is switched from Poison to Weapon so its new direct
+  # ticks land on poison-immune MVPs. The tick damage and the NoDamage flag
+  # removal live in the .cpp / base file respectively.
   - Id: 140
     Name: AS_VENOMDUST
+    Element: Weapon
+    Duration1: 10000
+    Cooldown: 20000
     Requires:
-      ItemCost:
-        - Item: Posionous_Canine
-          Amount: 2
-  # Payon Stories rebalance: Venom Splasher detonation re-tuned to a linear 15s -> 6s curve
+      SpCost: 20
+  # Payon Stories rebalance: Venom Splasher detonation re-tuned to a linear
+  # 8s -> 2s curve so the bomb procs sooner (was 15s -> 6s).
   - Id: 141
     Name: AS_SPLASHER
     Duration1:
       - Level: 1
-        Time: 15000
-      - Level: 2
-        Time: 14000
-      - Level: 3
-        Time: 13000
-      - Level: 4
-        Time: 12000
-      - Level: 5
-        Time: 11000
-      - Level: 6
-        Time: 10000
-      - Level: 7
-        Time: 9000
-      - Level: 8
         Time: 8000
-      - Level: 9
-        Time: 7000
-      - Level: 10
+      - Level: 2
+        Time: 7300
+      - Level: 3
+        Time: 6700
+      - Level: 4
         Time: 6000
+      - Level: 5
+        Time: 5300
+      - Level: 6
+        Time: 4700
+      - Level: 7
+        Time: 4000
+      - Level: 8
+        Time: 3300
+      - Level: 9
+        Time: 2700
+      - Level: 10
+        Time: 2000
+  # Payon Stories rebalance: Poison React reduced to 5 levels. It no longer uses
+  # its own damage formula; instead it autocasts Envenom at the player's learned
+  # Envenom level when the holder is hit (see src/map/battle.cpp SC_POISONREACT).
+  - Id: 139
+    Name: AS_POISONREACT
+    MaxLevel: 5
+  # Payon Stories rebalance: Sonic Blow is now usable with Daggers as well as
+  # Katars, so dual-dagger stealth Assassins get the same burst — and the same
+  # Opportunist feed (see src/map/skills/thief/sonicblow.cpp) — that Katar
+  # builds have. The full Requires block is restated so the weapon change cannot
+  # silently drop the per-level SP cost.
+  - Id: 136
+    Name: AS_SONICBLOW
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 16
+        - Level: 2
+          Amount: 18
+        - Level: 3
+          Amount: 20
+        - Level: 4
+          Amount: 22
+        - Level: 5
+          Amount: 24
+        - Level: 6
+          Amount: 26
+        - Level: 7
+          Amount: 28
+        - Level: 8
+          Amount: 30
+        - Level: 9
+          Amount: 32
+        - Level: 10
+          Amount: 34
+      Weapon:
+        Katar: true
+        Dagger: true
+  # Payon Stories rebalance: Grimtooth becomes the cloak-gated stealth burst.
+  # Guaranteed hit (IgnoreFlee), a short 2s cooldown so it is a window and not a
+  # spam, splash that grows with level, and now usable with daggers as well as
+  # katars so double-dagger stealth builds have a real burst. Damage floor lives
+  # in src/map/skills/thief/grimtooth.cpp. Hiding remains the primary gate, but
+  # a banked Opportunist charge can substitute for it (see the AS_GRIMTOOTH
+  # special case in skill_check_condition_sc_required, and the single-target
+  # Opportunist branch in grimtooth.cpp). The full Requires block is restated so
+  # the weapon change cannot drop the SP cost or the Hiding gate.
+  - Id: 137
+    Name: AS_GRIMTOOTH
+    DamageFlags:
+      Splash: true
+      IgnoreFlee: true
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    Cooldown: 2000
+    Requires:
+      SpCost: 3
+      Weapon:
+        Katar: true
+        Dagger: true
+      Status:
+        Hiding: true
+  # Payon Stories rebalance: Venom Knife is a cooldown-gated ranged venom poke.
+  # The thrown-Dagger ammo cost was removed in db/pre-re/skill_db.yml; a short
+  # 2s cooldown replaces it, and direct ranged damage is added in
+  # src/map/skills/thief/throwvenomknife.cpp.
+  - Id: 1004
+    Name: AS_VENOMKNIFE
+    Cooldown: 2000
   # Payon Stories rebalance: Back Stab is now a 3-cell gap closer with per-level cast delay
   - Id: 212
     Name: RG_BACKSTAP

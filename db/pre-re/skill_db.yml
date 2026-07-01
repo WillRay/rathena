@@ -4929,8 +4929,10 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Ground
-    DamageFlags:
-      NoDamage: true
+    # Payon Stories rebalance: NoDamage flag removed so the cloud can deal
+    # direct weapon-damage ticks (see src/map/skill.cpp UNT_VENOMDUST and
+    # src/map/skills/thief/venomdust.cpp). The import loader cannot clear a
+    # damage flag, so this removal must live in the base file.
     Range: 2
     Hit: Single
     HitCount: 1
@@ -16799,6 +16801,9 @@ Body:
     Flags:
       IsQuest: true
   - Id: 1004
+    # Payon Stories rebalance: Ammo (thrown Dagger) requirement removed so the
+    # skill is a cooldown-gated ranged poke rather than a dagger sink. Requirement
+    # removal cannot be expressed by the import loader, so it lives here.
     Name: AS_VENOMKNIFE
     Description: Throw Venom Knife
     MaxLevel: 1
@@ -16820,9 +16825,6 @@ Body:
     Duration2: 60000
     Requires:
       SpCost: 15
-      Ammo:
-        Dagger: true
-      AmmoAmount: 1
     Status: Poison
   - Id: 1005
     Name: RG_CLOSECONFINE

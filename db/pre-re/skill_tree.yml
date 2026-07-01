@@ -799,7 +799,7 @@ Body:
           - Name: TF_POISON
             Level: 1
       - Name: AS_POISONREACT
-        MaxLevel: 10
+        MaxLevel: 5
         Requires:
           - Name: AS_ENCHANTPOISON
             Level: 3

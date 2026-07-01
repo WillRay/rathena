@@ -25,18 +25,13 @@ void SkillVenomSplasher::calculateSkillRatio(const Damage *wd, const block_list 
 }
 
 void SkillVenomSplasher::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	status_data* tstatus = status_get_status_data(*target);
 	sc_type type = skill_get_sc(getSkillId());
-	map_session_data* sd = BL_CAST( BL_PC, src );
 
 	// Payon Stories rebalance: Venom Splasher no longer requires the target to be
-	// under 75% HP; pre-renewal now matches renewal in dropping that gate.
-	if( status_has_mode(tstatus,MD_STATUSIMMUNE) ) {
-		if (sd) {
-			clif_skill_fail( *sd, getSkillId() );
-		}
-		return;
-	}
+	// under 75% HP, and it may now be planted on boss / status-immune targets so
+	// the venom finisher stays usable for MVP hunting. The SC_SPLASHER bomb is a
+	// delivery timer (no BossResist flag, so it lands on bosses), and detonation
+	// deals direct weapon damage, so the skill works on poison-immune monsters.
 	clif_skill_nodamage(src,*target,getSkillId(),skill_lv,
 		sc_start4(src,target,type,100,skill_lv,getSkillId(),src->id,skill_get_time(getSkillId(),skill_lv),1000));
 }

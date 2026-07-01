@@ -4446,16 +4446,10 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 200;
 #endif
 		if (!skill_id || skill_id == KN_AUTOCOUNTER) {
-			if (const status_change_entry* sce = sc->getSCE(SC_POISONREACT); sce != nullptr && sce->val4 == 1) {
-				// Damage boost from poison react (for players bonus depends on level learned)
-				if (sd != nullptr)
-					skillratio += 30 * pc_checkskill(sd, AS_POISONREACT);
-				else
-					skillratio += 30 * sce->val1;
-				// This attack has a chance to cause poison
-				sc_start2(src, target, SC_POISON, sce->val3, sce->val1, src->id, skill_get_time2(AS_POISONREACT, sce->val1), sstatus->amotion);
-				status_change_end(src, SC_POISONREACT);
-			}
+			// Payon Stories rebalance: Poison React no longer empowers the next
+			// attack with its own damage formula; it simply autocasts Envenom at
+			// the learned level when the holder is hit (see the SC_POISONREACT
+			// autocast in battle_calc_weapon_attack).
 			if (sc->getSCE(SC_CRUSHSTRIKE)) {
 				if (sd) { //ATK [{Weapon Level * (Weapon Upgrade Level + 6) * 100} + (Weapon ATK) + (Weapon Weight)]%
 					int16 index = sd->equip_index[EQI_HAND_R];
@@ -5206,11 +5200,14 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, block_list
 			status_change_end(target, SC_REJECTSWORD);
 	}
 
-	// Poison React Envenom Level 5 Autocast
+	// Poison React: autocast Envenom at the holder's learned Envenom level
+	// (Payon Stories rebalance: was a hardcoded level 5).
 	if (tsc != nullptr && wd->damage > 0) {
 		if (status_change_entry* sce = tsc->getSCE(SC_POISONREACT); sce != nullptr && rnd_chance_official(sce->val3, 100)) {
-			if (status_check_skilluse(target, src, TF_POISON, 0))
-				skill_attack(BF_WEAPON, target, target, src, TF_POISON, 5, gettick(), 0);
+			map_session_data* preact_sd = BL_CAST(BL_PC, target);
+			uint16 env_lv = preact_sd != nullptr ? pc_checkskill(preact_sd, TF_POISON) : sce->val1;
+			if (env_lv > 0 && status_check_skilluse(target, src, TF_POISON, 0))
+				skill_attack(BF_WEAPON, target, target, src, TF_POISON, env_lv, gettick(), 0);
 			// Counter is reduced even if the autocast fails
 			if (--sce->val2 <= 0)
 				status_change_end(target, SC_POISONREACT);
@@ -7256,18 +7253,9 @@ enum damage_lv battle_weapon_attack(block_list* src, block_list* target, t_tick 
 		}
 	}
 
-	// Poison React counter activates on attacks from poison-element enemies as well as normal poison attacks
-	if (tsc != nullptr && ((src->type != BL_PC && sstatus->def_ele == ELE_POISON) || sstatus->rhw.ele == ELE_POISON)) {
-		if (status_change_entry* sce = tsc->getSCE(SC_POISONREACT); sce != nullptr && sce->val4 == 0) {
-			// Next normal attack will receive a damage boost
-			sce->val4 = 1;
-
-			// The target will start attacking instead of the source
-			unit_attack(target, src->id, 0);
-
-			return ATK_BLOCK;
-		}
-	}
+	// Payon Stories rebalance: Poison React's poison-attack block / damage-boost
+	// mode was removed. It is now purely a reactive Envenom autocast (handled in
+	// battle_calc_weapon_attack), so poison-element attacks are no longer blocked.
 
 	if( tsc && tsc->getSCE(SC_BLADESTOP_WAIT) &&
 #ifndef RENEWAL

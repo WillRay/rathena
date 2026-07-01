@@ -13,6 +13,10 @@ SkillThrowVenomKnife::SkillThrowVenomKnife() : WeaponSkillImpl(AS_VENOMKNIFE) {
 void SkillThrowVenomKnife::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
 #ifdef RENEWAL
 	base_skillratio += 400;
+#else
+	// Payon Stories rebalance: reliable direct ranged venom poke.
+	// 150% + 30% per level (skill is max level 1, so 180% ATK).
+	base_skillratio += 50 + 30 * skill_lv;
 #endif
 }
 

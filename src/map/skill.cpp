@@ -7072,6 +7072,11 @@ int32 skill_unit_onplace_timer(skill_unit *unit, block_list *bl, t_tick tick)
 			break;
 
 		case UNT_VENOMDUST:
+#ifndef RENEWAL
+			// Payon Stories rebalance: the cloud deals a direct weapon-damage
+			// tick each interval so it contributes on poison-immune MVPs.
+			skill_attack(skill_get_type(sg->skill_id),ss,unit,bl,sg->skill_id,sg->skill_lv,tick,0);
+#endif
 			if(tsc && !tsc->getSCE(type))
 				status_change_start(ss,bl,type,10000,sg->skill_lv,sg->src_id,0,0,skill_get_time2(sg->skill_id,sg->skill_lv),SCSTART_NONE);
 			break;
@@ -8191,6 +8196,18 @@ static bool skill_check_condition_sc_required( map_session_data& sd, uint16 skil
 
 	if (sc == nullptr) {
 		clif_skill_fail( sd, skill_id );
+		return false;
+	}
+
+	// Thief passive rebalance: Grimtooth may be opened either from Hiding
+	// (the normal stealth setup) or with a banked Opportunist charge. The
+	// Opportunist charge substitutes for the Hiding requirement here; the
+	// cast is later dropped to single-target and the charge consumed in
+	// src/map/skills/thief/grimtooth.cpp.
+	if (skill_id == AS_GRIMTOOTH) {
+		if (sc->getSCE(SC_HIDING) || sc->getSCE(SC_OPPORTUNIST))
+			return true;
+		clif_skill_fail( sd, skill_id, USESKILL_FAIL_LEVEL );
 		return false;
 	}
 
@@ -9652,8 +9669,13 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 		// damaging skills (Cloaking, Hiding, etc.) preserve the charge so
 		// it isn't wasted on utility presses. Auto-casts (state.autocast)
 		// already zero SP above, so this branch naturally doesn't fire.
+		// Grimtooth is excluded: it consumes the Opportunist charge itself
+		// (to substitute for the Hiding requirement, dropping to single-
+		// target) in its castendDamageId, so the charge must survive this
+		// step rather than being spent here on the SP discount.
 		if (require.sp > 0 && sd->sc.getSCE(SC_OPPORTUNIST) != nullptr
-			&& (skill_get_inf(skill_id) & INF_ATTACK_SKILL) != 0) {
+			&& (skill_get_inf(skill_id) & INF_ATTACK_SKILL) != 0
+			&& skill_id != AS_GRIMTOOTH) {
 			require.sp = require.sp / 2;
 			status_change_end(sd, SC_OPPORTUNIST);
 		}

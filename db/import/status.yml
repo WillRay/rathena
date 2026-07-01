@@ -45,6 +45,14 @@ Header:
   Type: STATUS_DB
   Version: 4
 Body:
+  # Payon Stories rebalance: Enchant Poison now also grants a flat ATK bonus
+  # (val3, +5 per skill level) that applies even against poison-immune targets,
+  # so the status must recalc Batk when it starts/ends. Atk_Ele is preserved
+  # (the weapon still becomes Poison element). See status.cpp SC_ENCPOISON.
+  - Status: Encpoison
+    CalcFlags:
+      Atk_Ele: true
+      Batk: true
   # Payon Stories rebalance: Two-Hand Quicken now grants FLEE + CRIT
   - Status: Twohandquicken
     CalcFlags:

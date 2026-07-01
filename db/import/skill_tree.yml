@@ -57,3 +57,16 @@ Body:
         Requires:
           - Name: RG_PLAGIARISM
             Level: 10
+  # Payon Stories rebalance: Sonic Blow no longer requires Katar Mastery 4.
+  # Dagger stealth Assassins skip Katar Mastery entirely, so gating their new
+  # dagger-capable Sonic Blow behind it locked them out of the skill (and of the
+  # Sonic Blow -> Opportunist feed). Level 0 erases the AS_KATAR prerequisite;
+  # MaxLevel 10 is restated because the parser requires it, and the removal
+  # propagates to the Assassin Cross and baby trees through inheritance.
+  - Job: Assassin
+    Tree:
+      - Name: AS_SONICBLOW
+        MaxLevel: 10
+        Requires:
+          - Name: AS_KATAR
+            Level: 0
