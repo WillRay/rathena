@@ -41,6 +41,15 @@ Displays SVN version of the server.
 
 ---------------------------------------
 
+@aspd
+
+Displays your current attacks per second based on your buffed ASPD.
+
+Output Example:
+180 ASPD => 2.50 attacks/sec
+
+---------------------------------------
+
 @rates
 
 Displays the server rates.

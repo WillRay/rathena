@@ -992,6 +992,29 @@ ACMD_FUNC(load){
 /*==========================================
  *
  *------------------------------------------*/
+ACMD_FUNC(aspd)
+{
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	int32 amotion = sd->battle_status.amotion;
+	int32 adelay  = sd->battle_status.adelay;
+	if (amotion <= 0 || adelay <= 0) {
+		clif_displaymessage(fd, msg_txt(sd, 1542)); // Unable to determine ASPD.
+		return -1;
+	}
+	int32 aspd_val = (AMOTION_ZERO_ASPD - amotion) / AMOTION_INTERVAL;
+	double aps = 1000.0 / adelay;
+
+	sprintf(atcmd_output, msg_txt(sd, 1541), aspd_val, aps); // %d ASPD => %.2f attacks/sec
+	clif_displaymessage(fd, atcmd_output);
+	return 0;
+}
+
+/*==========================================
+ *
+ *------------------------------------------*/
 ACMD_FUNC(speed)
 {
 	int16 speed;
@@ -11494,6 +11517,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(whogm),
 		ACMD_DEF(save),
 		ACMD_DEF(load),
+		ACMD_DEF(aspd),
 		ACMD_DEF(speed),
 		ACMD_DEF(storage),
 		ACMD_DEF(guildstorage),

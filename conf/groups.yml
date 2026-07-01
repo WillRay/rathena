@@ -46,6 +46,7 @@ Body:
     Name: Player
     Level: 0
     Commands:
+      aspd: true
       changedress: true
       resurrect: true
     Permissions:
