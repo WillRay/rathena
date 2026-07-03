@@ -572,8 +572,16 @@ Body:
   # db/pre-re/skill_db.yml (no longer consumes an arrow). SP cost cut to a very
   # approachable 3 + 1 per level (4 at Lv1 up to 13 at Lv10) so it can be the
   # Archer's bread-and-butter spam without draining SP.
+  # Now a non-targeted skill: TargetType Self + NoTargetSelf turns it into a
+  # combo-style cast (skill_get_casttype -> CAST_DAMAGE) that auto-fires on the
+  # player's current target (unit.cpp: target_id = ud->target) instead of
+  # requiring a fresh target click. AlterRangeVulture from the base entry is
+  # preserved (Flags merge field-by-field).
   - Id: 46
     Name: AC_DOUBLE
+    TargetType: Self
+    Flags:
+      NoTargetSelf: true
     Cooldown: 3000
     Requires:
       SpCost:
