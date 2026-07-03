@@ -7200,14 +7200,17 @@ enum damage_lv battle_weapon_attack(block_list* src, block_list* target, t_tick 
 		{
 			int16 index = sd->equip_index[EQI_AMMO];
 			if (index < 0) {
-				if (sd->weapontype1 > W_KATAR && sd->weapontype1 < W_HUUMA)
-					clif_skill_fail( *sd, 0, USESKILL_FAIL_NEED_MORE_BULLET );
-				else
-					clif_arrow_fail( *sd, ARROWFAIL_NO_AMMO );
-				return ATK_NONE;
+				if (battle_config.arrow_require) {
+					if (sd->weapontype1 > W_KATAR && sd->weapontype1 < W_HUUMA)
+						clif_skill_fail( *sd, 0, USESKILL_FAIL_NEED_MORE_BULLET );
+					else
+						clif_arrow_fail( *sd, ARROWFAIL_NO_AMMO );
+					return ATK_NONE;
+				}
+				// arrow_require off: fire without ammo equipped (no arrow bonus/consumption)
 			}
 			//Ammo check by Ishizu-chan
-			if (sd->inventory_data[index]) {
+			else if (sd->inventory_data[index]) {
 				switch (sd->status.weapon) {
 					case W_BOW:
 						if (sd->inventory_data[index]->subtype != AMMO_ARROW) {
@@ -8421,6 +8424,7 @@ static const struct _battle_data {
 	{ "open_box_weight_rate",               &battle_config.open_box_weight_rate,            70,     0,      100             },
 #endif
 	{ "arrow_decrement",                    &battle_config.arrow_decrement,                 1,      0,      2,              },
+	{ "arrow_require",                      &battle_config.arrow_require,                   1,      0,      1,              },
 	{ "ammo_unequip",                       &battle_config.ammo_unequip,                    1,      0,      1,              },
 	{ "ammo_check_weapon",                  &battle_config.ammo_check_weapon,               1,      0,      1,              },
 	{ "max_aspd",                           &battle_config.max_aspd,                        190,    100,    199,            },

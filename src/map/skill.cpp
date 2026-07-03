@@ -9543,7 +9543,7 @@ bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint1
 		return false;
 	}
 
-	if( require.ammo ) { //Skill requires stuff equipped in the ammo slot.
+	if( require.ammo && battle_config.arrow_require ) { //Skill requires stuff equipped in the ammo slot.
 		uint8 extra_ammo = 0;
 
 #ifdef RENEWAL

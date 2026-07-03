@@ -287,6 +287,7 @@ struct Battle_Config
 	int32 natural_heal_skill_interval;
 	int32 natural_heal_weight_rate;
 	int32 arrow_decrement;
+	int32 arrow_require;
 	int32 ammo_unequip;
 	int32 ammo_check_weapon;
 	int32 max_aspd;

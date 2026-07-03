@@ -17,6 +17,22 @@ added in future passes.
 
 ---
 
+## General Changes
+
+- **Ranged weapons no longer require ammo to be equipped (optional).** Added a new
+  `arrow_require` battle config (`conf/battle/battle.conf`, default `yes` = official
+  behavior). When set to `no`, bows and guns can perform normal attacks and use
+  ammo-based skills without any arrow/ammo equipped. Arrow damage bonuses and ammo
+  consumption still apply only when ammo *is* equipped, and mismatched-ammo checks
+  remain enforced when ammo is equipped.
+  - `src/map/battle.hpp` — added `arrow_require` config field.
+  - `src/map/battle.cpp` — registered the config and gated the normal-attack ammo
+    requirement on it.
+  - `src/map/skill.cpp` — gated the skill ammo requirement on it.
+  - `conf/battle/battle.conf` — documented the new `arrow_require` setting.
+
+---
+
 ## Class Changes
 
 ### Novice Skill Changes
