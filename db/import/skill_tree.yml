@@ -70,3 +70,39 @@ Body:
         Requires:
           - Name: AS_KATAR
             Level: 0
+  # Payon Stories rebalance: Charge Arrow is no longer a quest skill (the IsQuest
+  # flag is cleared in db/import/skill_db.yml). It is now a 5-level skill-point
+  # skill gated behind Arrow Shower 5, sitting directly under Arrow Shower in the
+  # tree. The change propagates to Hunter/Sniper and the baby trees through
+  # Archer inheritance.
+  - Job: Archer
+    Tree:
+      - Name: AC_CHARGEARROW
+        MaxLevel: 5
+        Requires:
+          - Name: AC_SHOWER
+            Level: 5
+  # Payon Stories rebalance: Improve Concentration no longer requires Vulture's
+  # Eye 1. Level 0 erases the AC_VULTURE prerequisite; MaxLevel 10 is restated
+  # because the parser requires it. The removal propagates to Hunter/Sniper,
+  # Bard/Dancer and the baby/high trees through Archer inheritance. Super Novice
+  # and Super Baby define the skill natively, so they are erased separately.
+      - Name: AC_CONCENTRATION
+        MaxLevel: 10
+        Requires:
+          - Name: AC_VULTURE
+            Level: 0
+  - Job: Supernovice
+    Tree:
+      - Name: AC_CONCENTRATION
+        MaxLevel: 10
+        Requires:
+          - Name: AC_VULTURE
+            Level: 0
+  - Job: Super_Baby
+    Tree:
+      - Name: AC_CONCENTRATION
+        MaxLevel: 10
+        Requires:
+          - Name: AC_VULTURE
+            Level: 0

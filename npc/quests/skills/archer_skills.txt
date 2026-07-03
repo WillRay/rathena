@@ -40,13 +40,13 @@ moc_ruins,118,99,5	script	Roberto	88,{
 			mes " ";
 			mes "You are...";
 			next;
-			if (countitem(1019) > 12) {
+			if (countitem(1019) > 4) {
 				mes "[Roberto]";
 				mes "You brought them!";
 				mes "Thank you very much.";
 				mes "Then, as I promised, I will teach you the skill.";
 				next;
-				delitem 1019,13; //Wooden_Block
+				delitem 1019,5; //Wooden_Block (Trunk)
 				skill "AC_MAKINGARROW",1,SKILL_PERM;
 				mes "[Roberto]";
 				mes "No need to worry about arrows now.";

@@ -142,6 +142,35 @@ Header:
   Type: SKILL_DB
   Version: 4
 Body:
+  # Attention Concentrate: buff duration raised to a flat 5 minutes (300000ms)
+  # at all levels, up from 4 minutes, to bring core buffs in line with the
+  # 5-minute standard. SP cost is also halved from the base 20 + 6/level curve
+  # to a 10 + 3/level curve (13 SP at Lv1, 40 SP at Lv10).
+  - Id: 45
+    Name: AC_CONCENTRATION
+    Duration1: 300000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 13
+        - Level: 2
+          Amount: 16
+        - Level: 3
+          Amount: 19
+        - Level: 4
+          Amount: 22
+        - Level: 5
+          Amount: 25
+        - Level: 6
+          Amount: 28
+        - Level: 7
+          Amount: 31
+        - Level: 8
+          Amount: 34
+        - Level: 9
+          Amount: 37
+        - Level: 10
+          Amount: 40
   - Id: 5
     Name: SM_BASH
     Requires:
@@ -538,3 +567,86 @@ Body:
       SpCost: 9
       Status:
         Pick_Stone: true
+  # Double Strafe: now has a 3s cooldown. Damage buffed +120 percentage points
+  # at all levels in C++ (doublestrafe.cpp). Arrow ammo requirement removed in
+  # db/pre-re/skill_db.yml (no longer consumes an arrow). SP cost cut to a very
+  # approachable 3 + 1 per level (4 at Lv1 up to 13 at Lv10) so it can be the
+  # Archer's bread-and-butter spam without draining SP.
+  - Id: 46
+    Name: AC_DOUBLE
+    Cooldown: 3000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 4
+        - Level: 2
+          Amount: 5
+        - Level: 3
+          Amount: 6
+        - Level: 4
+          Amount: 7
+        - Level: 5
+          Amount: 8
+        - Level: 6
+          Amount: 9
+        - Level: 7
+          Amount: 10
+        - Level: 8
+          Amount: 11
+        - Level: 9
+          Amount: 12
+        - Level: 10
+          Amount: 13
+  # Arrow Shower: 5s cooldown, pushback removed (Knockback 0), and it now
+  # strikes twice from rank 5 onward (HitCount per-level). Damage buffed +50
+  # percentage points at all levels in C++ (arrowshower.cpp).
+  - Id: 47
+    Name: AC_SHOWER
+    Cooldown: 5000
+    HitCount:
+      - Level: 1
+        Count: 1
+      - Level: 2
+        Count: 1
+      - Level: 3
+        Count: 1
+      - Level: 4
+        Count: 1
+      - Level: 5
+        Count: 2
+      - Level: 6
+        Count: 2
+      - Level: 7
+        Count: 2
+      - Level: 8
+        Count: 2
+      - Level: 9
+        Count: 2
+      - Level: 10
+        Count: 2
+    Knockback: 0
+  # Charge Arrow: reworked from a 1-level quest skill into a 5-level skill-point
+  # skill (see db/import/skill_tree.yml for the Arrow Shower 5 prerequisite and
+  # the raised tree MaxLevel). IsQuest is cleared so it can be learned with skill
+  # points, MaxLevel is raised to 5, knockback is cut from 6 to 3 cells, and SP
+  # is cut to a very approachable 4 + 1 per level (5 at Lv1, 9 at Lv5). Damage
+  # floor of 300% + 20% per level lives in src/map/skills/archer/chargearrow.cpp.
+  # The Bow + Arrow requirement is left untouched — it still fires with arrows.
+  - Id: 148
+    Name: AC_CHARGEARROW
+    MaxLevel: 5
+    Flags:
+      IsQuest: false
+    Knockback: 3
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 5
+        - Level: 2
+          Amount: 6
+        - Level: 3
+          Amount: 7
+        - Level: 4
+          Amount: 8
+        - Level: 5
+          Amount: 9

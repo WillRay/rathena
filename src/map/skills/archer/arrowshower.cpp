@@ -12,7 +12,7 @@ void SkillArrowShower::calculateSkillRatio(const Damage* wd, const block_list* s
 #ifdef RENEWAL
 	base_skillratio += 50 + 10 * skill_lv;
 #else
-	base_skillratio += -25 + 5 * skill_lv;
+	base_skillratio += 25 + 5 * skill_lv;
 #endif
 }
 

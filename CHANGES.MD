@@ -112,6 +112,65 @@ added in future passes.
   other mastery reworks, this exists to make the skill points feel earned.
   (Verified — already in line with this rebalance on the live tree.)*
 
+### Archer Skill Changes
+
+- **Attention Concentrate:** SP cost is now `10 SP + 3 per skill level` (13 SP
+  at level 1, 40 SP at level 10) — half of the previous `20 SP + 6 per skill
+  level` curve. The `Vulture's Eye 1` prerequisite has been removed, so the
+  skill can be learned directly, and it has been moved up two rows and one
+  column to the right in the Archer skill tree to sit alongside the other core
+  self-buffs. The buff still lasts a flat `5 minutes` at every level, and
+  casting it also clears the `Confusion` status (upside-down screen) from the
+  caster. *Developer Comments: Attention Concentrate is a baseline Archer buff
+  that everyone keeps up permanently, so gating it behind Vulture's Eye and
+  charging a steep SP toll only taxed low-level Archers for no real choice;
+  halving the cost and freeing the prerequisite lets it read as the core AGI/DEX
+  buff it actually is. The Confusion cleanse gives Archers a way to self-correct
+  a common status.*
+
+- **Arrow Crafting:** The teaching quest can now be started at `Job Level 15`
+  and only consumes `5 Trunks`, down from 13. *Developer Comments: In line with
+  the other Platinum skill reworks, a smaller material cost matches the lower
+  level at which the skill becomes available.*
+
+- **Double Strafe:** Damage raised by `120 percentage points` at every level,
+  from `100% + 10% per level above 1` (100% at Lv 1, 190% at Lv 10) to
+  `220% + 10% per level above 1` (220% at Lv 1, 310% at Lv 10). The skill now
+  carries a `3 second cooldown` and no longer requires or consumes an arrow —
+  it fires from a Bow with no ammunition. SP cost is now a very approachable
+  `3 + 1 per skill level` (4 SP at Lv 1, 13 SP at Lv 10), down from the earlier
+  `12 + 1 per level` curve. *Developer
+  Comments: Double Strafe was the Archer's bread-and-butter nuke but was
+  throttled by arrow economy and trivially spammable; dropping the ammo tax
+  while adding a short cooldown turns it into a heavy-hitting opener rather than
+  a machine-gun. The SP curve was pulled down hard so this core spam skill
+  never feels SP-starved — the 3s cooldown, not the SP bar, is what paces it.*
+
+- **Arrow Shower:** Damage raised by `50 percentage points` at every level, from
+  `80% + 5% per level above 1` (80% at Lv 1, 125% at Lv 10) to `130% + 5% per
+  level above 1` (130% at Lv 1, 175% at Lv 10). The skill now has a `5 second
+  cooldown`, no longer knocks enemies back, and from `rank 5 and up strikes
+  twice` in a single cast. All arrow flavor and the pushback/trap-scattering
+  description have been dropped from the tooltip (the skill still fires from a
+  Bow with arrows as normal). *Developer Comments: Arrow Shower was a niche trap-pushing
+  utility that did too little damage to be picked as an attack. Removing the
+  knockback lets it actually hit a clumped pack, and the double hit past rank 5
+  plus the higher ratio finally give Archers a real AoE nuke; the cooldown keeps
+  it from replacing single-target spam outright.*
+
+- **Charge Arrow:** No longer a quest skill — it is now a `5-level skill-point
+  skill` learned in the tree directly under Arrow Shower (column 3, row 3),
+  gated behind `Arrow Shower 5`. Damage is raised to `300% + 20% per skill
+  level` (320% at Lv 1, 400% at Lv 5), up from a flat 150%, knockback is cut
+  from `6 cells to 3`, and SP is now a very approachable `4 + 1 per skill level`
+  (5 SP at Lv 1, 9 SP at Lv 5), down from the earlier `15 + 1 per level` curve.
+  *Developer Comments: Locking a hard-hitting single-target
+  knockback behind a quest kept most Archers from ever touching it; folding it
+  into the normal tree as an Arrow Shower follow-up gives the class a reliable
+  ranged finisher, and the shorter knockback stops it from shoving targets out
+  of follow-up range. The SP cost was cut to near-nothing so the finisher is
+  always available; Arrow Shower keeps its heavier cost as the AoE nuke.*
+
 ### Thief Skill Changes
 
 - **Double Attack:** Activation chance raised from `5% per skill level` to
