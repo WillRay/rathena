@@ -5050,7 +5050,12 @@ static void battle_calc_attack_left_right_hands(struct Damage* wd, block_list *s
 			if (is_attack_right_handed(src, skill_id) && wd->damage) {
 				if( (sd->class_&MAPID_FIRSTMASK) == MAPID_THIEF ) {
 					skill = pc_checkskill(sd,AS_RIGHT);
+#ifndef RENEWAL
+					// Righthand Mastery: 70 + 10/lv (80%-120%)
+					ATK_RATER(wd->damage, 70 + (skill * 10))
+#else
 					ATK_RATER(wd->damage, 50 + (skill * 20))
+#endif
 				}
 				else if(sd->class_ == MAPID_KAGEROUOBORO) {
 					skill = pc_checkskill(sd,KO_RIGHT);
@@ -5063,7 +5068,12 @@ static void battle_calc_attack_left_right_hands(struct Damage* wd, block_list *s
 			if (wd->damage2) {
 				if( (sd->class_&MAPID_FIRSTMASK) == MAPID_THIEF) {
 					skill = pc_checkskill(sd,AS_LEFT);
+#ifndef RENEWAL
+					// Lefthand Mastery: 50 + 10/lv (60%-100%)
+					ATK_RATEL(wd->damage2, 50 + (skill * 10))
+#else
 					ATK_RATEL(wd->damage2, 30 + (skill * 20))
+#endif
 				}
 				else if(sd->class_ == MAPID_KAGEROUOBORO) {
 					skill = pc_checkskill(sd,KO_LEFT);

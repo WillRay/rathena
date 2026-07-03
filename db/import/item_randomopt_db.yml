@@ -30,3 +30,11 @@
 Header:
   Type: RANDOM_OPTION_DB
   Version: 1
+
+Body:
+  # VAR_ATKPERCENT (bAtkRate) is Renewal-only and errors in Pre-Renewal.
+  # Remap to bAddRace,RC_All so the rolled value stays a % physical damage bonus vs all races.
+  - Id: 13
+    Option: VAR_ATKPERCENT
+    Script: |
+      bonus2 bAddRace,RC_All,getrandomoptinfo(ROA_VALUE);
