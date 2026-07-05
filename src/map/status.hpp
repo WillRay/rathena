@@ -1452,6 +1452,9 @@ enum sc_type : int16 {
 	// Thief quest skill stone economy
 	SC_PICK_STONE,    // "Holding Stone" flag granted by Find Stone; consumed by Stone Fling / Sand Attack
 
+	// Hunter rebalance
+	SC_HUNTED,        // "Hunted" mark applied by Beast Bane; pure flag, 7s duration. Empowers Blitz Beat (5x5 AoE + 100% damage)
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 

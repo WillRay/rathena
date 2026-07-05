@@ -13276,6 +13276,25 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 
 	// 1st thing to execute when loading status
 	switch (type) {
+		case SC_FEAR:
+			// Fear has no status icon of its own, so play a looping
+			// EF_VENOMIMPRESS visual to make the debuff visible on the
+			// target. Removed again in status_change_end. Only fire it on a
+			// fresh application so a refresh does not stack a second visual.
+			if (sc_isnew)
+				clif_specialeffect(bl, EF_VENOMIMPRESS, AREA);
+			break;
+		case SC_HUNTED:
+			// Hunter rebalance: persistent "Hunted" mark. Start the looping
+			// EF_MARKING_USE_CHANGEMONSTER visual here so it plays for whatever
+			// applied the status; it is removed in status_change_end. Only fire it
+			// on a fresh application — when the mark is refreshed on a target that
+			// already has it, the timer above has already been extended back to the
+			// full duration, so replaying the effect would just stack a second
+			// looping visual on top of the first.
+			if (sc_isnew)
+				clif_specialeffect(bl, EF_MARKING_USE_CHANGEMONSTER, AREA);
+			break;
 		case SC_BERSERK:
 			if (!(sce->val2)) { // Don't heal if already set
 				//status_heal(bl, status->max_hp, 0, 1); // Do not use percent_heal as this healing must override BERSERK's block.
@@ -13548,6 +13567,24 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 	status_data* status = status_get_status_data(*bl);
 
 	switch(type) {
+		case SC_FEAR:
+			// Tear down the looping EF_VENOMIMPRESS visual started in
+			// status_change_start_sub so it disappears when Fear expires or
+			// is otherwise removed.
+			clif_specialeffect_remove(bl, EF_VENOMIMPRESS, AREA, bl);
+			break;
+		case SC_HUNTED:
+			// Hunter rebalance: tear down the looping EF_MARKING_USE_CHANGEMONSTER
+			// visual started in status_change_start_sub so the mark disappears
+			// when the status expires or is otherwise removed.
+			clif_specialeffect_remove(bl, EF_MARKING_USE_CHANGEMONSTER, AREA, bl);
+			break;
+		case SC_ANKLE:
+			// Remove the persistent "bound" cage shown while rooted (e.g. by
+			// Snaring Arrow). Harmless no-op for SC_ANKLE sources that never
+			// started the effect.
+			clif_specialeffect_remove(bl, EF_NPC_STOP, AREA, bl);
+			break;
 		case SC_KEEPING:
 		case SC_BARRIER:
 			if (unit_data* ud = unit_bl2ud(bl); ud != nullptr) {
@@ -14310,7 +14347,7 @@ TIMER_FUNC(status_change_timer){
 			status_fix_damage(bl, bl, damage, 1, 0);
 		}
 		break;
-		
+
 	case SC_TOXIN:
 		if (sce->val4 >= 0) { // Damage is every 10 seconds including 3%sp drain.
 			if (sce->val3 == 1) { // Target

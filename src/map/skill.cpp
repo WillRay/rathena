@@ -1258,8 +1258,48 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		//So if the target can't be inflicted with statuses, this is pointless.
 		return 0;
 
+	// Hunter rebalance: snapshot whether the target already carries the "Hunted"
+	// mark before Beast Bane gets a chance to (re)apply it this hit. The mark
+	// means "the Hunter's next offensive skill on this target is assisted by the
+	// falcon"; that assist / consume path (further below) keys off this pre-hit
+	// state so a mark freshly planted by THIS hit is not immediately spent.
+	bool target_hunted = (tsc->getSCE(SC_HUNTED) != nullptr);
+
 	if( sd )
-	{ // These statuses would be applied anyway even if the damage was blocked by some skills. [Inkfish]
+	{
+		// Hunter rebalance: Beast Bane is now a passive that stamps the "Hunted"
+		// mark (SC_HUNTED) on the targets a Hunter damages with an offensive
+		// skill. The chance scales with the learned skill level. Rates are held in
+		// the 1/10000 units status_change_start() expects so the fractional
+		// per-level steps land exactly on the L1/L10 endpoints below:
+		//   offensive skill: 10% (L1) -> 60% (L10)
+		// Plain auto attacks (skill_id 0) do not apply the mark. Falcon skills
+		// (Blitz Beat, Detecting, Spring Trap) are also excluded — the mark is
+		// meant to come from the Hunter's own offensive skills, not from an auto
+		// attack or the falcon acting on its own. It is also skipped when the
+		// target is already Hunted: that hit spends the existing mark (falcon
+		// assist below) instead of stacking a fresh one on top.
+		if (skill_id != 0 && skill_id != HT_BLITZBEAT && skill_id != HT_DETECTING && skill_id != HT_SPRINGTRAP && !target_hunted) {
+			if (uint16 beastbane_lv = pc_checkskill(sd, HT_BEASTBANE); beastbane_lv > 0) {
+				int32 hunted_rate = 1000 + (beastbane_lv - 1) * 5000 / 9;
+				status_change_start(src, bl, SC_HUNTED, hunted_rate, beastbane_lv, 0, 0, 0, 7000, SCSTART_NONE);
+			}
+		}
+
+		// Hunter rebalance: on top of the offensive-skill stamp above, every
+		// plain auto attack now also carries a flat [skill level]% chance to
+		// plant the Hunted mark on the target (1% at L1 -> 10% at L10). The
+		// rate is in the 1/10000 units status_change_start() expects, so 100
+		// units per level lands exactly on level%. Skipped when the target is
+		// already Hunted so an existing mark (and the falcon assist it gates)
+		// is left intact rather than re-rolled by a white hit.
+		if (skill_id == 0 && !(attack_type&BF_SKILL) && !target_hunted) {
+			if (uint16 beastbane_lv = pc_checkskill(sd, HT_BEASTBANE); beastbane_lv > 0) {
+				status_change_start(src, bl, SC_HUNTED, beastbane_lv * 100, beastbane_lv, 0, 0, 0, 7000, SCSTART_NONE);
+			}
+		}
+
+		// These statuses would be applied anyway even if the damage was blocked by some skills. [Inkfish]
 		if( skill_id != WS_CARTTERMINATION && skill_id != AM_DEMONSTRATION && skill_id != CR_REFLECTSHIELD && skill_id != MS_REFLECTSHIELD && skill_id != GN_HELLS_PLANT_ATK
 #ifndef RENEWAL
 		&& skill_id != ASC_BREAKER
@@ -1339,6 +1379,33 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		skill->impl->applyAdditionalEffects(src, bl, skill_lv, tick, attack_type, dmg_lv);
 	}
 
+	// Hunter rebalance: falcon assist. When a Falcon-equipped bow user lands one
+	// of their own offensive skills on a target that was already carrying the
+	// Hunted mark (snapshotted as target_hunted above, so a mark planted by this
+	// very hit does not count), the falcon automatically strikes it with a
+	// single-target Blitz Beat and the mark is consumed. The mark is the gate, so
+	// there is no extra proc roll — a Hunted target always draws the assist.
+	// Blitz Beat is excluded (a manually cast Blitz Beat spends the mark itself
+	// for its empowered 5x5 / +40% version, see blitzbeat.cpp), as are the other
+	// falcon skills (Detecting, Spring Trap) and plain auto attacks (skill_id 0),
+	// so neither those nor white hits give or consume the mark.
+	if (sd && target_hunted && pc_isfalcon(sd) && sd->status.weapon == W_BOW
+		&& skill_id != 0 && skill_id != HT_BLITZBEAT && skill_id != HT_DETECTING && skill_id != HT_SPRINGTRAP) {
+		if (int32 blitz_lv = pc_checkskill(sd, HT_BLITZBEAT); blitz_lv > 0) {
+			int32 rate;
+
+			if ((sd->class_ & MAPID_THIRDMASK) == MAPID_RANGER)
+				rate = 5;
+			else
+				rate = (sd->status.job_level + 9) / 10;
+
+			// Consume the mark before the strike so the auto-fired Blitz Beat
+			// resolves as a plain single-target hit (no AoE, no +100%).
+			status_change_end(bl, SC_HUNTED);
+			skill_castend_damage_id(src, bl, HT_BLITZBEAT, (blitz_lv < rate) ? blitz_lv : rate, tick, SD_LEVEL);
+		}
+	}
+
 	switch(skill_id) {
 		case 0:
 			{ // Normal attacks (no skill used)
@@ -1347,17 +1414,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 				if(sd) {
 					int32 skill;
 
-					// Automatic trigger of Blitz Beat
-					if (pc_isfalcon(sd) && sd->status.weapon == W_BOW && (skill = pc_checkskill(sd, HT_BLITZBEAT)) > 0 && rnd() % 1000 <= sstatus->luk * 10 / 3 + 1) {
-						int32 rate;
-
-						if ((sd->class_ & MAPID_THIRDMASK) == MAPID_RANGER)
-							rate = 5;
-						else
-							rate = (sd->status.job_level + 9) / 10;
-
-						skill_castend_damage_id(src, bl, HT_BLITZBEAT, (skill < rate) ? skill : rate, tick, SD_LEVEL);
-					}
 					// Automatic trigger of Warg Strike
 					if (pc_iswug(sd) && (skill = pc_checkskill(sd, RA_WUGSTRIKE)) > 0) {
 						int32 rate = sstatus->luk * 10 / 3 + 1;

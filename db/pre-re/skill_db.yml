@@ -4235,9 +4235,8 @@ Body:
         Time: 20000
     Requires:
       SpCost: 12
-      ItemCost:
-        - Item: Booby_Trap
-          Amount: 1
+    # Snaring Arrow rebalance: Booby_Trap reagent removed (see db/import/skill_db.yml
+    # and src/map/skills/archer/anklesnare.cpp) - import cannot unset an ItemCost.
     Unit:
       Id: Anklesnare
       Range: 1

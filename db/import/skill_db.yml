@@ -418,6 +418,9 @@ Body:
   # silently drop the per-level SP cost.
   - Id: 136
     Name: AS_SONICBLOW
+    TargetType: Self
+    Flags:
+      NoTargetSelf: true
     Requires:
       SpCost:
         - Level: 1
@@ -577,6 +580,12 @@ Body:
   # player's current target (unit.cpp: target_id = ud->target) instead of
   # requiring a fresh target click. AlterRangeVulture from the base entry is
   # preserved (Flags merge field-by-field).
+  - Id: 52
+    Name: TF_POISON
+    TargetType: Self
+    Flags:
+      NoTargetSelf: true
+    Cooldown: 3000
   - Id: 46
     Name: AC_DOUBLE
     TargetType: Self
@@ -646,6 +655,7 @@ Body:
     Flags:
       IsQuest: false
     Knockback: 3
+    Cooldown: 15000
     Requires:
       SpCost:
         - Level: 1
@@ -658,3 +668,146 @@ Body:
           Amount: 8
         - Level: 5
           Amount: 9
+  # Snaring Arrow (formerly Ankle Snare): converted from a ground trap into a
+  # single-target bow attack. TargetType Attack makes it a normal targeted skill -
+  # the player picks an enemy and it routes to castendDamageId. It deals a light
+  # hit (140% + 20% per level, formula in src/map/skills/archer/anklesnare.cpp)
+  # and briefly roots the target with SC_ANKLE for Duration2 (1s at Lv1 -> 2s at
+  # Lv5). Range -9 + AlterRangeVulture uses the caster's bow sight range. A 3s
+  # cooldown keeps the short root from being chained into a permanent lock. The
+  # NoDamage/IsTrap flags are cleared here; the Booby_Trap reagent was removed in
+  # db/pre-re/skill_db.yml (import cannot unset an ItemCost). The dormant trap
+  # Unit block is harmless - skill_unitsetting is never reached anymore.
+  - Id: 117
+    Name: HT_ANKLESNARE
+    Description: Snaring Arrow
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: false
+    Flags:
+      IsTrap: false
+      AlterRangeVulture: true
+    Range: -9
+    Element: Weapon
+    Duration2:
+      - Level: 1
+        Time: 1000
+      - Level: 2
+        Time: 1250
+      - Level: 3
+        Time: 1500
+      - Level: 4
+        Time: 1750
+      - Level: 5
+        Time: 2000
+    Cooldown: 3000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 5
+        - Level: 2
+          Amount: 6
+        - Level: 3
+          Amount: 7
+        - Level: 4
+          Amount: 8
+        - Level: 5
+          Amount: 9
+      Weapon:
+        Bow: true
+      Ammo:
+        Arrow: true
+      AmmoAmount: 1
+  # Blitz Beat is a single-target strike by default. Splash is disabled
+  # (Splash: false) and SplashArea zeroed here so the base cell-only behaviour is
+  # what the client and DB report; the strike only widens into a 5x5 area when it
+  # lands on a target carrying the "Hunted" mark, and that conditional AoE (plus
+  # the matching +40% damage) is wired in C++ (src/map/skills/archer/blitzbeat.cpp
+  # and src/map/battle.cpp) rather than in the DB. IgnoreFlee is preserved
+  # (DamageFlags merge field-by-field). Hit count per level is unchanged.
+  # A 5-second cooldown is also added so the reworked strike can't be spammed
+  # back to back.
+  # Now a non-targeted, instant-cast skill: TargetType Self + NoTargetSelf turns
+  # it into a combo-style cast (skill_get_casttype -> CAST_DAMAGE) that
+  # auto-fires on the player's current target (unit.cpp: target_id = ud->target)
+  # instead of requiring a fresh target click. CastTime is zeroed so it fires
+  # instantly. AlterRangeVulture / TargetTrap from the base entry are preserved
+  # (Flags merge field-by-field).
+  # SP cost is also flattened to a fixed 15 SP at every level (was 10/13/16/19/22)
+  # so the falcon strike costs the same no matter how far it has been leveled.
+  - Id: 129
+    Name: HT_BLITZBEAT
+    TargetType: Self
+    Flags:
+      NoTargetSelf: true
+    DamageFlags:
+      Splash: false
+    SplashArea: 0
+    CastTime: 0
+    Cooldown: 5000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 15
+        - Level: 2
+          Amount: 15
+        - Level: 3
+          Amount: 15
+        - Level: 4
+          Amount: 15
+        - Level: 5
+          Amount: 15
+  # Hunter rebalance: Detecting is repurposed from a utility reveal into an
+  # offensive falcon strike, renamed "Predatory Strike" client-side. It still
+  # reveals hidden units and traps, but now also strikes every enemy in a 9x9
+  # area for 3x a Blitz Beat hit spread over 5 hits (the Misc formula lives in
+  # battle_calc_misc_attack; HitCount 5 gives the div_ that multiplies the
+  # per-hit value back up), inflicts Fear for 2s and stamps the Hunted mark on
+  # each target it hits (see src/map/skills/archer/detect.cpp). MaxLevel 4 -> 5,
+  # the NoDamage flag is cleared and Splash/IgnoreFlee added, the splash grows
+  # to a 9x9 (radius 4), a flat 9-cell placement range, a 30s cooldown, and SP
+  # is now 35/40/45/50/55 (30 + 5 per rank).
+  - Id: 130
+    Name: HT_DETECTING
+    Description: Predatory Strike
+    MaxLevel: 5
+    DamageFlags:
+      NoDamage: false
+      Splash: true
+      IgnoreFlee: true
+    Range: 9
+    SplashArea: 4
+    Cooldown: 30000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 35
+        - Level: 2
+          Amount: 40
+        - Level: 3
+          Amount: 45
+        - Level: 4
+          Amount: 50
+        - Level: 5
+          Amount: 55
+  # Beast Bane renamed to "Predator's Eye" client-side. Cosmetic only — the
+  # passive's STR-scaled mastery-damage behaviour against Brute/Insect monsters
+  # is unchanged; only the display name in the skill window and tooltips moves.
+  - Id: 126
+    Name: HT_BEASTBANE
+    Description: Predator's Eye
+  # Hunter rebalance: Falconry Mastery is turned from a passive into an active
+  # self-cast toggle that summons or dismisses the Hunter's falcon, mirroring the
+  # Falcon Flute item (the toggle lives in src/map/skills/archer/falconmastery.cpp).
+  # TargetType Self + NoDamage routes it through castendNoDamageId. Costs no SP and
+  # has a fixed 2s cast that DEX cannot reduce. Learning the skill still gates
+  # whether a falcon can be summoned, so the passive prerequisite role is intact.
+  - Id: 127
+    Name: HT_FALCON
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    FixedCastTime: 2000
+    Requires:
+      SpCost: 0

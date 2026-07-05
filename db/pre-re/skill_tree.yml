@@ -724,12 +724,12 @@ Body:
             Level: 1
           - Name: HT_REMOVETRAP
             Level: 1
-      - Name: HT_BEASTBANE
-        MaxLevel: 10
       - Name: HT_FALCON
         MaxLevel: 1
+      - Name: HT_BEASTBANE
+        MaxLevel: 10
         Requires:
-          - Name: HT_BEASTBANE
+          - Name: HT_FALCON
             Level: 1
       - Name: HT_STEELCROW
         MaxLevel: 10

@@ -85,3 +85,10 @@ Body:
     Icon: EFST_LUXANIMA
     Flags:
       NoWarning: true
+  # Hunter rebalance: "Hunted" mark applied to targets hit by Blitz Beat for
+  # 7 seconds. Pure flag status — no stat bonus, no CalcFlags. The client-side
+  # visual is a one-shot EF_MARKING_USE_CHANGEMONSTER effect fired on apply
+  # from blitzbeat.cpp, so no persistent status icon is needed here.
+  - Status: Hunted
+    Flags:
+      NoWarning: true

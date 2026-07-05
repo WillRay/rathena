@@ -2006,6 +2006,7 @@
 	export_constant(SC_GROUND_CHARM_POWER);
 	export_constant(SC_OPPORTUNIST);
 	export_constant(SC_PICK_STONE);
+	export_constant(SC_HUNTED);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)

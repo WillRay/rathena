@@ -106,3 +106,20 @@ Body:
         Requires:
           - Name: AC_VULTURE
             Level: 0
+  # Hunter rebalance: Detecting is repurposed into an offensive falcon strike and
+  # relocated under Steel Crow in the tree. It now requires Steel Crow 10 (which
+  # transitively pulls Blitz Beat 5 and Falconry Mastery), so its old Improve
+  # Concentration 1 and Falconry Mastery 1 prerequisites are erased (Level 0).
+  # MaxLevel 4 -> 5. Propagates to Sniper and the baby/high Hunter trees through
+  # inheritance.
+  - Job: Hunter
+    Tree:
+      - Name: HT_DETECTING
+        MaxLevel: 5
+        Requires:
+          - Name: AC_CONCENTRATION
+            Level: 0
+          - Name: HT_FALCON
+            Level: 0
+          - Name: HT_STEELCROW
+            Level: 10

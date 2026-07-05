@@ -146,6 +146,16 @@ added in future passes.
   a machine-gun. The SP curve was pulled down hard so this core spam skill
   never feels SP-starved — the 3s cooldown, not the SP bar, is what paces it.*
 
+- **Double Strafe (targeting):** Double Strafe is now a non-targeted skill. Instead
+  of prompting for a target cursor, it is cast on the caster and automatically
+  redirects to your current target (`TargetType: Self` + `NoTargetSelf`, which the
+  engine resolves to a combo-style `CAST_DAMAGE` on `ud->target`). If you have no
+  target, the skill simply does nothing. *Developer Comments: Requiring a fresh
+  target click on every cast made the Archer's main spam skill feel clunky next to
+  auto-attack; letting it snap to whatever you are already fighting keeps the
+  rhythm on the 3s cooldown instead of the mouse. Vulture's Eye range bonus is
+  preserved.*
+
 - **Arrow Shower:** Damage raised by `50 percentage points` at every level, from
   `80% + 5% per level above 1` (80% at Lv 1, 125% at Lv 10) to `130% + 5% per
   level above 1` (130% at Lv 1, 175% at Lv 10). The skill now has a `5 second
@@ -169,7 +179,151 @@ added in future passes.
   into the normal tree as an Arrow Shower follow-up gives the class a reliable
   ranged finisher, and the shorter knockback stops it from shoving targets out
   of follow-up range. The SP cost was cut to near-nothing so the finisher is
-  always available; Arrow Shower keeps its heavier cost as the AoE nuke.*
+  always available; Arrow Shower keeps its heavier cost as the AoE nuke. It now
+  carries a `15 second cooldown`. Developer note: with SP costs cut to near-nothing,
+  nothing stopped the finisher from being spammed on cooldown-free repeat; a 15s
+  cooldown keeps it as a hard-hitting opener rather than a sustained-DPS button.*
+
+- **Snaring Arrow (formerly Ankle Snare):** Reworked from a ground trap into a
+  single-target bow attack. Instead of being placed on a cell, it is aimed
+  directly at a target enemy within bow range. It deals a light `140% + 20% per
+  skill level` hit (140% at Lv 1, 220% at Lv 5) and briefly roots the target with
+  the old Ankle immobilize for `1 second at Lv 1 scaling to 2 seconds at Lv 5`.
+  A rooted target displays a visible "bound" cage effect for the duration so it
+  is clear the snare landed. It fires from a `Bow` and consumes `1 Arrow`, costs
+  `5 + 1 per skill level SP`
+  (5 SP at Lv 1, 9 SP at Lv 5), and carries a `3 second cooldown`. The Booby Trap
+  reagent, the trap placement and the old 4-20 second ground snare are all gone.
+  *Developer Comments: The trap version asked Hunters to pre-place a
+  reagent-hungry snare and hope an enemy wandered onto it, which never fit an
+  active bow line. Turning it into a cheap, targeted poke that roots what it hits
+  gives Archers a real kiting tool; the short root paired with a 3s cooldown makes
+  it a repeatable window rather than a permanent lock, and bosses eat the damage
+  but ignore the root so it stays a leveling and PvP utility, not an MVP
+  trivializer.*
+
+### Hunter Skill Changes
+
+- **Beast Bane:** Reworked from a flat damage mastery into a passive "Hunted"
+  hunter's mark. The old `+4 ATK per skill level` bonus against Brute and Insect
+  monsters (plus the Hunter Spirit STR rider) is gone entirely. In its place,
+  every offensive skill the Hunter lands now has a chance to mark its target with
+  `Hunted` (`SC_HUNTED`, a 7-second mark). The chance scales
+  with skill level, running `10% at Lv 1 to 60% at Lv 10`, interpolated linearly
+  across the ten levels. Plain auto attacks also carry a smaller `Skill Level%`
+  chance to plant the same mark (see the entry below), and Falcon
+  skills (`Blitz Beat`, `Detecting`, `Spring Trap`) never apply it — the offensive
+  and auto-attack rolls come only from the Hunter, not the falcon. *Developer Comments: A small race-limited ATK mastery gave Hunters no
+  reason to max Beast Bane past the Falcon/Blitz prerequisite. Turning it into
+  the class's source of the Hunted mark makes it the backbone passive of the
+  hunter's-mark identity — every point now widens how reliably your skills keep
+  targets tagged.*
+
+- **Beast Bane (auto-attack mark):** On top of the offensive-skill stamp above, every
+  plain auto attack now has a flat `Skill Level%` chance to plant the `Hunted` mark on the
+  target — `1% at Lv 1 to 10% at Lv 10`. The roll is skipped when the target is already
+  `Hunted`, so a white hit never re-rolls (or spends) an existing mark; auto attacks still
+  neither consume the mark nor trigger the falcon assist. *Developer Comments: leaving auto
+  attacks out entirely meant a Hunter kiting with white hits between skill casts let marks
+  lapse for no reason. A small, skill-level-scaled trickle keeps targets tagged during downtime
+  without approaching the reliability of an actual skill cast, so maxing Beast Bane still pays
+  off mostly through active play.*
+
+- **Blitz Beat (falcon assist):** The `Hunted` mark now reads as "my next offensive skill on
+  this target is assisted by my falcon." When a Bow-wielding, Falcon-equipped Hunter lands any
+  of their other offensive skills on a `Hunted` target, the falcon automatically strikes it
+  with a `single-target Blitz Beat` and the mark is consumed. There is no separate proc roll —
+  the mark itself is the gate, so a tagged target always draws the assist. Beast Bane no longer
+  stacks a fresh mark on a target that is already `Hunted` (that hit spends the existing mark
+  instead), and auto-attacks never consume the mark or draw the falcon assist. *Developer Comments: the old
+  proc rolled its own chance on top of the mark's application chance, which double-dipped the
+  RNG and made the falcon feel unreliable. Making the mark a guaranteed one-shot "assist token"
+  that any skill can cash in gives the Hunted loop a clear cadence: plant with one skill, spend
+  with the next.*
+- **Blitz Beat (cooldown & Hunted payoff):** Blitz Beat now has a `5 second cooldown`.
+  Cast directly on a target carrying the `Hunted` mark, the strike consumes the mark to deal
+  `40% more damage` and widen into a `5x5 area attack` (splash radius 2, the nearest centered
+  area to a 4x4 footprint) centered on the Hunted foe; nearby enemies caught in the splash take
+  the normal strike. Any falcon strike — the manual empowered cast or the assist proc above —
+  always spends the mark. The earlier `Hunted`-consume bleed (and its `SC_HUNTED_DOT` status)
+  is removed entirely. *Developer Comments: the bleed was a fiddly second formula bolted onto
+  the strike. Folding the payoff straight into Blitz Beat — a burst of extra damage plus a small
+  area so a tagged pack gets cleared — reads more clearly and keeps the reward on the skill
+  itself. Directing the mark yourself with a manual Blitz Beat is the burst option; letting
+  another skill spring the falcon assist is the automatic one, and either way the mark is spent.*
+- **Blitz Beat (targeting & cast):** Blitz Beat is now `non-targeted` and `instant-cast`.
+  It no longer asks for a target cursor - it auto-fires on your `current auto-attack target`
+  (via the `TargetType: Self` + `NoTargetSelf` flag pair, which the engine resolves to
+  `ud->target`), and its `1.5s cast time` is removed. Vulture's Eye range scaling
+  (`AlterRangeVulture`) is preserved. *Developer Comments: as a finisher meant to be woven
+  into the Hunter's auto-attack flow, the target-click and cast bar broke the rhythm; letting
+  it snap onto whatever you're already shooting keeps its pacing on the 5s cooldown where it
+  belongs.*
+- **Blitz Beat (SP cost & Hunted damage):** SP cost is now a flat `15 SP` at every level
+  (down from the old `10/13/16/19/22` curve), and the empowered strike against a `Hunted`
+  target now deals `100% more damage` (double damage) instead of `40% more`. *Developer
+  Comments: the scaling SP curve punished maxing the skill for no real reason now that Blitz
+  Beat is a woven-in finisher, so a single flat cost keeps it spammable on its cooldown. The
+  40% Hunted bonus was too small to feel like a payoff for setting up the mark; doubling the
+  strike makes landing a manual Blitz Beat on a tagged foe the real burst it was meant to be.*
+- **Blitz Beat (Hunted SP refund removed):** The `30 SP` refund a Blitz Beat used to grant when it
+  struck a `Hunted` target has been removed. The strike still deals double damage and widens into a
+  5x5 area against a Hunted foe, and still consumes the mark — it just no longer pays SP back.
+  *Developer Comments: the refund let a Hunter who kept a target tagged effectively cast Blitz Beat
+  for free on its cooldown, which was too much sustain on top of the damage and area the mark already
+  grants. Dropping it keeps the Hunted payoff about burst, not resource generation.*
+- **Blitz Beat (base damage formula):** The falcon strike's base Misc-damage formula now counts
+  the Hunter's `full INT` instead of half. It goes from `(LUK + INT / 2 + 20) x 2` to
+  `(LUK + INT + 20) x 2` per hit, before the Steel Crow, Hunted and hit-count multipliers apply.
+  Falcon Assault and Predatory Strike, which are both built on the Blitz Beat base formula,
+  benefit by the same amount.
+  *Developer Comments: Blitz Beat is meant to be the INT-scaling payoff of a Falcon build, but
+  only crediting half of INT made the stat feel weak on the one skill that should reward it.
+  Counting full INT gives INT-invested Hunters a damage floor that actually tracks their build.*
+- **Predatory Strike (formerly Detecting):** Detecting is repurposed from a pure reveal utility
+  into an offensive falcon strike and renamed `Predatory Strike`. It is now a `5-level` skill
+  (was 4), relocated in the skill tree to the first column directly under Steel Crow and requiring
+  `Steel Crow 10` (its old Improve Concentration 1 / Falconry Mastery 1 prerequisites are dropped).
+  Cast on the ground, it still reveals every hidden unit and trap in the area, but now also strikes
+  each enemy in a `9x9 cell area` (splash radius 4) for `3x a Blitz Beat hit` dealt over `5 hits`.
+  Every enemy struck is inflicted with `Fear for 2 seconds` (fixed duration, ignoring stat
+  resistance) and stamped with the `Hunted` mark (7s). SP cost is `30 + 5 per level` (35 SP at Lv 1
+  to 55 SP at Lv 5) and the skill carries a `30 second cooldown`. *Developer Comments: Detecting
+  was a single-purpose reveal button that almost no Hunter kept on the bar once traps and Blitz were
+  online. Folding it into the Hunted-mark loop turns it into a genuine opener — a wide AoE that
+  reveals a pack, softens it with Fear, tags everything as Hunted for the falcon-assist payoff, and
+  lands a meaningful burst of its own. Splitting the 3x Blitz Beat total across five hits lets it
+  chew through DEF-stacked packs a little better than one fat hit would. The 30s cooldown keeps it
+  an opener rather than a spam nuke. Fear already exists in the pre-renewal status database, so no
+  renewal-only status wiring was needed — only the fixed 2s application.*
+- **Predatory Strike:** The falcon strike now scales its damage with skill level instead of being
+  flat. Damage rises from `300% of a Blitz Beat at level 1` by `50% per level` to `500% at level 5`
+  (300 / 350 / 400 / 450 / 500%). *Developer Comments: A fixed 300% made every point past level 1
+  buy only SP cost and cooldown with no payoff on the damage itself. Tying the multiplier to skill
+  level gives Hunters a real reason to max the skill and rewards the Steel Crow 10 investment it now
+  gates behind.*
+- **Predator's Eye (formerly Beast Bane):** The Brute/Insect mastery passive is renamed from
+  `Beast Bane` to `Predator's Eye`. Cosmetic only — its STR-scaled mastery-damage behaviour is
+  unchanged; only the display name in the skill window, tooltips and cross-references (Soul Link,
+  Beast Strafing) moves. *Developer Comments: A name refresh to sit alongside the reworked
+  Predatory Strike and read more like an active Hunter identity; no gameplay values were touched.*
+- **Falconry Mastery:** Converted from a passive into an active self-cast toggle that summons or
+  dismisses the Hunter's falcon, mirroring the Falcon Flute item. Costs `0 SP` and has a fixed
+  `2 second` cast time that DEX cannot reduce. Learning the skill still gates whether a falcon can be
+  summoned (so it remains the prerequisite for the Falcon tree), and it refuses to fire while a warg
+  is out. *Developer Comments: Requiring a consumable Falcon Flute just to re-perch a falcon after a
+  map change or death was pure friction. Folding the toggle onto the mastery skill itself gives
+  Hunters a one-button summon/dismiss without touching their inventory, while the free cost and short
+  fixed cast keep it a convenience rather than a combat action.*
+- **Steel Crow:** Reworked from a flat `+6 damage per skill level` mastery into an ATK-scaling
+  falcon amplifier. Every falcon strike — `Blitz Beat`, `Falcon Assault` and `Predatory Strike` —
+  now gains bonus damage equal to `2.5% of the Hunter's ATK (base ATK + weapon ATK) per Steel Crow
+  level`, up to `+25% of ATK at level 10`. The old flat `+level` term folded into the falcon
+  Misc-damage formula is removed. *Developer Comments: a flat +60 at max level was a rounding error
+  once a Hunter had any real gear, so Steel Crow was a dead-end prerequisite point. Tying the bonus
+  to the Hunter's own ATK makes the falcon scale with the bow and STR/gear the player actually
+  invests in, giving every point a visible payoff across all three falcon skills instead of a token
+  additive that gear quickly drowns out.*
 
 ### Thief Skill Changes
 
@@ -233,6 +387,16 @@ added in future passes.
   off — the client itself throttles skill input while a continuous attack
   is queued, which the server cannot bypass; the resume here keeps your
   auto-attacks going either way.*
+
+- **Envenom — Non-Targeted Cast:** Envenom no longer opens a target cursor.
+  It is now flagged `TargetType: Self` + `NoTargetSelf`, which makes the engine
+  treat it as a combo-style damage skill (`skill_get_casttype` -> `CAST_DAMAGE`)
+  that auto-fires on your current target (`unit.cpp`: `target_id = ud->target`).
+  Press it once and it lands on whatever you are already attacking; with no
+  current target the cast simply does nothing. *Developer Comments: Envenom is a
+  spam skill you weave into auto-attacks, and the extra target-click was pure
+  friction — pacing it on ASPD and SP rather than the mouse is how it should
+  have felt all along. Pairs directly with the Auto-Attack Resume change above.*
 
 - **Detoxify:** On a successful cast that actually removes a `Poison` or
   `Deadly Poison` status from the target, Detoxify now also heals the
@@ -343,6 +507,17 @@ added in future passes.
   `25%` rate is high enough to be part of the plan without being guaranteed, and
   the PvP/WoE gate matches the other Opportunist sources so stacked SP sustain
   never warps duels.*
+
+- **Sonic Blow — Non-Targeted Cast:** Sonic Blow no longer opens a target
+  cursor. It is now flagged `TargetType: Self` + `NoTargetSelf`, so the engine
+  treats it as a combo-style damage skill (`skill_get_casttype` -> `CAST_DAMAGE`)
+  that auto-fires on your current target (`unit.cpp`: `target_id = ud->target`).
+  Press it once and it strikes whatever you are already attacking; with no
+  current target the cast does nothing. The Katar/Dagger weapon requirement is
+  unchanged. *Developer Comments: Sonic Blow is the Assassin's burst opener and
+  the core of the stealth rotation — removing the target-click keeps the flurry
+  flowing off cooldown and ASPD instead of the mouse, which matters most when
+  chaining into the Opportunist -> Grimtooth follow-up.*
 
 - **Venom Dust:** Reworked from a poison-status trap into a damaging poison
   cloud. The `2 Venom Canines` reagent is removed; the cloud now lasts a flat

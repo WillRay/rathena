@@ -2299,12 +2299,6 @@ int64 battle_addmastery(map_session_data *sd,block_list *target,int64 dmg,int32 
 
 	damage += (15 * pc_checkskill(sd, NC_MADOLICENCE)); // Attack bonus is granted even without the Madogear
 
-	if((skill = pc_checkskill(sd,HT_BEASTBANE)) > 0 && (status->race == RC_INSECT || status->race == RC_BRUTE || status->race == RC_PLAYER_DORAM) ) {
-		damage += (skill * 4);
-		if (sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_HUNTER)
-			damage += sd->status.str;
-	}
-
 #ifdef RENEWAL
 	//Weapon Research bonus applies to all weapons
 	if((skill = pc_checkskill(sd,BS_WEAPONRESEARCH)) > 0)
@@ -3473,8 +3467,15 @@ int32 battle_get_weapon_element(const Damage& wd, const block_list& src, const b
 				element = sstatus->lhw.ele;
 		}
 
-		if(is_skill_using_arrow(&src, skill_id) && sd && sd->bonus.arrow_ele && weapon_position == EQI_HAND_R)
-			element = sd->bonus.arrow_ele;
+		if(is_skill_using_arrow(&src, skill_id) && sd && weapon_position == EQI_HAND_R) {
+			if(sd->bonus.arrow_ele)
+				element = sd->bonus.arrow_ele;
+			// On ranged weapons, weapon-property enchants (Aspersio, Enchant Poison,
+			// elemental endows) take priority over the ammo's element. With ammo removed
+			// this preserves the endowed weapon element so those buffs affect ranged damage.
+			if(sc != nullptr)
+				element = status_calc_attack_element(&src, sc, element);
+		}
 		if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm >= MAX_SPIRITCHARM)
 			element = sd->spiritcharm_type; // Summoning 10 spiritcharm will endow your weapon
 
@@ -6416,7 +6417,22 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 				md.damage = skill_lv * 20 + skill * 6 + ((sstatus->agi / 2) *2) + ((sstatus->dex / 10) *2);
 #else
 				//md.damage = (sstatus->dex / 10 + sstatus->int_ / 2 + skill * 3 + 40) * 2;
-				md.damage = (sstatus->luk + sstatus->int_ / 2 + skill + 20) * 2;
+				// Steel Crow (HT_STEELCROW) no longer feeds the flat "+ level" term
+				// here; it now scales the falcon strike off the hunter's ATK (see
+				// the bonus added at the end of this block).
+				md.damage = (sstatus->luk + sstatus->int_ + 20) * 2;
+
+				// Hunter rebalance: a Blitz Beat that strikes a "Hunted" target
+				// (SC_HUNTED) hits 100% harder (double damage). The same mark also
+				// turns the strike into a 5x5 area attack in
+				// src/map/skills/archer/blitzbeat.cpp; this is the damage half of
+				// that bonus.
+				if (skill_id == HT_BLITZBEAT) {
+					status_change* tsc = status_get_sc(target);
+
+					if (tsc != nullptr && tsc->getSCE(SC_HUNTED))
+						md.damage = md.damage * 200 / 100;
+				}
 
 				//if(mflag > 1) //Autocasted Blitz
 					//nk.set(NK_SPLASHSPLIT);
@@ -6427,8 +6443,38 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 					//Falcon Assault Modifier
 					md.damage = md.damage * (150 + 70 * skill_lv) / 100;
 				}
+#ifndef RENEWAL
+				// Steel Crow (HT_STEELCROW): the falcon strike gains extra damage
+				// equal to 2.5% of the hunter's ATK (base ATK + weapon ATK) per
+				// Steel Crow level. Applied to the final falcon damage so both Blitz
+				// Beat and Falcon Assault benefit equally.
+				md.damage += (int64)(sstatus->batk + sstatus->rhw.atk) * 25 * skill / 1000;
+#endif
 			}
 			break;
+#ifndef RENEWAL
+		case HT_DETECTING:
+			{
+				// Hunter rebalance: Predatory Strike is an offensive falcon strike. It
+				// deals a full Blitz Beat (the same LUK/INT Misc formula, all 5 hits)
+				// scaled by skill level: 300% at level 1, rising 50% per level to 500%
+				// at level 5. The 9x9 area, Fear and the Hunted mark are handled in
+				// src/map/skills/archer/detect.cpp.
+				uint16 steel;
+
+				if(!sd || !(steel = pc_checkskill(sd,HT_STEELCROW)))
+					steel = 0;
+
+				md.damage = (sstatus->luk + sstatus->int_ + 20) * 2;
+				// 300% at level 1, +50% per level, up to 500% at level 5.
+				md.damage = md.damage * 5 * (250 + 50 * skill_lv) / 100;
+				// Steel Crow (HT_STEELCROW): as with the other falcon strikes, add
+				// 2.5% of the hunter's ATK (base + weapon) per Steel Crow level to
+				// the total damage, replacing the old flat "+ level" term.
+				md.damage += (int64)(sstatus->batk + sstatus->rhw.atk) * 25 * steel / 1000;
+			}
+			break;
+#endif
 #ifndef RENEWAL
 		case BA_DISSONANCE:
 			md.damage = 30 + 10 * skill_lv;

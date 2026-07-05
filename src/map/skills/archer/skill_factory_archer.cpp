@@ -40,6 +40,7 @@
 #include "electricshocker.cpp"
 #include "encore.cpp"
 #include "falconassault.cpp"
+#include "falconmastery.cpp"
 #include "fearbreeze.cpp"
 #include "firingtrap.cpp"
 #include "flametrap.cpp"
@@ -222,6 +223,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillClaymoreTrap>();
 		case HT_DETECTING:
 			return std::make_unique<SkillDetect>();
+		case HT_FALCON:
+			return std::make_unique<SkillFalconMastery>();
 		case HT_FLASHER:
 			return std::make_unique<SkillFlasher>();
 		case HT_FREEZINGTRAP:
