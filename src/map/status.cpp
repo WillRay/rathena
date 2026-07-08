@@ -4340,6 +4340,8 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	// Absolute modifiers from passive skills
 	if((skill=pc_checkskill(sd,BS_HILTBINDING))>0)
 		base_status->batk += 4;
+	if((skill=pc_checkskill(sd,AC_OWL))>0)
+		base_status->batk += 3 * skill; // +3 ATK / lv (compensates for no longer requiring arrows)
 #else
 	base_status->watk = status_weapon_atk(base_status->rhw);
 	base_status->watk2 = status_weapon_atk(base_status->lhw);

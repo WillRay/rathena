@@ -819,7 +819,7 @@ Body:
     Flags:
       DropEffect: RED_PILLAR
     Script: |
-      if (getrefine()<6) {
+      if (getequiprefinerycnt(EQI_ARMOR)<6) {
          bonus bDef,2;
          bonus bMdef,5;
       }
@@ -855,7 +855,7 @@ Body:
       DropEffect: RED_PILLAR
     Script: |
       bonus bAgi,2;
-      if (getrefine()>8)
+      if (getequiprefinerycnt(EQI_GARMENT)>8)
          bonus bFlee,20;
   - Id: 30160
     AegisName: S_Card_4160
@@ -867,7 +867,7 @@ Body:
       DropEffect: RED_PILLAR
     Script: |
       bonus bStr,2;
-      if (getrefine()>8) {
+      if (getequiprefinerycnt(EQI_SHOES)>8) {
          bonus bMaxHPrate,10;
          bonus bMaxSPrate,10;
       }
@@ -1144,7 +1144,7 @@ Body:
     Flags:
       DropEffect: RED_PILLAR
     Script: |
-      if (getrefine()<6)
+      if (getequiprefinerycnt(EQI_SHOES)<6)
          bonus bMdef,7;
   - Id: 30201
     AegisName: S_Card_4201
@@ -1318,7 +1318,7 @@ Body:
       DropEffect: RED_PILLAR
     Script: |
       bonus bDef,2;
-      if (getrefine()>8)
+      if (getequiprefinerycnt(EQI_HAND_L)>8)
          bonus bMdef,5;
   - Id: 30229
     AegisName: S_Card_4229
@@ -1409,7 +1409,7 @@ Body:
     Flags:
       DropEffect: RED_PILLAR
     Script: |
-      if (getrefine()<6) {
+      if (getequiprefinerycnt(EQI_HAND_L)<6) {
          bonus bDef,2;
          bonus bMdef,3;
       }
@@ -1437,7 +1437,7 @@ Body:
       DropEffect: RED_PILLAR
     Script: |
       bonus bVit,2;
-      if (getrefine()>8)
+      if (getequiprefinerycnt(EQI_ARMOR)>8)
          bonus bMaxHP,800;
   - Id: 30243
     AegisName: S_Card_4243
@@ -1669,7 +1669,7 @@ Body:
     Flags:
       DropEffect: RED_PILLAR
     Script: |
-      if (getrefine()<6)
+      if (getequiprefinerycnt(EQI_HAND_R)<6)
          bonus bMdef,5;
   - Id: 30279
     AegisName: S_Card_4279
@@ -1722,7 +1722,7 @@ Body:
     Flags:
       DropEffect: RED_PILLAR
     Script: |
-      if (getrefine()<6)
+      if (getequiprefinerycnt(EQI_GARMENT)<6)
          bonus bMdef,8;
   - Id: 30288
     AegisName: S_Card_4288
@@ -1734,7 +1734,7 @@ Body:
       DropEffect: RED_PILLAR
     Script: |
       bonus bInt,2;
-      if (getrefine()>8)
+      if (getequiprefinerycnt(EQI_HAND_R)>8)
          bonus bMaxSP,150;
   - Id: 30290
     AegisName: S_Card_4290
@@ -1916,7 +1916,7 @@ Body:
       DropEffect: RED_PILLAR
     Script: |
       bonus bMaxHP,300;
-      if (getrefine()>=9)
+      if (getequiprefinerycnt(EQI_SHOES)>=9)
          bonus2 bSkillAtk,"SM_BASH",10;
   - Id: 30322
     AegisName: S_Card_4322
@@ -2099,7 +2099,7 @@ Body:
     Flags:
       DropEffect: RED_PILLAR
     Script: |
-      if (getrefine()<=4) {
+      if (getequiprefinerycnt(EQI_GARMENT)<=4) {
          bonus bFlee,20;
          bonus bFlee2,1;
       }
@@ -2128,7 +2128,7 @@ Body:
     Flags:
       DropEffect: RED_PILLAR
     Script: |
-      bonus bMaxHP,800-40*getrefine();
+      bonus bMaxHP,800-40*getequiprefinerycnt(EQI_ARMOR);
       bonus bHPrecovRate,10;
   - Id: 30354
     AegisName: S_Card_4354
@@ -2167,7 +2167,7 @@ Body:
     Flags:
       DropEffect: RED_PILLAR
     Script: |
-      bonus bStr,getrefine()-6;
+      bonus bStr,getequiprefinerycnt(EQI_HAND_R)-6;
   - Id: 30359
     AegisName: S_Card_4359
     Name: Shadow Assassin Cross Card
@@ -2220,8 +2220,8 @@ Body:
     Flags:
       DropEffect: RED_PILLAR
     Script: |
-      bonus bCastrate,getrefine()*-1;
-      if (getrefine()>=9) {
+      bonus bCastrate,getequiprefinerycnt(EQI_HAND_R)*-1;
+      if (getequiprefinerycnt(EQI_HAND_R)>=9) {
          bonus bMatkRate,2;
       }
   - Id: 30369
@@ -2243,7 +2243,7 @@ Body:
     Flags:
       DropEffect: RED_PILLAR
     Script: |
-      bonus bVit,getrefine()-5;
+      bonus bVit,getequiprefinerycnt(EQI_ARMOR)-5;
   - Id: 30371
     AegisName: S_Card_4371
     Name: Shadow Archdam Card
@@ -2275,8 +2275,8 @@ Body:
     Flags:
       DropEffect: RED_PILLAR
     Script: |
-      bonus bLuk,getrefine()-5;
-      bonus bCritical,getrefine();
+      bonus bLuk,getequiprefinerycnt(EQI_GARMENT)-5;
+      bonus bCritical,getequiprefinerycnt(EQI_GARMENT);
   - Id: 30374
     AegisName: S_Card_4374
     Name: Shadow Vesper Card
@@ -2297,7 +2297,7 @@ Body:
     Flags:
       DropEffect: RED_PILLAR
     Script: |
-      if (getrefine()>=9) {
+      if (getequiprefinerycnt(EQI_GARMENT)>=9) {
          bonus2 bSubEle,Ele_Neutral,15;
          bonus bFlee,15;
       }
@@ -2327,7 +2327,7 @@ Body:
     Flags:
       DropEffect: RED_PILLAR
     Script: |
-      if (getrefine()<=4) {
+      if (getequiprefinerycnt(EQI_SHOES)<=4) {
          bonus bMaxHPrate,8;
          bonus bMaxSPrate,8;
          bonus bHPrecovRate,5;
@@ -2346,7 +2346,7 @@ Body:
     Flags:
       DropEffect: RED_PILLAR
     Script: |
-      if (getrefine()<=4) {
+      if (getequiprefinerycnt(EQI_HAND_R)<=4) {
          bonus bSPrecovRate,5;
          bonus bMaxSP,80;
       }
@@ -2436,7 +2436,7 @@ Body:
     Flags:
       DropEffect: RED_PILLAR
     Script: |
-      bonus bAgi,getrefine()-5;
+      bonus bAgi,getequiprefinerycnt(EQI_SHOES)-5;
   - Id: 30397
     AegisName: S_Card_4397
     Name: Shadow Despero of Thanatos Card
@@ -2446,7 +2446,7 @@ Body:
     Flags:
       DropEffect: RED_PILLAR
     Script: |
-      bonus bInt,getrefine()-6;
+      bonus bInt,getequiprefinerycnt(EQI_HAND_L)-6;
   - Id: 30400
     AegisName: S_Card_4400
     Name: Shadow Aliza Card
@@ -2514,7 +2514,7 @@ Body:
     Flags:
       DropEffect: RED_PILLAR
     Script: |
-      bonus bMagicDamageReturn,getrefine()*2;
+      bonus bMagicDamageReturn,getequiprefinerycnt(EQI_ARMOR)*2;
       if (BaseClass == Job_Mage)
          bonus bMdef,3;
   - Id: 30408

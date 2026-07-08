@@ -51,9 +51,10 @@ OnSellItem:
 	mes "Cards to sell:";
 	mes "-----------------------------------";
 	for(set .@i,0; .@i<getarraysize(@sold_nameid); set .@i,.@i+1)
-		if (@sold_nameid[.@i] > 4000 && @sold_nameid[.@i] < 4700) {
+		if ((@sold_nameid[.@i] > 4000 && @sold_nameid[.@i] < 4700) || (@sold_nameid[.@i] > 30000 && @sold_nameid[.@i] < 31000)) {
+			set .@base_id, (@sold_nameid[.@i] > 30000) ? @sold_nameid[.@i]-26000 : @sold_nameid[.@i];
 			if (.Level) {
-				query_sql("SELECT `LV` FROM `mob_db` WHERE `DropCardid` = "+@sold_nameid[.@i],.@lv);
+				query_sql("SELECT `LV` FROM `mob_db` WHERE `DropCardid` = "+.@base_id,.@lv);
 				if (.@lv < .Level) {
 					dispbottom getitemname(@sold_nameid[.@i])+" is under the minimum level.";
 					continue;
@@ -61,7 +62,7 @@ OnSellItem:
 			}
 			set .@card_id[getarraysize(.@card_id)], @sold_nameid[.@i];
 			set .@card_amt[getarraysize(.@card_amt)], @sold_quantity[.@i];
-			set .@mvp, compare(.MVP$,""+@sold_nameid[.@i]);
+			set .@mvp, compare(.MVP$,""+.@base_id);
 			mes ((.@mvp)?"  ^FF0000":"  ^777777")+@sold_quantity[.@i]+"x "+getitemname(@sold_nameid[.@i])+"^000000";
 			set .@card_total, .@card_total+(@sold_quantity[.@i]*((.@mvp)?.Points[1]:.Points[0]));
 		}

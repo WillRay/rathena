@@ -114,6 +114,8 @@ added in future passes.
 
 ### Archer Skill Changes
 
+- **Owl's Eye:** In addition to its usual `+1 DEX per skill level` (+10 DEX at level 10), the skill now also grants `+3 ATK per skill level` (+30 ATK at level 10) as a passive. *Developer Comments: With arrows no longer required to fire a bow, Archers lost the flat ATK that their ammunition used to contribute; folding a small ATK bonus into Owl's Eye — a skill every Archer already maxes for the DEX — restores that lost damage without adding another button to press.*
+
 - **Attention Concentrate:** SP cost is now `10 SP + 3 per skill level` (13 SP
   at level 1, 40 SP at level 10) — half of the previous `20 SP + 6 per skill
   level` curve. The `Vulture's Eye 1` prerequisite has been removed, so the
