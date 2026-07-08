@@ -1402,7 +1402,13 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			// Consume the mark before the strike so the auto-fired Blitz Beat
 			// resolves as a plain single-target hit (no AoE, no +100%).
 			status_change_end(bl, SC_HUNTED);
+			// Flag this as an auto-cast so the Razorwing passive (blitzbeat.cpp)
+			// applies the weaker Hunted-triggered slow (5%/level) rather than the
+			// manual-cast slow (10%/level). Restore the prior state afterwards.
+			bool prev_autocast = sd->state.autocast;
+			sd->state.autocast = 1;
 			skill_castend_damage_id(src, bl, HT_BLITZBEAT, (blitz_lv < rate) ? blitz_lv : rate, tick, SD_LEVEL);
+			sd->state.autocast = prev_autocast;
 		}
 	}
 
@@ -2397,7 +2403,6 @@ int32 skill_is_combo(uint16 skill_id) {
 		case TK_DOWNKICK:
 		case TK_COUNTER:
 		case TK_JUMPKICK:
-		case HT_POWER:
 		case SR_DRAGONCOMBO:
 			return 1;
 		case SR_FALLENEMPIRE:
@@ -2534,13 +2539,6 @@ void skill_combo(block_list* src,block_list *dsrc, block_list *bl, uint16 skill_
 				target_id = 0; // Will target current auto-target instead
 			}
 #endif
-			break;
-		case AC_DOUBLE:
-			if (pc_checkskill(sd, HT_POWER)) {
-				duration = 2000;
-				nodelay = 1; //Neither gives walk nor attack delay
-				target_id = 0; //Does not need to be used on previous target
-			}
 			break;
 		case SR_DRAGONCOMBO:
 			if (pc_checkskill(sd, SR_FALLENEMPIRE) > 0)
@@ -3121,7 +3119,9 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 		case WM_SEVERE_RAINSTORM_MELEE:
 			clif_skill_damage( *src, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, WM_SEVERE_RAINSTORM, -2, DMG_SPLASH );
 			break;
-		case HT_CLAYMORETRAP:
+		// TEST: HT_CLAYMORETRAP pulled out of the trap-splash display case so it falls through
+		// to default: (the same clif_skill_damage path Double Strafe uses) — checking whether
+		// the crouch animation is tied to the skill ID rather than the display case.
 		case HT_BLASTMINE:
 		case HT_FLASHER:
 		case HT_FREEZINGTRAP:
@@ -3187,6 +3187,8 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 		default:
 			if( flag&SD_ANIMATION && dmg.div_ < 2 ) //Disabling skill animation doesn't works on multi-hit.
 				dmg_type = DMG_SPLASH;
+			if( dmg.type == DMG_CRITICAL ) //show the critical-hit splash for single-hit skills that rolled a crit (NK_CRITICAL)
+				dmg_type = DMG_CRITICAL;
 			if (src->type == BL_SKILL) {
 				TBL_SKILL *su = (TBL_SKILL*)src;
 				if (su->group && skill_get_inf2(su->group->skill_id, INF2_ISTRAP)) { // show damage on trap targets
@@ -3368,6 +3370,40 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 		return 0; //Should return 0 when damage was reflected
 
 	return damage;
+}
+
+/**
+ * Hunter rebalance - Land Mine passive.
+ * Lodges a Land Mine "arrow" in a target that was just struck. 1.5 seconds later the wound is
+ * torn open and the target takes 25% of the triggering hit's damage all at once (see
+ * SC_LANDMINE_BLEED in status.cpp) - the "it hurts when the arrow is removed" fantasy. During
+ * the wait the target shows the bleeding visual. Re-application before it fires adds the new
+ * damage on top of the pending amount and refreshes the 1.5s fuse, so repeated Double Strafe /
+ * Arrow Shower hits stack into a bigger burst.
+ * @param src: Caster (credited for the burst damage)
+ * @param bl: Target that takes the burst
+ * @param damage: Damage dealt by the triggering hit
+ */
+void skill_apply_landmine_bleed( block_list *src, block_list *bl, int64 damage )
+{
+	if( src == nullptr || bl == nullptr || damage <= 0 )
+		return;
+
+	// The whole delayed burst is 25% of the triggering hit (~half of one Double Strafe shot).
+	int32 burst = static_cast<int32>( damage * 25 / 100 );
+
+	if( burst < 1 )
+		burst = 1; // Guarantee a visible hit even on tiny damage.
+
+	// Stack on top of any burst still pending (fuse not yet expired) on this target.
+	status_change *tsc = status_get_sc( bl );
+
+	if( tsc != nullptr && tsc->getSCE( SC_LANDMINE_BLEED ) != nullptr )
+		burst += tsc->getSCE( SC_LANDMINE_BLEED )->val1;
+
+	// val1 = burst damage, val2 = caster GID (for kill credit). 1500ms duration == interval -> a
+	// single hit 1.5s after the cast.
+	sc_start2( src, bl, SC_LANDMINE_BLEED, 100, burst, src->id, 1500 );
 }
 
 /*==========================================
@@ -3964,6 +4000,21 @@ TIMER_FUNC(skill_timerskill){
 					break;
 				case NPC_PULSESTRIKE2:
 					skill_castend_damage_id(src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
+					break;
+				case HT_CLAYMORETRAP: {
+						// Delayed detonation of the non-targeted Claymore Trap. The 2s arming
+						// timer set in SkillClaymoreTrap::castendDamageId has elapsed and the
+						// target is still valid, so deal the splash damage now. Mirrors
+						// SkillImplRecursiveDamageSplash's splash search so each hit re-enters
+						// castendDamageId with flag&1.
+						// Show the explosion effect on the target as the damage lands.
+						clif_specialeffect(target, EF_CLAYMORE, AREA);
+						int32 splash = skill_get_splash(skl->skill_id, skl->skill_lv);
+						skill_area_temp[0] = 0;
+						skill_area_temp[1] = target->id;
+						skill_area_temp[2] = 0;
+						map_foreachinrange(skill_area_sub, target, splash, BL_CHAR|BL_SKILL, src, skl->skill_id, skl->skill_lv, tick, skl->flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+					}
 					break;
 				case HVAN_EXPLOSION:
 					status_kill(src);
@@ -5157,8 +5208,17 @@ TIMER_FUNC(skill_castend_id){
 			{
 				// Increases/Decreases cooldown of a skill by item/card bonuses.
 				int32 cooldown = pc_get_skillcooldown(sd, ud->skill_id, ud->skill_lv);
-				if (cooldown > 0)
+				if (cooldown > 0) {
 					skill_blockpc_start(*sd, ud->skill_id, cooldown);
+
+					// Shared cooldown: Blitz Beat and Phantasmic Arrow (Serrated Shot)
+					// lock each other out. Casting either one puts the other on the
+					// same cooldown as well.
+					if (ud->skill_id == HT_BLITZBEAT)
+						skill_blockpc_start(*sd, HT_PHANTASMIC, cooldown);
+					else if (ud->skill_id == HT_PHANTASMIC)
+						skill_blockpc_start(*sd, HT_BLITZBEAT, cooldown);
+				}
 			}
 			break;
 			case BL_HOM:
@@ -8648,10 +8708,8 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			if(!sc || !(sc->getSCE(SC_SMA) || sc->getSCE(SC_USE_SKILL_SP_SHA)))
 				return false;
 			break;
-		case HT_POWER:
-			if(!(sc && sc->getSCE(SC_COMBO) && sc->getSCE(SC_COMBO)->val1 == AC_DOUBLE))
-				return false;
-			break;
+		// HT_POWER (Wyvern Bolt) is now a regular learnable skill and no longer
+		// requires the Double Attack combo state to be cast.
 #ifndef RENEWAL
 		case CG_HERMODE:
 			if(!npc_check_areanpc(1,sd.m,sd.x,sd.y,skill_get_splash(skill_id, skill_lv))) {
@@ -14048,6 +14106,45 @@ bool skill_blockpc_start(map_session_data &sd, uint16 skill_id, t_tick tick) {
 	if (battle_config.display_status_timers)
 		clif_skill_cooldown(sd, skill_id, tick);
 
+	return true;
+}
+
+/**
+ * Shortens the remaining cooldown of a single skill for a player, but only if the
+ * skill is currently on cooldown. Does nothing if the skill is not cooling down
+ * (cooldown reductions cannot be "banked" for a future cast).
+ * @param sd: The player whose cooldown to shorten
+ * @param skill_id: The skill whose cooldown should be reduced
+ * @param tick: The amount of time (in ms) to shave off the remaining cooldown
+ * @return True if a live cooldown was shortened, false otherwise
+ */
+bool skill_reduce_cooldown(map_session_data &sd, uint16 skill_id, t_tick tick) {
+	if (tick < 1)
+		return false;
+
+	auto it = sd.scd.find(skill_id);
+	if (it == sd.scd.end())
+		return false; // Skill is not on cooldown - nothing to shorten.
+
+	const struct TimerData *timer = get_timer(it->second);
+	if (timer == nullptr)
+		return false;
+
+	t_tick remaining = timer->tick - gettick();
+
+	// Drop the current cooldown timer; it is either cleared or restarted shorter.
+	delete_timer(it->second, skill_blockpc_end);
+	sd.scd.erase(it);
+
+	if (remaining - tick < 1) {
+		// The reduction wipes out the whole remaining cooldown.
+		if (battle_config.display_status_timers)
+			clif_skill_cooldown(sd, skill_id, 0);
+		return true;
+	}
+
+	// Restart the cooldown with the shortened remaining time.
+	skill_blockpc_start(sd, skill_id, remaining - tick);
 	return true;
 }
 

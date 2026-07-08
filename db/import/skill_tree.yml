@@ -112,8 +112,21 @@ Body:
   # Concentration 1 and Falconry Mastery 1 prerequisites are erased (Level 0).
   # MaxLevel 4 -> 5. Propagates to Sniper and the baby/high Hunter trees through
   # inheritance.
+  # Hunter rebalance: Serrated Shot (HT_PHANTASMIC) is no longer a quest skill (the
+  # IsQuest flag is cleared in db/import/skill_db.yml). It becomes a 10-level skill-point
+  # attack with no prerequisites of its own.
+  # Hunter rebalance: HT_LANDMINE (Land Mine) is now a passive skill (see db/import/skill_db.yml)
+  # and is gated behind Serrated Shot (HT_PHANTASMIC) level 5. MaxLevel stays 5. HT_BLASTMINE
+  # and HT_REMOVETRAP still require HT_LANDMINE level 1, so they inherit the new gating transitively.
   - Job: Hunter
     Tree:
+      - Name: HT_PHANTASMIC
+        MaxLevel: 10
+      - Name: HT_LANDMINE
+        MaxLevel: 5
+        Requires:
+          - Name: HT_PHANTASMIC
+            Level: 5
       - Name: HT_DETECTING
         MaxLevel: 5
         Requires:
@@ -123,3 +136,50 @@ Body:
             Level: 0
           - Name: HT_STEELCROW
             Level: 10
+  # Hunter rebalance: HT_POWER (Wyvern Bolt) is no longer a Double Attack combo
+  # skill; it is now a normal 5-level skill-point bow attack gated behind Master
+  # Fletching (AC_MAKINGARROW) level 10. Propagates to Sniper and the baby/high
+  # Hunter trees through inheritance. AC_DOUBLE Level 0 erases the inherited
+  # Double Strafe prerequisite from the base re tree (import merges Requires, it
+  # does not replace them, so the old gate must be explicitly removed).
+      - Name: HT_POWER
+        MaxLevel: 5
+        Requires:
+          - Name: AC_MAKINGARROW
+            Level: 10
+          - Name: AC_DOUBLE
+            Level: 0
+  # Tranquillizing Dart rebalance: HT_SANDMAN is now a single-rank targeted dart
+  # (see db/pre-re/skill_db.yml) gated behind Ankle Snare level 1 instead of Flasher.
+      - Name: HT_SANDMAN
+        MaxLevel: 1
+        Requires:
+          - Name: HT_ANKLESNARE
+            Level: 1
+  # Master Fletching rebalance: AC_MAKINGARROW (formerly the Arrow Crafting quest
+  # skill) is now a 10-level skill-point passive (see db/import/skill_db.yml). It is
+  # gated behind Jagged Fletching (HT_LANDMINE) level 5 and Tranquillizing Dart
+  # (HT_SANDMAN) level 1. MaxLevel 1 -> 10. AC_MAKINGARROW is defined natively only in
+  # the Hunter tree, so this propagates to Sniper and the baby/high Hunter trees
+  # through inheritance and Archers do not gain it.
+      - Name: AC_MAKINGARROW
+        MaxLevel: 10
+        Requires:
+          - Name: HT_LANDMINE
+            Level: 5
+          - Name: HT_SANDMAN
+            Level: 1
+  # Hunter rebalance: HT_SPRINGTRAP (Crippling Talons) is now a passive Blitz Beat
+  # rider (see db/import/skill_db.yml). Its prerequisites are Tranquillizing Dart
+  # (HT_SANDMAN) level 1 and Blitz Beat (HT_BLITZBEAT) level 1. MaxLevel stays 5.
+  # HT_FALCON Level 0 erases the inherited Falcon Mastery prerequisite from the
+  # base re tree (import merges Requires, it does not replace them).
+      - Name: HT_SPRINGTRAP
+        MaxLevel: 5
+        Requires:
+          - Name: HT_SANDMAN
+            Level: 1
+          - Name: HT_BLITZBEAT
+            Level: 1
+          - Name: HT_FALCON
+            Level: 0

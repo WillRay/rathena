@@ -162,8 +162,6 @@ Body:
         Requires:
           - Name: AC_DOUBLE
             Level: 5
-      - Name: AC_MAKINGARROW
-        MaxLevel: 1
       - Name: AC_CHARGEARROW
         MaxLevel: 1
   - Job: Acolyte
@@ -667,63 +665,14 @@ Body:
       Novice: true
       Archer: true
     Tree:
-      - Name: HT_SKIDTRAP
-        MaxLevel: 5
       - Name: HT_LANDMINE
         MaxLevel: 5
       - Name: HT_ANKLESNARE
         MaxLevel: 5
-        Requires:
-          - Name: HT_SKIDTRAP
-            Level: 1
-      - Name: HT_SHOCKWAVE
-        MaxLevel: 5
-        Requires:
-          - Name: HT_ANKLESNARE
-            Level: 1
       - Name: HT_SANDMAN
         MaxLevel: 5
-        Requires:
-          - Name: HT_FLASHER
-            Level: 1
-      - Name: HT_FLASHER
-        MaxLevel: 5
-        Requires:
-          - Name: HT_SKIDTRAP
-            Level: 1
-      - Name: HT_FREEZINGTRAP
-        MaxLevel: 5
-        Requires:
-          - Name: HT_FLASHER
-            Level: 1
-      - Name: HT_BLASTMINE
-        MaxLevel: 5
-        Requires:
-          - Name: HT_LANDMINE
-            Level: 1
-          - Name: HT_SANDMAN
-            Level: 1
-          - Name: HT_FREEZINGTRAP
-            Level: 1
-      - Name: HT_CLAYMORETRAP
-        MaxLevel: 5
-        Requires:
-          - Name: HT_SHOCKWAVE
-            Level: 1
-          - Name: HT_BLASTMINE
-            Level: 1
-      - Name: HT_REMOVETRAP
+      - Name: AC_MAKINGARROW
         MaxLevel: 1
-        Requires:
-          - Name: HT_LANDMINE
-            Level: 1
-      - Name: HT_TALKIEBOX
-        MaxLevel: 1
-        Requires:
-          - Name: HT_SHOCKWAVE
-            Level: 1
-          - Name: HT_REMOVETRAP
-            Level: 1
       - Name: HT_FALCON
         MaxLevel: 1
       - Name: HT_BEASTBANE
@@ -751,8 +700,6 @@ Body:
       - Name: HT_SPRINGTRAP
         MaxLevel: 5
         Requires:
-          - Name: HT_REMOVETRAP
-            Level: 1
           - Name: HT_FALCON
             Level: 1
       - Name: HT_PHANTASMIC

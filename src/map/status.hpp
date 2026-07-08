@@ -1455,6 +1455,12 @@ enum sc_type : int16 {
 	// Hunter rebalance
 	SC_HUNTED,        // "Hunted" mark applied by Beast Bane; pure flag, 7s duration. Empowers Blitz Beat (5x5 AoE + 100% damage)
 
+	// Hunter rebalance: Land Mine passive
+	SC_LANDMINE_BLEED, // Bleed DoT from the Land Mine passive. val1 = damage per tick, val2 = caster GID. 4 ticks / 500ms / 2s. See status_change_timer.
+
+	// Hunter rebalance: Razorwing passive
+	SC_RAZORWING_SLOW, // Movement-speed slow inflicted by Blitz Beat when the caster has learned Razorwing. val1 = speed penalty %. See status_calc_speed.
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 

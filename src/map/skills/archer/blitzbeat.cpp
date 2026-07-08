@@ -6,10 +6,32 @@
 #include <config/core.hpp>
 
 #include "map/battle.hpp"
+#include "map/pc.hpp"
 #include "map/skill.hpp"
 #include "map/status.hpp"
 
 SkillBlitzBeat::SkillBlitzBeat() : SkillImplRecursiveDamageSplash(HT_BLITZBEAT) {
+}
+
+void SkillBlitzBeat::applyAdditionalEffects(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
+#ifndef RENEWAL
+	// Hunter rebalance: the Razorwing passive (HT_SPRINGTRAP) makes Blitz Beat slow
+	// the movement speed of everything it hits. A manually cast Blitz Beat slows by
+	// 10% per Razorwing level; a Hunted-triggered falcon strike (auto-cast, see the
+	// falcon-assist block in skill.cpp) slows by 5% per level. No effect if the
+	// caster has not learned Razorwing.
+	map_session_data* sd = BL_CAST(BL_PC, src);
+	if (sd == nullptr)
+		return;
+
+	uint16 razorwing_lv = pc_checkskill(sd, HT_SPRINGTRAP);
+	if (razorwing_lv == 0)
+		return;
+
+	int32 slow_pct = (sd->state.autocast ? 5 : 10) * razorwing_lv;
+	// 2s movement slow; val1 is read by status_calc_speed (status.cpp).
+	sc_start(src, target, SC_RAZORWING_SLOW, 100, slow_pct, 2000);
+#endif
 }
 
 void SkillBlitzBeat::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {

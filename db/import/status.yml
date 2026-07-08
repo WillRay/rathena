@@ -92,3 +92,33 @@ Body:
   - Status: Hunted
     Flags:
       NoWarning: true
+  # Hunter rebalance: Land Mine passive. A lodged "arrow" applied by Double Strafe / Arrow
+  # Shower when the caster has learned the Land Mine passive; 1.5s later it tears open for a
+  # single burst of damage ("it hurts when the arrow is removed"). All damage behaviour lives
+  # in status.cpp (SC_LANDMINE_BLEED): val1 holds the burst damage, val2 the caster GID, and
+  # it fires exactly once because its 1500ms duration equals its 1500ms interval. It borrows
+  # vanilla Bleeding's look — the EFST_BLOODING icon and the Opt2 blood-drip effect during the
+  # 1.5s wait (SendOption transmits it) — but none of Bleeding's mechanics: no VIT/LUK resist,
+  # no boss immunity, no regen block (no CalcFlags: Regen), and it can't collide with a real
+  # Bleeding. Opt2 Bleeding is purely cosmetic (no gameplay logic keys off OPT2_BLEEDING).
+  # NoSave so a pending burst does not persist across relog.
+  - Status: Landmine_Bleed
+    Icon: EFST_BLOODING
+    Opt2:
+      Bleeding: true
+    Flags:
+      SendOption: true
+      NoSave: true
+  # Hunter rebalance: Razorwing slow. Applied to targets hit by Blitz Beat when
+  # the caster has learned the Razorwing passive (HT_SPRINGTRAP). val1 carries the
+  # speed penalty %, read in status.cpp status_calc_speed, so CalcFlags Speed must
+  # recalc movement speed on start/end. Borrows the Decrease Agility icon
+  # (EFST_DEC_AGI) for a familiar "slowed" visual. Debuff so status resistance
+  # applies. See src/map/skills/archer/blitzbeat.cpp for the 10%/5% per-level split.
+  - Status: Razorwing_Slow
+    Icon: EFST_DEC_AGI
+    CalcFlags:
+      Speed: true
+    Flags:
+      Debuff: true
+      NoWarning: true

@@ -5,9 +5,14 @@
 
 #include "../skill_impl.hpp"
 
-class SkillClaymoreTrap : public SkillImpl {
+// Gameplay test: Claymore Trap is no longer a ground trap. It is now a
+// non-targeted direct attack that auto-fires on the caster's current target
+// (Self + NoTargetSelf in skill_db). Instead of hitting instantly it arms on
+// the target and detonates after 2 seconds, then deals its splash damage
+// (SplashArea 2, BF_MISC formula in battle.cpp).
+class SkillClaymoreTrap : public SkillImplRecursiveDamageSplash {
 public:
 	SkillClaymoreTrap();
 
-	void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override;
+	void castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override;
 };

@@ -4763,6 +4763,16 @@ static void battle_calc_defense_reduction( Damage* wd, block_list* src, block_li
 		def2 = (def2*(100-i))/100;
 	}
 
+#ifndef RENEWAL
+	// Serrated Shot (HT_PHANTASMIC): the barbed arrowheads bite through armor,
+	// bypassing 2% of the target's DEF per skill level (up to 20% at Lv10).
+	if (skill_id == HT_PHANTASMIC && skill_lv > 0) {
+		int16 i = min(2 * skill_lv, 100); //cap it to 100 for 0 def min
+		def1 = (def1 * (100 - i)) / 100;
+		def2 = (def2 * (100 - i)) / 100;
+	}
+#endif
+
 	if (tsc) {
 		if (tsc->getSCE(SC_FORCEOFVANGUARD)) {
 			int16 i = 2 * tsc->getSCE(SC_FORCEOFVANGUARD)->val1;
@@ -6445,10 +6455,10 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 				}
 #ifndef RENEWAL
 				// Steel Crow (HT_STEELCROW): the falcon strike gains extra damage
-				// equal to 2.5% of the hunter's ATK (base ATK + weapon ATK) per
+				// equal to 2% of the hunter's ATK (base ATK + weapon ATK) per
 				// Steel Crow level. Applied to the final falcon damage so both Blitz
 				// Beat and Falcon Assault benefit equally.
-				md.damage += (int64)(sstatus->batk + sstatus->rhw.atk) * 25 * skill / 1000;
+				md.damage += (int64)(sstatus->batk + sstatus->rhw.atk) * 20 * skill / 1000;
 #endif
 			}
 			break;
@@ -6469,9 +6479,9 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 				// 300% at level 1, +50% per level, up to 500% at level 5.
 				md.damage = md.damage * 5 * (250 + 50 * skill_lv) / 100;
 				// Steel Crow (HT_STEELCROW): as with the other falcon strikes, add
-				// 2.5% of the hunter's ATK (base + weapon) per Steel Crow level to
+				// 2% of the hunter's ATK (base + weapon) per Steel Crow level to
 				// the total damage, replacing the old flat "+ level" term.
-				md.damage += (int64)(sstatus->batk + sstatus->rhw.atk) * 25 * steel / 1000;
+				md.damage += (int64)(sstatus->batk + sstatus->rhw.atk) * 20 * steel / 1000;
 			}
 			break;
 #endif

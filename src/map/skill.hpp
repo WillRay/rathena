@@ -673,6 +673,7 @@ extern int32 skill_area_temp[8];
 int32 skill_castend_song(block_list* src, uint16 skill_id, uint16 skill_lv, t_tick tick);
 
 bool skill_blockpc_start(map_session_data &sd, uint16 skill_id, t_tick tick);
+bool skill_reduce_cooldown(map_session_data &sd, uint16 skill_id, t_tick tick);
 void skill_blockpc_clear(map_session_data &sd);
 TIMER_FUNC(skill_blockpc_end);
 bool skill_blockhomun_start(homun_data &hd, uint16 skill_id, t_tick tick);
@@ -690,6 +691,9 @@ TIMER_FUNC(skill_blockmerc_end);
 // Skill action, (return dmg,heal)
 int64 skill_attack( int32 attack_type, block_list* src, block_list *dsrc,block_list *bl,uint16 skill_id,uint16 skill_lv,t_tick tick,int32 flag );
 int32 skill_attack_area(struct block_list *bl,va_list ap);
+
+// Hunter rebalance: applies/stacks the Land Mine passive bleed on bl, scaled off the given hit damage.
+void skill_apply_landmine_bleed( block_list *src, block_list *bl, int64 damage );
 
 void skill_reload(void);
 

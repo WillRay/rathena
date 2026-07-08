@@ -4291,47 +4291,29 @@ Body:
         RemovedByFireRain: true
   - Id: 119
     Name: HT_SANDMAN
-    Description: Sandman
-    MaxLevel: 5
-    Type: Misc
-    TargetType: Ground
-    DamageFlags:
-      NoDamage: true
-      Splash: true
+    # Tranquillizing Dart rebalance: converted from a ground trap into a single-target,
+    # bow-range dart that puts the target to sleep. The trap Booby_Trap ItemCost is
+    # removed here in the base file (import cannot unset an ItemCost). See also
+    # src/map/skills/archer/sandman.cpp and db/import/skill_tree.yml.
+    Description: Tranquillizing Dart
+    MaxLevel: 1
+    Type: Weapon
+    TargetType: Attack
     Flags:
-      IsTrap: true
-      IgnoreHovering: true
-      AllowOnWarg: true
-    Range: 3
+      AlterRangeVulture: true
+    Range: -9
     Hit: Single
     HitCount: 1
-    SplashArea: 2
-    Duration1:
-      - Level: 1
-        Time: 150000
-      - Level: 2
-        Time: 120000
-      - Level: 3
-        Time: 90000
-      - Level: 4
-        Time: 60000
-      - Level: 5
-        Time: 30000
-    Duration2: 30000
+    Element: Weapon
+    Cooldown: 60000
+    Duration2: 15000
     Requires:
-      SpCost: 12
-      ItemCost:
-        - Item: Booby_Trap
-          Amount: 1
-    Unit:
-      Id: Sandman
-      Range: 1
-      Interval: 1000
-      Target: Enemy
-      Flag:
-        NoReiteration: true
-        NoFootSet: true
-        RemovedByFireRain: true
+      SpCost: 30
+      Weapon:
+        Bow: true
+      Ammo:
+        Arrow: true
+      AmmoAmount: 1
     Status: Sleep
   - Id: 120
     Name: HT_FLASHER
@@ -4490,18 +4472,19 @@ Body:
     Description: Claymore Trap
     MaxLevel: 5
     Type: Misc
-    TargetType: Ground
+    # Gameplay test: converted from a ground trap to a non-targeted direct attack.
+    # Self + NoTargetSelf makes the cast auto-fire on the caster's current target
+    # (see unit_skilluse_id2 "Auto-select target"). No trap unit, no trap items.
+    TargetType: Self
     DamageFlags:
       Splash: true
       IgnoreFlee: true
       IgnoreDefCard: true
     Flags:
-      IsTrap: true
-      TargetTrap: true
-      AlterRangeResearchTrap: true
+      NoTargetSelf: true
       IgnoreHovering: true
       AllowOnWarg: true
-    Range: 3
+    Range: 7
     Hit: Single
     HitCount: 1
     Element: Fire
@@ -4510,31 +4493,9 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    Duration1:
-      - Level: 1
-        Time: 20000
-      - Level: 2
-        Time: 40000
-      - Level: 3
-        Time: 60000
-      - Level: 4
-        Time: 80000
-      - Level: 5
-        Time: 100000
+    Cooldown: 10000
     Requires:
       SpCost: 15
-      ItemCost:
-        - Item: Booby_Trap
-          Amount: 2
-    Unit:
-      Id: Claymoretrap
-      Range: 1
-      Interval: 1000
-      Target: Enemy
-      Flag:
-        NoReiteration: true
-        NoFootSet: true
-        RemovedByFireRain: true
   - Id: 124
     Name: HT_REMOVETRAP
     Description: Remove Trap

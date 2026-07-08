@@ -8110,6 +8110,11 @@ static uint16 status_calc_speed(block_list *bl, status_change *sc, int32 speed)
 				val = max( val, 75 );
 			if( sc->getSCE(SC_SLOWDOWN) ) // Slow Potion
 				val = max( val, sc->getSCE(SC_SLOWDOWN)->val1 );
+			// Hunter rebalance: Razorwing slow from Blitz Beat. val1 holds the
+			// speed penalty % (10% per Razorwing level on a manual Blitz Beat,
+			// 5% per level on a Hunted-triggered falcon strike).
+			if( sc->getSCE(SC_RAZORWING_SLOW) )
+				val = max( val, sc->getSCE(SC_RAZORWING_SLOW)->val1 );
 			if( sc->getSCE(SC_GATLINGFEVER) )
 				val = max( val, 100 );
 			if( sc->getSCE(SC_SUITON) )
@@ -9605,6 +9610,8 @@ static int32 status_get_sc_interval(enum sc_type type)
 		case SC_BLEEDING:
 		case SC_TOXIN:
 			return 500;
+		case SC_LANDMINE_BLEED:
+			return 1500; // Single delayed burst 1.5s after the hit (interval == duration -> one tick).
 		case SC_HELLS_PLANT:
 			return 333;
 		case SC_SHIELDSPELL_HP:
@@ -11191,6 +11198,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 		case SC_KILLING_AURA:
 		case SC_WINKCHARM:
 		case SC_VOICEOFSIREN:
+		case SC_LANDMINE_BLEED:
 			tick_time = status_get_sc_interval(type);
 			val4 = tick - tick_time; // Remaining time
 			break;
@@ -14345,6 +14353,26 @@ TIMER_FUNC(status_change_timer){
 			freeLock.lock();
 			clif_damage(*bl, *bl, tick, 0, 1, damage, 1, DMG_NORMAL, 0, false);
 			status_fix_damage(bl, bl, damage, 1, 0);
+		}
+		break;
+
+	case SC_LANDMINE_BLEED:
+		// Land Mine passive: the "arrow" has been lodged since the hit; 1.5s later it is torn
+		// out, dealing all of the stored damage (val1) in one burst with a visible floating
+		// number (mirroring how SC_BURNING is displayed). This fires exactly once because the
+		// status' interval equals its duration. The caster (val2 GID) is credited; if they are
+		// gone, the target self-sources.
+		if (sce->val4 >= 0 && sce->val1 > 0) {
+			int64 damage = sce->val1;
+			block_list* caster = map_id2bl(sce->val2);
+
+			if (caster == nullptr)
+				caster = bl;
+
+			freeLock.lock();
+			clif_specialeffect(bl, EF_CRITICALWOUND, AREA); // Show the wound tearing open on the target.
+			clif_damage(*bl, *bl, tick, 0, 1, damage, 1, DMG_NORMAL, 0, false);
+			status_fix_damage(caster, bl, damage, 1, 0);
 		}
 		break;
 

@@ -202,7 +202,122 @@ added in future passes.
   but ignore the root so it stays a leveling and PvP utility, not an MVP
   trivializer.*
 
+- **Snaring Arrow (rebalance):** Damage lowered by 20% across the board to
+  `112% at Lv 1 scaling to 176% at Lv 5` (down from `140% -> 220%`). The root is
+  now `0.5s shorter at every level` (`0.5s at Lv 1 scaling to 1.5s at Lv 5`), and
+  the cooldown now scales down with skill level, `30 seconds at Lv 1 falling to
+  20 seconds at Lv 5` (was a flat 3 seconds). *Developer Comments: the flat 3s
+  cooldown let the reworked poke be chained into a near-permanent root while still
+  dealing meaningful chip damage. Pushing the cooldown up an order of magnitude —
+  and rewarding investment by tapering it as the skill levels — plus trimming both
+  the damage and the root turns it back into a deliberate control opener instead
+  of a spammable lock.*
+
 ### Hunter Skill Changes
+
+- **Razorwing (formerly Spring Trap):** The old `HT_SPRINGTRAP` active falcon skill is converted into
+  a `5`-level passive (`TargetType: Passive`), so it can no longer be cast directly and its SP cost is
+  zeroed. While learned, it makes `Blitz Beat` cripple the movement of everything it strikes: a manually
+  cast `Blitz Beat` slows every target it hits by `10% per skill level` (up to `50%` at Lv5), while a
+  `Blitz Beat` triggered automatically against a `Hunted` target (the falcon-assist strike) slows by
+  `5% per skill level` (up to `25%` at Lv5) instead. The slow lasts `2 seconds` and stacks with nothing
+  — it uses a dedicated status (`SC_RAZORWING_SLOW`) that reports the highest movement penalty in play.
+  *Developer Comments: Spring Trap was a niche WoE trap-popper that most Hunters never slotted. Recycling it into a Blitz Beat rider turns the falcon's signature strike into a real kiting tool, and splitting the manual (10%) from the auto-triggered (5%) value keeps the stronger slow tied to a deliberate cast rather than free falcon procs.*
+
+- **Crippling Talons (formerly Razorwing):** `HT_SPRINGTRAP` is renamed to `Crippling Talons` with
+  updated flavor text; the passive Blitz Beat slow effect is unchanged. Its prerequisites are
+  changed to `Tranquillizing Dart Lv. 1` and `Blitz Beat Lv. 1` (previously `Jagged Fletching
+  Lv. 5` and `Blitz Beat Lv. 1`). *Developer Comments: The name and tooltip now speak to the falcon's raking talons rather than a leftover trap, and swapping the Jagged Fletching gate for a Tranquillizing Dart point keeps the passive tied to Blitz Beat while making it easier to reach.*
+
+- **Master Fletching (formerly Arrow Crafting):** The old `AC_MAKINGARROW` quest skill is rebuilt
+  into `Master Fletching`, a `10`-level skill-point passive that ties the Hunter's arrow kit
+  together. It is gated behind `Jagged Fletching Lv. 5` and `Tranquillizing Dart Lv. 1`, and each
+  level grants three cumulative bonuses: `Tranquillizing Dart`'s cooldown is cut by `2 seconds per
+  level` (a full `-20s`, from `60s` to `40s`, at Lv10); each `Serrated Shot` cast has a `5% per
+  level` chance to shave `5 seconds` off `Wyvern Bolt`'s remaining cooldown (`50%` at Lv10, and
+  only when Wyvern Bolt is actually on cooldown — the reduction cannot be banked); and `Snaring
+  Arrow`'s root lasts `0.2 seconds per level` longer (up to `+2s` at Lv10). The old arrow-crafting cast is removed
+  entirely (`TargetType: Passive`), and the `IsQuest` flag is cleared so it trains with skill
+  points. *Developer Comments: Arrow Crafting was a dead quest skill in a world with vendor arrows, so its slot was recycled into a capstone that rewards Hunters for investing in the reworked Sandman/Serrated Shot/Ankle Snare line rather than sitting idle — the Serrated Shot proc in particular lets a Hunter who keeps up Serrated Shot pressure cut into Wyvern Bolt's long 40s cooldown.*
+
+- **Wyvern Bolt (formerly Beast Strafing):** The old `HT_POWER` Double Attack combo skill is
+  rebuilt into `Wyvern Bolt`, a normal `5`-level skill-point bow attack learnable directly in
+  the Hunter tree with no prerequisites. The combo-only cast gate (which required the Double
+  Attack `SC_COMBO` state) is removed, so it can be cast on any target, and the
+  `IsSpirit` flag is cleared so it can actually be trained with skill points (spirit
+  skills are unlearnable and only appear when Soul Linked). It is now a piercing
+  line attack: a single hit lands on the target and on every enemy on the straight line
+  from the caster through the target, continuing `2 cells` past it. Damage is
+  `400% ATK + 100% per level` (`500%` at Lv1 up to `900%` at Lv5), and the bolt gains
+  power with distance for up to `+50% more damage` at maximum range, scaling linearly
+  with each target's distance from the caster. `MaxLevel 1 -> 5`; the old
+  `2-hit, [50 + 8*STR]% ATK` formula is dropped for the single scaling hit; SP is
+  `25 + 5 per level` (`30` at Lv1 up to `50` at Lv5); a `40 second` cooldown is added.
+  It keeps its Bow + Arrow requirement and Vulture's-Eye sight range.
+  *Developer Comments: HT_POWER was a dead-end combo tail nobody could reach without the exact
+  Double Strafe -> Beast Strafing chain. Turning it into a learnable piercing line shot gives
+  Hunters a directional AoE poke that rewards keeping distance; the 40s cooldown keeps its
+  heavy damage a windowed opener rather than a spam button.*
+
+- **Wyvern Bolt:** Every enemy the bolt strikes is now knocked back `2 cells` (pushed away
+  from the caster, i.e. further along the bolt's line). *Developer Comments: leaning into the
+  fantasy of a heavy piercing shot — the knockback punctuates the hit, opens space for a
+  kiting Hunter, and scatters targets down the line rather than leaving them stacked on top of
+  each other.*
+
+- **Wyvern Bolt:** Now has a fixed `0.5 second` cast time. On this pre-renewal server cast
+  time is a single variable value, so the `500ms` is flagged to ignore DEX, cast-reduction
+  buffs and gear — the shot always takes exactly half a second to fire regardless of
+  DEX or cast-reduction gear. *Developer Comments: an instant-cast piercing line nuke on a
+  40s cooldown felt too twitchy and hard to react to; a short, uncappable wind-up gives the
+  skill a readable tell and a real animation commitment without meaningfully hurting its
+  burst role.*
+
+- **Jagged Fletching (formerly Land Mine):** The old Land Mine trap is renamed to
+  `Jagged Fletching` and converted from an active ground trap into a `passive` skill
+  (`TargetType: Passive` / `INF_PASSIVE_SKILL`). It can no longer be cast, consumes no
+  SP and no longer requires a `Booby Trap`; its old trap machinery (unit, duration, Stun
+  status, `IsTrap`) is now inert. Its `MaxLevel` stays `5`, and it is gated behind
+  `Serrated Shot (Phantasmic Arrow) level 10` in the Hunter tree. Blast Mine and Remove
+  Trap still require it at level 1, so they inherit the new gating transitively.
+
+  While learned, it barbs the Hunter's arrows so that `Double Strafe` and `Arrow Shower`
+  leave a jagged arrow lodged in every target they hit. After `1.5 seconds` the barbs tear
+  free, dealing `additional damage equal to 50% of that hit's damage` in a single burst. The
+  extra damage is applied as fixed damage — it ignores DEF and cannot be resisted (no VIT/LUK
+  reduction, no boss immunity), and it is credited to the Hunter. During the delay the target
+  shows the bleeding visual, and hitting a target again before it tears free stacks the pending
+  damage and refreshes the 1.5s timer. The effect is currently flat and does **not** scale
+  with the level of Jagged Fletching. *Developer Comments: Land Mine was a dead trap slot once
+  its ground-target playstyle fell off, so it is repurposed into a delayed-damage rider on the
+  Hunter's two bread-and-butter bow skills — "it hurts when you pull the arrow out." The 1.5s
+  fuse gives a small burst-timing game and the fixed, unresistable damage keeps it relevant
+  against high-VIT and boss targets. Level scaling is intentionally left off for now while the
+  numbers are being tested.*
+
+- **Serrated Shot (formerly Phantasmic Arrow):** The quest skill Phantasmic Arrow is
+  rebuilt into `Serrated Shot`, a non-targeted single-target bow attack. It is no longer a
+  quest skill (`IsQuest` cleared) — it is now a `10`-level skill-point skill learnable
+  directly in the Hunter tree. It is aimed via `TargetType: Self` + `NoTargetSelf`, so it
+  auto-fires on your current target with no target cursor. Damage is now `300% ATK at Lv 1,
+  +50% per level to 700% at Lv 9, then 800% at Lv 10` (up from a flat `150%`), with `9`
+  cell range, an `8 second` cooldown, and `15 -> 30 SP` (`15, 17, 19, 21, 23, 25, 27, 29,
+  30, 30`). It keeps its Bow requirement and weapon element. The old `3-cell knockback` is
+  removed. In the skill window it is relocated up one row and three columns to the left in
+  the Hunter tree. *Developer Comments: We wanted a spammable single-target damage button
+  for Hunters whose pacing lives on an 8s cooldown, and Phantasmic Arrow's clean bow-shot
+  animation fits "Serrated Shot" better than the trap skills. Knockback is dropped so the
+  shot stays put for follow-ups; a Bleeding passive will supply its on-hit effect later.*
+
+- **Serrated Shot (SP, crit & armor-piercing pass):** SP cost is flattened to a `flat 15 SP at
+  all levels` (down from the old `15 -> 30` ramp). The skill can now land `critical hits` like a
+  normal attack (`DamageFlags.Critical` / `NK_CRITICAL`), and its barbed heads `bypass 2% of the
+  target's DEF per skill level` (up to `20%` at Lv 10), wired up in `battle_calc_defense_reduction`
+  (pre-renewal only). *Developer Comments: Serrated Shot wanted to feel like a precise, armor-
+  shredding bow strike rather than a flat-rate poke — enabling crits gives crit-DEX Hunters a
+  reason to build around it, the DEF-piercing rewards leveling the skill against high-DEF targets,
+  and the flat 15 SP removes the perverse "leveling it up costs more to cast" tax so investment is
+  a pure upgrade.*
 
 - **Beast Bane:** Reworked from a flat damage mastery into a passive "Hunted"
   hunter's mark. The old `+4 ATK per skill level` bonus against Brute and Insect
@@ -272,6 +387,12 @@ added in future passes.
   *Developer Comments: the refund let a Hunter who kept a target tagged effectively cast Blitz Beat
   for free on its cooldown, which was too much sustain on top of the damage and area the mark already
   grants. Dropping it keeps the Hunted payoff about burst, not resource generation.*
+- **Blitz Beat (Hunted SP refund reinstated at 20):** Blitz Beat once again refunds SP when it
+  consumes a `Hunted` mark, now `20 SP` (down from the original `30`). The refund only triggers on
+  the empowered strike that spends the mark, so an ordinary single-target Blitz Beat still costs full
+  price. *Developer Comments: removing the refund outright left the Hunted payoff feeling like it only
+  ever cost the Hunter resources to set up. A smaller 20 SP return rewards cashing in the mark without
+  restoring the near-free spam the old 30 SP refund enabled.*
 - **Blitz Beat (base damage formula):** The falcon strike's base Misc-damage formula now counts
   the Hunter's `full INT` instead of half. It goes from `(LUK + INT / 2 + 20) x 2` to
   `(LUK + INT + 20) x 2` per hit, before the Steel Crow, Hunted and hit-count multipliers apply.
@@ -302,6 +423,12 @@ added in future passes.
   buy only SP cost and cooldown with no payoff on the damage itself. Tying the multiplier to skill
   level gives Hunters a real reason to max the skill and rewards the Steel Crow 10 investment it now
   gates behind.*
+- **Blitz Beat & Serrated Shot (shared cooldown):** The two falcon/bow strikes now share a single
+  `5 second cooldown` — casting either one puts both on cooldown. Serrated Shot's own cooldown is
+  lowered from `8 seconds` to `5 seconds` to match. *Developer Comments: both skills are the Hunter's
+  instant, non-targeted burst button, and letting them be fired back-to-back on independent timers
+  doubled the intended single-target spike. Binding them to one shared cooldown makes the choice each
+  cycle "which strike do I want now" instead of "press both", without slowing either one in isolation.*
 - **Predator's Eye (formerly Beast Bane):** The Brute/Insect mastery passive is renamed from
   `Beast Bane` to `Predator's Eye`. Cosmetic only — its STR-scaled mastery-damage behaviour is
   unchanged; only the display name in the skill window, tooltips and cross-references (Soul Link,
@@ -317,13 +444,30 @@ added in future passes.
   fixed cast keep it a convenience rather than a combat action.*
 - **Steel Crow:** Reworked from a flat `+6 damage per skill level` mastery into an ATK-scaling
   falcon amplifier. Every falcon strike — `Blitz Beat`, `Falcon Assault` and `Predatory Strike` —
-  now gains bonus damage equal to `2.5% of the Hunter's ATK (base ATK + weapon ATK) per Steel Crow
-  level`, up to `+25% of ATK at level 10`. The old flat `+level` term folded into the falcon
+  now gains bonus damage equal to `2% of the Hunter's ATK (base ATK + weapon ATK) per Steel Crow
+  level`, up to `+20% of ATK at level 10`. The old flat `+level` term folded into the falcon
   Misc-damage formula is removed. *Developer Comments: a flat +60 at max level was a rounding error
   once a Hunter had any real gear, so Steel Crow was a dead-end prerequisite point. Tying the bonus
   to the Hunter's own ATK makes the falcon scale with the bow and STR/gear the player actually
   invests in, giving every point a visible payoff across all three falcon skills instead of a token
-  additive that gear quickly drowns out.*
+  additive that gear quickly drowns out. The per-level bonus was subsequently trimmed from 2.5% to
+  2% of ATK (25% -> 20% at max level) to pull the falcon's ATK-scaled ceiling back in line with the
+  other Hunter skills.*
+
+- **Tranquillizing Dart (formerly Sandman):** The old Sandman ground trap is rebuilt into
+  `Tranquillizing Dart`, a single-rank (`MaxLevel 5 -> 1`) targeted bow skill. Instead of
+  laying a hidden trap, it fires a dart at a single enemy at `bow range` (`Range -9`,
+  extended by Vulture's Eye) and puts the target to `sleep for up to 15 seconds`. Like
+  Snaring Arrow it lands a real (but deliberately tiny, `~1% ATK`) hit so the shot connects
+  and the status applies — a true no-damage version routes through the no-damage cast path,
+  which never resolves the on-hit effect. It costs `30 SP` (up from 12), gains a `60 second`
+  cooldown, requires a bow and 1 Arrow, and no longer consumes a `Booby Trap`. In the Hunter
+  tree it now requires `Ankle Snare level 1` instead of Flasher. *Developer Comments: as a
+  5-level trap Sandman competed with the server's other, better traps and rarely got picked.
+  Refocusing it into a single-point bow-range sleep dart gives Hunters a reliable crowd-control
+  opener; the 1% ATK hit is only the delivery vehicle (the engine drops on-hit effects for
+  zero-damage shots), and the long 60s cooldown and 30 SP cost are the price for a guaranteed
+  15-second sleep.*
 
 ### Thief Skill Changes
 

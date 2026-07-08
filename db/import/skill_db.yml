@@ -672,9 +672,9 @@ Body:
   # single-target bow attack. TargetType Attack makes it a normal targeted skill -
   # the player picks an enemy and it routes to castendDamageId. It deals a light
   # hit (140% + 20% per level, formula in src/map/skills/archer/anklesnare.cpp)
-  # and briefly roots the target with SC_ANKLE for Duration2 (1s at Lv1 -> 2s at
-  # Lv5). Range -9 + AlterRangeVulture uses the caster's bow sight range. A 3s
-  # cooldown keeps the short root from being chained into a permanent lock. The
+  # and briefly roots the target with SC_ANKLE for Duration2 (0.5s at Lv1 -> 1.5s at
+  # Lv5). Range -9 + AlterRangeVulture uses the caster's bow sight range. Cooldown
+  # scales 30s at Lv1 -> 20s at Lv5 to keep the root from being chained. The
   # NoDamage/IsTrap flags are cleared here; the Booby_Trap reagent was removed in
   # db/pre-re/skill_db.yml (import cannot unset an ItemCost). The dormant trap
   # Unit block is harmless - skill_unitsetting is never reached anymore.
@@ -692,16 +692,26 @@ Body:
     Element: Weapon
     Duration2:
       - Level: 1
-        Time: 1000
+        Time: 500
       - Level: 2
-        Time: 1250
+        Time: 750
       - Level: 3
-        Time: 1500
+        Time: 1000
       - Level: 4
-        Time: 1750
+        Time: 1250
       - Level: 5
-        Time: 2000
-    Cooldown: 3000
+        Time: 1500
+    Cooldown:
+      - Level: 1
+        Time: 30000
+      - Level: 2
+        Time: 27500
+      - Level: 3
+        Time: 25000
+      - Level: 4
+        Time: 22500
+      - Level: 5
+        Time: 20000
     Requires:
       SpCost:
         - Level: 1
@@ -809,5 +819,160 @@ Body:
     DamageFlags:
       NoDamage: true
     FixedCastTime: 2000
+    Requires:
+      SpCost: 0
+  # Hunter rebalance: HT_PHANTASMIC (Phantasmic Arrow) reworked into "Serrated Shot"
+  # (renamed client-side), a non-targeted, auto-firing single-target bow attack.
+  # TargetType Self + NoTargetSelf makes it fire on the caster's current target with no
+  # target cursor (native engine combo-skill aiming). IsQuest is cleared so it becomes a
+  # 10-level skill-point skill. Damage curve (300% at Lv1 -> 800% at Lv10) lives in
+  # src/map/skills/archer/phantasmicarrow.cpp. Range -9 -> 9, knockback removed (a
+  # Bleeding passive will provide the on-hit effect later), 5s cooldown (shared with
+  # Blitz Beat), SP a flat 15 at all levels.
+  # It keeps its existing Bow weapon requirement and Weapon element (Requires.Weapon is
+  # left untouched, so the merge preserves the base Bow requirement).
+  # DamageFlags.Critical (NK_CRITICAL) lets the skill roll critical hits like a normal
+  # attack. It also bypasses 2% of the target's DEF per skill level (up to 20% at Lv10) —
+  # that DEF-piercing rate is wired up in src/map/battle.cpp battle_calc_defense_reduction.
+  - Id: 1009
+    Name: HT_PHANTASMIC
+    MaxLevel: 10
+    TargetType: Self
+    Flags:
+      IsQuest: false
+      NoTargetSelf: true
+    DamageFlags:
+      Critical: true
+    Range: 9
+    Knockback: 0
+    # 5s cooldown, shared with Blitz Beat (HT_BLITZBEAT) — casting either skill
+    # puts both on cooldown (see the shared-cooldown block in skill_castend_id,
+    # src/map/skill.cpp).
+    Cooldown: 5000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 15
+        - Level: 2
+          Amount: 15
+        - Level: 3
+          Amount: 15
+        - Level: 4
+          Amount: 15
+        - Level: 5
+          Amount: 15
+        - Level: 6
+          Amount: 15
+        - Level: 7
+          Amount: 15
+        - Level: 8
+          Amount: 15
+        - Level: 9
+          Amount: 15
+        - Level: 10
+          Amount: 15
+  # Hunter rebalance: HT_LANDMINE (Land Mine) is converted from an active ground trap into
+  # a passive skill. TargetType: Passive maps to INF_PASSIVE_SKILL (0x00), so the skill is
+  # no longer castable and all of its trap machinery (Unit / Duration / Status / IsTrap /
+  # ItemCost) becomes dead but harmless — the ground/unit cast path is never reached. SpCost
+  # is zeroed for cleanliness. IsTrap is cleared so it no longer counts as a trap skill.
+  # No passive bonus is wired up yet (structural conversion only); the skill confers nothing
+  # until an effect is added in code. The Booby_Trap ItemCost cannot be cleared via import
+  # (the loader only sets item slots, never resets them), but it is inert on a passive skill.
+  # The Hunter skill-tree prerequisite (Serrated Shot / HT_PHANTASMIC level 10) lives in
+  # db/import/skill_tree.yml.
+  - Id: 116
+    Name: HT_LANDMINE
+    Description: Jagged Fletching
+    TargetType: Passive
+    Flags:
+      IsTrap: false
+    Requires:
+      SpCost: 0
+  # Hunter rebalance: HT_SPRINGTRAP (Spring Trap) is converted from an active
+  # falcon skill into a passive, renamed "Razorwing" client-side. TargetType:
+  # Passive maps to INF_PASSIVE_SKILL (0x00), so it is no longer castable and its
+  # trap-springing machinery (springtrap.cpp) becomes dead but harmless — the cast
+  # path is never reached. SpCost is zeroed for cleanliness (the Falcon state
+  # requirement is left in place but is inert on a passive). MaxLevel stays 5.
+  # The passive makes Blitz Beat slow the movement speed of everything it hits:
+  # 10% per Razorwing level on a manual Blitz Beat, 5% per level on a
+  # Hunted-triggered falcon strike. The slow (SC_RAZORWING_SLOW) is wired up in
+  # src/map/skills/archer/blitzbeat.cpp and src/map/status.cpp.
+  - Id: 131
+    Name: HT_SPRINGTRAP
+    Description: Razorwing
+    TargetType: Passive
+    Requires:
+      SpCost: 0
+  # Hunter rebalance: HT_POWER (formerly the "Beast Strafing" Double Attack combo)
+  # is reworked into "Wyvern Bolt" (renamed client-side), a normal 5-level learnable
+  # bow skill. The combo-only cast gate is removed in src/map/skill.cpp so it can be
+  # cast on any target. It is now a piercing line attack: a single hit lands on the
+  # target and on every enemy on the straight line from the caster through the target,
+  # continuing 2 cells past it (line logic in src/map/skills/archer/beaststrafing.cpp).
+  # Damage is 400% ATK + 100% per level, scaled up by distance for up to +50% more at
+  # max range (both formulas live in beaststrafing.cpp calculateSkillRatio). MaxLevel
+  # 1 -> 5; Multi_Hit x2 collapsed to a Single hit; SplashArea 1 sets the line width
+  # read by skill_get_splash; SpCost 25 + 5/level (30 at Lv1 -> 50 at Lv5); 40s cooldown.
+  # The IsSpirit (INF2_ISSPIRIT) flag is cleared — spirit skills cannot be learned with
+  # skill points (pc.cpp), so it must be off for the skill to be trainable. Bow + Arrow
+  # requirement is preserved from the base entry.
+  # The Hunter skill-tree entry (MaxLevel 5) lives in db/import/skill_tree.yml.
+  - Id: 499
+    Name: HT_POWER
+    Description: Wyvern Bolt
+    MaxLevel: 5
+    Hit: Single
+    HitCount: 1
+    SplashArea: 1
+    Flags:
+      IsSpirit: false
+    # Wyvern Bolt gets a fixed 0.5s cast time. This server is pre-renewal (PRERE defined,
+    # RENEWAL_CAST compiled out), so FixedCastTime does nothing — cast time comes only from
+    # the variable CastTime. The IgnoreDex/IgnoreStatus/IgnoreItemBonus flags make the 500ms
+    # immune to DEX scaling, cast-reduction buffs, and gear, so it is always exactly 0.5s.
+    CastTime: 500
+    CastTimeFlags:
+      IgnoreDex: true
+      IgnoreStatus: true
+      IgnoreItemBonus: true
+    Cooldown: 40000
+    # Wyvern Bolt now knocks every enemy it pierces back 2 cells (away from the caster,
+    # i.e. further down the bolt's line). Applied automatically by skill_attack via
+    # skill_get_blewcount; no C++ change needed.
+    Knockback: 2
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 30
+        - Level: 2
+          Amount: 35
+        - Level: 3
+          Amount: 40
+        - Level: 4
+          Amount: 45
+        - Level: 5
+          Amount: 50
+  # Hunter rebalance: AC_MAKINGARROW (Arrow Crafting) is repurposed into "Master
+  # Fletching" (renamed client-side), a 10-level passive. TargetType: Passive maps to
+  # INF_PASSIVE_SKILL (0x00), so the skill is no longer castable and its old arrow-
+  # crafting cast path (src/map/skills/archer/makingarrow.cpp) becomes dead but harmless.
+  # IsQuest is cleared so it can be learned with skill points, MaxLevel 1 -> 10, and
+  # SpCost is zeroed. The three passive bonuses are wired up in C++:
+  #   - Tranquillizing Dart (HT_SANDMAN) cooldown -2s per level (src/map/pc.cpp).
+  #   - Each Serrated Shot (HT_PHANTASMIC) cast has a 5% per level chance to shave 5s
+  #     off Wyvern Bolt's (HT_POWER) cooldown (src/map/skills/archer/phantasmicarrow.cpp).
+  #   - Snaring Arrow (HT_ANKLESNARE) root +0.2s per level
+  #     (src/map/skills/archer/anklesnare.cpp).
+  # The Hunter skill-tree prerequisites (Jagged Fletching / HT_LANDMINE 5 and
+  # Tranquillizing Dart / HT_SANDMAN 1) live in db/import/skill_tree.yml.
+  - Id: 147
+    Name: AC_MAKINGARROW
+    Description: Master Fletching
+    MaxLevel: 10
+    TargetType: Passive
+    Flags:
+      IsQuest: false
     Requires:
       SpCost: 0

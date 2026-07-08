@@ -3,18 +3,30 @@
 
 #include "sandman.hpp"
 
+#include "map/skill.hpp"
 #include "map/status.hpp"
 
-SkillSandman::SkillSandman() : SkillImpl(HT_SANDMAN) {
+SkillSandman::SkillSandman() : WeaponSkillImpl(HT_SANDMAN) {
 }
 
-void SkillSandman::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
-	// Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
-	flag |= 1;
+// Tranquillizing Dart is set up in the skill DB as a normal targeted attack skill
+// (TargetType Attack), so the cast routes straight to castendDamageId against the
+// enemy the player selected - the inherited WeaponSkillImpl::castendDamageId performs
+// the skill_attack, which shows the arrow and then triggers applyAdditionalEffects.
+// (The effect only fires on a hit that lands: skill_additional_effect returns early
+// on dmg_lv < ATK_DEF, which is why the dart deals damage instead of being NoDamage.)
 
-	skill_unitsetting(src,getSkillId(),skill_lv,x,y,0);
+void SkillSandman::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
+	// The value of this skill is the sleep, not the damage - a light poke so the arrow
+	// connects and the sleep lands.
+	base_skillratio -= 99; // ~1% ATK
 }
 
 void SkillSandman::applyAdditionalEffects(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
-	sc_start(src, target, SC_SLEEP, (10 * skill_lv + 40), skill_lv, skill_get_time2(getSkillId(), skill_lv), 1000);
+	// Put the target to sleep for the skill's time2 (15s). Status-immune targets
+	// (e.g. bosses) shrug it off.
+	if (status_bl_has_mode(target, MD_STATUSIMMUNE))
+		return;
+
+	sc_start(src, target, SC_SLEEP, 100, skill_lv, skill_get_time2(getSkillId(), skill_lv));
 }

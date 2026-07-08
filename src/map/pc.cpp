@@ -7311,6 +7311,13 @@ int32 pc_get_skillcooldown( const map_session_data* sd, uint16 skill_id, uint16 
 	if (skill_id == SU_TUNABELLY && pc_checkskill(sd, SU_SPIRITOFSEA) > 0)
 		cooldown -= skill_get_time(SU_TUNABELLY, skill_lv);
 
+#ifndef RENEWAL
+	// Master Fletching passive shaves 2s per skill level off Tranquillizing Dart's
+	// (HT_SANDMAN) cooldown.
+	if (skill_id == HT_SANDMAN)
+		cooldown -= 2000 * pc_checkskill(sd, AC_MAKINGARROW);
+#endif
+
 	for (auto &it : sd->skillcooldown) {
 		if (it.id == skill_id) {
 			cooldown += it.val;
