@@ -20,7 +20,7 @@ OnInit:
 	monster strnpcinfo(4),.@d[UNPC_X],.@d[UNPC_Y],"Punching Bag",1908,1,strnpcinfo(0)+"::OnMyMobDead",Size_Small;
 	.@dupid = atoi(strnpcinfo(2));
 	.gid[.@dupid] = $@mobid[0];
-	.mhp[.@dupid] = getmonsterinfo (4,1908);
+	.mhp[.@dupid] = getmonsterinfo(1908,MOB_MAXHP);
 	setunitdata .gid[.@dupid],UMOB_MODE,.@d[UMOB_MODE]|0x4000000|0x0200000; // Set MD_STATUS_IMMUNE (0x4000000) because EDP/burn/%MHP based status can skew the DPS counter so much.
 	initnpctimer;
 	end;
