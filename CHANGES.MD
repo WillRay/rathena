@@ -259,6 +259,21 @@ added in future passes.
   Hunters a directional AoE poke that rewards keeping distance; the 40s cooldown keeps its
   heavy damage a windowed opener rather than a spam button.*
 
+- **Serrated Shot / Wyvern Bolt / Master Fletching (interaction rework):** The link between
+  `Serrated Shot`, `Wyvern Bolt` and `Master Fletching` is retuned. `Serrated Shot` now shaves
+  a guaranteed `2.5 seconds` off `Wyvern Bolt`'s remaining cooldown on **every hit** (previously
+  a `5% per Master Fletching level` chance for `-5s`), so keeping up Serrated Shot pressure
+  reliably pulls Wyvern Bolt's `40s` cooldown forward. In exchange, `Master Fletching` no longer
+  touches Wyvern Bolt's cooldown at all — its third bonus is now `+10% Serrated Shot damage per
+  level` (up to `+100%` at Lv10). `Serrated Shot`'s base damage is also lowered at the top end:
+  the curve now runs `300% ATK` at Lv1 scaling linearly to `650% ATK` at Lv10 (previously `800%`
+  at Lv10, a `-150%` cut at max), with the intermediate ranks smoothed across the range.
+  *Developer Comments: the old random Wyvern proc was swingy and hard to feel; making the reduction
+  a flat per-hit amount turns Serrated Shot into a dependable cooldown engine for Wyvern Bolt.
+  Master Fletching's damage bonus now stacks cleanly on top of a lower base, so the max-rank
+  ceiling (650% base + 100% from Master Fletching) lands close to where it was before without
+  Serrated Shot hitting like a truck on its own.*
+
 - **Wyvern Bolt:** Every enemy the bolt strikes is now knocked back `2 cells` (pushed away
   from the caster, i.e. further along the bolt's line). *Developer Comments: leaning into the
   fantasy of a heavy piercing shot — the knockback punctuates the hit, opens space for a
@@ -272,6 +287,12 @@ added in future passes.
   40s cooldown felt too twitchy and hard to react to; a short, uncappable wind-up gives the
   skill a readable tell and a real animation commitment without meaningfully hurting its
   burst role.*
+
+- **Wyvern Bolt:** The bolt can no longer miss (`IgnoreFlee`). *Developer Comments: as a weapon attack
+  Wyvern Bolt was paying the full flee tax that its rival Predatory Strike (a Misc strike) skips
+  entirely, so against high-flee targets it landed softer despite the bigger ATK% on the tin. Making it
+  always connect lets its large ratio actually deliver against the targets where it was falling behind,
+  keeping it a hair ahead of Predatory Strike single-target as intended.*
 
 - **Jagged Fletching (formerly Land Mine):** The old Land Mine trap is renamed to
   `Jagged Fletching` and converted from an active ground trap into a `passive` skill
@@ -423,6 +444,14 @@ added in future passes.
   buy only SP cost and cooldown with no payoff on the damage itself. Tying the multiplier to skill
   level gives Hunters a real reason to max the skill and rewards the Steel Crow 10 investment it now
   gates behind.*
+- **Predatory Strike:** Damage lowered by `100%` at every level — the curve now runs from
+  `200% of a Blitz Beat at level 1` by `50% per level` to `400% at level 5` (200 / 250 / 300 / 350 /
+  400%), down from 300–500%. *Developer Comments: Predatory Strike is a Misc falcon strike, so it
+  ignores the target's DEF and (with IgnoreFlee) never misses, on top of hitting a 9x9 and applying
+  a 2s Fear. Compared on paper against Wyvern Bolt's raw ATK% it looked even, but because it bypasses
+  the whole mitigation layer it was quietly the stronger nuke against anything armored. Shaving 100%
+  off each rank keeps it as the AoE/crowd-control option while ceding the single-target damage crown
+  to Wyvern Bolt, as intended.*
 - **Blitz Beat & Serrated Shot (shared cooldown):** The two falcon/bow strikes now share a single
   `5 second cooldown` — casting either one puts both on cooldown. Serrated Shot's own cooldown is
   lowered from `8 seconds` to `5 seconds` to match. *Developer Comments: both skills are the Hunter's

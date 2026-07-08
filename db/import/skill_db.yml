@@ -825,8 +825,10 @@ Body:
   # (renamed client-side), a non-targeted, auto-firing single-target bow attack.
   # TargetType Self + NoTargetSelf makes it fire on the caster's current target with no
   # target cursor (native engine combo-skill aiming). IsQuest is cleared so it becomes a
-  # 10-level skill-point skill. Damage curve (300% at Lv1 -> 800% at Lv10) lives in
-  # src/map/skills/archer/phantasmicarrow.cpp. Range -9 -> 9, knockback removed (a
+  # 10-level skill-point skill. Damage curve (300% at Lv1 -> 650% at Lv10, plus +10%
+  # per Master Fletching level) lives in src/map/skills/archer/phantasmicarrow.cpp,
+  # which also shaves 2.5s off Wyvern Bolt's (HT_POWER) cooldown per hit.
+  # Range -9 -> 9, knockback removed (a
   # Bleeding passive will provide the on-hit effect later), 5s cooldown (shared with
   # Blitz Beat), SP a flat 15 at all levels.
   # It keeps its existing Bow weapon requirement and Weapon element (Requires.Weapon is
@@ -925,6 +927,10 @@ Body:
     MaxLevel: 5
     Hit: Single
     HitCount: 1
+    # Wyvern Bolt can no longer miss: IgnoreFlee makes it bypass the target's flee
+    # roll and always connect, matching the reliability of the Misc falcon strikes.
+    DamageFlags:
+      IgnoreFlee: true
     SplashArea: 1
     Flags:
       IsSpirit: false
@@ -961,8 +967,8 @@ Body:
   # IsQuest is cleared so it can be learned with skill points, MaxLevel 1 -> 10, and
   # SpCost is zeroed. The three passive bonuses are wired up in C++:
   #   - Tranquillizing Dart (HT_SANDMAN) cooldown -2s per level (src/map/pc.cpp).
-  #   - Each Serrated Shot (HT_PHANTASMIC) cast has a 5% per level chance to shave 5s
-  #     off Wyvern Bolt's (HT_POWER) cooldown (src/map/skills/archer/phantasmicarrow.cpp).
+  #   - Serrated Shot (HT_PHANTASMIC) damage +10% per level
+  #     (src/map/skills/archer/phantasmicarrow.cpp calculateSkillRatio).
   #   - Snaring Arrow (HT_ANKLESNARE) root +0.2s per level
   #     (src/map/skills/archer/anklesnare.cpp).
   # The Hunter skill-tree prerequisites (Jagged Fletching / HT_LANDMINE 5 and

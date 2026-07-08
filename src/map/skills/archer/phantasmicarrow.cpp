@@ -4,7 +4,6 @@
 #include "phantasmicarrow.hpp"
 
 #include <config/core.hpp>
-#include <common/random.hpp>
 
 #include "map/clif.hpp"
 #include "map/pc.hpp"
@@ -17,9 +16,14 @@ void SkillPhantasmicArrow::calculateSkillRatio(const Damage* wd, const block_lis
 #ifdef RENEWAL
 	base_skillratio += 400;
 #else
-	// Serrated Shot: 300% ATK at Lv1, +50% per level up to 700% at Lv9, then 800% at Lv10.
+	// Serrated Shot: 300% ATK at Lv1 scaling linearly to 650% ATK at Lv10.
 	// base_skillratio starts at 100, so the addition is the displayed ATK% minus 100.
-	base_skillratio += (skill_lv < 10 ? 200 + 50 * (skill_lv - 1) : 700);
+	base_skillratio += 200 + (350 * (skill_lv - 1)) / 9;
+	// Master Fletching (AC_MAKINGARROW) passive: +10% damage per skill level.
+	if (const map_session_data* sd = BL_CAST(BL_PC, src); sd != nullptr) {
+		if (uint8 mf = pc_checkskill(sd, AC_MAKINGARROW); mf > 0)
+			base_skillratio += 10 * mf;
+	}
 #endif
 }
 
@@ -28,13 +32,10 @@ void SkillPhantasmicArrow::castendDamageId(block_list* src, block_list* target, 
 	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 
 #ifndef RENEWAL
-	// Master Fletching passive: each Serrated Shot cast has a 5% per skill level chance
-	// to shave 5s off Wyvern Bolt's (HT_POWER) remaining cooldown - only if Wyvern Bolt
-	// is currently cooling down.
-	if (map_session_data* sd = BL_CAST(BL_PC, src); sd != nullptr) {
-		if (uint8 mf = pc_checkskill(sd, AC_MAKINGARROW); mf > 0 && rnd_chance(5 * mf, 100))
-			skill_reduce_cooldown(*sd, HT_POWER, 5000);
-	}
+	// Each Serrated Shot hit shaves 2.5s off Wyvern Bolt's (HT_POWER) remaining
+	// cooldown - only if Wyvern Bolt is currently cooling down.
+	if (map_session_data* sd = BL_CAST(BL_PC, src); sd != nullptr)
+		skill_reduce_cooldown(*sd, HT_POWER, 2500);
 #endif
 }
 

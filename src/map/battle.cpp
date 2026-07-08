@@ -6467,7 +6467,7 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 			{
 				// Hunter rebalance: Predatory Strike is an offensive falcon strike. It
 				// deals a full Blitz Beat (the same LUK/INT Misc formula, all 5 hits)
-				// scaled by skill level: 300% at level 1, rising 50% per level to 500%
+				// scaled by skill level: 200% at level 1, rising 50% per level to 400%
 				// at level 5. The 9x9 area, Fear and the Hunted mark are handled in
 				// src/map/skills/archer/detect.cpp.
 				uint16 steel;
@@ -6476,8 +6476,8 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 					steel = 0;
 
 				md.damage = (sstatus->luk + sstatus->int_ + 20) * 2;
-				// 300% at level 1, +50% per level, up to 500% at level 5.
-				md.damage = md.damage * 5 * (250 + 50 * skill_lv) / 100;
+				// 200% at level 1, +50% per level, up to 400% at level 5.
+				md.damage = md.damage * 5 * (150 + 50 * skill_lv) / 100;
 				// Steel Crow (HT_STEELCROW): as with the other falcon strikes, add
 				// 2% of the hunter's ATK (base + weapon) per Steel Crow level to
 				// the total damage, replacing the old flat "+ level" term.
