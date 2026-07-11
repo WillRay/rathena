@@ -176,23 +176,23 @@ izlude_in,82,163,3	script	Shurank	733,{
 		mes "Dequ'ee. It seems you've been working very hard and that you've made the most of this experience.";
 		next;
 		mes "[Shurank]";
-		mes "For now, I believe you'll benefit from learning some more about Swordman skills. First, let me tell you more about the Sword Masteries.";
+		mes "For now, I believe you'll benefit from learning some more about Swordman skills. First, let me tell you more about the mastery skills for swords.";
 		next;
 		mes "[Shurank]";
 		mes "There are two different kinds:";
-		mes "^5D478BOne Handed Sword Mastery^000000 and";
-		mes "^5D478BTwo Handed Sword Mastery^000000. Both";
-		mes "are Passive Skills that increase your Attack Power as these skills are leveled up.";
+		mes "^5D478BBlade Mastery^000000 and";
+		mes "^5D478BRelentless Assault^000000. Both";
+		mes "are Passive Skills that make you a deadlier swordsman as they are leveled up.";
 		next;
 		mes "[Shurank]";
-		mes "One Handed Sword Mastery";
-		mes "increases the damage of Daggers and One Handed Swords while Two Handed Sword Mastery increases the damage of Two Handed Swords.";
+		mes "Blade Mastery";
+		mes "increases your ATK and HIT with Daggers, One Handed Swords, and Two Handed Swords, while Relentless Assault adds bonus damage to your next attack after using an offensive skill.";
 		next;
 		set .@chk_hanson, getskilllv("SM_SWORD");
 		set .@chk_yangson, getskilllv("SM_TWOHAND");
-		if((.@chk_hanson > 9) || (.@chk_yangson > 9)){
+		if((.@chk_hanson > 4) || (.@chk_yangson > 4)){
 			mes "[Shurank]";
-			mes "Ah, from the way you handle your Sword, I see that you have mastered a Sword Mastery. I'm thoroughly impressed.";
+			mes "Ah, from the way you handle your Sword, I see that you have mastered a sword mastery skill. I'm thoroughly impressed.";
 			next;
 			mes "[Shurank]";
 			mes "Let me give you";

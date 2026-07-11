@@ -1299,6 +1299,26 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			}
 		}
 
+		// Swordsman rebalance: Two-Handed Sword Mastery ("Relentless Assault") no
+		// longer grants a flat 2H-sword ATK bonus (see battle_addmastery in
+		// battle.cpp). Instead, landing ANY offensive skill (not just an auto
+		// attack) grants the caster SC_TWOHANDBOOST, which empowers the next
+		// plain auto attack with bonus damage (see the skill_id==0 case in
+		// battle_calc_attack_skill_ratio), then consumes itself. 5s window to
+		// land the empowered auto attack, or the buff simply expires.
+		// NOTE: intentionally not gated on attack_type&BF_MAGIC — SM_TWOHAND
+		// sits in the Swordsman/Knight/Crusader tree, which has no offensive
+		// magic skills of its own, so a magic-only gate would make this
+		// unusable for its own class. "Offensive spell" is read here as "any
+		// offensive skill cast," matching what the class can actually use.
+		if (skill_id != 0) {
+			if (uint16 twohand_lv = pc_checkskill(sd, SM_TWOHAND); twohand_lv > 0) {
+				sc_start(src, src, SC_TWOHANDBOOST, 100, twohand_lv, 5000);
+				if (battle_config.etc_log)
+					ShowInfo("SC_TWOHANDBOOST granted to PC %d after skill %d (lv %d), twohand_lv=%d\n", sd->status.char_id, skill_id, skill_lv, twohand_lv);
+			}
+		}
+
 		// These statuses would be applied anyway even if the damage was blocked by some skills. [Inkfish]
 		if( skill_id != WS_CARTTERMINATION && skill_id != AM_DEMONSTRATION && skill_id != CR_REFLECTSHIELD && skill_id != MS_REFLECTSHIELD && skill_id != GN_HELLS_PLANT_ATK
 #ifndef RENEWAL

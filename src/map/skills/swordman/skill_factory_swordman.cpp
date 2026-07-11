@@ -27,6 +27,7 @@
 #include "dragonicpierce.cpp"
 #include "earthdrive.cpp"
 #include "enchantblade.cpp"
+#include "endure.cpp"
 #include "fightingspirit.cpp"
 #include "forceofvanguard.cpp"
 #include "giantgrowth.cpp"
@@ -296,7 +297,7 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 		case SM_BASH:
 			return std::make_unique<SkillBash>();
 		case SM_ENDURE:
-			return std::make_unique<StatusSkillImpl>(skill_id);
+			return std::make_unique<SkillEndure>();
 		case SM_MAGNUM:
 			return std::make_unique<SkillMagnumBreak>();
 		case SM_PROVOKE:

@@ -41,10 +41,46 @@ Header:
   Version: 1
 
 Body:
+  # Blade Mastery rebalance: SM_SWORD (renamed client-side "Sword Mastery" ->
+  # "Blade Mastery") is now a 5-level skill (was 10) that grants +4 ATK per
+  # level and +4 HIT per level for 1H Swords, 2H Swords, and Daggers, both
+  # applied as visible status additions (see src/map/status.cpp
+  # status_calc_pc_sub and db/import/skill_db.yml). Propagates to Swordman's
+  # advanced/baby trees through inheritance; Rogue and Super Novice define
+  # SM_SWORD natively so they are restated separately below.
+  # Two-Handed Sword Mastery rebalance: SM_TWOHAND is now a 5-level skill
+  # (was 10), reworked into the SC_TWOHANDBOOST spell-into-melee proc (see
+  # db/import/skill_db.yml). Propagates to Swordman's advanced/baby trees
+  # through inheritance; Rogue and Super Novice do not define SM_TWOHAND
+  # natively so no separate restatement is needed there.
+  # Increase HP Recovery and Endure rebalance: both trimmed from 10 levels to
+  # 5 with doubled per-level bonuses (see db/import/skill_db.yml). Propagates
+  # to Swordman's advanced/baby trees through inheritance; Super Novice and
+  # Super Baby define them natively so they are restated separately below.
+  # Combat Recovery rework: SM_MOVINGRECOVERY is no longer a quest-only skill (see
+  # db/import/skill_db.yml Flags.IsQuest: false); it is now learned with skill
+  # points, 5 levels, gated behind Increase HP Recovery (SM_RECOVERY) Rank 5.
+  - Job: Swordman
+    Tree:
+      - Name: SM_SWORD
+        MaxLevel: 5
+      - Name: SM_TWOHAND
+        MaxLevel: 5
+      - Name: SM_RECOVERY
+        MaxLevel: 5
+      - Name: SM_ENDURE
+        MaxLevel: 5
+      - Name: SM_MOVINGRECOVERY
+        MaxLevel: 5
+        Requires:
+          - Name: SM_RECOVERY
+            Level: 5
   # Payon Stories rebalance: Preserve is available early to non-transcendent Rogues
   # so Plagiarism builds don't depend on a constant supply from other players.
   - Job: Rogue
     Tree:
+      - Name: SM_SWORD
+        MaxLevel: 5
       - Name: ST_PRESERVE
         MaxLevel: 1
         Requires:
@@ -94,6 +130,12 @@ Body:
             Level: 0
   - Job: Supernovice
     Tree:
+      - Name: SM_SWORD
+        MaxLevel: 5
+      - Name: SM_RECOVERY
+        MaxLevel: 5
+      - Name: SM_ENDURE
+        MaxLevel: 5
       - Name: AC_CONCENTRATION
         MaxLevel: 10
         Requires:
@@ -101,6 +143,12 @@ Body:
             Level: 0
   - Job: Super_Baby
     Tree:
+      - Name: SM_SWORD
+        MaxLevel: 5
+      - Name: SM_RECOVERY
+        MaxLevel: 5
+      - Name: SM_ENDURE
+        MaxLevel: 5
       - Name: AC_CONCENTRATION
         MaxLevel: 10
         Requires:
@@ -183,3 +231,24 @@ Body:
             Level: 1
           - Name: HT_FALCON
             Level: 0
+  # Two-Handed Sword Mastery rebalance: Parrying's SM_TWOHAND prerequisite is
+  # lowered from level 10 to level 5 to match the trimmed SM_TWOHAND MaxLevel
+  # (see the Swordman Tree override above and db/import/skill_db.yml).
+  # Requires entries for the same prerequisite skill overwrite in place
+  # (keyed map), so this simply replaces the inherited Level: 10 gate.
+  # Increase HP Recovery rebalance: Tension Relax's SM_RECOVERY prerequisite is
+  # lowered from level 10 to level 5 to match the trimmed SM_RECOVERY MaxLevel
+  # (see the Swordman Tree override above and db/import/skill_db.yml) — level 10
+  # is no longer reachable, so the skill would be unlearnable otherwise.
+  - Job: Lord_Knight
+    Tree:
+      - Name: LK_PARRYING
+        MaxLevel: 10
+        Requires:
+          - Name: SM_TWOHAND
+            Level: 5
+      - Name: LK_TENSIONRELAX
+        MaxLevel: 1
+        Requires:
+          - Name: SM_RECOVERY
+            Level: 5
