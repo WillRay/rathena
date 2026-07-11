@@ -171,8 +171,14 @@ Body:
           Amount: 37
         - Level: 10
           Amount: 40
+  # Non-targeted: Self + NoTargetSelf make Bash auto-fire on the caster's
+  # current target (no target cursor). The two flags are a deliberate pair.
   - Id: 5
     Name: SM_BASH
+    TargetType: Self
+    Flags:
+      NoTargetSelf: true
+    Cooldown: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -982,3 +988,73 @@ Body:
       IsQuest: false
     Requires:
       SpCost: 0
+  # Blade Mastery rebalance: SM_SWORD renamed client-side from "Sword Mastery" to
+  # "Blade Mastery" (internal Aegis name SM_SWORD is unchanged) and trimmed from
+  # 10 levels to 5. It grants +4 ATK per level and +4 HIT per level for 1H Swords,
+  # 2H Swords, and Daggers, applied as visible base_status additions in
+  # src/map/status.cpp status_calc_pc_sub (ATK: "ATTACK CALCULATION" section,
+  # batk; HIT: "HIT CALCULATION" section, hit) so they show up in the player's
+  # status window, unlike the old hidden battle_addmastery damage bonus. The
+  # learnable level cap for Swordman/Rogue/Supernovice/Super_Baby is restated in
+  # db/import/skill_tree.yml.
+  - Id: 2
+    Name: SM_SWORD
+    Description: Blade Mastery
+    MaxLevel: 5
+  # Two-Handed Sword Mastery ("Relentless Assault") rebalance: trimmed from 10
+  # levels to 5 and reworked from a flat 2H-sword ATK bonus into a skill-into-
+  # melee proc. Landing any offensive skill now grants SC_TWOHANDBOOST (see
+  # src/map/skill.cpp skill_additional_effect), which gives the caster a 5s
+  # window in which their very next plain auto attack deals +10% per skill
+  # level bonus damage (see the SC_TWOHANDBOOST consumption in
+  # src/map/battle.cpp battle_calc_attack_skill_ratio); the buff simply
+  # expires if no auto attack lands within that window. Not gated on
+  # BF_MAGIC - the Swordsman/Knight/Crusader tree has no offensive magic
+  # skills, so a magic-only trigger would never fire for the class that
+  # actually learns this skill. The old ATK bonus is removed from
+  # battle_addmastery.
+  - Id: 3
+    Name: SM_TWOHAND
+    Description: Relentless Assault
+    MaxLevel: 5
+  # Increase HP Recovery rebalance: trimmed from 10 levels to 5, with the per-level
+  # regen bonus doubled (src/map/status.cpp regen calc, src/map/pc.cpp pc_itemheal,
+  # and the SM_RECOVERY potion-heal bonus in src/map/skills/merchant/aidpotion.cpp,
+  # aidberserkpotion.cpp, aidcondensedpotion.cpp) so Lv5 matches the old Lv10 total
+  # (+50 HP and +2.0% MaxHP regen bonus, +100% extra potion healing).
+  - Id: 4
+    Name: SM_RECOVERY
+    Description: Increase HP Recovery
+    MaxLevel: 5
+  # Endure rebalance: trimmed from 10 levels to 5. The MDEF bonus is doubled per
+  # level (src/map/skills/swordman/endure.cpp starts SC_ENDURE at skill_lv * 2) so
+  # Lv5 still grants MDEF +10, same as the old Lv10. Duration per level is
+  # compressed to match (new Lv1-5 = old Lv2/4/6/8/10), so Lv5 still lasts 37s.
+  - Id: 8
+    Name: SM_ENDURE
+    Description: Endure
+    MaxLevel: 5
+    Duration1:
+      - Level: 1
+        Time: 13000
+      - Level: 2
+        Time: 19000
+      - Level: 3
+        Time: 25000
+      - Level: 4
+        Time: 31000
+      - Level: 5
+        Time: 37000
+  # Combat Recovery repurposed: the passive walk-regen tick (regen.state.walk) is
+  # removed from src/map/status.cpp; instead src/map/mob.cpp mob_dead() now grants a
+  # burst heal on kill worth (10% * skill_lv) of the SM_RECOVERY sit-regen formula
+  # (skill_lv_recovery*10 + skill_lv_recovery*max_hp/250), up to 50% at Lv5, gated
+  # by a 5s internal cooldown (sd->smrecovery_tick in src/map/pc.hpp). No longer a
+  # quest skill: now learned with skill points, 5 levels, requiring SM_RECOVERY
+  # Rank 5 (see db/import/skill_tree.yml).
+  - Id: 144
+    Name: SM_MOVINGRECOVERY
+    Description: Combat Recovery
+    MaxLevel: 5
+    Flags:
+      IsQuest: false

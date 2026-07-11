@@ -84,7 +84,7 @@ Weapon Perfection: Buff length increased to 5 minutes at max rank, slight SP inc
 - Strip Shield: Increased hard DEF reduction on monsters from 15% to 30%.
 - Strip Armor: Increased VIT DEF reduction on monsters from 40% to 70%.
 - Strip Helm: Changed from 40% INT reduction on monsters to 30% INT reduction and 20% MDEF reduction.
-- Sword Mastery: Each level of Sword Mastery grants the Rogue double attack with swords equal to a 7% chance per skill level of Sword Mastery, assuming the Rogue has the equivalent level of Double Attack learned.
+- Blade Mastery (formerly Sword Mastery): Each level grants the Rogue double attack with swords equal to a 7% chance per skill level, assuming the Rogue has the equivalent level of Double Attack learned.
 
 
 # Item Changes

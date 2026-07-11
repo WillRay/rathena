@@ -36,7 +36,8 @@ izlude_in,74,172,4	script	Swordman#swd	119,{
 			next;
 			skill "NV_TRICKDEAD",0,SKILL_PERM;
 			jobchange Job_Swordman_High;
-			skill "SM_MOVINGRECOVERY",1,SKILL_PERM;
+			// Combat Recovery (SM_MOVINGRECOVERY) is no longer a quest/platinum skill -
+			// it is learned with skill points, requiring Increase HP Recovery Rank 5.
 			skill "SM_FATALBLOW",1,SKILL_PERM;
 			skill "SM_AUTOBERSERK",1,SKILL_PERM;
 			mes "[Swordman]";

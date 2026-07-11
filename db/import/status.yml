@@ -122,3 +122,20 @@ Body:
     Flags:
       Debuff: true
       NoWarning: true
+  # Swordsman rebalance: Two-Handed Sword Mastery ("Relentless Assault"). SM_TWOHAND
+  # no longer grants a flat 2H-sword ATK bonus; instead landing any offensive skill
+  # grants this buff to self (val1 = SM_TWOHAND level), which empowers the caster's
+  # next auto attack with bonus damage in battle.cpp battle_calc_attack_skill_ratio,
+  # then consumes itself. Not gated on BF_MAGIC - the Swordsman/Knight/Crusader tree
+  # has no offensive magic skills, so a magic-only gate would make the buff
+  # unreachable for its own class. Reuses the Rune Knight Enchant Blade icon
+  # (EFST_ENCHANTBLADE); RK_ENCHANTBLADE is unreachable on this pre-re server, so no
+  # icon collision in practice. The icon's hover tooltip (client
+  # lua files/stateicon/stateiconinfo.lub) is repurposed to say "Relentless Assault"
+  # / "Your next melee physical attack will deal increased damage" instead of the
+  # original Enchant Blade text. 5s window to land the empowered auto attack, or it
+  # expires unused.
+  - Status: Twohandboost
+    Icon: EFST_ENCHANTBLADE
+    Flags:
+      NoWarning: true

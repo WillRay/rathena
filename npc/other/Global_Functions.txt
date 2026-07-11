@@ -669,7 +669,8 @@ function	script	F_GetPlatinumSkills	{
 			skill "NV_TRICKDEAD",1,SKILL_PERM;
 		break;
 	case Job_Swordman:
-		skill "SM_MOVINGRECOVERY",1,SKILL_PERM;
+		// Combat Recovery (SM_MOVINGRECOVERY) is no longer a quest/platinum skill -
+		// it is learned with skill points, requiring Increase HP Recovery Rank 5.
 		skill "SM_FATALBLOW",1,SKILL_PERM;
 		skill "SM_AUTOBERSERK",1,SKILL_PERM;
 		break;

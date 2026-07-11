@@ -1461,6 +1461,9 @@ enum sc_type : int16 {
 	// Hunter rebalance: Razorwing passive
 	SC_RAZORWING_SLOW, // Movement-speed slow inflicted by Blitz Beat when the caster has learned Razorwing. val1 = speed penalty %. See status_calc_speed.
 
+	// Swordsman rebalance: Two-Handed Sword Mastery passive
+	SC_TWOHANDBOOST, // Granted to self after landing any offensive skill (not gated on BF_MAGIC - the Swordsman tree has no magic skills). val1 = SM_TWOHAND skill level. 5s window; empowers the next auto attack with +10%*level damage, then consumes itself. See battle_calc_attack_skill_ratio.
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 

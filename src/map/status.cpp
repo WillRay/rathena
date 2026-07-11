@@ -4342,6 +4342,8 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		base_status->batk += 4;
 	if((skill=pc_checkskill(sd,AC_OWL))>0)
 		base_status->batk += 3 * skill; // +3 ATK / lv (compensates for no longer requiring arrows)
+	if((sd->status.weapon == W_1HSWORD || sd->status.weapon == W_DAGGER || sd->status.weapon == W_2HSWORD) && (skill=pc_checkskill(sd,SM_SWORD))>0)
+		base_status->batk += 4 * skill;
 #else
 	base_status->watk = status_weapon_atk(base_status->rhw);
 	base_status->watk2 = status_weapon_atk(base_status->lhw);
@@ -4496,6 +4498,8 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			base_status->rhw.range += skill;
 		}
 	}
+	if((sd->status.weapon == W_1HSWORD || sd->status.weapon == W_DAGGER || sd->status.weapon == W_2HSWORD) && (skill = pc_checkskill(sd,SM_SWORD)) > 0)
+		base_status->hit += skill * 4;
 	if((sd->status.weapon == W_1HAXE || sd->status.weapon == W_2HAXE) && (skill = pc_checkskill(sd,NC_TRAININGAXE)) > 0)
 		base_status->hit += skill * 3;
 	if((sd->status.weapon == W_MACE || sd->status.weapon == W_2HMACE) && (skill = pc_checkskill(sd,NC_TRAININGAXE)) > 0)
@@ -4649,7 +4653,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	status_calc_weight(sd, CALCWT_MAXBONUS);
 	status_calc_cart_weight(sd, CALCWT_MAXBONUS);
 
-	if (pc_checkskill(sd, SM_MOVINGRECOVERY) > 0 || pc_ismadogear(sd))
+	if (pc_ismadogear(sd))
 		sd->regen.state.walk = 1;
 	else
 		sd->regen.state.walk = 0;
@@ -5306,7 +5310,7 @@ void status_calc_regen(block_list *bl, struct status_data *status, struct regen_
 
 		val = 0;
 		if( (skill=pc_checkskill(sd,SM_RECOVERY)) > 0 )
-			val += skill*5 + skill*status->max_hp/500;
+			val += skill*10 + skill*status->max_hp/250;
 
 		if (sc) {
 			if (sc->getSCE(SC_INCREASE_MAXHP))
@@ -15725,8 +15729,11 @@ static int32 status_natural_heal(block_list* bl, va_list args)
 	if(flag&RGN_SHP) { // Skill HP regen
 		sregen->tick.hp += (int32)(natural_heal_diff_tick * (sregen->rate.hp / 100.));
 
-		while(sregen->tick.hp >= (uint32)battle_config.natural_heal_skill_interval) {
-			sregen->tick.hp -= battle_config.natural_heal_skill_interval;
+		// sregen->hp is only ever populated by SM_RECOVERY (see status_calc_regen), which
+		// ticks on its own 5s cadence independent of the shared natural_heal_skill_interval
+		// used by the skill SP regen sources below (Increase SP Recovery, Ninpou, etc.).
+		while(sregen->tick.hp >= 5000) {
+			sregen->tick.hp -= 5000;
 			if(status_heal(bl, sregen->hp, 0, 3) < sregen->hp)
 				break; // Full
 		}

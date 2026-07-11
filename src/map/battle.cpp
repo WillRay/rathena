@@ -2329,14 +2329,14 @@ int64 battle_addmastery(map_session_data *sd,block_list *target,int64 dmg,int32 
 				damage += (skill * 3);
 #endif
 		case W_DAGGER:
-			if((skill = pc_checkskill(sd,SM_SWORD)) > 0)
-				damage += (skill * 4);
+			// Sword Mastery's ATK bonus is applied in status_calc_pc_sub (base_status->batk)
+			// instead of here, so it shows up in the player's displayed ATK stat.
 			if((skill = pc_checkskill(sd,GN_TRAINING_SWORD)) > 0)
 				damage += skill * 10;
 			break;
 		case W_2HSWORD:
-			if((skill = pc_checkskill(sd,SM_TWOHAND)) > 0)
-				damage += (skill * 4);
+			// Two-Handed Sword Mastery rebalance: no longer a flat 2H-sword ATK
+			// bonus. See the SC_TWOHANDBOOST consumption in battle_calc_weapon_attack.
 			break;
 		case W_1HSPEAR:
 		case W_2HSPEAR:
@@ -4469,6 +4469,17 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 						skillratio += 250;
 				}
 			}
+		}
+		// Two-Handed Sword Mastery ("Relentless Assault") rebalance: SM_TWOHAND
+		// now grants SC_TWOHANDBOOST (self, see skill_additional_effect) after
+		// landing an offensive skill. It empowers only the very next plain auto
+		// attack with +10% per skill level damage, then consumes itself.
+		if (!skill_id && sc->getSCE(SC_TWOHANDBOOST)) {
+			int32 twohandboost_bonus = 10 * sc->getSCE(SC_TWOHANDBOOST)->val1;
+			skillratio += twohandboost_bonus;
+			status_change_end(src, SC_TWOHANDBOOST);
+			if (battle_config.etc_log && sd)
+				ShowInfo("SC_TWOHANDBOOST consumed by PC %d, +%d%% skillratio\n", sd->status.char_id, twohandboost_bonus);
 		}
 	}
 

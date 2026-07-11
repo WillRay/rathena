@@ -47,11 +47,49 @@ added in future passes.
 
 ### Swordsman Skill Changes
 
+- **Sword Mastery (renamed "Blade Mastery"):** Trimmed from `10` levels down
+  to `5`. Now grants `+4 ATK per skill level` and `+4 HIT per skill level` (up
+  to `+20 ATK` / `+20 HIT` at level 5) as real additions to the character's
+  ATK and HIT stats while wielding a One-Handed Sword, Two-Handed Sword, or
+  Dagger, both visible in the status window. *Developer Comments: A 10-level
+  passive that only did flat, hidden damage was a lot of skill points for a
+  bonus players couldn't even see reflected on their sheet. Five levels gets
+  it filled out early, putting the ATK and HIT bonuses directly on the
+  visible stats means sword builds (heavier weapons, Blade Mastery Rogues)
+  can actually see what they're getting for the points, and extending it to
+  Two-Handed Swords means the rename to "Blade Mastery" isn't just cosmetic —
+  it now genuinely covers every blade a Swordsman can wield instead of ceding
+  greatswords to Relentless Assault alone.*
+- **Two-Handed Sword Mastery (renamed "Relentless Assault"):** Trimmed from `10` levels down to `5` and
+  reworked from a flat 2H-sword ATK bonus into a skill-into-melee proc.
+  Landing any offensive skill now grants a buff, lasting `5` seconds, that
+  empowers the caster's very next auto attack with `+10% damage per skill
+  level`; the buff consumes itself on that attack, or simply expires if no
+  auto attack lands within the window. The Parry prerequisite is lowered
+  from level 10 to level 5 to match. *Developer Comments: A flat 2H-sword-
+  only ATK bonus didn't do anything for the growing number of Swordsmen who
+  split time between skills and steel, and it was invisible outside of
+  damage meters. Turning it into a payoff for actually alternating skills
+  and swings gives auto-attack Swordsmen a reason to pick it up, and it
+  reads clearly on screen instead of disappearing into a damage formula.*
 - **Bash:** SP cost reduced to a smooth `3 + 1 per skill level` (4 SP at level 1
   up to 13 SP at level 10). *Developer Comments: Previously the skill had only
   two SP costs — one for levels 1–5 and another for 6–10. Because damage scales
   linearly with skill level, SP cost should scale with it too, and players who
   prefer a mid-level Bash should not be punished for stopping short of 10.*
+
+- **Bash:** Now non-targeted — it automatically fires on your current target
+  instead of requiring a target-cursor click, via the `Self` target type plus the
+  `NoTargetSelf` flag. *Developer Comments: Bash is a spam skill, and forcing a
+  target click on every press interrupts its flow. Auto-firing on the current
+  target keeps its pacing on cooldown and ASPD, where it belongs, rather than on
+  the mouse. No damage, SP, or range values change.*
+
+- **Bash:** Now has a 1 second cooldown (`Cooldown: 1000`). *Developer Comments:
+  Pairs with the non-targeted change above — with the target-click removed, Bash
+  can be spammed as fast as the client sends packets, so a short 1s cooldown caps
+  its cadence and keeps its DPS where it was intended rather than letting it
+  outpace ASPD.*
 
 - **Magnum Break:** Splash radius increased to 4 cells (9×9 area) and SP cost
   lowered from 30 to 18. *Developer Comments: With the lower SP cost and the
@@ -59,13 +97,59 @@ added in future passes.
   Compared to second-class AoEs it is still on the modest side, but it should
   finally feel worth pressing.*
 
-- **Moving HP Recovery:** Can be learned at Job Level 15 and the quest now asks
-  for 50 Empty Bottles instead of 200. *Developer Comments: As with other
-  Platinum-skill reworks, the requirement is dropped in line with the lower
-  level the skill becomes available at. (Verified — already in line with this
-  rebalance on the live tree.)*
+- **Combat Recovery:** No longer a quest-only skill — it is now a `5`-level
+  skill learned with skill points, requiring Increase HP Recovery Rank `5`.
+  *Developer Comments: Gating a kill-triggered heal behind a one-time quest
+  meant most Swordsmen either had it maxed forever or never bothered with it
+  at all. Putting it on the tree behind Increase HP Recovery gives players a
+  real point-investment choice and ties the two skills together thematically.*
+- **Combat Recovery (reworked effect):** No longer grants passive HP/SP
+  regen while walking. Instead, defeating an enemy now heals `10% per skill
+  level` (up to `50%` at level 5) of what Increase HP Recovery's sit-regen
+  tick would restore (`skill_lv_recovery * 10 + skill_lv_recovery * MaxHP /
+  250`), and this proc has an internal cooldown of `5` seconds. *Developer
+  Comments: The old walking-regen effect was easy to miss and did nothing to
+  make combat itself feel rewarding. Tying a slice of Increase HP Recovery's
+  healing to landing the killing blow gives Swordsmen a small, noticeable
+  trickle of sustain for staying aggressive, scaling with the points they've
+  put into the skill, while the 5 second cooldown keeps it from turning into
+  a farming-heal loop against weak mobs.*
+- **Combat Recovery (removed free grants):** No longer auto-granted on
+  Swordman rebirth or by the Platinum Skill NPC / Jobmaster's
+  `F_GetPlatinumSkills`. The "Knight De Thomas" quest NPC that used to teach
+  it for 50 Empty Bottles has been retired (`npc/quests/skills/
+  swordman_skills.txt`, and the Izlude placements in the `pre-re`/`re`
+  variants of that path). Fatal Blow and Auto Berserk still grant for free at
+  rebirth/from the Platinum Skill NPC — only Combat Recovery changed.
+  *Developer Comments: These were all leftover from when the skill was
+  quest-only, and each one silently handed it out for free, bypassing the
+  new Increase HP Recovery Rank 5 requirement. A skill that's supposed to
+  cost tree points shouldn't also be a freebie three other ways.*
+
+- **Increase HP Recovery:** Trimmed from `10` levels down to `5`, with the
+  per-level regen bonus doubled to compensate — level 5 now restores
+  `50 HP + 2.0% of MaxHP`, matching the old level 10 total, and the
+  potion-healing bonus from this skill is doubled to `+20% per skill level`
+  (up to `+100%` at level 5, same ceiling as before). The regen tick interval
+  is unchanged at every `10` seconds while idle.
+  *Developer Comments: Another 10-level passive that took forever to feel
+  meaningful point-for-point. Five levels gets it to full strength twice as
+  fast without changing the cap players were already building toward.*
+
+- **Endure:** Trimmed from `10` levels down to `5`, with the MDEF bonus
+  doubled per level — level 5 now grants `MDEF +10` for `37` seconds, the
+  same totals the old level 10 gave. *Developer Comments: Endure's MDEF was
+  creeping up by a single point every level, which made the back half of the
+  skill barely register. Halving the level count and doubling the per-rank
+  MDEF gets Swordsmen to the same ceiling for half the skill points.*
 
 ### Knight Skill Changes
+
+- **Tension Relax:** Its Increase HP Recovery prerequisite is lowered from
+  level 10 to level 5. *Developer Comments: Increase HP Recovery was trimmed
+  to a 5-level skill, so the old level 10 gate was no longer reachable and
+  would have made Tension Relax unlearnable. Level 5 restores the original
+  "max out Increase HP Recovery first" requirement.*
 
 - **Two-Hand Quicken:** In addition to its existing ASPD bonus, now grants
   `+1 FLEE per skill level` and `+0.8% CRIT per skill level`. The previous HIT

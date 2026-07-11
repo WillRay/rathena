@@ -7,145 +7,20 @@
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
-//= Quests for skills: Fatal Blow, Mobile HP Recovery,
-//  Auto-Berserk
+//= Quests for skills: Fatal Blow, Auto-Berserk
 //===== Additional Comments: =================================
 //= 1.6 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //= 1.7 Updated to latest available official file. [Masao]
 //= 1.8 Fixed JobLevel requirements. [Euphy]
 //= 1.9 Moved Izlude NPC to pre-re/re paths. [Euphy]
 //=     Updated "Knight De Thomas" NPC to latest version.
+//= 2.0 Retired the "Knight De Thomas" NPC and its Mobile HP Recovery
+//=     quest: Combat Recovery (SM_MOVINGRECOVERY) is no longer taught
+//=     via quest, it is now learned with skill points (requires
+//=     Increase HP Recovery Rank 5). See npc/pre-re/quests/skills/
+//=     swordman_skills.txt and npc/re/quests/skills/swordman_skills.txt
+//=     for the now-retired Izlude NPC placement.
 //============================================================
-
--	script	::KnightDeThomas	98,4,4,{
-	if ((BaseClass == Job_Swordman) && (JobLevel >= 15 || (BaseJob == Job_Knight || BaseJob == Job_Crusader))) {
-		if (getskilllv("SM_MOVINGRECOVERY") == 1) {
-			mes "[De Thomas]";
-			mes "Oh, it's you?";
-			mes "Long time no see!";
-			mes "You seem healthier than before.";
-			mes "Hahahaha!";
-			mes "Take care! See you again!";
-			close;
-		} else if (countitem(713) >= 50) {
-			mes "[De Thomas]";
-			mes "Welcome back...";
-			mes "Are you ready to learn Body Movin'?";
-			next;
-			switch (select("Yes.:No, I'm not ready yet.")) {
-			case 1:
-				mes "[De Thomas]";
-				mes "Let's see.....";
-				next;
-				mes "[De Thomas]";
-				mes "Ok! I shall now teach you...";
-				mes "...The Body Movin' skill!";
-				next;
-				delitem 713,50; //Empty_Bottle
-				skill "SM_MOVINGRECOVERY",1,SKILL_PERM;
-				mes "[De Thomas]";
-				mes "There you go!";
-				mes "Try it yourself.";
-				mes "But don't overdo it.";
-				next;
-				mes "[De Thomas]";
-				mes "Oh yeah, I won't be needing your";
-				mes "armor so you can keep it.";
-				mes "Good luck now!";
-				close;
-			case 2:
-				mes "[De Thomas]";
-				mes "Is that so?";
-				mes "Then come when you are prepared.";
-				close;
-			}
-		} else {
-			mes "[De Thomas]";
-			mes "Hmmm... He's a swordsman...";
-			mes "You know that I am De Thomas Carlos, right?";
-			mes "Knight of Prontera's 3rd Calvary.";
-			mes "De Thomas Carlos!";
-			next;
-			mes "[De Thomas]";
-
-			// bug: official script always states that job level is too low
-			//mes "Wait a second, your Job level isn't above ^00880015^000000!";
-			//mes "Come back when it is.";
-
-			// custom: old dialog
-			mes "You do not have all the items I asked for.";
-			next;
-			mes "[De Thomas]";
-			mes "Remember, I need ^00880050 empty bottles^000000, and your armor. Come back when you have it all.";
-			close;
-		}
-	} else {
-		mes "[De Thomas]";
-		mes "My name is De Thomas Carlos.";
-		mes "Knight of Prontera's 3rd Calvary.";
-		mes "I have a certain duty these days.";
-		mes "Ehem! Need I say more.";
-		close;
-	}
-	end;
-
-OnTouch:
-	if ((BaseClass == Job_Swordman) && (JobLevel >= 15 || (BaseJob == Job_Knight || BaseJob == Job_Crusader))) {
-		mes "[De Thomas]";
-		mes "Oh, no! You must have been hurt! Are you ok?";
-		mes "You must have fought hard to get such serious injuries..";
-		mes "Being a swordsman must come with a lot of responsibility and sacrifice.";
-		next;
-		mes "[De Thomas]";
-		if (Sex == SEX_MALE)
-			mes "For these swordsmen and knights, there is a wonderful skill.";
-		else
-			mes "For these swordswomen and knights, there is a wonderful skill young lady.";
-		mes "I present to you - HP Recovery While Moving!";
-		mes "Body moving is a splendid skill";
-		mes "that allows you to regain strength(HP)";
-		mes "while you are moving!";
-		next;
-		mes "[De Thomas]";
-		mes "It is currently under development";
-		mes "so it may not recover that much,";
-		mes "but it will help a little.";
-		mes "What do you think? Would you like to learn this skill?";
-		next;
-		switch (select("What a nice skill! I want to learn it!:No, thank you.")) {
-		case 1:
-			mes "[De Thomas]";
-			mes "Very well. I will tell you what you need to learn this skill.";
-			mes "First, your job level must be higher than ^00880015^000000.";
-			mes "You will also need ^00880020 empty bottles^000000.";
-			mes "Why? Because it is proof that you fought fiercely to have used that many potions.";
-			next;
-			mes "[De Thomas]";
-			mes "Also, the armor you used in battle.";
-			mes "This is also proof of an experienced fighter.";
-			mes "For the armor... your armor is perfect!";
-			mes "Bring your armor!";
-			next;
-			select("Eh? You need that, too?");
-			mes "[De Thomas]";
-			mes "Not really.. I don't really NEED it.";
-			mes "It's just that my niece has gotten a bug hunting as a holiday task during the summer vacation.";
-			mes "Of course! It would be much easier for me to get it myself.";
-			mes "but I must work here all the time so I don't exactly have the time to go out and get it.";
-			next;
-			mes "[De Thomas]";
-			mes "Don't you think it is pitiful that I have to stay in once place everyday, not being able to go outside?";
-			mes "Please, find me one...*sniffsniff*";
-			mes "If you don't...";
-			close;
-		case 2:
-			mes "[De Thomas]";
-			mes "...";
-			close;
-		}
-	}
-	end;
-}
 
 prt_in,75,88,5	script	Leon Von Frich	85,3,3,{
 	if ((BaseClass == Job_Swordman) && (JobLevel >= 25 || (BaseJob == Job_Knight || BaseJob == Job_Crusader))) {

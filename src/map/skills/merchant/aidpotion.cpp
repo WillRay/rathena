@@ -60,7 +60,7 @@ void SkillAidPotion::castendNoDamageId(block_list* src, block_list* target, uint
 				hp = potion_hp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
 				hp = hp * (100 + (tstatus->vit * 2)) / 100;
 				if( dstsd )
-					hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10) / 100;
+					hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*20) / 100;
 			}
 			if( potion_sp > 0 ) {
 				sp = potion_sp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
@@ -93,7 +93,7 @@ void SkillAidPotion::castendNoDamageId(block_list* src, block_list* target, uint
 		hp = (hp + rnd()%(skill_lv*20+1)) * (150 + skill_lv*10) / 100;
 		hp = hp * (100 + (tstatus->vit * 2)) / 100;
 		if( dstsd )
-			hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10) / 100;
+			hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*20) / 100;
 	}
 	if( dstsd && (j = pc_skillheal2_bonus(dstsd, getSkillId())) ) {
 		hp += hp * j / 100;

@@ -2955,6 +2955,25 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 		first_sd = sd;
 	}
 
+	int32 sm_movingrecovery_lv = sd ? pc_checkskill(sd, SM_MOVINGRECOVERY) : 0;
+
+	if( sd && sm_movingrecovery_lv > 0 ) {
+		if( DIFF_TICK(tick, sd->smrecovery_tick) >= 5000 ) {
+			int32 sm_recovery_lv = pc_checkskill(sd, SM_RECOVERY);
+
+			if( sm_recovery_lv > 0 ) {
+				int32 heal = sm_recovery_lv * 10 + sm_recovery_lv * sd->battle_status.max_hp / 250;
+
+				heal = heal * (10 * sm_movingrecovery_lv) / 100;
+
+				if( heal > 0 ) {
+					status_heal(sd, heal, 0, battle_config.show_hp_sp_gain ? 3 : 1);
+					sd->smrecovery_tick = tick;
+				}
+			}
+		}
+	}
+
 	if( md->guardian_data && md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS )
 		guild_castledatasave(md->guardian_data->castle->castle_id, CD_ENABLED_GUARDIAN00 + md->guardian_data->number,0);
 
@@ -6882,6 +6901,7 @@ static void mob_drop_ratio_adjust(void){
 						ratemax = battle_config.item_drop_equip_max;
 						break;
 					case IT_CARD:
+					case IT_SHADOWGEAR:
 						rate_adjust = is_mvp ? battle_config.item_rate_card_mvp : (is_boss ? battle_config.item_rate_card_boss : battle_config.item_rate_card);
 						ratemin = battle_config.item_drop_card_min;
 						ratemax = battle_config.item_drop_card_max;

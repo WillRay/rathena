@@ -302,7 +302,7 @@ function	script	F_Snowball	{
 	case 2:
 		mes "Blessings.";
 		mes "Holy night~";
-		unitskilluseid getcharid(3),"SM_ENDURE",10;
+		unitskilluseid getcharid(3),"SM_ENDURE",5;
 		close2;
 		cutin "",255;
 		break;

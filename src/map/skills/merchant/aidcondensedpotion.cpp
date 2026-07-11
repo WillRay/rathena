@@ -28,7 +28,7 @@ void SkillAidCondensedPotion::castendNoDamageId(block_list *src, block_list *tar
 		sp = sp * (100 + (tstatus->int_ * 2))/100;
 		if (dstsd) {
 			if (hp)
-				hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10 + pc_skillheal2_bonus(dstsd, getSkillId()))/100;
+				hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*20 + pc_skillheal2_bonus(dstsd, getSkillId()))/100;
 			if (sp)
 				sp = sp * (100 + pc_checkskill(dstsd,MG_SRECOVERY)*10 + pc_skillheal2_bonus(dstsd, getSkillId()))/100;
 		}
