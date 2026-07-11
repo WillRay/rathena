@@ -8,7 +8,9 @@
 //= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
-//= Adds slots to selected weapons and armor.
+//= Adds slots to selected weapons and accessories.
+//= Armor cannot be slotted on this server; instead it is
+//= reinforced into its "Wild" counterpart (extra stats, no slot).
 //===== Additional Comments: =================================
 //= 0.1a added missing L_No: to 2 funcs [Lupus]
 //= 0.1b Removed duplicates [Toms]
@@ -28,6 +30,10 @@
 //=     Some cleanup & optimization. [Gepard]
 //= 2.0 Duplicates now spawn from floating NPCs. [L0ne_W0lf]
 //= 2.0a Added 'disable_items' command. [Euphy]
+//= 3.0 Split into Weapon/Accessory (slot) and Armor (Wild reinforcement)
+//=     branches. Accessories moved out of the armor list. Refine,
+//=     cards and random options are now preserved across the
+//=     transformation. [Custom]
 //============================================================
 
 -	script	Seiyablem#dummy::SocketEnchant	-1,{
@@ -41,14 +47,15 @@
 		close;
 	}
 	mes "[Seiyablem]";
-	mes "I'm an engineer that specializes in adding Slots to normal Weapons and Armor.";
+	mes "I'm an engineer that specializes in adding Slots to Weapons and Accessories.";
+	mes "I also know how to reinforce Armor into its ^0000FFWild^000000 form - it won't take a Slot, but it comes out sturdier for the trouble.";
 	mes "My service fee, the required materials and the chance of success all depend on the specific item I'm working on.";
 	next;
 	mes "[Seiyablem]";
-	mes "Adding Slots may seem simple, but it's far more complicated than it looks.";
+	mes "Adding a Slot - or reinforcing a piece of Armor - may seem simple, but it's far more complicated than it looks.";
 	mes "If you're interested in my service, let me know.";
 	next;
-	switch(select("Add Slot to Weapon:Add Slot to Armor:Slot Attempt Info:Cancel"))
+	switch(select("Add Slot to Weapon:Add Slot to Accessory:Reinforce Armor into Wild:Slot & Reinforcement Info:Cancel"))
 	{
 		case 1:
 			mes "[Seiyablem]";
@@ -90,92 +97,102 @@
 			}
 		case 2:
 			mes "[Seiyablem]";
-			mes "Armor, you said?";
-			mes "Sure, no problem.";
-			mes "Armor is divided into 4 different classes, depending on the work difficulty.";
-			mes "C Class is the easiest one, and S Class he hardest one.";
-			mes "Which class would you like to try?";
-			mes "Which armor would you like to try adding a Slot?";
+			mes "You want to add a Slot to an accessory?";
+			mes "Sure, no problem. Which one would you like to try?";
 			next;
-			switch(select("Mantle:Coat:Circlet:Biretta:Mirror Shield:Chain Mail:Saint Robe:Silk Robe:Boots:Shoes:Muffler:Guard:Buckler:Shield:Bongun Hat:Gemmed Sallet:Bucket Hat:Memory Book:Tights:Legion Plate Armor:Full Plate:Thief Clothes:Greaves:Coif:Manteau:Helm:Ninja Suit:Orc Helm:Ancient Cape:Monk Hat:Golden Gear:Brooch:Munak Hat:Majestic Goat:Spiky Band:Bone Helm:Corsair:Crown:Tiara:Sphinx Hat:Robe of Cast:Earring:Ring:Bow Thimble:Mage Coat:Holy Robe:Sacred Mission:Undershirt:Pantie"))
+			switch(select("Brooch:Earring:Ring:Bow Thimble"))
 			{
-				case 1: callfunc "Func_Socket",2307,2308,1,99,100,1000,1;
-				case 2: callfunc "Func_Socket",2309,2310,1,99,100,1000,1;
-				case 3: callfunc "Func_Socket",2232,2233,1,99,100,1000,1;
-				case 4: callfunc "Func_Socket",2216,2217,1,99,100,1000,1;
-				case 5:  callfunc "Func_Socket",2107,2108,1,99,100,1000,1;
-				case 6:  callfunc "Func_Socket",2314,2315,1,99,100,1000,1;
-				case 7:  callfunc "Func_Socket",2325,2326,1,99,100,1000,1;
-				case 8:  callfunc "Func_Socket",2321,2322,1,99,100,1000,1;
-				case 9:  callfunc "Func_Socket",2405,2406,1,99,100,1000,1;
-				case 10:  callfunc "Func_Socket",2403,2404,1,99,100,1000,1;
-				case 11:  callfunc "Func_Socket",2503,2504,1,99,100,1000,1;
-				case 12:  callfunc "Func_Socket",2101,2102,1,99,100,1000,1;
-				case 13:  callfunc "Func_Socket",2103,2104,1,99,100,1000,1;
-				case 14: callfunc "Func_Socket",2105,2106,1,99,100,1000,1;
-				case 15: callfunc "Func_Socket",5046,5168,1,99,100,1000,1;
-				case 16:  callfunc "Func_Socket",2230,2231,1,99,100,1000,1;
-				case 17:  callfunc "Func_Socket",5114,5120,1,99,100,1000,1;
-				case 18:  callfunc "Func_Socket",2109,2121,1,99,100,1000,1;
-				case 19:  callfunc "Func_Socket",2330,2331,1,99,100,1000,1;
-				case 20:  callfunc "Func_Socket",2341,2342,1,99,100,1000,1;
-				case 21:  callfunc "Func_Socket",2316,2317,1,99,100,1000,1;
-				case 22:  callfunc "Func_Socket",2335,2336,1,99,100,1000,1;
-				case 23:  callfunc "Func_Socket",2411,2412,1,99,100,1000,1;
-				case 24:  callfunc "Func_Socket",5092,5093,1,99,100,1000,1;
-				case 25: callfunc "Func_Socket",2505,2506,1,99,100,1000,1;
-				case 26: callfunc "Func_Socket",2228,2229,1,99,100,1000,1;
-				case 27: callfunc "Func_Socket",2337,2359,1,99,100,1000,1;
-				case 28: callfunc "Func_Socket",2299,5157,1,99,100,1000,1;
-				case 29: callfunc "Func_Socket",2507,2525,1,99,100,1000,1;
-				case 30: callfunc "Func_Socket",2251,5158,1,99,100,1000,1;
-				case 31: callfunc "Func_Socket",2246,5159,1,99,100,1000,1;
-				case 32: callfunc "Func_Socket",2605,2625,1,99,100,1000,1;
-				case 33: callfunc "Func_Socket",2264,5167,1,99,150,1000,1;
-				case 34:  callfunc "Func_Socket",2256,5160,1,99,500,1000,1;
-				case 35:  callfunc "Func_Socket",2258,5161,1,99,500,1000,1;
-				case 36:  callfunc "Func_Socket",5017,5162,1,99,500,1000,1;
-				case 37:  callfunc "Func_Socket",5019,5163,1,99,500,1000,1;
-				case 38:  callfunc "Func_Socket",2235,5165,1,99,500,1000,1;
-				case 39:  callfunc "Func_Socket",2234,5164,1,99,500,1000,1;
-				case 40:  callfunc "Func_Socket",5053,5166,1,99,100,1000,1;
-				case 41:  callfunc "Func_Socket",2343,2360,1,99,100,1000,1;
-				case 42:  callfunc "Func_Socket",2602,2622,1,99,100,1000,1;
-				case 43: callfunc "Func_Socket",2601,2621,1,99,100,1000,1;
-				case 44: callfunc "Func_Socket",2619,2671,1,99,100,1000,1;
-				case 45: callfunc "Func_Socket",2334,2372,1,99,100,1000,1;
-				case 46: callfunc "Func_Socket",2327,2373,1,99,100,1000,1;
-				case 47: callfunc "Func_Socket",2111,2128,1,99,100,1000,1;
-				case 48: callfunc "Func_Socket",2522,2523,1,99,100,1000,1;
-				case 49: callfunc "Func_Socket",2339,2371,1,99,100,1000,1;
+				case 1: callfunc "Func_Socket",2605,2625,1,99,100,1000,1;
+				case 2: callfunc "Func_Socket",2602,2622,1,99,100,1000,1;
+				case 3: callfunc "Func_Socket",2601,2621,1,99,100,1000,1;
+				case 4: callfunc "Func_Socket",2619,2671,1,99,100,1000,1;
 			}
 		case 3:
 			mes "[Seiyablem]";
-			mes "Well, I haven't really refined the art of Slot Addition.";
+			mes "Armor, you said?";
+			mes "I can't safely punch a Slot into Armor plating - it just doesn't hold up. What I can do instead is reinforce it into ^0000FFWild^000000 gear: no Slot, but noticeably tougher.";
+			mes "Armor is divided into 4 different classes, depending on the work difficulty.";
+			mes "C Class is the easiest one, and S Class the hardest one.";
+			mes "Which piece of Armor would you like to reinforce?";
+			next;
+			switch(select("Mantle:Coat:Circlet:Biretta:Mirror Shield:Chain Mail:Saint Robe:Silk Robe:Boots:Shoes:Muffler:Guard:Buckler:Shield:Bongun Hat:Gemmed Sallet:Bucket Hat:Memory Book:Tights:Legion Plate Armor:Full Plate:Thief Clothes:Greaves:Coif:Manteau:Helm:Ninja Suit:Orc Helm:Ancient Cape:Monk Hat:Golden Gear:Munak Hat:Majestic Goat:Spiky Band:Bone Helm:Corsair:Crown:Tiara:Sphinx Hat:Robe of Cast:Mage Coat:Holy Robe:Sacred Mission:Undershirt:Pantie"))
+			{
+				case 1: callfunc "Func_Socket",2307,2308,1,99,100,1000,1,0,0,1;
+				case 2: callfunc "Func_Socket",2309,2310,1,99,100,1000,1,0,0,1;
+				case 3: callfunc "Func_Socket",2232,2233,1,99,100,1000,1,0,0,1;
+				case 4: callfunc "Func_Socket",2216,2217,1,99,100,1000,1,0,0,1;
+				case 5: callfunc "Func_Socket",2107,2108,1,99,100,1000,1,0,0,1;
+				case 6: callfunc "Func_Socket",2314,2315,1,99,100,1000,1,0,0,1;
+				case 7: callfunc "Func_Socket",2325,2326,1,99,100,1000,1,0,0,1;
+				case 8: callfunc "Func_Socket",2321,2322,1,99,100,1000,1,0,0,1;
+				case 9: callfunc "Func_Socket",2405,2406,1,99,100,1000,1,0,0,1;
+				case 10: callfunc "Func_Socket",2403,2404,1,99,100,1000,1,0,0,1;
+				case 11: callfunc "Func_Socket",2503,2504,1,99,100,1000,1,0,0,1;
+				case 12: callfunc "Func_Socket",2101,2102,1,99,100,1000,1,0,0,1;
+				case 13: callfunc "Func_Socket",2103,2104,1,99,100,1000,1,0,0,1;
+				case 14: callfunc "Func_Socket",2105,2106,1,99,100,1000,1,0,0,1;
+				case 15: callfunc "Func_Socket",5046,5168,1,99,100,1000,1,0,0,1;
+				case 16: callfunc "Func_Socket",2230,2231,1,99,100,1000,1,0,0,1;
+				case 17: callfunc "Func_Socket",5114,5120,1,99,100,1000,1,0,0,1;
+				case 18: callfunc "Func_Socket",2109,2121,1,99,100,1000,1,0,0,1;
+				case 19: callfunc "Func_Socket",2330,2331,1,99,100,1000,1,0,0,1;
+				case 20: callfunc "Func_Socket",2341,2342,1,99,100,1000,1,0,0,1;
+				case 21: callfunc "Func_Socket",2316,2317,1,99,100,1000,1,0,0,1;
+				case 22: callfunc "Func_Socket",2335,2336,1,99,100,1000,1,0,0,1;
+				case 23: callfunc "Func_Socket",2411,2412,1,99,100,1000,1,0,0,1;
+				case 24: callfunc "Func_Socket",5092,5093,1,99,100,1000,1,0,0,1;
+				case 25: callfunc "Func_Socket",2505,2506,1,99,100,1000,1,0,0,1;
+				case 26: callfunc "Func_Socket",2228,2229,1,99,100,1000,1,0,0,1;
+				case 27: callfunc "Func_Socket",2337,2359,1,99,100,1000,1,0,0,1;
+				case 28: callfunc "Func_Socket",2299,5157,1,99,100,1000,1,0,0,1;
+				case 29: callfunc "Func_Socket",2507,2525,1,99,100,1000,1,0,0,1;
+				case 30: callfunc "Func_Socket",2251,5158,1,99,100,1000,1,0,0,1;
+				case 31: callfunc "Func_Socket",2246,5159,1,99,100,1000,1,0,0,1;
+				case 32: callfunc "Func_Socket",2264,5167,1,99,150,1000,1,0,0,1;
+				case 33: callfunc "Func_Socket",2256,5160,1,99,500,1000,1,0,0,1;
+				case 34: callfunc "Func_Socket",2258,5161,1,99,500,1000,1,0,0,1;
+				case 35: callfunc "Func_Socket",5017,5162,1,99,500,1000,1,0,0,1;
+				case 36: callfunc "Func_Socket",5019,5163,1,99,500,1000,1,0,0,1;
+				case 37: callfunc "Func_Socket",2235,5165,1,99,500,1000,1,0,0,1;
+				case 38: callfunc "Func_Socket",2234,5164,1,99,500,1000,1,0,0,1;
+				case 39: callfunc "Func_Socket",5053,5166,1,99,100,1000,1,0,0,1;
+				case 40: callfunc "Func_Socket",2343,2360,1,99,100,1000,1,0,0,1;
+				case 41: callfunc "Func_Socket",2334,2372,1,99,100,1000,1,0,0,1;
+				case 42: callfunc "Func_Socket",2327,2373,1,99,100,1000,1,0,0,1;
+				case 43: callfunc "Func_Socket",2111,2128,1,99,100,1000,1,0,0,1;
+				case 44: callfunc "Func_Socket",2522,2523,1,99,100,1000,1,0,0,1;
+				case 45: callfunc "Func_Socket",2339,2371,1,99,100,1000,1,0,0,1;
+			}
+		case 4:
+			mes "[Seiyablem]";
+			mes "Well, I haven't really refined the art of Slot Addition or Wild Reinforcement.";
 			mes "It's so complicated that I'd be lying if I told you that I knew every factor that affected the process.";
 			mes "Still, I do notice a few trends...";
 			next;
 			mes "[Seiyablem]";
-			mes "In some towns, Slot addition attempts are more successful for equipment with fewer upgrades.";
+			mes "In some towns, attempts are more successful for equipment with fewer upgrades.";
 			mes "In other towns, the opposite is true.";
 			mes "isn't that really peculiar?";
 			next;
 			mes "[Seiyablem]";
 			mes "Oh, there's also something really important that you should know.";
-			mes "If you ask me to add a Slot to something, make sure that you don't have multiples of it in your inventory.";
+			mes "If you ask me to work on something, make sure that you don't have multiples of it in your inventory.";
 			next;
 			mes "[Seiyablem]";
-			mes "Here's an example: if you have a +7 Manteau and a normal Manteau in your inventory, then I will randomly pick one of them for my Slot Addition attempt.";
+			mes "Here's an example: if you have a +7 Manteau and a normal Manteau in your inventory, then I will randomly pick one of them to work on.";
 			mes "Just remember to be careful.";
 			next;
 			mes "[Seiyablem]";
-			mes "Again, ^FF0000only carry one of the equipment to which you want me to add a Slot^000000.";
+			mes "Again, ^FF0000only carry one of the equipment you want me to work on^000000.";
 			mes "All other equipment with the same name should be placed in your Kafra Storage, got it?";
+			next;
+			mes "[Seiyablem]";
+			mes "One more thing - whatever comes out the other end, whether it's a freshly Slotted item or a reinforced Wild piece, keeps its refine level, any Cards, and any random options it already had. I'm not in the business of robbing my customers.";
 			close;
-		case 4:
+		case 5:
 			mes "[Seiyablem]";
 			mes "Take it easy, adventurer.";
-			mes "If you ever want to try adding a Slot to some of your equipment, come back and let me know.";
+			mes "If you ever want to try adding a Slot, or reinforcing some Armor, come back and let me know.";
 			mes "Seeya~";
 			close;
 	}
@@ -186,34 +203,34 @@ function	script	Func_Socket	{
 	.@zeny_req = getarg(4);
 	setarray .@item_req[0], getarg(5), getarg(7,0);
 	setarray .@req_amount[0], getarg(6), getarg(8,0);
+	.@mode = getarg(9,0); // 0 = Slot Addition (weapon/accessory), 1 = Wild Reinforcement (armor)
 
 	disable_items;
 	mes "[Seiyablem]";
-	mes "You want to add a Slot to a "+ getitemname(.@item_id) +"?";
+	if (.@mode == 1)
+		mes "You want me to reinforce a "+ getitemname(.@item_id) +" into its Wild form?";
+	else
+		mes "You want to add a Slot to a "+ getitemname(.@item_id) +"?";
 	mes "Alright, please bring me ^FF0000"+ .@req_amount[0] +" "+ getitemname(.@item_req[0]) + (.@req_amount[0] > 1 && .@item_req[0] != 999 ? "s":"") +"^000000, "+ (.@item_req[1] != 0 && .@req_amount[1] != 0 ? ("^FF0000"+ .@req_amount[1] +" "+ getitemname(.@item_req[1]) + (.@req_amount[1] > 1 && .@item_req[1] != 999 ? "s":"") + "^000000 ") : "") + "and my ^FF0000" + (.@zeny_req >= 1000 ? (.@zeny_req /1000 +",000") : .@zeny_req) +",000 zeny^000000 service fee.";
 	mes "Ah, and don't forget to bring that "+ getitemname(.@item_id) +"!";
 	next;
 	mes "[Seiyablem]";
-	if (getiteminfo(.@item_id, ITEMINFO_LOCATIONS) & EQP_HAND_R) // weapon
+	if (.@mode == 1)
 	{
-		mes "I can try to add a slot now if you have the required items and zeny.";
+		mes "If you have all the required materials, my zeny service fee and the Armor, then we can go ahead with the Wild Reinforcement attempt.";
+		mes "There's a chance it might fail, but don't worry - your Armor, its refine, any Cards and any random options will be safe either way.";
+	}
+	else
+	{
+		mes "I can try to add a Slot now if you have the required items and zeny.";
 		mes "However, you should know that there's a chance that I might fail.";
-		//mes "Therefore, I need to give you a fair warning...";
-		next;
-		//mes "[Seiyablem]";
-		//mes "If this attempt to add a Slot to your Weapon fails, then the ^FF0000Weapon^000000, ^FF0000and any Cards compounded to it will be destroyed^000000.";
+		mes "Don't worry though - your item, its refine, any Cards and any random options will be safe either way.";
 	}
-	else // armor
-	{
-		mes "If you have all the required materials, my zeny service fee and the Armor, then we can go ahead with the Slot Addition attempt.";
-		//mes "But before that, I must warn you of the risk.";
-		//next;
-		//mes "[Seiyablem]";
-		//mes "If this attempt to add a Slot to your Armor fails, then the ^FF0000Armor^000000, ^FF0000it's upgrades^000000 ^FF0000and any Cards compounded to it will be destroyed^000000.";
-	}
-	mes "Do you still want to try to add a Slot?";
 	next;
-	switch(select("Attempt Slot Addition:Cancel"))
+	mes "[Seiyablem]";
+	mes "Do you still want to try?";
+	next;
+	switch(select((.@mode == 1 ? "Attempt Wild Reinforcement" : "Attempt Slot Addition") +":Cancel"))
 	{
 		case 1:
 			if ((Zeny >= .@zeny_req*1000) && countitem(.@item_req[0]) >= .@req_amount[0] && countitem(getarg(7,512)) >= .@req_amount[1] && countitem(.@item_id) > 0)// if there's no getarg(7) and getarg(8) provided, check itemcount against 0 (we still need a valid item ID though)
@@ -222,6 +239,28 @@ function	script	Func_Socket	{
 				mes "Alright then, let the work begin!";
 				mes "You'd better pray for a successful result.";
 				next;
+
+				// Capture the exact item's refine/attribute/cards/random options/grade so we can
+				// recreate them on the resulting item and never destroy player progress.
+				getinventorylist();
+				.@idx = -1;
+				for (.@i = 0; .@i < @inventorylist_count; .@i++)
+				{
+					if (@inventorylist_id[.@i] == .@item_id)
+					{
+						.@idx = .@i;
+						break;
+					}
+				}
+				.@identify = (.@idx != -1) ? @inventorylist_identify[.@idx] : 1;
+				.@refine = (.@idx != -1) ? @inventorylist_refine[.@idx] : 0;
+				.@attribute = (.@idx != -1) ? @inventorylist_attribute[.@idx] : 0;
+				.@grade = (.@idx != -1) ? @inventorylist_enchantgrade[.@idx] : 0;
+				setarray .@card[0], (.@idx != -1) ? @inventorylist_card1[.@idx] : 0, (.@idx != -1) ? @inventorylist_card2[.@idx] : 0, (.@idx != -1) ? @inventorylist_card3[.@idx] : 0, (.@idx != -1) ? @inventorylist_card4[.@idx] : 0;
+				setarray .@opt_id[0], (.@idx != -1) ? @inventorylist_option_id1[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_id2[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_id3[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_id4[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_id5[.@idx] : 0;
+				setarray .@opt_val[0], (.@idx != -1) ? @inventorylist_option_value1[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_value2[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_value3[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_value4[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_value5[.@idx] : 0;
+				setarray .@opt_param[0], (.@idx != -1) ? @inventorylist_option_parameter1[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_parameter2[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_parameter3[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_parameter4[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_parameter5[.@idx] : 0;
+
 				set .@a, rand(1,100);
 				if ((.@a > getarg(2)) && (.@a < getarg(3)))
 				{
@@ -234,7 +273,7 @@ function	script	Func_Socket	{
 					if (.@item_req[1] != 0 && .@req_amount[1] != 0)
 						delitem .@item_req[1],.@req_amount[1];
 					Zeny = Zeny - .@zeny_req *1000;
-					getitem getarg(1),1;
+					getitem4 getarg(1),1,.@identify,.@refine,.@attribute,.@card[0],.@card[1],.@card[2],.@card[3],.@grade,.@opt_id,.@opt_val,.@opt_param;
 					next;
 					mes "[Seiyablem]";
 					mes "See you again, buddy!";
@@ -248,7 +287,6 @@ function	script	Func_Socket	{
 					mes "However, I am completely innocent.";
 					mes "This is your luck, and it is destined by god, okay?";
 					mes "Don't be so disappointed, and try next time.";
-					//delitem .@item_id,1;
 					delitem .@item_req[0],.@req_amount[0];
 					if (.@item_req[1] != 0 && .@req_amount[1] != 0)
 						delitem .@item_req[1],.@req_amount[1];
@@ -262,7 +300,7 @@ function	script	Func_Socket	{
 			else
 			{
 				mes "[Seiyablem]";
-				mes "I'd like to go ahead with this Slot Addition attempt, but you're missing a few things.";
+				mes "I'd like to go ahead with this, but you're missing a few things.";
 				mes "You sure that you have the equipment, required materials and the zeny?";
 				close;
 			}
@@ -283,7 +321,10 @@ morocc,51,41,4	duplicate(SocketEnchant)	Seiyablem#moc	84
 -	script	Young Man#dummy::SocketMan	-1,{
 	mes "[Young Man]";
 	mes "I'm considering becoming a Slotting Engineer.";
-	mes "It's a new field where you can add Slots to equipment, and it'd be cool if I can work in such a lucrative career.";
+	mes "It's a new field where you can add Slots to Weapons and Accessories, and it'd be cool if I can work in such a lucrative career.";
+	next;
+	mes "[Young Man]";
+	mes "Armor's a bit different, though - I hear it can't take a Slot at all. Instead, engineers reinforce it into something called ^0000FFWild^000000 gear. No Slot, but it hits harder to carry.";
 	next;
 	mes "[Young Man]";
 	mes "There's a huge element of luck involved in successfully adding Slots from what I can understand.";
