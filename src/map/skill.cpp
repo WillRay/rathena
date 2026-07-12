@@ -1254,6 +1254,12 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		}
 	}
 
+	// Two-Hand Quicken rework: any landed auto-attack builds a Momentum stack
+	if (sd && skill_id == 0 && sc && sc->getSCE(SC_TWOHANDQUICKEN)) {
+		int32 stacks = sc->getSCE(SC_MOMENTUM) ? sc->getSCE(SC_MOMENTUM)->val1 : 0;
+		sc_start(src, src, SC_MOMENTUM, 100, min(5, stacks + 1), 15000);
+	}
+
 	if (!tsc) //skill additional effect is about adding effects to the target...
 		//So if the target can't be inflicted with statuses, this is pointless.
 		return 0;
@@ -1785,6 +1791,15 @@ int32 skill_counter_additional_effect (block_list* src, block_list *bl, uint16 s
 
 	sd = BL_CAST(BL_PC, src);
 	dstsd = BL_CAST(BL_PC, bl);
+
+	// Two-Hand Quicken rework: taking a melee hit builds a Momentum stack
+	if (dstsd && (attack_type & BF_SHORT)) {
+		status_change *bsc = status_get_sc(bl);
+		if (bsc && bsc->getSCE(SC_TWOHANDQUICKEN)) {
+			int32 stacks = bsc->getSCE(SC_MOMENTUM) ? bsc->getSCE(SC_MOMENTUM)->val1 : 0;
+			sc_start(bl, bl, SC_MOMENTUM, 100, min(5, stacks + 1), 15000);
+		}
+	}
 
 	if(dstsd && attack_type & BF_WEAPONMASK) {	//Counter effects.
 		for (const auto &it : dstsd->addeff_atked) {

@@ -1464,6 +1464,9 @@ enum sc_type : int16 {
 	// Swordsman rebalance: Two-Handed Sword Mastery passive
 	SC_TWOHANDBOOST, // Granted to self after landing any offensive skill (not gated on BF_MAGIC - the Swordsman tree has no magic skills). val1 = SM_TWOHAND skill level. 5s window; empowers the next auto attack with +10%*level damage, then consumes itself. See battle_calc_attack_skill_ratio.
 
+	// Knight rebalance: Two-Hand Quicken stacking ASPD
+	SC_MOMENTUM, // Stacks while Two-Hand Quicken is active, built by landing/receiving attacks. val1 = stack count (max 5). Reduces weapon swing delay by 7% per stack (max 35% at 5 stacks) via the aspd_rate max group. 15s duration, refreshes on stack. Own icon (EFST_STRIKING, borrowed) so it does not share Two-Hand Quicken's slot. See status_calc_aspd_rate.
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 

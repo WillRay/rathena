@@ -8270,7 +8270,7 @@ static int16 status_calc_aspd(block_list *bl, status_change *sc, bool fixed)
 
 		if (!sc->getSCE(SC_QUAGMIRE)) {
 			// !TODO: How does Two-Hand Quicken, Adrenaline Rush, and Spear quick change? (+10%)
-			if (bonus < 7 && (sc->getSCE(SC_TWOHANDQUICKEN) || sc->getSCE(SC_ONEHAND) || sc->getSCE(SC_MERC_QUICKEN) || sc->getSCE(SC_ADRENALINE) || sc->getSCE(SC_SPEARQUICKEN)))
+			if (bonus < 7 && (sc->getSCE(SC_ONEHAND) || sc->getSCE(SC_MERC_QUICKEN) || sc->getSCE(SC_ADRENALINE) || sc->getSCE(SC_SPEARQUICKEN)))
 				bonus = 7;
 			else if (bonus < 6 && sc->getSCE(SC_ADRENALINE2))
 				bonus = 6;
@@ -8438,10 +8438,6 @@ static int16 status_calc_aspd_rate(block_list *bl, status_change *sc, int32 aspd
 	if (sc->getSCE(SC_STAR_COMFORT))
 		max = sc->getSCE(SC_STAR_COMFORT)->val2;
 
-	if (sc->getSCE(SC_TWOHANDQUICKEN) &&
-		max < sc->getSCE(SC_TWOHANDQUICKEN)->val2)
-		max = sc->getSCE(SC_TWOHANDQUICKEN)->val2;
-
 	if (sc->getSCE(SC_ONEHAND) &&
 		max < sc->getSCE(SC_ONEHAND)->val2)
 		max = sc->getSCE(SC_ONEHAND)->val2;
@@ -8461,6 +8457,15 @@ static int16 status_calc_aspd_rate(block_list *bl, status_change *sc, int32 aspd
 	if (sc->getSCE(SC_SPEARQUICKEN) &&
 		max < sc->getSCE(SC_SPEARQUICKEN)->val2)
 		max = sc->getSCE(SC_SPEARQUICKEN)->val2;
+
+	// Two-Hand Quicken rework: Momentum reduces weapon swing delay by 7% per
+	// stack (70 in the 1000 = 100% aspd_rate scale), capped at 35% at 5 stacks.
+	// At the 35% cap this is 5 points better than the old flat +30% aspd-rate.
+	if (sc->getSCE(SC_MOMENTUM)) {
+		int32 momentum_rate = min(350, 70 * sc->getSCE(SC_MOMENTUM)->val1);
+		if (max < momentum_rate)
+			max = momentum_rate;
+	}
 
 	if (sc->getSCE(SC_GATLINGFEVER) &&
 		max < sc->getSCE(SC_GATLINGFEVER)->val2)
@@ -11082,7 +11087,6 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 				unit_stop_walking( bl, USW_FIXPOS|USW_FORCE_STOP );
 			break;
 		case SC_ONEHAND:
-		case SC_TWOHANDQUICKEN:
 			val2 = 300;
 			if (val1 > 10) // For boss casted skills [Skotlex]
 				val2 += 20*(val1-10);

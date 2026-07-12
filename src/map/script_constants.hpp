@@ -985,6 +985,7 @@
 	export_constant(SC_PROVOKE);
 	export_constant(SC_ENDURE);
 	export_constant(SC_TWOHANDQUICKEN);
+	export_constant(SC_MOMENTUM);
 	export_constant(SC_CONCENTRATE);
 	export_constant(SC_HIDING);
 	export_constant(SC_CLOAKING);

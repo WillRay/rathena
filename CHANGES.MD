@@ -151,12 +151,37 @@ added in future passes.
   would have made Tension Relax unlearnable. Level 5 restores the original
   "max out Increase HP Recovery first" requirement.*
 
-- **Two-Hand Quicken:** In addition to its existing ASPD bonus, now grants
-  `+1 FLEE per skill level` and `+0.8% CRIT per skill level`. The previous HIT
-  bonus has been removed. *Developer Comments: Auto-attack Knights have always
-  felt a step behind Bowling-Bash and Spiral-Pierce builds. A modest survival
-  and crit bonus on the buff they were going to press anyway brings the agility
-  line closer to its peers without making it the new optimum.*
+- **Two-Hand Quicken:** The flat ASPD bonus has been removed and replaced with
+  **Momentum**, a stacking buff (new `SC_MOMENTUM` status, shown with its own
+  icon so it does not share Two-Hand Quicken's status slot — the Sorcerer's
+  Striking icon is borrowed, since `SO_STRIKING` has no entry in the pre-re
+  skill tree and is unreachable/unused on this server) that only accrues
+  while Two-Hand Quicken is active. Landing any
+  auto-attack, or taking a melee auto-attack, adds a stack; stacks cap at 5,
+  last 15 seconds, and each new stack refreshes the timer. Each stack reduces
+  weapon swing delay by `7%` (up to `35%` at 5 stacks — 5 points better than the
+  old flat `+30%` ASPD-rate at full stacks). The skill still grants
+  `+1 FLEE per skill level` and `+0.8% CRIT per skill level`, unchanged. The
+  in-client skill description and the borrowed status icon's hover tooltip
+  have both been updated to describe the new behavior.
+  *Developer Comments: A flat, front-loaded ASPD buff meant the payoff was the
+  same whether you fought for one hit or one minute. Momentum ties the reward
+  to sustained combat instead — a Knight who keeps the pressure on now ends up
+  slightly faster than the old buff ever allowed, but only after ramping up.*
+  - `src/map/status.hpp` — added `SC_MOMENTUM` to the `sc_type` enum.
+  - `src/map/script_constants.hpp` — exported `SC_MOMENTUM` as a script constant.
+  - `src/map/status.cpp` — removed Two-Hand Quicken's ASPD sources
+    (`status_change_start`'s `val2 = 300` fallthrough, the
+    `status_calc_aspd_rate` block, and the renewal-only `status_calc_aspd`
+    fixed-bonus term); added Momentum's `7% per stack` swing-delay reduction
+    (capped at `35%`) to the `status_calc_aspd_rate` max group.
+  - `src/map/skill.cpp` — `skill_additional_effect` grants a Momentum stack on
+    any landed auto-attack while Two-Hand Quicken is active;
+    `skill_counter_additional_effect` grants a stack when receiving a melee
+    (`BF_SHORT`) auto-attack while Two-Hand Quicken is active.
+  - `db/pre-re/status.yml` — dropped `CalcFlags` from `Twohandquicken`; added
+    the `Momentum` status entry (`EFST_STRIKING` borrowed icon so it occupies
+    its own status slot, `SendVal1` shows the stack count).
 
 - **Bowling Bash:** The gutter-line bug has been removed entirely (the chain
   reaction now uses a 5×5 area around the caster, independent of where on the

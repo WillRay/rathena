@@ -298,8 +298,6 @@ Body:
   - Status: Twohandquicken
     Icon: EFST_TWOHANDQUICKEN
     DurationLookup: KN_TWOHANDQUICKEN
-    CalcFlags:
-      Aspd: true
     Opt3:
       Quicken: true
     Flags:
@@ -307,6 +305,16 @@ Body:
       RemoveOnHermode: true
     Fail:
       Decreaseagi: true
+  - Status: Momentum
+    Icon: EFST_STRIKING         # borrowed 3rd-job (Sorcerer's Striking) icon; SO_STRIKING has no pre-re skill tree entry so it's unreachable/unused here
+    CalcFlags:
+      Aspd: true                # triggers ASPD recalc on stack change
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      SendVal1: true            # shows the stack count on the icon
+      NoDispell: true
+      NoClearance: true
   - Status: Concentrate
     Icon: EFST_CONCENTRATION
     DurationLookup: AC_CONCENTRATION
