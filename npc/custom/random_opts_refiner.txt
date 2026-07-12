@@ -169,12 +169,16 @@ function	script	GetRandomOptId	{
 
 				if (callfunc("IsRandomChanceOf", 30)) {
 					setarray @optIds[0], RDMOPT_RANGE_ATTACK_DAMAGE_TARGET, RDMOPT_VAR_ATKPERCENT;
-					return @optIds[(getarraysize(@optIds) > 1 ? rand(0,getarraysize(@optIds)-1) : 0)];
+					if (getarraysize(@optIds) > 1)
+						return @optIds[rand(0,getarraysize(@optIds)-1)];
+					return @optIds[0];
 				}
 
 				if (callfunc("IsRandomChanceOf", 50)) {
 					setarray @optIds[0], RDMOPT_VAR_ATTPOWER, RDMOPT_VAR_CRITICALSUCCESSVALUE;
-					return @optIds[(getarraysize(@optIds) > 1 ? rand(0,getarraysize(@optIds)-1) : 0)];
+					if (getarraysize(@optIds) > 1)
+						return @optIds[rand(0,getarraysize(@optIds)-1)];
+					return @optIds[0];
 				}
 				return 0;
 			case W_2HSTAFF:
@@ -185,12 +189,16 @@ function	script	GetRandomOptId	{
 				
 				if (callfunc("IsRandomChanceOf", 30)) {
 					setarray @optIds[0], RDMOPT_VAR_MAGICATKPERCENT, RDMOPT_CLASS_MDAMAGE_NORMAL;
-					return @optIds[(getarraysize(@optIds) > 1 ? rand(0,getarraysize(@optIds)-1) : 0)];
+					if (getarraysize(@optIds) > 1)
+						return @optIds[rand(0,getarraysize(@optIds)-1)];
+					return @optIds[0];
 				}
 
 				if (callfunc("IsRandomChanceOf", 50)) {
 					setarray @optIds[0], RDMOPT_HEAL_MODIFY_PERCENT, RDMOPT_ADDSKILLMDAMAGE_ALL, RDMOPT_VAR_ATTMPOWER;
-					return @optIds[(getarraysize(@optIds) > 1 ? rand(0,getarraysize(@optIds)-1) : 0)];
+					if (getarraysize(@optIds) > 1)
+						return @optIds[rand(0,getarraysize(@optIds)-1)];
+					return @optIds[0];
 				}
 			default:
 				if (callfunc("IsRandomChanceOf", 20)) {
@@ -205,7 +213,9 @@ function	script	GetRandomOptId	{
 
 				if (callfunc("IsRandomChanceOf", 50)) {
 					setarray @optIds[0], RDMOPT_VAR_ATTPOWER, RDMOPT_VAR_CRITICALSUCCESSVALUE;
-					return @optIds[(getarraysize(@optIds) > 1 ? rand(0,getarraysize(@optIds)-1) : 0)];
+					if (getarraysize(@optIds) > 1)
+						return @optIds[rand(0,getarraysize(@optIds)-1)];
+					return @optIds[0];
 				}
 				return 0;
 		}
@@ -214,65 +224,87 @@ function	script	GetRandomOptId	{
 	if (@itemType == EQI_ARMOR) {
 		if (callfunc("IsRandomChanceOf", 30)) {
 			setarray @optIds[0], RDMOPT_VAR_ITEMDEFPOWER, RDMOPT_VAR_MDEFPOWER, RDMOPT_VAR_MAXHPPERCENT, RDMOPT_VAR_MAXSPPERCENT;
-			return @optIds[(getarraysize(@optIds) > 1 ? rand(0,getarraysize(@optIds)-1) : 0)];
+			if (getarraysize(@optIds) > 1)
+				return @optIds[rand(0,getarraysize(@optIds)-1)];
+			return @optIds[0];
 		}
 
 		if (callfunc("IsRandomChanceOf", 50)) {
 			setarray @optIds[0], RDMOPT_VAR_MAXHPAMOUNT, RDMOPT_VAR_MAXSPAMOUNT, RDMOPT_VAR_AVOIDSUCCESSVALUE, RDMOPT_VAR_PLUSAVOIDSUCCESSVALUE;
-			return @optIds[(getarraysize(@optIds) > 1 ? rand(0,getarraysize(@optIds)-1) : 0)];
+			if (getarraysize(@optIds) > 1)
+				return @optIds[rand(0,getarraysize(@optIds)-1)];
+			return @optIds[0];
 		}
 	}
 
 	if (@itemType == EQI_SHOES) {
 		if (callfunc("IsRandomChanceOf", 50)) {
 			setarray @optIds[0], RDMOPT_VAR_HPACCELERATION, RDMOPT_VAR_SPACCELERATION, RDMOPT_VAR_ITEMDEFPOWER, RDMOPT_DEC_SP_CONSUMPTION;
-			return @optIds[(getarraysize(@optIds) > 1 ? rand(0,getarraysize(@optIds)-1) : 0)];
+			if (getarraysize(@optIds) > 1)
+				return @optIds[rand(0,getarraysize(@optIds)-1)];
+			return @optIds[0];
 		}
 
 		if (callfunc("IsRandomChanceOf", 20)) {
 			setarray @optIds[0], RDMOPT_VAR_PLUSASPD, RDMOPT_DEC_SPELL_CAST_TIME;
-			return @optIds[(getarraysize(@optIds) > 1 ? rand(0,getarraysize(@optIds)-1) : 0)];
+			if (getarraysize(@optIds) > 1)
+				return @optIds[rand(0,getarraysize(@optIds)-1)];
+			return @optIds[0];
 		}
 	}
 
 	if (@itemType == EQI_GARMENT) {
 		if (callfunc("IsRandomChanceOf", 50)) {
 			setarray @optIds[0], RDMOPT_VAR_AVOIDSUCCESSVALUE, RDMOPT_VAR_HPACCELERATION, RDMOPT_DEC_SP_CONSUMPTION;
-			return @optIds[(getarraysize(@optIds) > 1 ? rand(0,getarraysize(@optIds)-1) : 0)];
+			if (getarraysize(@optIds) > 1)
+				return @optIds[rand(0,getarraysize(@optIds)-1)];
+			return @optIds[0];
 		}
 
 		if (callfunc("IsRandomChanceOf", 30)) {
 			setarray @optIds[0], RDMOPT_VAR_MAXHPAMOUNT, RDMOPT_VAR_MAXSPAMOUNT, RDMOPT_DEC_SPELL_CAST_TIME, RDMOPT_DEC_SPELL_DELAY_TIME;
-			return @optIds[(getarraysize(@optIds) > 1 ? rand(0,getarraysize(@optIds)-1) : 0)];
+			if (getarraysize(@optIds) > 1)
+				return @optIds[rand(0,getarraysize(@optIds)-1)];
+			return @optIds[0];
 		}
 	}
 
 	if (@itemType == EQI_HAND_L) {
 		if (callfunc("IsRandomChanceOf", 50)) {
 			setarray @optIds[0], RDMOPT_VAR_ITEMDEFPOWER, RDMOPT_VAR_MDEFPOWER, RDMOPT_VAR_HPACCELERATION, RDMOPT_VAR_SPACCELERATION;
-			return @optIds[(getarraysize(@optIds) > 1 ? rand(0,getarraysize(@optIds)-1) : 0)];
+			if (getarraysize(@optIds) > 1)
+				return @optIds[rand(0,getarraysize(@optIds)-1)];
+			return @optIds[0];
 		}
 
 		if (callfunc("IsRandomChanceOf", 30)) {
 			setarray @optIds[0], RDMOPT_VAR_AVOIDSUCCESSVALUE, RDMOPT_VAR_PLUSAVOIDSUCCESSVALUE, RDMOPT_DEC_SPELL_CAST_TIME;
-			return @optIds[(getarraysize(@optIds) > 1 ? rand(0,getarraysize(@optIds)-1) : 0)];
+			if (getarraysize(@optIds) > 1)
+				return @optIds[rand(0,getarraysize(@optIds)-1)];
+			return @optIds[0];
 		}
 	}
 
 	if (@itemType == EQI_ACC_L || @itemType == EQI_ACC_R) {
 		if (callfunc("IsRandomChanceOf", 50)) {
 			setarray @optIds[0], RDMOPT_VAR_CRITICALSUCCESSVALUE;
-			return @optIds[(getarraysize(@optIds) > 1 ? rand(0,getarraysize(@optIds)-1) : 0)];
+			if (getarraysize(@optIds) > 1)
+				return @optIds[rand(0,getarraysize(@optIds)-1)];
+			return @optIds[0];
 		}
 
 		if (callfunc("IsRandomChanceOf", 30)) {
 			setarray @optIds[0], RDMOPT_VAR_ATTPOWER, RDMOPT_VAR_ATTMPOWER;
-			return @optIds[(getarraysize(@optIds) > 1 ? rand(0,getarraysize(@optIds)-1) : 0)];
+			if (getarraysize(@optIds) > 1)
+				return @optIds[rand(0,getarraysize(@optIds)-1)];
+			return @optIds[0];
 		}
 
 		if (callfunc("IsRandomChanceOf", 20)) {
 			setarray @optIds[0], RDMOPT_ADDEXPPERCENT_KILLRACE_ALL, RDMOPT_MELEE_ATTACK_DAMAGE_TARGET, RDMOPT_RANGE_ATTACK_DAMAGE_TARGET;
-			return @optIds[(getarraysize(@optIds) > 1 ? rand(0,getarraysize(@optIds)-1) : 0)];
+			if (getarraysize(@optIds) > 1)
+				return @optIds[rand(0,getarraysize(@optIds)-1)];
+			return @optIds[0];
 		}
 	}
 

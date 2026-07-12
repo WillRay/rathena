@@ -1467,6 +1467,9 @@ enum sc_type : int16 {
 	// Knight rebalance: Two-Hand Quicken stacking ASPD
 	SC_MOMENTUM, // Stacks while Two-Hand Quicken is active, built by landing/receiving attacks. val1 = stack count (max 5). Reduces weapon swing delay by 7% per stack (max 35% at 5 stacks) via the aspd_rate max group. 15s duration, refreshes on stack. Own icon (EFST_STRIKING, borrowed) so it does not share Two-Hand Quicken's slot. See status_calc_aspd_rate.
 
+	// Knight rebalance: Retaliation active retaliation stance
+	SC_KNIGHTCOUNTER, // Active self-buff from KN_AUTOCOUNTER ("Retaliation"). val1 = KN_AUTOCOUNTER skill level. 15s duration; while active, any physical auto-attack (melee or ranged) against the Knight has a 10% * skill level chance to trigger a deferred counterstrike. See battle_weapon_attack.
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 

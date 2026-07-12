@@ -2011,6 +2011,7 @@
 	export_constant(SC_LANDMINE_BLEED);
 	export_constant(SC_RAZORWING_SLOW);
 	export_constant(SC_TWOHANDBOOST);
+	export_constant(SC_KNIGHTCOUNTER);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)

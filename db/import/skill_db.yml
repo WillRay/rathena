@@ -1058,3 +1058,57 @@ Body:
     MaxLevel: 5
     Flags:
       IsQuest: false
+  # Auto Counter rebalance: reworked from a reactive, facing-gated one-shot (cast
+  # applies SC_AUTOCOUNTER with NoMove/NoAttack for a fraction of a second; a melee
+  # hit received in that window fires one guaranteed-crit, defense-ignoring
+  # counterstrike) into a proactive 15s active stance. Casting now applies
+  # SC_KNIGHTCOUNTER (its own status, not shared with Counter Instinct's
+  # SC_AUTOCOUNTER - see db/import/status.yml and src/map/battle.cpp
+  # battle_weapon_attack); the Knight is rooted (NoMove) but can still act/attack
+  # for the duration - unlike base Autocounter it has no NoAttack/NoInteract.
+  # While active, any physical auto-attack against the Knight - melee OR
+  # ranged - has a 10% * skill level chance (10% at Lv1 up to 50% at Lv5) to
+  # fire back a single counterstrike; the incoming hit is not blocked. The
+  # counterstrike no longer carries a flat ATK bonus - instead it hits twice
+  # (Hit: Multi_Hit, HitCount: 2 below, div_ comes from skill_get_num) at
+  # normal ATK per hit, and each of the two hits can critically hit at double
+  # the Knight's normal crit rate (DamageFlags.Critical below enables crits
+  # for the skill; the x2 rate multiplier is in src/map/battle.cpp
+  # is_attack_critical, case KN_AUTOCOUNTER). Cast is instant (CastTime: 0) -
+  # it's a stance you flip on, not a windup - with a 60s cooldown from cast
+  # and a flat 10 SP cost at every level.
+  - Id: 61
+    Name: KN_AUTOCOUNTER
+    Description: Retaliation
+    Hit: Multi_Hit
+    HitCount: 2
+    DamageFlags:
+      IgnoreDefense: false
+      Critical: true
+      NoDamage: true
+    Status: Knightcounter
+    CastTime: 0
+    Duration1: 15000
+    Cooldown: 60000
+    Requires:
+      SpCost: 10
+  # Peco Peco Riding was a passive prerequisite check only (pc_checkskill gate for
+  # pc_setriding, toggled elsewhere via @ride/scripts) with no cast of its own.
+  # Made properly castable: TargetType Self so it self-fires with no target
+  # selection, a 2s cast fixed against DEX/INT/item/status reduction (see
+  # CastTimeFlags below), no SP cost, and a 5s cooldown. Casting now toggles
+  # mount/dismount directly (src/map/skill.cpp skill_castend_nodamage_id, case
+  # KN_RIDING calls pc_setriding).
+  - Id: 63
+    Name: KN_RIDING
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    CastTime: 2000
+    CastTimeFlags:
+      IgnoreDex: true
+      IgnoreStatus: true
+      IgnoreItemBonus: true
+    Cooldown: 5000
+    Requires:
+      SpCost: 0

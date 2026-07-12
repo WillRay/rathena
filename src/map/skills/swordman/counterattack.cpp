@@ -3,6 +3,7 @@
 
 #include "counterattack.hpp"
 
+#include "map/clif.hpp"
 #include "map/status.hpp"
 
 SkillCounterAttack::SkillCounterAttack() : SkillImpl(KN_AUTOCOUNTER) {
@@ -10,13 +11,32 @@ SkillCounterAttack::SkillCounterAttack() : SkillImpl(KN_AUTOCOUNTER) {
 
 void SkillCounterAttack::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
 	dmg.flag = (dmg.flag&~BF_SKILLMASK)|BF_NORMAL;
+	// wd.type defaults to DMG_NORMAL and is only auto-tagged DMG_MULTI_HIT by
+	// battle_calc_multi_attack() for skill_id == 0 (plain attacks). Since the
+	// counterstrike is dispatched with an explicit skill_id, that tagging never
+	// runs, so without this the client renders the doubled div_ as one bigger
+	// hit instead of two - tag it here so it splits into two hits (and can be
+	// promoted to DMG_MULTI_HIT_CRITICAL by is_attack_critical on a crit).
+	dmg.type = DMG_MULTI_HIT;
 }
 
 void SkillCounterAttack::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	sc_start(src, target, skill_get_sc(getSkillId()), 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
-	skill_addtimerskill(src, tick + 100, target->id, 0, 0, getSkillId(), skill_lv, BF_WEAPON, flag);
-}
+	bool started = sc_start(src, src, skill_get_sc(getSkillId()), 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
 
-void SkillCounterAttack::modifyHitRate(int16& hit_rate, const block_list* src, const block_list* target, uint16 skill_lv) const {
-	hit_rate += hit_rate * 20 / 100;
+	clif_skill_nodamage(src, *src, getSkillId(), skill_lv, started);
+	// The cast is instant (CastTime: 0) but the client still shows its default cast-bar
+	// UI for the skill-use packet unless told otherwise. The old reactive version cleared
+	// it reactively via clif_skillcastcancel the moment a counter fired ("Remove the
+	// casting bar." - Skotlex); this stance no longer has that reactive moment, so clear
+	// it immediately once the buff is applied instead.
+	clif_skillcastcancel(*src);
+	// One-shot "stance activated" flash on the Knight.
+	clif_specialeffect(src, EF_GUMGANG8, AREA);
+	if (started) {
+		// Show the same persistent "bound" cage used for rooted targets (Snaring
+		// Arrow's SC_ANKLE, and Sohee's NPC_STOP) so it's visually obvious the
+		// Knight cannot move while the stance is up. Matching teardown fires when
+		// SC_KNIGHTCOUNTER ends (status_change_end, src/map/status.cpp).
+		clif_specialeffect(src, EF_NPC_STOP, AREA);
+	}
 }

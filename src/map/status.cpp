@@ -13603,6 +13603,11 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 			// started the effect.
 			clif_specialeffect_remove(bl, EF_NPC_STOP, AREA, bl);
 			break;
+		case SC_KNIGHTCOUNTER:
+			// Remove the same persistent "bound" cage shown while the Retaliation
+			// stance's NoMove root is up (see counterattack.cpp castendNoDamageId).
+			clif_specialeffect_remove(bl, EF_NPC_STOP, AREA, bl);
+			break;
 		case SC_KEEPING:
 		case SC_BARRIER:
 			if (unit_data* ud = unit_bl2ud(bl); ud != nullptr) {

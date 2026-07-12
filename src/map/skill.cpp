@@ -3852,9 +3852,6 @@ TIMER_FUNC(skill_timerskill){
 				break;
 
 			switch(skl->skill_id) {
-				case KN_AUTOCOUNTER:
-					clif_skill_nodamage(src,*target,skl->skill_id,skl->skill_lv);
-					break;
 				case RG_INTIMIDATE:
 					if (unit_warp(src,-1,-1,-1,CLR_TELEPORT) == 0) {
 						int16 x,y;
@@ -4642,6 +4639,12 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 #else
 				guild_block_skill(sd, skill_get_time2(skill_id, skill_lv));
 #endif
+		}
+		break;
+	case KN_RIDING:
+		if (sd) {
+			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+			pc_setriding(sd, !pc_isriding(sd));
 		}
 		break;
 	case GD_EMERGENCYCALL:

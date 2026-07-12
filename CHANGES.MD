@@ -193,6 +193,156 @@ added in future passes.
   up with, but the skill now hits twice and behaves the same way on every map,
   every cell.*
 
+- **Auto Counter:** Reworked from a reactive, facing-gated one-shot into a
+  proactive combat stance. The cast is **instant** and applies a **15 second**
+  self-buff (new `SC_KNIGHTCOUNTER` status, its own icon) with a **60 second**
+  cooldown from cast. The Knight is rooted in place for the duration (cannot
+  move) but can still act/attack freely. While the buff is active, any
+  physical auto-attack landed on the Knight — **melee or ranged** — has a
+  flat **50% chance** to trigger a return
+  swing, a plain normal attack (defense applies, no forced crit) dealing
+  **200% ATK** at every skill level; the incoming hit still lands, it is not
+  blocked. Because a proper phantom-attacker unit isn't feasible in this
+  engine, the counter simply plays as the Knight swinging back, which reads
+  correctly for both melee and ranged attackers. *Developer Comments: the old
+  Auto Counter asked you to stand still, face your target, and hope its next
+  hit was melee — in
+  practice nobody used it. Turning it into an always-on stance with a coin-flip
+  retaliation makes it a real defensive tool a Knight can lean on mid-fight
+  instead of a gimmick you set up in advance. One accepted side effect: Counter
+  Instinct's (`ST_REJECTSWORD`) own counterstrike still calls into
+  `KN_AUTOCOUNTER` for its damage, so it now also hits as a plain 200% blow
+  instead of a defense-ignoring guaranteed crit — giving it its own dedicated
+  strike skill was judged out of scope for this pass.*
+  - `src/map/status.hpp` — added `SC_KNIGHTCOUNTER` to the `sc_type` enum.
+  - `src/map/script_constants.hpp` — exported `SC_KNIGHTCOUNTER` as a script
+    constant.
+  - `db/import/status.yml` — added the `Knightcounter` status entry (reuses the
+    classic `EFST_AUTOCOUNTER` icon, duration looked up from `KN_AUTOCOUNTER`,
+    `States: NoMove` but no `NoAttack`/`NoInteract`).
+  - `db/import/skill_db.yml` — `KN_AUTOCOUNTER` now applies `Knightcounter` on
+    cast, with `CastTime: 0` (instant), `Duration1: 15000` and
+    `Cooldown: 60000`; `DamageFlags` no longer force
+    `IgnoreDefense`/`Critical`.
+  - `src/map/skills/swordman/counterattack.cpp` — `castendNoDamageId` now just
+    starts the self-buff (no more immediate scheduled hit); added
+    `calculateSkillRatio` for the flat `200%` ratio; removed the old
+    `modifyHitRate` `+20%` hit bonus.
+  - `src/map/battle.cpp` — `is_attack_critical` no longer force-crits
+    `KN_AUTOCOUNTER`'s counterstrike (Counter Instinct's `SC_AUTOCOUNTER`
+    guaranteed-crit path is unchanged); `battle_weapon_attack` gained a new
+    non-blocking `SC_KNIGHTCOUNTER` check (50% chance, deferred 100ms via
+    `skill_addtimerskill`) alongside the existing `SC_AUTOCOUNTER` block; plays
+    the classic `EF_AUTOCOUNTER` effect (the same audio/visual cue the old
+    reactive counter used) on the Knight whenever the retaliation triggers.
+  - `src/map/skill.cpp` — removed the now-dead `KN_AUTOCOUNTER` case in
+    `skill_timerskill` (a no-damage stub left over from the old cast path) so
+    the deferred counterstrike falls through to the normal `skill_attack` path
+    and actually deals damage.
+- **Auto Counter (follow-up):** The counterstrike no longer carries a flat
+  `200% ATK` bonus — it now hits **twice** at normal ATK per hit, and each of
+  the two hits can land a critical strike at **double** the Knight's normal
+  `CRIT` rate. *Developer Comments: a flat damage multiplier felt like a
+  bigger single number but played the same as a normal hit every time. Two
+  rolls of the dice, each with a real shot at a crit, makes the retaliation
+  feel like a distinct payoff instead of a bigger version of a plain attack,
+  and it scales naturally with any crit-rate investment the Knight already
+  made.*
+  - `db/import/skill_db.yml` — `KN_AUTOCOUNTER` now sets `Hit: Multi_Hit` and
+    `HitCount: 2` (drives `div_` via `skill_get_num`), and `DamageFlags.Critical`
+    is `true` (allows the skill to roll crits at all; defense still applies —
+    `IgnoreDefense` stays `false`).
+  - `src/map/skills/swordman/counterattack.cpp` — removed the `calculateSkillRatio`
+    override that added the flat `+100` ratio; the counterstrike now deals
+    plain `100%` ATK per hit like a normal attack. `modifyDamageData` also
+    tags the damage as `DMG_MULTI_HIT` — since the counterstrike carries an
+    explicit `skill_id`, the engine's usual auto-tagging (which only runs for
+    plain `skill_id == 0` attacks) never applies, and without this the client
+    rendered the doubled total as one bigger hit instead of two separate hits.
+  - `src/map/battle.cpp` — `is_attack_critical` gained a `case KN_AUTOCOUNTER:`
+    that doubles the effective `cri` stat used for the roll, on top of the
+    normal crit-rate formula (STR/LUK/equipment bonuses all still apply before
+    the doubling).
+- **Auto Counter (follow-up):** Fixed a lingering client-side cast bar shown
+  for the full duration of casting the skill, even though the cast is
+  instant. *Developer Comments: the client always shows its default cast-bar
+  UI for any skill-use packet unless explicitly told to dismiss it. The old
+  reactive version cleared it the moment a counter fired
+  (`clif_skillcastcancel`, "Remove the casting bar." - Skotlex); since the
+  old buff only lasted 400-2000ms, that reactive clear (or the SC's own
+  early expiry) usually hid the bar before it was noticeable. This stance
+  keeps the buff up for 15 seconds and has no equivalent reactive moment, so
+  the bar was left to play out its full default length every time, unmasked.*
+  - `src/map/skills/swordman/counterattack.cpp` — `castendNoDamageId` now
+    calls `clif_skillcastcancel` right after applying `SC_KNIGHTCOUNTER`, so
+    the cast bar is dismissed immediately once the buff lands instead of
+    lingering.
+- **Auto Counter (follow-up):** The buff's status icon now actually appears
+  in the status bar. *Developer Comments: the classic `EFST_AUTOCOUNTER` icon
+  has no entry in this client's `stateiconinfo.lub` table, so it silently
+  never rendered no matter what the server sent. Swapped to Rune Knight's
+  Crush Strike icon (`EFST_CRUSHSTRIKE`) instead - `RK_CRUSHSTRIKE` is
+  unreachable on this pre-re server (same trick already used for Two-Hand
+  Quicken/Momentum borrowing Enchant Blade/Striking), and its icon is
+  confirmed to render, with its tooltip repurposed to describe Auto Counter.*
+  - `db/import/status.yml` — `Knightcounter`'s `Icon` changed from
+    `EFST_AUTOCOUNTER` to `EFST_CRUSHSTRIKE`.
+  - `lua files/stateicon/stateiconinfo.lub` — repurposed the
+    `EFST_CRUSHSTRIKE` `StateIconList` entry's title/description to describe
+    Auto Counter instead of Crush Strike.
+- **Auto Counter → Retaliation (follow-up):** Renamed to **Retaliation**
+  (display name only - Aegis name `KN_AUTOCOUNTER` is unchanged). The
+  retaliation trigger chance is now `10% * skill level` (10% at Lv1 up to
+  50% at Lv5) instead of a flat 50%, and SP cost is now a flat `10 SP` at
+  every level (was `3 SP`). Casting now also plays a one-shot activation
+  flash (`EF_GUMGANG8`) on the Knight, and shows the same persistent "bound"
+  cage effect used by rooted targets (Snaring Arrow's `SC_ANKLE`, Sohee's
+  `NPC_STOP`) for the full 15s duration, making the immobility visually
+  obvious. *Developer Comments: "Auto Counter" was a holdover name from the
+  old reactive mechanic and no longer described a stance the player
+  proactively activates - "Retaliation" fits the new active-buff identity.
+  Scaling the trigger chance with skill level gives investing in higher
+  ranks a clear payoff beyond just the flat ATK/crit numbers, and the SP
+  bump to 10 brings the cost in line with a 15-second combat stance rather
+  than the old sub-2-second reactive window. The activation flash and root
+  visual close the loop on "how do I know this is active and why can't I
+  move" raised during testing.*
+  - `db/import/skill_db.yml` — `Requires.SpCost: 10`; `Description:
+    Retaliation`.
+  - `src/map/battle.cpp` — the `SC_KNIGHTCOUNTER` retaliation check in
+    `battle_weapon_attack` now rolls `rnd()%100 < 10 * skill_lv` instead of
+    a flat `< 50`.
+  - `src/map/skills/swordman/counterattack.cpp` — `castendNoDamageId` plays
+    `EF_GUMGANG8` once on cast, and (when the buff successfully starts)
+    `EF_NPC_STOP` to begin the persistent root-cage visual.
+  - `src/map/status.cpp` — `status_change_end` gained a `case
+    SC_KNIGHTCOUNTER:` that calls `clif_specialeffect_remove` on
+    `EF_NPC_STOP`, tearing the cage down when the stance ends (mirrors the
+    existing `SC_ANKLE` case).
+  - `lua files/skillinfoz/skillinfolist.lub` — `SkillName` changed to
+    "Retaliation"; `SpAmount` changed to `{ 10, 10, 10, 10, 10 }`.
+  - `lua files/skillinfoz/skilldescript.lub` — title changed to
+    "Retaliation"; body rewritten for the `10% per skill level` trigger
+    chance and `10 SP` cost.
+  - `lua files/stateicon/stateiconinfo.lub` — the repurposed
+    `EFST_CRUSHSTRIKE` entry's title changed to "Retaliation".
+- **Peco Peco Ride:** Is now a properly castable skill instead of a passive
+  prerequisite gate. Casting it takes a `2 second` fixed cast (unaffected by
+  DEX, INT, cast-reducing items, or status effects), has a `5 second`
+  cooldown, and costs no SP. Completing the cast toggles the caster between
+  mounted and dismounted on a Peco Peco. *Developer Comments: Riding used to
+  only be togglable through `@ride` or item scripts, with the skill itself
+  doing nothing when used — a Knight clicking their own Peco Peco Ride icon
+  got no feedback at all. Giving it a real cast makes the skill icon
+  actually do what its tooltip always implied.*
+  - `db/import/skill_db.yml` — `KN_RIDING` gained `TargetType: Self`,
+    `DamageFlags.NoDamage: true`, `CastTime: 2000` with `CastTimeFlags`
+    (`IgnoreDex`, `IgnoreStatus`, `IgnoreItemBonus`) so the cast time can't be
+    reduced, `Cooldown: 5000`, and `Requires.SpCost: 0`.
+  - `src/map/skill.cpp` — `skill_castend_nodamage_id` gained a `KN_RIDING`
+    case that calls `pc_setriding` to toggle the mount state on cast
+    completion.
+
 ### Crusader Skill Changes
 
 - **Holy Cross:** Damage raised from `100% + 35% per level` to

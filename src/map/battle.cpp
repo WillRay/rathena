@@ -3059,17 +3059,24 @@ static bool is_attack_critical(struct Damage* wd, block_list *src, const block_l
 
 		switch(skill_id) {
 			case 0:
-				if(sc && !sc->getSCE(SC_AUTOCOUNTER))
-					break;
-				clif_specialeffect(src, EF_AUTOCOUNTER, AREA);
-				status_change_end(src, SC_AUTOCOUNTER);
-				[[fallthrough]];
+				// Counter Instinct (ST_REJECTSWORD) is the only remaining user of SC_AUTOCOUNTER;
+				// its reactive counterstrike still lands a guaranteed crit. KN_AUTOCOUNTER's own
+				// counterstrike (SC_KNIGHTCOUNTER, see battle_weapon_attack) is a plain hit and no
+				// longer forces a crit here.
+				if(sc && sc->getSCE(SC_AUTOCOUNTER)) {
+					clif_specialeffect(src, EF_AUTOCOUNTER, AREA);
+					status_change_end(src, SC_AUTOCOUNTER);
+					if(battle_config.auto_counter_type &&
+						(battle_config.auto_counter_type&src->type))
+						return true;
+					else
+						cri *= 2;
+				}
+				break;
 			case KN_AUTOCOUNTER:
-				if(battle_config.auto_counter_type &&
-					(battle_config.auto_counter_type&src->type))
-					return true;
-				else
-					cri *= 2;
+				// Each of the counterstrike's two hits rolls crit at double the Knight's
+				// normal crit rate, rather than the flat ATK bonus this skill used to carry.
+				cri *= 2;
 				break;
 			case SN_SHARPSHOOTING:
 			case MA_SHARPSHOOTING:
@@ -7330,6 +7337,20 @@ enum damage_lv battle_weapon_attack(block_list* src, block_list* target, t_tick 
 			status_change_end(target, SC_AUTOCOUNTER);
 			skill_attack(BF_WEAPON,target,target,src,KN_AUTOCOUNTER,skill_lv,tick,0);
 			return ATK_BLOCK;
+		}
+	}
+
+	// Knight rebalance: Retaliation active retaliation stance. Unlike Counter
+	// Instinct's SC_AUTOCOUNTER above, this does not block the incoming hit - the
+	// Knight simply has a 10% * skill level chance to also swing back, melee or
+	// ranged, while SC_KNIGHTCOUNTER is active. Deferred 100ms so it resolves
+	// cleanly after the triggering hit (no re-entrancy if it kills the attacker).
+	if (tsc && tsc->getSCE(SC_KNIGHTCOUNTER) && status_check_skilluse(target, src, KN_AUTOCOUNTER, 1)) {
+		uint16 skill_lv = tsc->getSCE(SC_KNIGHTCOUNTER)->val1;
+
+		if (rnd()%100 < 10 * skill_lv) {
+			clif_specialeffect(target, EF_AUTOCOUNTER, AREA);
+			skill_addtimerskill(target, tick + 100, src->id, 0, 0, KN_AUTOCOUNTER, skill_lv, BF_WEAPON, 0);
 		}
 	}
 

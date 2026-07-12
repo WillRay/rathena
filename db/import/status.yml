@@ -139,3 +139,22 @@ Body:
     Icon: EFST_ENCHANTBLADE
     Flags:
       NoWarning: true
+
+  # Knight rebalance: Retaliation (KN_AUTOCOUNTER, renamed from "Auto Counter")
+  # active retaliation stance. Roots the Knight in place (NoMove) for the full
+  # duration - it's a planted, ready-to-parry stance - but deliberately has no
+  # NoAttack/NoInteract (unlike base Autocounter, which Counter Instinct still
+  # uses), so the Knight can still act/attack while up. The classic
+  # EFST_AUTOCOUNTER icon has no StateIconList entry in this client build and
+  # never renders in the status bar, so this borrows Rune Knight's Crush Strike
+  # icon (EFST_CRUSHSTRIKE) instead - RK_CRUSHSTRIKE is unreachable on this
+  # pre-re server, and its icon is confirmed to render. The icon's hover
+  # tooltip (client lua files/stateicon/stateiconinfo.lub) is repurposed to
+  # describe Retaliation instead of the original Crush Strike text.
+  - Status: Knightcounter
+    Icon: EFST_CRUSHSTRIKE
+    DurationLookup: KN_AUTOCOUNTER
+    States:
+      NoMove: true
+    Flags:
+      NoWarning: true
