@@ -163,9 +163,13 @@ function	script	GetRandomOptId	{
 			case W_BOW:
 			case W_MUSICAL:
 			case W_WHIP:
-				if (callfunc("IsRandomChanceOf", 20)) {
-					return RDMOPT_VAR_PLUSASPD;
+				if (callfunc("IsRandomChanceOf", 50)) {
+					setarray @optIds[0], RDMOPT_VAR_ATTPOWER, RDMOPT_VAR_CRITICALSUCCESSVALUE;
+					if (getarraysize(@optIds) > 1)
+						return @optIds[rand(0,getarraysize(@optIds)-1)];
+					return @optIds[0];
 				}
+
 
 				if (callfunc("IsRandomChanceOf", 30)) {
 					setarray @optIds[0], RDMOPT_RANGE_ATTACK_DAMAGE_TARGET, RDMOPT_VAR_ATKPERCENT;
@@ -174,17 +178,17 @@ function	script	GetRandomOptId	{
 					return @optIds[0];
 				}
 
-				if (callfunc("IsRandomChanceOf", 50)) {
-					setarray @optIds[0], RDMOPT_VAR_ATTPOWER, RDMOPT_VAR_CRITICALSUCCESSVALUE;
-					if (getarraysize(@optIds) > 1)
-						return @optIds[rand(0,getarraysize(@optIds)-1)];
-					return @optIds[0];
+				if (callfunc("IsRandomChanceOf", 20)) {
+					return RDMOPT_VAR_PLUSASPD;
 				}
 				return 0;
 			case W_2HSTAFF:
 			case W_BOOK:
-				if (callfunc("IsRandomChanceOf", 20)) {
-					return RDMOPT_DEC_SPELL_CAST_TIME;
+				if (callfunc("IsRandomChanceOf", 50)) {
+					setarray @optIds[0], RDMOPT_HEAL_MODIFY_PERCENT, RDMOPT_ADDSKILLMDAMAGE_ALL, RDMOPT_VAR_ATTMPOWER;
+					if (getarraysize(@optIds) > 1)
+						return @optIds[rand(0,getarraysize(@optIds)-1)];
+					return @optIds[0];
 				}
 				
 				if (callfunc("IsRandomChanceOf", 30)) {
@@ -194,15 +198,16 @@ function	script	GetRandomOptId	{
 					return @optIds[0];
 				}
 
+				if (callfunc("IsRandomChanceOf", 20)) {
+					return RDMOPT_DEC_SPELL_CAST_TIME;
+				}
+				return 0;
+			default:
 				if (callfunc("IsRandomChanceOf", 50)) {
-					setarray @optIds[0], RDMOPT_HEAL_MODIFY_PERCENT, RDMOPT_ADDSKILLMDAMAGE_ALL, RDMOPT_VAR_ATTMPOWER;
+					setarray @optIds[0], RDMOPT_VAR_ATTPOWER, RDMOPT_VAR_CRITICALSUCCESSVALUE;
 					if (getarraysize(@optIds) > 1)
 						return @optIds[rand(0,getarraysize(@optIds)-1)];
 					return @optIds[0];
-				}
-			default:
-				if (callfunc("IsRandomChanceOf", 20)) {
-					return RDMOPT_VAR_PLUSASPD;
 				}
 
 				if (callfunc("IsRandomChanceOf", 30)) {
@@ -211,26 +216,23 @@ function	script	GetRandomOptId	{
 					return RDMOPT_MELEE_ATTACK_DAMAGE_TARGET;
 				}
 
-				if (callfunc("IsRandomChanceOf", 50)) {
-					setarray @optIds[0], RDMOPT_VAR_ATTPOWER, RDMOPT_VAR_CRITICALSUCCESSVALUE;
-					if (getarraysize(@optIds) > 1)
-						return @optIds[rand(0,getarraysize(@optIds)-1)];
-					return @optIds[0];
+				if (callfunc("IsRandomChanceOf", 20)) {
+					return RDMOPT_VAR_PLUSASPD;
 				}
 				return 0;
 		}
 	}
 
 	if (@itemType == EQI_ARMOR) {
-		if (callfunc("IsRandomChanceOf", 30)) {
-			setarray @optIds[0], RDMOPT_VAR_ITEMDEFPOWER, RDMOPT_VAR_MDEFPOWER, RDMOPT_VAR_MAXHPPERCENT, RDMOPT_VAR_MAXSPPERCENT;
+		if (callfunc("IsRandomChanceOf", 50)) {
+			setarray @optIds[0], RDMOPT_VAR_MAXHPAMOUNT, RDMOPT_VAR_MAXSPAMOUNT, RDMOPT_VAR_AVOIDSUCCESSVALUE, RDMOPT_VAR_PLUSAVOIDSUCCESSVALUE;
 			if (getarraysize(@optIds) > 1)
 				return @optIds[rand(0,getarraysize(@optIds)-1)];
 			return @optIds[0];
 		}
 
-		if (callfunc("IsRandomChanceOf", 50)) {
-			setarray @optIds[0], RDMOPT_VAR_MAXHPAMOUNT, RDMOPT_VAR_MAXSPAMOUNT, RDMOPT_VAR_AVOIDSUCCESSVALUE, RDMOPT_VAR_PLUSAVOIDSUCCESSVALUE;
+		if (callfunc("IsRandomChanceOf", 30)) {
+			setarray @optIds[0], RDMOPT_VAR_ITEMDEFPOWER, RDMOPT_VAR_MDEFPOWER, RDMOPT_VAR_MAXHPPERCENT, RDMOPT_VAR_MAXSPPERCENT;
 			if (getarraysize(@optIds) > 1)
 				return @optIds[rand(0,getarraysize(@optIds)-1)];
 			return @optIds[0];

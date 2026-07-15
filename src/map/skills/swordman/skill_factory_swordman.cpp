@@ -83,6 +83,7 @@
 #include "stonehardskin.cpp"
 #include "stormblast.cpp"
 #include "stormslash.cpp"
+#include "sunderingstrike.cpp"
 #include "trample.cpp"
 #include "traumaticblow.cpp"
 #include "ultimatesacrifice.cpp"
@@ -179,7 +180,7 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 		case KN_CHARGEATK:
 			return std::make_unique<SkillChargeAttack>();
 		case KN_ONEHAND:
-			return std::make_unique<StatusSkillImpl>(skill_id);
+			return std::make_unique<SkillSunderingStrike>();
 		case KN_PIERCE:
 			return std::make_unique<SkillPierce>();
 		case KN_SPEARBOOMERANG:

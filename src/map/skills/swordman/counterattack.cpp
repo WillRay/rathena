@@ -11,13 +11,6 @@ SkillCounterAttack::SkillCounterAttack() : SkillImpl(KN_AUTOCOUNTER) {
 
 void SkillCounterAttack::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
 	dmg.flag = (dmg.flag&~BF_SKILLMASK)|BF_NORMAL;
-	// wd.type defaults to DMG_NORMAL and is only auto-tagged DMG_MULTI_HIT by
-	// battle_calc_multi_attack() for skill_id == 0 (plain attacks). Since the
-	// counterstrike is dispatched with an explicit skill_id, that tagging never
-	// runs, so without this the client renders the doubled div_ as one bigger
-	// hit instead of two - tag it here so it splits into two hits (and can be
-	// promoted to DMG_MULTI_HIT_CRITICAL by is_attack_critical on a crit).
-	dmg.type = DMG_MULTI_HIT;
 }
 
 void SkillCounterAttack::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {

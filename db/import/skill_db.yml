@@ -178,7 +178,7 @@ Body:
     TargetType: Self
     Flags:
       NoTargetSelf: true
-    Cooldown: 1000
+    Cooldown: 2000
     Requires:
       SpCost:
         - Level: 1
@@ -1061,37 +1061,60 @@ Body:
   # Auto Counter rebalance: reworked from a reactive, facing-gated one-shot (cast
   # applies SC_AUTOCOUNTER with NoMove/NoAttack for a fraction of a second; a melee
   # hit received in that window fires one guaranteed-crit, defense-ignoring
-  # counterstrike) into a proactive 15s active stance. Casting now applies
+  # counterstrike) into a proactive 10s active stance. Casting now applies
   # SC_KNIGHTCOUNTER (its own status, not shared with Counter Instinct's
   # SC_AUTOCOUNTER - see db/import/status.yml and src/map/battle.cpp
   # battle_weapon_attack); the Knight is rooted (NoMove) but can still act/attack
   # for the duration - unlike base Autocounter it has no NoAttack/NoInteract.
-  # While active, any physical auto-attack against the Knight - melee OR
-  # ranged - has a 10% * skill level chance (10% at Lv1 up to 50% at Lv5) to
-  # fire back a single counterstrike; the incoming hit is not blocked. The
-  # counterstrike no longer carries a flat ATK bonus - instead it hits twice
-  # (Hit: Multi_Hit, HitCount: 2 below, div_ comes from skill_get_num) at
-  # normal ATK per hit, and each of the two hits can critically hit at double
-  # the Knight's normal crit rate (DamageFlags.Critical below enables crits
-  # for the skill; the x2 rate multiplier is in src/map/battle.cpp
-  # is_attack_critical, case KN_AUTOCOUNTER). Cast is instant (CastTime: 0) -
-  # it's a stance you flip on, not a windup - with a 60s cooldown from cast
-  # and a flat 10 SP cost at every level.
+  # While active, any physical attack against the Knight - melee OR ranged,
+  # HIT OR MISS - has an 8% * skill level chance (8% at Lv1 up to 40% at Lv5) to
+  # fire back a single counterstrike; the incoming hit is not blocked, and the
+  # roll happens before the attack's own hit/miss is resolved (see
+  # battle_weapon_attack) so a whiffed attack can still be countered. The
+  # counterstrike deals normal (100%) ATK - no flat bonus - but can critically
+  # hit at double the Knight's normal crit rate (DamageFlags.Critical below
+  # enables crits for the skill; the x2 rate multiplier is in
+  # src/map/battle.cpp is_attack_critical, case KN_AUTOCOUNTER). Cast is
+  # instant (CastTime: 0) - it's a stance you flip on, not a windup - with a
+  # 30s cooldown from cast and a flat 15 SP cost at every level.
   - Id: 61
     Name: KN_AUTOCOUNTER
     Description: Retaliation
-    Hit: Multi_Hit
-    HitCount: 2
     DamageFlags:
       IgnoreDefense: false
       Critical: true
       NoDamage: true
     Status: Knightcounter
     CastTime: 0
-    Duration1: 15000
-    Cooldown: 60000
+    Duration1: 10000
+    Cooldown: 30000
     Requires:
-      SpCost: 10
+      SpCost: 15
+  # Knight rebalance: KN_BOWLINGBASH (Bowling Bash) reworked from a spammable
+  # click-targeted double-hit into a committed 5s-cooldown burst strike.
+  # TargetType Self + Flags.NoTargetSelf makes it non-targeted: the player
+  # presses it with no cursor and unit_skilluse_id2 (src/map/unit.cpp)
+  # auto-fires it on the caster's current target (same native "combo skill"
+  # behavior used by KN_ONEHAND below). DamageFlags.Critical lets every splash
+  # and chain hit roll a critical independently (NK_CRITICAL). The single-hit
+  # change (div_ 2 -> 1), the +60% ATK per consumed Momentum stack (+300% at 5
+  # stacks), and the Momentum consumption all live in
+  # src/map/skills/swordman/bowlingbash.cpp. Splash, knockback pinball, range
+  # and SP cost are left at their base values. CastTime overridden to 0 (base
+  # pre-re value is 700ms) so skill_get_cast() == 0 and the generic
+  # "auto-resume auto-attack after instant-cast skills" block in
+  # skill_castend_damage_id (src/map/skill.cpp) actually re-engages the
+  # target once Bowling Bash strikes, instead of treating it as a cast-timed
+  # skill and skipping the resume.
+  - Id: 62
+    Name: KN_BOWLINGBASH
+    TargetType: Self
+    Flags:
+      NoTargetSelf: true
+    DamageFlags:
+      Critical: true
+    CastTime: 0
+    Cooldown: 5000
   # Peco Peco Riding was a passive prerequisite check only (pc_checkskill gate for
   # pc_setriding, toggled elsewhere via @ride/scripts) with no cast of its own.
   # Made properly castable: TargetType Self so it self-fires with no target
@@ -1112,3 +1135,89 @@ Body:
     Cooldown: 5000
     Requires:
       SpCost: 0
+  # Knight rebalance: KN_ONEHAND (One-Hand Quicken) is repurposed into
+  # "Sundering Strike", a 5-level offensive weapon strike that consumes
+  # Momentum stacks (built by Two-Hand Quicken, see SC_MOMENTUM) for burst
+  # damage and crushes the target's armor. DamageFlags.NoDamage and
+  # Flags.IsSpirit are cleared so it no longer behaves as a no-damage
+  # Soul-Link buff and can be learned with skill points like any other Knight
+  # skill. Requires.Weapon switches from 1H Sword to 2H Sword (1hSword
+  # explicitly cleared since import merges Weapon flags field-by-field, same
+  # as the HT_ANKLESNARE precedent above). Status: OneHand (the old buff
+  # grant) is left in the base entry inert - the code path never reads it now
+  # that the factory returns SkillSunderingStrike instead of StatusSkillImpl
+  # (same "dead but harmless" precedent as HT_LANDMINE above). Duration1 is
+  # repurposed from the old buff duration into the SC_SUNDER debuff length,
+  # read via skill_get_time. Damage scaling (200% + 100% ATK per level + 50%
+  # ATK per consumed Momentum stack, single hit, no AoE), the armor-crush
+  # debuff (SC_SUNDER, -5% DEF per skill level, main target only), and the
+  # Cart Termination (WS_CARTTERMINATION) visual-only animation override all
+  # live in src/map/skills/swordman/sunderingstrike.cpp. Its own 10s cooldown
+  # is independent of KN_BOWLINGBASH's - the two used to share a mutual
+  # lockout (src/map/skill.cpp) but that has been removed so each skill is on
+  # its own clock. The Knight skill-tree prerequisite (Bowling
+  # Bash level 10) lives in db/import/skill_tree.yml. See the
+  # TargetType/NoTargetSelf comment below for the non-targeted "fires on
+  # current target" behavior.
+  # Knight rebalance: KN_CHARGEATK (Charge Attack) is reworked from a 1-level
+  # quest skill into a 5-level skill-point spam tool, gated behind Cavalier
+  # Mastery (KN_CAVALIERMASTERY) level 5 (see db/import/skill_tree.yml).
+  # IsQuest is cleared, MaxLevel raised to 5, and SP dropped to a flat 5. A
+  # 30s cooldown at Lv1 shrinking 5s per rank (10s at Lv5) is added. It
+  # remains a normal player-targeted skill (base TargetType: Attack is left
+  # untouched) - the player picks the enemy with the cursor. CastTime is
+  # zeroed so the cast is instant; this both drops the old distance-scaled
+  # windup and satisfies the instant_cast check in skill_castend_damage_id
+  # (src/map/skill.cpp), which re-engages auto-attack on the same target once
+  # the skill lands instead of leaving the player idle. The old distance-based
+  # cast-time multiplier in src/map/unit.cpp (case KN_CHARGEATK) becomes a
+  # no-op against a 0 base and is left in place, dead but harmless. Damage
+  # scaling (50% ATK per skill level per 3 cells of distance) and the removal
+  # of the target-knockback (renewal keeps it) both live in
+  # src/map/skills/swordman/chargeattack.cpp.
+  - Id: 1001
+    Name: KN_CHARGEATK
+    MaxLevel: 5
+    CastTime: 0
+    Flags:
+      IsQuest: false
+    Cooldown:
+      - Level: 1
+        Time: 30000
+      - Level: 2
+        Time: 25000
+      - Level: 3
+        Time: 20000
+      - Level: 4
+        Time: 15000
+      - Level: 5
+        Time: 10000
+    Requires:
+      SpCost: 5
+  - Id: 495
+    Name: KN_ONEHAND
+    Description: Sundering Strike
+    MaxLevel: 5
+    # TargetType Self + Flags.NoTargetSelf together make this a non-targeted
+    # "combo skill" (INF_SELF_SKILL + INF2_NOTARGETSELF -> CAST_DAMAGE in
+    # skill_get_casttype): the player presses the skill with no target cursor
+    # and unit_skilluse_id2 (src/map/unit.cpp) auto-redirects the cast onto
+    # ud->target, the caster's current target. No C++ change needed for this
+    # part - it's native engine behavior.
+    TargetType: Self
+    Range: 2
+    DamageFlags:
+      NoDamage: false
+    Flags:
+      IsSpirit: false
+      NoTargetSelf: true
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    Duration1: 12000
+    Cooldown: 10000
+    Requires:
+      SpCost: 22
+      Weapon:
+        1hSword: false
+        2hSword: true

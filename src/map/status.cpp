@@ -7810,6 +7810,8 @@ static defType status_calc_def(block_list *bl, status_change *sc, int32 def)
 		def = def * 75 / 100; //Should round down
 	if(sc->getSCE(SC_SIGNUMCRUCIS))
 		def -= def * sc->getSCE(SC_SIGNUMCRUCIS)->val2/100;
+	if(sc->getSCE(SC_SUNDER)) // Knight rebalance: Sundering Strike armor crush - no PC gate, applies to players too
+		def -= def * sc->getSCE(SC_SUNDER)->val1/100;
 	if(sc->getSCE(SC_CONCENTRATION))
 		def -= def * sc->getSCE(SC_CONCENTRATION)->val4/100;
 	if(sc->getSCE(SC_SKE))
@@ -8458,11 +8460,10 @@ static int16 status_calc_aspd_rate(block_list *bl, status_change *sc, int32 aspd
 		max < sc->getSCE(SC_SPEARQUICKEN)->val2)
 		max = sc->getSCE(SC_SPEARQUICKEN)->val2;
 
-	// Two-Hand Quicken rework: Momentum reduces weapon swing delay by 7% per
-	// stack (70 in the 1000 = 100% aspd_rate scale), capped at 35% at 5 stacks.
-	// At the 35% cap this is 5 points better than the old flat +30% aspd-rate.
+	// Two-Hand Quicken rework: Momentum reduces weapon swing delay by 3% per
+	// stack (30 in the 1000 = 100% aspd_rate scale), capped at 30% at 10 stacks.
 	if (sc->getSCE(SC_MOMENTUM)) {
-		int32 momentum_rate = min(350, 70 * sc->getSCE(SC_MOMENTUM)->val1);
+		int32 momentum_rate = min(300, 30 * sc->getSCE(SC_MOMENTUM)->val1);
 		if (max < momentum_rate)
 			max = momentum_rate;
 	}
@@ -13597,6 +13598,15 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 			// when the status expires or is otherwise removed.
 			clif_specialeffect_remove(bl, EF_MARKING_USE_CHANGEMONSTER, AREA, bl);
 			break;
+		case SC_MOMENTUM:
+			// Two-Hand Quicken rework: tear down the max-stacks aura
+			// (EF_BOTTOM_ANI) started in skill.cpp when Momentum hit 10 stacks,
+			// so it disappears the moment the bar drops below cap - whether the
+			// buff expires, is consumed by Bowling Bash/Sundering Strike, or is
+			// otherwise removed. Harmless no-op if the aura was never shown
+			// (the player never reached 10 stacks).
+			clif_specialeffect_remove(bl, EF_BOTTOM_ANI, AREA, bl);
+			break;
 		case SC_ANKLE:
 			// Remove the persistent "bound" cage shown while rooted (e.g. by
 			// Snaring Arrow). Harmless no-op for SC_ANKLE sources that never
@@ -16549,7 +16559,13 @@ void StatusDatabase::loadingFinished(){
 		}else if( status->flag[SCF_BLEFFECT] ){
 			this->StatusRelevantBLTypes[status->icon] |= BL_SCEFFECT;
 		}else{
-			this->StatusRelevantBLTypes[status->icon] = BL_PC;
+			// OR in BL_PC rather than overwrite: two different statuses can share
+			// an icon (icon-borrowing, e.g. SC_SUNDER borrows EFST_BROKENARMOR from
+			// SC_BROKENARMOR). Overwriting here would clobber BL_SCEFFECT bits a
+			// BlEffect status already set for the same icon slot, depending on
+			// unordered_map iteration order - silently hiding the icon for any
+			// non-PC (BL_MOB, etc.) target.
+			this->StatusRelevantBLTypes[status->icon] |= BL_PC;
 		}
 	}
 

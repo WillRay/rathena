@@ -240,6 +240,56 @@ Body:
   # lowered from level 10 to level 5 to match the trimmed SM_RECOVERY MaxLevel
   # (see the Swordman Tree override above and db/import/skill_db.yml) — level 10
   # is no longer reachable, so the skill would be unlearnable otherwise.
+  # Knight rebalance: KN_ONEHAND (Sundering Strike) moves from a Two-Hand Quicken 10
+  # Soul-Link gate to a Bowling Bash 10 gate, matching its new identity as a
+  # follow-up strike that spends the Momentum stacks Two-Hand Quicken builds
+  # (see db/import/skill_db.yml). MaxLevel 1 -> 5. KN_TWOHANDQUICKEN Level 0
+  # erases the old inherited prerequisite (import merges Requires by keyed
+  # skill name, it does not replace them - same pattern as HT_POWER's
+  # AC_DOUBLE erasure above). Propagates to Lord_Knight/Lord_Knight2 through
+  # inheritance.
+  - Job: Knight
+    Tree:
+      - Name: KN_ONEHAND
+        MaxLevel: 5
+        Requires:
+          - Name: KN_TWOHANDQUICKEN
+            Level: 0
+          - Name: KN_BOWLINGBASH
+            Level: 10
+      # Counter Attack rebalance: now gated ONLY behind Bowling Bash Rank 5.
+      # SM_TWOHAND Level 0 erases the inherited Two-Handed Sword Mastery
+      # Level 1 requirement (import merges Requires by keyed skill name, it
+      # does not replace them - same pattern as HT_POWER's AC_DOUBLE erasure
+      # above), and the earlier Two-Hand Quicken Rank 5 requirement has been
+      # dropped entirely rather than erased, since it was only ever added by
+      # this same import block. Bowling Bash's own base-tree requirement of
+      # KN_AUTOCOUNTER Level 5 (db/pre-re/skill_tree.yml) is erased below to
+      # avoid a circular gate between the two skills.
+      - Name: KN_AUTOCOUNTER
+        MaxLevel: 5
+        Requires:
+          - Name: SM_TWOHAND
+            Level: 0
+          - Name: KN_BOWLINGBASH
+            Level: 5
+      # See the KN_AUTOCOUNTER entry above: this erases the inherited
+      # KN_AUTOCOUNTER Level 5 requirement so it doesn't form a circular gate
+      # now that KN_AUTOCOUNTER itself requires KN_BOWLINGBASH Level 5.
+      - Name: KN_BOWLINGBASH
+        MaxLevel: 10
+        Requires:
+          - Name: KN_AUTOCOUNTER
+            Level: 0
+      # Charge Attack is no longer a quest skill (IsQuest cleared in
+      # db/import/skill_db.yml). It is now a 5-level skill-point skill gated
+      # behind Cavalier Mastery (KN_CAVALIERMASTERY) level 5. The base tree
+      # entry has no prerequisites of its own, so no Level: 0 erase is needed.
+      - Name: KN_CHARGEATK
+        MaxLevel: 5
+        Requires:
+          - Name: KN_CAVALIERMASTERY
+            Level: 5
   - Job: Lord_Knight
     Tree:
       - Name: LK_PARRYING

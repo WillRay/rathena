@@ -7342,14 +7342,18 @@ enum damage_lv battle_weapon_attack(block_list* src, block_list* target, t_tick 
 
 	// Knight rebalance: Retaliation active retaliation stance. Unlike Counter
 	// Instinct's SC_AUTOCOUNTER above, this does not block the incoming hit - the
-	// Knight simply has a 10% * skill level chance to also swing back, melee or
-	// ranged, while SC_KNIGHTCOUNTER is active. Deferred 100ms so it resolves
-	// cleanly after the triggering hit (no re-entrancy if it kills the attacker).
+	// Knight simply has an 8% * skill level chance to also swing back, melee or
+	// ranged, while SC_KNIGHTCOUNTER is active. This roll happens here, before
+	// wd = battle_calc_attack(...) below resolves the incoming attack's own
+	// hit/miss, so the counter can trigger even when the triggering attack
+	// misses. Deferred 100ms so it resolves cleanly after the triggering hit
+	// (no re-entrancy if it kills the attacker). No special-effect cue is
+	// played here (unlike Counter Instinct's guaranteed counter above) since
+	// it fires often enough at higher levels that the cue became noise.
 	if (tsc && tsc->getSCE(SC_KNIGHTCOUNTER) && status_check_skilluse(target, src, KN_AUTOCOUNTER, 1)) {
 		uint16 skill_lv = tsc->getSCE(SC_KNIGHTCOUNTER)->val1;
 
-		if (rnd()%100 < 10 * skill_lv) {
-			clif_specialeffect(target, EF_AUTOCOUNTER, AREA);
+		if (rnd()%100 < 8 * skill_lv) {
 			skill_addtimerskill(target, tick + 100, src->id, 0, 0, KN_AUTOCOUNTER, skill_lv, BF_WEAPON, 0);
 		}
 	}

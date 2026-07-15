@@ -315,6 +315,15 @@ Body:
       SendVal1: true            # shows the stack count on the icon
       NoDispell: true
       NoClearance: true
+  - Status: Sunder
+    Icon: EFST_BROKENARMOR      # borrowed - visually reads as "armor broken"
+    CalcFlags:
+      Def: true                 # triggers DEF recalc; see status_calc_def
+    Flags:
+      Debuff: true
+      BlEffect: true
+      DisplayPc: true
+      SendVal1: true            # shows the DEF reduction % on the icon
   - Status: Concentrate
     Icon: EFST_CONCENTRATION
     DurationLookup: AC_CONCENTRATION

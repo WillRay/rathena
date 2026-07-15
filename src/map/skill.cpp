@@ -1257,7 +1257,13 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	// Two-Hand Quicken rework: any landed auto-attack builds a Momentum stack
 	if (sd && skill_id == 0 && sc && sc->getSCE(SC_TWOHANDQUICKEN)) {
 		int32 stacks = sc->getSCE(SC_MOMENTUM) ? sc->getSCE(SC_MOMENTUM)->val1 : 0;
-		sc_start(src, src, SC_MOMENTUM, 100, min(5, stacks + 1), 15000);
+		sc_start(src, src, SC_MOMENTUM, 100, min(10, stacks + 1), 10000);
+		// Play a spinning aura (Chaos Panic's EF_BOTTOM_ANI) the moment the bar
+		// tops out at 10 stacks so it is visually clear the Knight is capped.
+		// Fire only on the 9->10 transition - re-applying at cap keeps the same
+		// looping aura, and it is torn down in status_change_end (SC_MOMENTUM).
+		if (stacks == 9)
+			clif_specialeffect(src, EF_BOTTOM_ANI, AREA);
 	}
 
 	if (!tsc) //skill additional effect is about adding effects to the target...
@@ -1797,7 +1803,11 @@ int32 skill_counter_additional_effect (block_list* src, block_list *bl, uint16 s
 		status_change *bsc = status_get_sc(bl);
 		if (bsc && bsc->getSCE(SC_TWOHANDQUICKEN)) {
 			int32 stacks = bsc->getSCE(SC_MOMENTUM) ? bsc->getSCE(SC_MOMENTUM)->val1 : 0;
-			sc_start(bl, bl, SC_MOMENTUM, 100, min(5, stacks + 1), 15000);
+			sc_start(bl, bl, SC_MOMENTUM, 100, min(10, stacks + 1), 10000);
+			// Show the max-stacks aura (see skill_additional_effect) on the
+			// 9->10 transition; removed in status_change_end (SC_MOMENTUM).
+			if (stacks == 9)
+				clif_specialeffect(bl, EF_BOTTOM_ANI, AREA);
 		}
 	}
 
@@ -3087,6 +3097,14 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 		case NPC_CRITICALSLASH:
 		case TF_DOUBLE:
 		case GS_CHAINACTION:
+		// Knight rebalance: KN_ONEHAND is repurposed from "One-Hand Quicken" (a
+		// no-damage self-buff) into Sundering Strike, a real weapon attack. Its
+		// own id still carries that old buff's raise-hand cast pose in the
+		// client's per-skill-id animation table, which would otherwise show
+		// instead of a weapon swing on every real hit regardless of whatever
+		// borrowed visual is played beforehand (see sunderingstrike.cpp). Forcing
+		// clif_damage here makes the real hit display as a plain weapon swing.
+		case KN_ONEHAND:
 			clif_damage(*src,*bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,dmg.type,dmg.damage2,false);
 			break;
 
@@ -5256,6 +5274,7 @@ TIMER_FUNC(skill_castend_id){
 						skill_blockpc_start(*sd, HT_PHANTASMIC, cooldown);
 					else if (ud->skill_id == HT_PHANTASMIC)
 						skill_blockpc_start(*sd, HT_BLITZBEAT, cooldown);
+
 				}
 			}
 			break;
