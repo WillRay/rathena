@@ -1254,18 +1254,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		}
 	}
 
-	// Two-Hand Quicken rework: any landed auto-attack builds a Momentum stack
-	if (sd && skill_id == 0 && sc && sc->getSCE(SC_TWOHANDQUICKEN)) {
-		int32 stacks = sc->getSCE(SC_MOMENTUM) ? sc->getSCE(SC_MOMENTUM)->val1 : 0;
-		sc_start(src, src, SC_MOMENTUM, 100, min(10, stacks + 1), 10000);
-		// Play a spinning aura (Chaos Panic's EF_BOTTOM_ANI) the moment the bar
-		// tops out at 10 stacks so it is visually clear the Knight is capped.
-		// Fire only on the 9->10 transition - re-applying at cap keeps the same
-		// looping aura, and it is torn down in status_change_end (SC_MOMENTUM).
-		if (stacks == 9)
-			clif_specialeffect(src, EF_BOTTOM_ANI, AREA);
-	}
-
 	if (!tsc) //skill additional effect is about adding effects to the target...
 		//So if the target can't be inflicted with statuses, this is pointless.
 		return 0;
@@ -1798,16 +1786,22 @@ int32 skill_counter_additional_effect (block_list* src, block_list *bl, uint16 s
 	sd = BL_CAST(BL_PC, src);
 	dstsd = BL_CAST(BL_PC, bl);
 
-	// Two-Hand Quicken rework: taking a melee hit builds a Momentum stack
-	if (dstsd && (attack_type & BF_SHORT)) {
-		status_change *bsc = status_get_sc(bl);
-		if (bsc && bsc->getSCE(SC_TWOHANDQUICKEN)) {
-			int32 stacks = bsc->getSCE(SC_MOMENTUM) ? bsc->getSCE(SC_MOMENTUM)->val1 : 0;
-			sc_start(bl, bl, SC_MOMENTUM, 100, min(10, stacks + 1), 10000);
-			// Show the max-stacks aura (see skill_additional_effect) on the
-			// 9->10 transition; removed in status_change_end (SC_MOMENTUM).
-			if (stacks == 9)
-				clif_specialeffect(bl, EF_BOTTOM_ANI, AREA);
+	// Two-Hand Quicken rework: landing any offensive skill builds a Momentum
+	// stack. This has to live here rather than in skill_additional_effect,
+	// because that function is skipped whenever the hit kills the target -
+	// and a killing blow should still build Momentum.
+	if (sd && skill_id != 0) {
+		status_change* sc = status_get_sc(src);
+
+		if (sc && sc->getSCE(SC_TWOHANDQUICKEN)) {
+			int32 stacks = sc->getSCE(SC_MOMENTUM) ? sc->getSCE(SC_MOMENTUM)->val1 : 0;
+			sc_start(src, src, SC_MOMENTUM, 100, min(3, stacks + 1), 10000);
+			// Play a spinning aura (Chaos Panic's EF_BOTTOM_ANI) the moment the bar
+			// tops out at 3 stacks so it is visually clear the Knight is capped.
+			// Fire only on the 2->3 transition - re-applying at cap keeps the same
+			// looping aura, and it is torn down in status_change_end (SC_MOMENTUM).
+			if (stacks == 2)
+				clif_specialeffect(src, EF_BOTTOM_ANI, AREA);
 		}
 	}
 

@@ -1465,7 +1465,7 @@ enum sc_type : int16 {
 	SC_TWOHANDBOOST, // Granted to self after landing any offensive skill (not gated on BF_MAGIC - the Swordsman tree has no magic skills). val1 = SM_TWOHAND skill level. 5s window; empowers the next auto attack with +10%*level damage, then consumes itself. See battle_calc_attack_skill_ratio.
 
 	// Knight rebalance: Two-Hand Quicken stacking ASPD
-	SC_MOMENTUM, // Stacks while Two-Hand Quicken is active, built by landing/receiving attacks. val1 = stack count (max 10). Reduces weapon swing delay by 3% per stack (max 30% at 10 stacks) via the aspd_rate max group. 10s duration, refreshes on stack. Own icon (EFST_STRIKING, borrowed) so it does not share Two-Hand Quicken's slot. See status_calc_aspd_rate.
+	SC_MOMENTUM, // Stacks while Two-Hand Quicken is active, built by landing offensive skills. val1 = stack count (max 3). Reduces weapon swing delay by 10% per stack (max 30% at 3 stacks) via the aspd_rate max group. 10s duration, refreshes on stack. Own icon (EFST_STRIKING, borrowed) so it does not share Two-Hand Quicken's slot. See status_calc_aspd_rate.
 
 	// Knight rebalance: Retaliation active retaliation stance
 	SC_KNIGHTCOUNTER, // Active self-buff from KN_AUTOCOUNTER ("Retaliation"). val1 = KN_AUTOCOUNTER skill level. 10s duration; while active, any physical auto-attack (melee or ranged, hit or miss) against the Knight has an 8% * skill level chance to trigger a deferred counterstrike. See battle_weapon_attack.

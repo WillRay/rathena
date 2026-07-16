@@ -1006,6 +1006,50 @@ added in future passes.
     cooldown, and both lost their now-inaccurate `Comments:` line about
     sharing a cooldown.
 
+- **Battle Rhythm (Momentum active-play rework):** Momentum stacks are no
+  longer built by landing or taking auto attacks — they are now granted by
+  landing an offensive skill while Two-Hand Quicken is active. Max stacks
+  drops from `10` to `3`, and each stack now reduces weapon swing delay by
+  `10%` (up from `3%`), so the cap is still `30%` at max stacks, just reached
+  in a third of the hits. Bowling Bash and Sundering Strike no longer consume
+  Momentum stacks for bonus damage — their former max-stack payoff is now a
+  flat, unconditional part of their base damage: Bowling Bash deals
+  `400% + 30% per skill level` (was `100% + 30%` plus up to `+300%` consumed),
+  and Sundering Strike deals `450% + 100% per skill level` (was
+  `200% + 100%` plus up to `+250%` consumed). *Developer Comments: passively
+  farming Momentum off auto attacks or getting hit rewarded standing still
+  and tanking damage, not playing the class. Tying stacks to landing offensive
+  skills makes Momentum a payoff for an active Knight rotation, and letting
+  Bowling Bash and Sundering Strike keep their old damage ceiling unconditionally
+  removes the awkward tension where spending ASPD stacks for damage undercut
+  the very buff that made the next few swings faster.*
+  - `src/map/skill.cpp` — the stack grant moved from `skill_additional_effect`
+    into `skill_counter_additional_effect` (keyed on `skill_id != 0` instead
+    of the old `skill_id == 0` auto-attack check), because
+    `skill_additional_effect` is skipped whenever the hit kills the target —
+    a killing blow with e.g. Bowling Bash was silently failing to grant a
+    stack under the old auto-attack-only placement. Cap lowered to
+    `min(3, ...)` from `min(10, ...)`; the max-stacks aura now fires on the
+    `2->3` transition. The damage-received stack grant (the old `BF_SHORT`
+    melee-hits-taken block) has been removed entirely.
+  - `src/map/status.cpp` — `status_calc_aspd_rate`'s Momentum bonus changed
+    from `30 * min(10, stacks)` (3%/stack, cap 300) to `100 * val1` (10%/stack,
+    still capped at `300`, i.e. `30%` at 3 stacks).
+  - `src/map/status.hpp` — `SC_MOMENTUM` comment updated to reflect the new
+    grant trigger, 3-stack cap, and 10%-per-stack ASPD bonus.
+  - `src/map/skills/swordman/bowlingbash.cpp` — `calculateSkillRatio` now adds
+    a flat `300 + 30 * skill_lv` instead of reading and consuming Momentum;
+    `castendDamageId` no longer ends/re-applies `SC_MOMENTUM`.
+  - `src/map/skills/swordman/sunderingstrike.cpp` — `calculateSkillRatio` now
+    adds a flat `350 + 100 * skill_lv` instead of reading and consuming
+    Momentum; `castendDamageId` no longer ends/re-applies `SC_MOMENTUM`.
+  - `lua files/skillinfoz/skilldescript.lub` — `KN_TWOHANDQUICKEN`'s Momentum
+    paragraph rewritten for the new grant trigger, 3-stack cap, and 10% swing
+    delay reduction; `KN_BOWLINGBASH` and `KN_ONEHAND` lost their Momentum
+    consumption lines and now state the flat damage formulas directly.
+  - `lua files/stateicon/stateiconinfo.lub` — the `EFST_STRIKING` (Momentum)
+    tooltip updated from `3%` to `10%` per stack.
+
 ### Crusader Skill Changes
 
 - **Holy Cross:** Damage raised from `100% + 35% per level` to

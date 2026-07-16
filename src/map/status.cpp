@@ -8460,10 +8460,10 @@ static int16 status_calc_aspd_rate(block_list *bl, status_change *sc, int32 aspd
 		max < sc->getSCE(SC_SPEARQUICKEN)->val2)
 		max = sc->getSCE(SC_SPEARQUICKEN)->val2;
 
-	// Two-Hand Quicken rework: Momentum reduces weapon swing delay by 3% per
-	// stack (30 in the 1000 = 100% aspd_rate scale), capped at 30% at 10 stacks.
+	// Two-Hand Quicken rework: Momentum reduces weapon swing delay by 10% per
+	// stack (100 in the 1000 = 100% aspd_rate scale), capped at 30% at 3 stacks.
 	if (sc->getSCE(SC_MOMENTUM)) {
-		int32 momentum_rate = min(300, 30 * sc->getSCE(SC_MOMENTUM)->val1);
+		int32 momentum_rate = min(300, 100 * sc->getSCE(SC_MOMENTUM)->val1);
 		if (max < momentum_rate)
 			max = momentum_rate;
 	}
@@ -13600,11 +13600,10 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 			break;
 		case SC_MOMENTUM:
 			// Two-Hand Quicken rework: tear down the max-stacks aura
-			// (EF_BOTTOM_ANI) started in skill.cpp when Momentum hit 10 stacks,
-			// so it disappears the moment the bar drops below cap - whether the
-			// buff expires, is consumed by Bowling Bash/Sundering Strike, or is
-			// otherwise removed. Harmless no-op if the aura was never shown
-			// (the player never reached 10 stacks).
+			// (EF_BOTTOM_ANI) started in skill.cpp when Momentum hit 3 stacks,
+			// so it disappears the moment the buff expires or is otherwise
+			// removed. Harmless no-op if the aura was never shown (the player
+			// never reached 3 stacks).
 			clif_specialeffect_remove(bl, EF_BOTTOM_ANI, AREA, bl);
 			break;
 		case SC_ANKLE:

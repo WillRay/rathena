@@ -33,19 +33,13 @@ void SkillBowlingBash::modifyDamageData(Damage& dmg, const block_list& src, cons
 }
 
 void SkillBowlingBash::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
-	base_skillratio += 30 * skill_lv;
 #ifndef RENEWAL
-	// Knight rebalance: consume up to 5 Momentum stacks (built by Two-Hand
-	// Quicken) for +60% ATK each, +300% at 5 stacks - same total ceiling as
-	// before, reached in half the stacks now that Bowling Bash's cooldown is
-	// no longer linked to Sundering Strike's. Read the live stack count here -
-	// the whole splash/chain cascade runs synchronously, so every hit sees the
-	// same value; the stacks are consumed once at the end of the initial cast
-	// in castendDamageId below.
-	const status_change* sc = status_get_sc(src);
-
-	if (sc && sc->getSCE(SC_MOMENTUM))
-		base_skillratio += 60 * min(5, sc->getSCE(SC_MOMENTUM)->val1);
+	// Momentum rework: Bowling Bash no longer consumes Momentum stacks for
+	// bonus damage - the old 5-stack ceiling (+300% ATK) is now baked in
+	// unconditionally, so Momentum is a pure ASPD reward for landing skills.
+	base_skillratio += 300 + 30 * skill_lv;
+#else
+	base_skillratio += 30 * skill_lv;
 #endif
 }
 
@@ -129,24 +123,5 @@ void SkillBowlingBash::castendDamageId(block_list* src, block_list* target, uint
 	}
 	// Original hit or chain hit depending on flag
 	skill_attack(BF_WEAPON,src,src,target,getSkillId(),skill_lv,tick,(flag&0xFFF)>0?SD_ANIMATION:0);
-
-	// Knight rebalance: consume Momentum only on the initial cast (flag depth
-	// 0), after every splash/chain hit above has already read the live stack
-	// count in calculateSkillRatio. Recursive chain calls carry a non-zero
-	// depth and must not consume. Only up to 5 stacks are spent - anything
-	// beyond that is re-applied instead of being discarded with the rest of
-	// the buff (same partial-consumption pattern as Sundering Strike).
-	if ((flag&0xFFF) == 0) {
-		status_change* sc = status_get_sc(src);
-
-		if (sc && sc->getSCE(SC_MOMENTUM)) {
-			int32 total_stacks = sc->getSCE(SC_MOMENTUM)->val1;
-			int32 remaining = total_stacks - min(5, total_stacks);
-
-			status_change_end(src, SC_MOMENTUM);
-			if (remaining > 0)
-				sc_start(src, src, SC_MOMENTUM, 100, remaining, 10000);
-		}
-	}
 #endif
 }
