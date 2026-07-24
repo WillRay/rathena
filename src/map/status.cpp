@@ -2496,6 +2496,42 @@ uint16 status_base_atk(const block_list *bl, const struct status_data *status, i
 	return cap_value(str, 0, USHRT_MAX);
 }
 
+#ifndef RENEWAL
+/**
+ * VIT-based soft DEF bonus (VIT redesign). Players get a quadratic bonus on top of the
+ * linear stock term; other unit types keep the stock linear-only formula.
+ * @param bl: Object to calculate for
+ * @param vit: VIT stat value
+ * @return def2 contribution from VIT
+ */
+static int32 status_calc_vit_def2_bonus(const block_list *bl, int32 vit)
+{
+	int32 bonus = vit;
+	if (bl->type == BL_PC && battle_config.vit_def2_quadratic_divisor > 0)
+		bonus += vit * vit / battle_config.vit_def2_quadratic_divisor;
+	return bonus;
+}
+
+/**
+ * Soft MDEF bonus (VIT redesign). Players derive mdef2 purely from VIT (linear + quadratic
+ * term); other unit types keep the stock int_ + vit/2 formula.
+ * @param bl: Object to calculate for
+ * @param vit: VIT stat value
+ * @param int_: INT stat value
+ * @return mdef2 contribution from VIT/INT
+ */
+static int32 status_calc_vit_mdef2_bonus(const block_list *bl, int32 vit, int32 int_)
+{
+	if (bl->type == BL_PC) {
+		int32 bonus = vit;
+		if (battle_config.vit_mdef2_quadratic_divisor > 0)
+			bonus += vit * vit / battle_config.vit_mdef2_quadratic_divisor;
+		return bonus;
+	}
+	return int_ + (vit / 2);
+}
+#endif
+
 #ifdef RENEWAL
 /**
  * Weapon attack value calculated for Players
@@ -2708,11 +2744,11 @@ void status_calc_misc(block_list *bl, struct status_data *status, int32 level)
 	status->flee = cap_value(stat, 1, SHRT_MAX);
 	// Def2
 	stat = status->def2;
-	stat += status->vit;
+	stat += status_calc_vit_def2_bonus(bl, status->vit);
 	status->def2 = cap_value(stat, 0, SHRT_MAX);
 	// Mdef2
 	stat = status->mdef2;
-	stat += status->int_ + (status->vit / 2);
+	stat += status_calc_vit_mdef2_bonus(bl, status->vit, status->int_);
 	status->mdef2 = cap_value(stat, 0, SHRT_MAX);
 #endif
 
@@ -3526,6 +3562,13 @@ static uint32 status_calc_maxhp_pc( map_session_data& sd, uint32 vit ){
 	}else if( pc_is_taekwon_ranker( &sd ) ){
 		dmax *= 3;
 	}
+
+#ifndef RENEWAL
+	// VIT redesign: flat MaxHP bonus, capped so it only matters at low-to-mid VIT
+	if( vit > 0 && battle_config.vit_flat_hp_cap > 0 ){
+		dmax += umin( static_cast<uint32>( pow( vit, 1.5 ) ), static_cast<uint32>( battle_config.vit_flat_hp_cap ) );
+	}
+#endif
 
 	// Vit from equip gives +1 additional HP
 	dmax += sd.indexed_bonus.param_equip[PARAM_VIT];
@@ -5281,7 +5324,12 @@ void status_calc_regen(block_list *bl, struct status_data *status, struct regen_
 	sd = BL_CAST(BL_PC,bl);
 	sc = status_get_sc(bl);
 
+#ifndef RENEWAL
+	// VIT redesign: smooth the vit/5 step so the fractional remainder isn't lost at the boundary
+	val = static_cast<int32>(status->vit / 5.0 + max(1.0, status->max_hp / 200.0));
+#else
 	val = (status->vit/5) + max(1, status->max_hp/200);
+#endif
 
 	if( sd && sd->hprecov_rate != 100 )
 		val = val*sd->hprecov_rate/100;
@@ -6063,7 +6111,7 @@ void status_calc_bl_main(block_list& bl, std::bitset<SCB_MAX> flag)
 #ifdef RENEWAL
 			+ (int32)( ((float)status->vit/2 - (float)b_status->vit/2) + ((float)status->agi/5 - (float)b_status->agi/5) )
 #else
-			+ (status->vit - b_status->vit)
+			+ (status_calc_vit_def2_bonus(&bl, status->vit) - status_calc_vit_def2_bonus(&bl, b_status->vit))
 #endif
 		);
 	}
@@ -6083,11 +6131,12 @@ void status_calc_bl_main(block_list& bl, std::bitset<SCB_MAX> flag)
 			)
 			status->mdef2 = status_calc_mdef2(&bl, sc, b_status->mdef2);
 		else
-			status->mdef2 = status_calc_mdef2(&bl, sc, b_status->mdef2 +(status->int_ - b_status->int_)
+			status->mdef2 = status_calc_mdef2(&bl, sc, b_status->mdef2
 #ifdef RENEWAL
+			+(status->int_ - b_status->int_)
 			+ (int32)( ((float)status->dex/5 - (float)b_status->dex/5) + ((float)status->vit/5 - (float)b_status->vit/5) )
 #else
-			+ ((status->vit - b_status->vit) / 2)
+			+ (status_calc_vit_mdef2_bonus(&bl, status->vit, status->int_) - status_calc_vit_mdef2_bonus(&bl, b_status->vit, b_status->int_))
 #endif
 			);
 	}
@@ -9593,6 +9642,21 @@ const status_change* status_get_sc(const block_list* bl){
 }
 
 
+#ifndef RENEWAL
+/**
+ * Continuous (breakpoint-free) status resistance curve for the VIT redesign.
+ * @param stat: Resisting stat value (VIT)
+ * @return sc_def/tick_def on the 10000 = 100% scale; asymptotically approaches but never
+ *         reaches 10000 from the stat alone (stat == vit_sc_def_halfpoint -> 5000, i.e. 50%).
+ */
+static int32 status_sc_def_curve(int32 stat)
+{
+	if (stat <= 0)
+		return 0;
+	return static_cast<int32>((int64)10000 * stat / (stat + battle_config.vit_sc_def_halfpoint));
+}
+#endif
+
 /*========================================== [Playtester]
 * Returns the interval for status changes that iterate multiple times
 * through the timer (e.g. those that deal damage in regular intervals)
@@ -9694,17 +9758,12 @@ t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type ty
 		case SC_POISON:
 		case SC_DPOISON:
 #ifndef RENEWAL
-			sc_def = status->vit*100;
-			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-			if (sd) {
-				// For players: 60000 - 450*vit - 100*luk
-				tick_def = status->vit*75;
-				tick_def2 = status->luk*100;
-			} else {
-				// For monsters: 30000 - 200*vit
-				tick /= 2;
-				tick_def = (status->vit*200)/3;
-			}
+			// VIT redesign: continuous resistance curve, no LUK component
+			sc_def = status_sc_def_curve(status->vit);
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
+			tick_def = sc_def * 3 / 4; // Duration resists slightly slower than chance
+			if (!sd)
+				tick /= 2; // Monsters take poison ticks twice as fast
 #else
 			sc_def = status->vit * 100 - levelAdv;
 			tick_def2 = -2000;
@@ -9712,9 +9771,9 @@ t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type ty
 			break;
 		case SC_STUN:
 #ifndef RENEWAL
-			sc_def = status->vit*100;
-			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-			tick_def2 = status->luk*10;
+			// VIT redesign: continuous resistance curve, no LUK component
+			sc_def = status_sc_def_curve(status->vit);
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
 #else
 			sc_def = status->vit * 100 - levelAdv;
 			tick_def2 = -500;
@@ -9722,9 +9781,9 @@ t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type ty
 			break;
 		case SC_SILENCE:
 #ifndef RENEWAL
-			sc_def = status->vit*100;
-			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-			tick_def2 = status->luk*10;
+			// VIT redesign: continuous resistance curve, no LUK component
+			sc_def = status_sc_def_curve(status->vit);
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
 #else
 			sc_def = status->int_ * 100 - levelAdv;
 			tick_def2 = -2000;
@@ -9732,9 +9791,9 @@ t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type ty
 			break;
 		case SC_BLEEDING:
 #ifndef RENEWAL
-			sc_def = status->vit*100;
-			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-			tick_def2 = status->luk*10;
+			// VIT redesign: continuous resistance curve, no LUK component
+			sc_def = status_sc_def_curve(status->vit);
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
 #else
 			sc_def = status->agi * 100 - levelAdv;
 			tick_def2 = -12000;
@@ -9742,9 +9801,9 @@ t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type ty
 			break;
 		case SC_SLEEP:
 #ifndef RENEWAL
-			sc_def = status->int_*100;
-			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-			tick_def2 = status->luk*10;
+			// VIT redesign: moved from INT to VIT, continuous resistance curve
+			sc_def = status_sc_def_curve(status->vit);
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
 #else
 			sc_def = status->agi * 100 - levelAdv;
 			tick_def2 = -2000;
@@ -9752,8 +9811,9 @@ t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type ty
 			break;
 		case SC_STONEWAIT:
 #ifndef RENEWAL
+			// VIT redesign: kept on hard MDEF (equipment counterplay), LUK component dropped
 			sc_def = status->mdef*100;
-			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
 			tick_def = 0; // No duration reduction
 #else
 			sc_def = status->mdef * 100 - levelAdv;
@@ -9762,33 +9822,34 @@ t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type ty
 			break;
 		case SC_FREEZE:
 #ifndef RENEWAL
+			// VIT redesign: kept on hard MDEF (equipment counterplay), LUK component dropped
 			sc_def = status->mdef*100;
-			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-			tick_def2 = status_src->luk*-10; // Caster can increase final duration with luk
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
+			tick_def2 = status_src->luk*-10; // Caster can increase final duration with luk (offensive LUK, unaffected)
 #else
 			sc_def = status->mdef * 100 - levelAdv;
 			tick_def2 = -3000;
 #endif
 			break;
 		case SC_CURSE:
+#ifndef RENEWAL
+			// VIT redesign: moved from LUK to VIT, continuous resistance curve.
+			// The old "immunity when luk is zero" quirk is removed along with LUK's defensive role.
+			sc_def = status_sc_def_curve(status->vit);
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
+#else
 			// Special property: immunity when luk is zero
 			if (status->luk == 0)
 				return 0;
-#ifndef RENEWAL
-			sc_def = status->luk*100;
-			sc_def2 = status->luk*10 - status_get_lv(src)*10; // Curse only has a level penalty and no resistance
-			tick_def = status->vit*100;
-			tick_def2 = status->luk*10;
-#else
 			sc_def = status->luk * 100 - levelAdv;
 			tick_def2 = -2000;
 #endif
 			break;
 		case SC_BLIND:
 #ifndef RENEWAL
-			sc_def = (status->vit + status->int_)*50;
-			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-			tick_def2 = status->luk*10;
+			// VIT redesign: moved fully to VIT, continuous resistance curve
+			sc_def = status_sc_def_curve(status->vit);
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
 #else
 			sc_def = status->int_ * 100 - levelAdv;
 			tick_def2 = -2000;
@@ -9796,9 +9857,9 @@ t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type ty
 			break;
 		case SC_CONFUSION:
 #ifndef RENEWAL
-			sc_def = (status->str + status->int_)*50;
-			sc_def2 = status_get_lv(src)*10 - status_get_lv(bl)*10 - status->luk*10; // Reversed sc_def2
-			tick_def2 = status->luk*10;
+			// VIT redesign: moved from STR/INT to VIT, continuous resistance curve
+			sc_def = status_sc_def_curve(status->vit);
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
 #else
 			sc_def = status->luk * 100 - levelAdv;
 			tick_def2 = -2000;
@@ -9970,8 +10031,12 @@ t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type ty
 			}
 		}
 
+#ifdef RENEWAL
 		// Aegis accuracy
 		if(rate > 0 && rate%10 != 0) rate += (10 - rate%10);
+#endif
+		// VIT redesign: rounding removed for pre-renewal so the continuous resist curve
+		// isn't quantized back up to the attacker's favor.
 	}
 
 	std::shared_ptr<s_status_change_db> scdb = status_db.find(type);

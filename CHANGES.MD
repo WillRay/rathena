@@ -33,6 +33,94 @@ added in future passes.
 
 ---
 
+## Stat Changes
+
+### VIT Redesign
+
+VIT used to read as an "HP-only" stat: soft DEF faded to nothing against
+late-game damage, soft MDEF belonged to INT instead of VIT, and status
+resistance was governed by hidden breakpoints (97 VIT for stun immunity, 0 LUK
+for curse immunity) rather than anything a player could see on their status
+window. This pass gives VIT a clear identity — endurance, resilience, and
+resistance to physical and magical punishment — and makes every point of VIT
+feel valuable instead of only the ones that happened to land on a breakpoint.
+Full design rationale and value tables live in `doc/vit_redesign.md`.
+
+- **Soft DEF now scales with VIT quadratically, and is deterministic.**
+  `def2 = VIT + VIT² / 150` (was flat `def2 = VIT`), and the old hidden random
+  roll applied when soft DEF reduces damage has been removed for players — the
+  displayed def2 value is now exactly what gets applied, every hit. *Developer
+  Comments: The old formula (`0.3×VIT` plus a widening random quadratic tail
+  players could never see) meant a VIT tank's actual toughness was a dice roll
+  even they couldn't predict. Making it deterministic and moving the quadratic
+  growth onto the visible stat means investing in VIT pays off exactly as much
+  as it appears to, and high-VIT tanks stay meaningfully tankier at every
+  damage tier instead of soft DEF flattening out.*
+  - `src/map/status.cpp` — `status_calc_vit_def2_bonus()` helper, wired into
+    `status_calc_misc()` and the SCB_DEF2 recalculation path.
+  - `src/map/battle.cpp` — `battle_calc_defense_reduction()`, player branch now
+    sets `vit_def = def2` directly.
+  - Tunable: `vit_def2_quadratic_divisor` in `conf/battle/status.conf`
+    (default `150`; `0` restores the old flat `def2 = VIT`).
+
+- **Soft MDEF moves from INT to VIT.** `mdef2 = VIT + VIT² / 400` for players
+  (was `mdef2 = INT + VIT/2`). INT keeps MATK, SP, SP regen, and every other
+  casting-related bonus — it no longer contributes to magical durability at
+  all. *Developer Comments: Magical durability and magical power living on the
+  same stat meant every caster was accidentally a little tanky against magic
+  just for building offense, while dedicated tanks had no way to buy magic
+  resistance at all. Splitting them out means casters make an honest choice
+  between glass-cannon and durable, and VIT becomes the answer to "how do I
+  survive magic" for every class, not just casters.*
+  - `src/map/status.cpp` — `status_calc_vit_mdef2_bonus()` helper, same wiring
+    as the def2 change above.
+  - Tunable: `vit_mdef2_quadratic_divisor` in `conf/battle/status.conf`
+    (default `400`; `0` drops mdef2 to `VIT` only).
+
+- **Status resistance consolidated under VIT and made continuous.** Stun,
+  Silence, Bleeding, Poison, Sleep, Blind, Confusion, and Curse all now resist
+  off a single smooth curve, `resist% = VIT / (VIT + 60)`, instead of a mix of
+  VIT/INT/STR/LUK with hard breakpoints. Sleep moves off INT, Blind and
+  Confusion move off their STR/INT blends, and Curse moves off LUK — including
+  removing the old "0 LUK = immune to Curse" quirk. LUK no longer has any
+  defensive role; it keeps its existing critical-hit and perfect-dodge
+  identity untouched. Freeze and Stone deliberately keep resisting off
+  equipped hard MDEF rather than VIT, so gear stays the counterplay to those
+  two statuses. *Developer Comments: The single biggest source of "hidden
+  knowledge" in the old system was the exact VIT value that made you immune to
+  a given status — the answer wasn't written anywhere in-game, and finding out
+  meant checking a wiki or getting chain-stunned to death first. A continuous
+  curve means there's no secret number to hit: more VIT always helps, by an
+  amount you can eyeball, and true immunity from stats alone simply isn't
+  possible anymore (you'd need gear or skills for that, same as before).*
+  - `src/map/status.cpp` — `status_sc_def_curve()` helper and the rewritten
+    `status_get_sc_def()` cases for the eight statuses above; the old Aegis
+    "round resistance up to the next 0.1%" rounding quirk is also removed
+    since it worked against the point of a smooth curve.
+  - Tunable: `vit_sc_def_halfpoint` in `conf/battle/status.conf` (default
+    `60` — VIT 60 is exactly 50% resist chance and duration; VIT 100 is
+    ~62.5%).
+
+- **VIT now grants a small flat MaxHP bonus, capped at +1000.** On top of the
+  existing `+1% MaxHP per VIT`, VIT now also adds `min(1000, floor(VIT^1.5))`
+  flat HP. *Developer Comments: The percentage bonus does nothing for a
+  low-level character who doesn't have much base HP to multiply yet, so early
+  VIT investment felt wasted. A capped flat bonus makes early VIT points feel
+  good immediately without stacking into anything absurd at 99+ VIT, where the
+  percentage bonus is already doing the heavy lifting.*
+  - `src/map/status.cpp` — `status_calc_maxhp_pc()`.
+  - Tunable: `vit_flat_hp_cap` in `conf/battle/status.conf` (default `1000`;
+    `0` disables).
+
+- **HP regeneration smoothed.** The natural HP regen tick (`VIT/5` plus a
+  MaxHP-based term) is now computed with floating-point math instead of two
+  separate integer truncations, so the fractional remainder from one term can
+  carry into the other instead of being silently dropped. This is a minor,
+  cosmetic change (±1 HP per regen tick at the boundary) with no new tunable.
+  - `src/map/status.cpp` — `status_calc_regen()`.
+
+---
+
 ## Class Changes
 
 ### Novice Skill Changes

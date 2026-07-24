@@ -4841,14 +4841,9 @@ static void battle_calc_defense_reduction( Damage* wd, block_list* src, block_li
 	//Damage reduction based on vitality
 	if (tsd) {	//Sd vit-eq
 		int32 skill;
-#ifndef RENEWAL
-		//Damage reduction: [VIT*0.3] + RND(0, [VIT^2/150] - [VIT*0.3] - 1) + [VIT*0.5]
-		vit_def = ((3 * def2) / 10);
-		vit_def += rnd_value(0, max(0, (def2 * def2) / 150 - ((3 * def2) / 10) - 1));
-		vit_def += (def2 / 2);
-#else
+		// VIT redesign: soft DEF reduction is deterministic for players, equal to def2
+		// (def2 already carries the VIT redesign's quadratic scaling from status.cpp).
 		vit_def = def2;
-#endif
 		if (src->type == BL_MOB && (battle_check_undead(sstatus->race, sstatus->def_ele) || sstatus->race == RC_DEMON) && //This bonus already doesn't work vs players
 			(skill = pc_checkskill(tsd, AL_DP)) > 0)
 			vit_def += (int32)(((float)tsd->status.base_level / 25.0 + 3.0) * skill + 0.5);

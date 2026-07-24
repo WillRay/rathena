@@ -14,3 +14,9 @@
 
 // Show Element Info [Hyroshima]
 int mob_ele_view;
+
+// VIT redesign
+int vit_def2_quadratic_divisor;
+int vit_mdef2_quadratic_divisor;
+int vit_sc_def_halfpoint;
+int vit_flat_hp_cap;
