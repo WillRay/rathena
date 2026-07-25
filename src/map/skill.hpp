@@ -208,6 +208,19 @@ enum e_skill_display {
 	SD_PREAMBLE  = 0x8000, // skill_area_sub will transmit a 'magic' damage packet (-30000 dmg) for the first target selected
 };
 
+// Sniper rebalance: marks a Blitz Beat fired by the Hunting Party "Ranger falcon"
+// auto-attack proc (skill_additional_effect, case 0), so the rest of the engine can
+// tell that strike apart from the Sniper's own falcon landing a real Blitz Beat.
+// Two things key off it:
+//   - battle_calc_misc_attack (battle.cpp) skips the Hunted-mark double damage;
+//     this proc must never interact with SC_HUNTED.
+//   - skill_attack (skill.cpp) skips scheduling the Windhawk echo; the echo mirrors
+//     the Sniper's own falcon only, not the Ranger falcon's independent strike.
+// Unlike the SD_* flags above (which skill_attack consumes itself and masks off with
+// `flag&0xFFF` before calling battle_calc_attack), this bit is deliberately low so it
+// survives that mask and reaches battle_calc_misc_attack's mflag.
+#define SD_HUNTINGPARTY_RANGER_STRIKE 0x100
+
 #define MAX_SKILL_ITEM_REQUIRE	10 /// Maximum required items
 #define MAX_SKILL_STATUS_REQUIRE 3 /// Maximum required statuses
 #define MAX_SKILL_EQUIP_REQUIRE 10 /// Maximum required equipped item

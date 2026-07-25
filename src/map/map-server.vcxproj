@@ -1298,6 +1298,7 @@
     <ClInclude Include="skills/swordman/stonehardskin.hpp" />
     <ClInclude Include="skills/swordman/stormblast.hpp" />
     <ClInclude Include="skills/swordman/stormslash.hpp" />
+    <ClInclude Include="skills/swordman/sunderingstrike.hpp" />
     <ClInclude Include="skills/swordman/trample.hpp" />
     <ClInclude Include="skills/swordman/traumaticblow.hpp" />
     <ClInclude Include="skills/swordman/ultimatesacrifice.hpp" />
@@ -4695,6 +4696,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/stormslash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/sunderingstrike.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/trample.cpp">

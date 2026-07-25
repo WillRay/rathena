@@ -33,6 +33,94 @@ added in future passes.
 
 ---
 
+## Stat Changes
+
+### VIT Redesign
+
+VIT used to read as an "HP-only" stat: soft DEF faded to nothing against
+late-game damage, soft MDEF belonged to INT instead of VIT, and status
+resistance was governed by hidden breakpoints (97 VIT for stun immunity, 0 LUK
+for curse immunity) rather than anything a player could see on their status
+window. This pass gives VIT a clear identity — endurance, resilience, and
+resistance to physical and magical punishment — and makes every point of VIT
+feel valuable instead of only the ones that happened to land on a breakpoint.
+Full design rationale and value tables live in `doc/vit_redesign.md`.
+
+- **Soft DEF now scales with VIT quadratically, and is deterministic.**
+  `def2 = VIT + VIT² / 150` (was flat `def2 = VIT`), and the old hidden random
+  roll applied when soft DEF reduces damage has been removed for players — the
+  displayed def2 value is now exactly what gets applied, every hit. *Developer
+  Comments: The old formula (`0.3×VIT` plus a widening random quadratic tail
+  players could never see) meant a VIT tank's actual toughness was a dice roll
+  even they couldn't predict. Making it deterministic and moving the quadratic
+  growth onto the visible stat means investing in VIT pays off exactly as much
+  as it appears to, and high-VIT tanks stay meaningfully tankier at every
+  damage tier instead of soft DEF flattening out.*
+  - `src/map/status.cpp` — `status_calc_vit_def2_bonus()` helper, wired into
+    `status_calc_misc()` and the SCB_DEF2 recalculation path.
+  - `src/map/battle.cpp` — `battle_calc_defense_reduction()`, player branch now
+    sets `vit_def = def2` directly.
+  - Tunable: `vit_def2_quadratic_divisor` in `conf/battle/status.conf`
+    (default `150`; `0` restores the old flat `def2 = VIT`).
+
+- **Soft MDEF moves from INT to VIT.** `mdef2 = VIT + VIT² / 400` for players
+  (was `mdef2 = INT + VIT/2`). INT keeps MATK, SP, SP regen, and every other
+  casting-related bonus — it no longer contributes to magical durability at
+  all. *Developer Comments: Magical durability and magical power living on the
+  same stat meant every caster was accidentally a little tanky against magic
+  just for building offense, while dedicated tanks had no way to buy magic
+  resistance at all. Splitting them out means casters make an honest choice
+  between glass-cannon and durable, and VIT becomes the answer to "how do I
+  survive magic" for every class, not just casters.*
+  - `src/map/status.cpp` — `status_calc_vit_mdef2_bonus()` helper, same wiring
+    as the def2 change above.
+  - Tunable: `vit_mdef2_quadratic_divisor` in `conf/battle/status.conf`
+    (default `400`; `0` drops mdef2 to `VIT` only).
+
+- **Status resistance consolidated under VIT and made continuous.** Stun,
+  Silence, Bleeding, Poison, Sleep, Blind, Confusion, and Curse all now resist
+  off a single smooth curve, `resist% = VIT / (VIT + 60)`, instead of a mix of
+  VIT/INT/STR/LUK with hard breakpoints. Sleep moves off INT, Blind and
+  Confusion move off their STR/INT blends, and Curse moves off LUK — including
+  removing the old "0 LUK = immune to Curse" quirk. LUK no longer has any
+  defensive role; it keeps its existing critical-hit and perfect-dodge
+  identity untouched. Freeze and Stone deliberately keep resisting off
+  equipped hard MDEF rather than VIT, so gear stays the counterplay to those
+  two statuses. *Developer Comments: The single biggest source of "hidden
+  knowledge" in the old system was the exact VIT value that made you immune to
+  a given status — the answer wasn't written anywhere in-game, and finding out
+  meant checking a wiki or getting chain-stunned to death first. A continuous
+  curve means there's no secret number to hit: more VIT always helps, by an
+  amount you can eyeball, and true immunity from stats alone simply isn't
+  possible anymore (you'd need gear or skills for that, same as before).*
+  - `src/map/status.cpp` — `status_sc_def_curve()` helper and the rewritten
+    `status_get_sc_def()` cases for the eight statuses above; the old Aegis
+    "round resistance up to the next 0.1%" rounding quirk is also removed
+    since it worked against the point of a smooth curve.
+  - Tunable: `vit_sc_def_halfpoint` in `conf/battle/status.conf` (default
+    `60` — VIT 60 is exactly 50% resist chance and duration; VIT 100 is
+    ~62.5%).
+
+- **VIT now grants a small flat MaxHP bonus, capped at +1000.** On top of the
+  existing `+1% MaxHP per VIT`, VIT now also adds `min(1000, floor(VIT^1.5))`
+  flat HP. *Developer Comments: The percentage bonus does nothing for a
+  low-level character who doesn't have much base HP to multiply yet, so early
+  VIT investment felt wasted. A capped flat bonus makes early VIT points feel
+  good immediately without stacking into anything absurd at 99+ VIT, where the
+  percentage bonus is already doing the heavy lifting.*
+  - `src/map/status.cpp` — `status_calc_maxhp_pc()`.
+  - Tunable: `vit_flat_hp_cap` in `conf/battle/status.conf` (default `1000`;
+    `0` disables).
+
+- **HP regeneration smoothed.** The natural HP regen tick (`VIT/5` plus a
+  MaxHP-based term) is now computed with floating-point math instead of two
+  separate integer truncations, so the fractional remainder from one term can
+  carry into the other instead of being silently dropped. This is a minor,
+  cosmetic change (±1 HP per regen tick at the boundary) with no new tunable.
+  - `src/map/status.cpp` — `status_calc_regen()`.
+
+---
+
 ## Class Changes
 
 ### Novice Skill Changes
@@ -90,6 +178,10 @@ added in future passes.
   can be spammed as fast as the client sends packets, so a short 1s cooldown caps
   its cadence and keeps its DPS where it was intended rather than letting it
   outpace ASPD.*
+
+- **Bash:** Cooldown doubled to 2 seconds (`Cooldown: 2000`). *Developer
+  Comments: The 1s cooldown from the non-targeted change above still let Bash
+  outpace its intended cadence at high ASPD; doubling it reins that back in.*
 
 - **Magnum Break:** Splash radius increased to 4 cells (9×9 area) and SP cost
   lowered from 30 to 18. *Developer Comments: With the lower SP cost and the
@@ -151,12 +243,56 @@ added in future passes.
   would have made Tension Relax unlearnable. Level 5 restores the original
   "max out Increase HP Recovery first" requirement.*
 
-- **Two-Hand Quicken:** In addition to its existing ASPD bonus, now grants
-  `+1 FLEE per skill level` and `+0.8% CRIT per skill level`. The previous HIT
-  bonus has been removed. *Developer Comments: Auto-attack Knights have always
-  felt a step behind Bowling-Bash and Spiral-Pierce builds. A modest survival
-  and crit bonus on the buff they were going to press anyway brings the agility
-  line closer to its peers without making it the new optimum.*
+- **Two-Hand Quicken:** The flat ASPD bonus has been removed and replaced with
+  **Momentum**, a stacking buff (new `SC_MOMENTUM` status, shown with its own
+  icon so it does not share Two-Hand Quicken's status slot — the Sorcerer's
+  Striking icon is borrowed, since `SO_STRIKING` has no entry in the pre-re
+  skill tree and is unreachable/unused on this server) that only accrues
+  while Two-Hand Quicken is active. Landing any
+  auto-attack, or taking a melee auto-attack, adds a stack; stacks cap at 5,
+  last 15 seconds, and each new stack refreshes the timer. Each stack reduces
+  weapon swing delay by `7%` (up to `35%` at 5 stacks — 5 points better than the
+  old flat `+30%` ASPD-rate at full stacks). The skill still grants
+  `+1 FLEE per skill level` and `+0.8% CRIT per skill level`, unchanged. The
+  in-client skill description and the borrowed status icon's hover tooltip
+  have both been updated to describe the new behavior.
+  *Developer Comments: A flat, front-loaded ASPD buff meant the payoff was the
+  same whether you fought for one hit or one minute. Momentum ties the reward
+  to sustained combat instead — a Knight who keeps the pressure on now ends up
+  slightly faster than the old buff ever allowed, but only after ramping up.*
+  - `src/map/status.hpp` — added `SC_MOMENTUM` to the `sc_type` enum.
+  - `src/map/script_constants.hpp` — exported `SC_MOMENTUM` as a script constant.
+  - `src/map/status.cpp` — removed Two-Hand Quicken's ASPD sources
+    (`status_change_start`'s `val2 = 300` fallthrough, the
+    `status_calc_aspd_rate` block, and the renewal-only `status_calc_aspd`
+    fixed-bonus term); added Momentum's `7% per stack` swing-delay reduction
+    (capped at `35%`) to the `status_calc_aspd_rate` max group.
+  - `src/map/skill.cpp` — `skill_additional_effect` grants a Momentum stack on
+    any landed auto-attack while Two-Hand Quicken is active;
+    `skill_counter_additional_effect` grants a stack when receiving a melee
+    (`BF_SHORT`) auto-attack while Two-Hand Quicken is active.
+  - `db/pre-re/status.yml` — dropped `CalcFlags` from `Twohandquicken`; added
+    the `Momentum` status entry (`EFST_STRIKING` borrowed icon so it occupies
+    its own status slot, `SendVal1` shows the stack count).
+- **Two-Hand Quicken → Battle Rhythm (follow-up):** Renamed to **Battle
+  Rhythm** (display name only — the Aegis name `KN_TWOHANDQUICKEN` is
+  unchanged). All in-client references to the old name were updated to
+  match, including its own tooltip and status icon, and the skills that
+  name it in their own Requirement lines or prose (Bowling Bash, Parry,
+  Gypsy's Please Don't Forget Me, Wizard's Watery Evasion).
+  *Developer Comments: "Two-Hand Quicken" was a holdover name from the old
+  flat-ASPD buff; now that it drives the Momentum stacking mechanic, "Battle
+  Rhythm" better fits a buff that builds up through sustained combat rather
+  than firing once on cast.*
+  - `lua files/skillinfoz/skillinfolist.lub` — `KN_TWOHANDQUICKEN`'s
+    `SkillName` changed to "Battle Rhythm".
+  - `lua files/skillinfoz/skilldescript.lub` — `KN_TWOHANDQUICKEN`'s title
+    changed to "Battle Rhythm"; `KN_BOWLINGBASH`'s Requirement line and
+    Momentum cross-reference, and `LK_PARRYING`'s Requirement line, updated
+    to say "Battle Rhythm"; the Gypsy and Wizard entries that mention it by
+    name in their Comments prose updated to match.
+  - `lua files/stateicon/stateiconinfo.lub` — the `EFST_TWOHANDQUICKEN`
+    status icon's title changed to "Battle Rhythm".
 
 - **Bowling Bash:** The gutter-line bug has been removed entirely (the chain
   reaction now uses a 5×5 area around the caster, independent of where on the
@@ -167,6 +303,840 @@ added in future passes.
   per-hit damage a little lower than the inflated 800% the official game ended
   up with, but the skill now hits twice and behaves the same way on every map,
   every cell.*
+
+- **Auto Counter:** Reworked from a reactive, facing-gated one-shot into a
+  proactive combat stance. The cast is **instant** and applies a **15 second**
+  self-buff (new `SC_KNIGHTCOUNTER` status, its own icon) with a **60 second**
+  cooldown from cast. The Knight is rooted in place for the duration (cannot
+  move) but can still act/attack freely. While the buff is active, any
+  physical auto-attack landed on the Knight — **melee or ranged** — has a
+  flat **50% chance** to trigger a return
+  swing, a plain normal attack (defense applies, no forced crit) dealing
+  **200% ATK** at every skill level; the incoming hit still lands, it is not
+  blocked. Because a proper phantom-attacker unit isn't feasible in this
+  engine, the counter simply plays as the Knight swinging back, which reads
+  correctly for both melee and ranged attackers. *Developer Comments: the old
+  Auto Counter asked you to stand still, face your target, and hope its next
+  hit was melee — in
+  practice nobody used it. Turning it into an always-on stance with a coin-flip
+  retaliation makes it a real defensive tool a Knight can lean on mid-fight
+  instead of a gimmick you set up in advance. One accepted side effect: Counter
+  Instinct's (`ST_REJECTSWORD`) own counterstrike still calls into
+  `KN_AUTOCOUNTER` for its damage, so it now also hits as a plain 200% blow
+  instead of a defense-ignoring guaranteed crit — giving it its own dedicated
+  strike skill was judged out of scope for this pass.*
+  - `src/map/status.hpp` — added `SC_KNIGHTCOUNTER` to the `sc_type` enum.
+  - `src/map/script_constants.hpp` — exported `SC_KNIGHTCOUNTER` as a script
+    constant.
+  - `db/import/status.yml` — added the `Knightcounter` status entry (reuses the
+    classic `EFST_AUTOCOUNTER` icon, duration looked up from `KN_AUTOCOUNTER`,
+    `States: NoMove` but no `NoAttack`/`NoInteract`).
+  - `db/import/skill_db.yml` — `KN_AUTOCOUNTER` now applies `Knightcounter` on
+    cast, with `CastTime: 0` (instant), `Duration1: 15000` and
+    `Cooldown: 60000`; `DamageFlags` no longer force
+    `IgnoreDefense`/`Critical`.
+  - `src/map/skills/swordman/counterattack.cpp` — `castendNoDamageId` now just
+    starts the self-buff (no more immediate scheduled hit); added
+    `calculateSkillRatio` for the flat `200%` ratio; removed the old
+    `modifyHitRate` `+20%` hit bonus.
+  - `src/map/battle.cpp` — `is_attack_critical` no longer force-crits
+    `KN_AUTOCOUNTER`'s counterstrike (Counter Instinct's `SC_AUTOCOUNTER`
+    guaranteed-crit path is unchanged); `battle_weapon_attack` gained a new
+    non-blocking `SC_KNIGHTCOUNTER` check (50% chance, deferred 100ms via
+    `skill_addtimerskill`) alongside the existing `SC_AUTOCOUNTER` block; plays
+    the classic `EF_AUTOCOUNTER` effect (the same audio/visual cue the old
+    reactive counter used) on the Knight whenever the retaliation triggers.
+  - `src/map/skill.cpp` — removed the now-dead `KN_AUTOCOUNTER` case in
+    `skill_timerskill` (a no-damage stub left over from the old cast path) so
+    the deferred counterstrike falls through to the normal `skill_attack` path
+    and actually deals damage.
+- **Auto Counter (follow-up):** The counterstrike no longer carries a flat
+  `200% ATK` bonus — it now hits **twice** at normal ATK per hit, and each of
+  the two hits can land a critical strike at **double** the Knight's normal
+  `CRIT` rate. *Developer Comments: a flat damage multiplier felt like a
+  bigger single number but played the same as a normal hit every time. Two
+  rolls of the dice, each with a real shot at a crit, makes the retaliation
+  feel like a distinct payoff instead of a bigger version of a plain attack,
+  and it scales naturally with any crit-rate investment the Knight already
+  made.*
+  - `db/import/skill_db.yml` — `KN_AUTOCOUNTER` now sets `Hit: Multi_Hit` and
+    `HitCount: 2` (drives `div_` via `skill_get_num`), and `DamageFlags.Critical`
+    is `true` (allows the skill to roll crits at all; defense still applies —
+    `IgnoreDefense` stays `false`).
+  - `src/map/skills/swordman/counterattack.cpp` — removed the `calculateSkillRatio`
+    override that added the flat `+100` ratio; the counterstrike now deals
+    plain `100%` ATK per hit like a normal attack. `modifyDamageData` also
+    tags the damage as `DMG_MULTI_HIT` — since the counterstrike carries an
+    explicit `skill_id`, the engine's usual auto-tagging (which only runs for
+    plain `skill_id == 0` attacks) never applies, and without this the client
+    rendered the doubled total as one bigger hit instead of two separate hits.
+  - `src/map/battle.cpp` — `is_attack_critical` gained a `case KN_AUTOCOUNTER:`
+    that doubles the effective `cri` stat used for the roll, on top of the
+    normal crit-rate formula (STR/LUK/equipment bonuses all still apply before
+    the doubling).
+- **Auto Counter (follow-up):** Fixed a lingering client-side cast bar shown
+  for the full duration of casting the skill, even though the cast is
+  instant. *Developer Comments: the client always shows its default cast-bar
+  UI for any skill-use packet unless explicitly told to dismiss it. The old
+  reactive version cleared it the moment a counter fired
+  (`clif_skillcastcancel`, "Remove the casting bar." - Skotlex); since the
+  old buff only lasted 400-2000ms, that reactive clear (or the SC's own
+  early expiry) usually hid the bar before it was noticeable. This stance
+  keeps the buff up for 15 seconds and has no equivalent reactive moment, so
+  the bar was left to play out its full default length every time, unmasked.*
+  - `src/map/skills/swordman/counterattack.cpp` — `castendNoDamageId` now
+    calls `clif_skillcastcancel` right after applying `SC_KNIGHTCOUNTER`, so
+    the cast bar is dismissed immediately once the buff lands instead of
+    lingering.
+- **Auto Counter (follow-up):** The buff's status icon now actually appears
+  in the status bar. *Developer Comments: the classic `EFST_AUTOCOUNTER` icon
+  has no entry in this client's `stateiconinfo.lub` table, so it silently
+  never rendered no matter what the server sent. Swapped to Rune Knight's
+  Crush Strike icon (`EFST_CRUSHSTRIKE`) instead - `RK_CRUSHSTRIKE` is
+  unreachable on this pre-re server (same trick already used for Two-Hand
+  Quicken/Momentum borrowing Enchant Blade/Striking), and its icon is
+  confirmed to render, with its tooltip repurposed to describe Auto Counter.*
+  - `db/import/status.yml` — `Knightcounter`'s `Icon` changed from
+    `EFST_AUTOCOUNTER` to `EFST_CRUSHSTRIKE`.
+  - `lua files/stateicon/stateiconinfo.lub` — repurposed the
+    `EFST_CRUSHSTRIKE` `StateIconList` entry's title/description to describe
+    Auto Counter instead of Crush Strike.
+- **Auto Counter → Retaliation (follow-up):** Renamed to **Retaliation**
+  (display name only - Aegis name `KN_AUTOCOUNTER` is unchanged). The
+  retaliation trigger chance is now `10% * skill level` (10% at Lv1 up to
+  50% at Lv5) instead of a flat 50%, and SP cost is now a flat `10 SP` at
+  every level (was `3 SP`). Casting now also plays a one-shot activation
+  flash (`EF_GUMGANG8`) on the Knight, and shows the same persistent "bound"
+  cage effect used by rooted targets (Snaring Arrow's `SC_ANKLE`, Sohee's
+  `NPC_STOP`) for the full 15s duration, making the immobility visually
+  obvious. *Developer Comments: "Auto Counter" was a holdover name from the
+  old reactive mechanic and no longer described a stance the player
+  proactively activates - "Retaliation" fits the new active-buff identity.
+  Scaling the trigger chance with skill level gives investing in higher
+  ranks a clear payoff beyond just the flat ATK/crit numbers, and the SP
+  bump to 10 brings the cost in line with a 15-second combat stance rather
+  than the old sub-2-second reactive window. The activation flash and root
+  visual close the loop on "how do I know this is active and why can't I
+  move" raised during testing.*
+  - `db/import/skill_db.yml` — `Requires.SpCost: 10`; `Description:
+    Retaliation`.
+  - `src/map/battle.cpp` — the `SC_KNIGHTCOUNTER` retaliation check in
+    `battle_weapon_attack` now rolls `rnd()%100 < 10 * skill_lv` instead of
+    a flat `< 50`.
+  - `src/map/skills/swordman/counterattack.cpp` — `castendNoDamageId` plays
+    `EF_GUMGANG8` once on cast, and (when the buff successfully starts)
+    `EF_NPC_STOP` to begin the persistent root-cage visual.
+  - `src/map/status.cpp` — `status_change_end` gained a `case
+    SC_KNIGHTCOUNTER:` that calls `clif_specialeffect_remove` on
+    `EF_NPC_STOP`, tearing the cage down when the stance ends (mirrors the
+    existing `SC_ANKLE` case).
+  - `lua files/skillinfoz/skillinfolist.lub` — `SkillName` changed to
+    "Retaliation"; `SpAmount` changed to `{ 10, 10, 10, 10, 10 }`.
+  - `lua files/skillinfoz/skilldescript.lub` — title changed to
+    "Retaliation"; body rewritten for the `10% per skill level` trigger
+    chance and `10 SP` cost.
+  - `lua files/stateicon/stateiconinfo.lub` — the repurposed
+    `EFST_CRUSHSTRIKE` entry's title changed to "Retaliation".
+- **Retaliation (follow-up):** Reverted the double-hit change - the
+  counterstrike is back to a single hit at normal ATK, still able to
+  critically hit at double the Knight's normal `CRIT` rate. The stance no
+  longer plays a special-effect flash each time the counter actually fires.
+  *Developer Comments: two hits and a crit shot each added visual noise on
+  top of what is already a frequent proc at higher levels (up to 50% per hit
+  taken); dropping back to one hit and cutting the per-proc flash keeps the
+  crit-rate payoff from the previous pass without turning every incoming hit
+  into a fireworks show.*
+  - `db/import/skill_db.yml` — removed the `Hit: Multi_Hit` / `HitCount: 2`
+    override, so `KN_AUTOCOUNTER` falls back to the base `Hit: Single` /
+    `HitCount: 1`.
+  - `src/map/skills/swordman/counterattack.cpp` — `modifyDamageData` no
+    longer tags the damage `DMG_MULTI_HIT` (only needed for the two-hit
+    display).
+  - `src/map/battle.cpp` — removed the `clif_specialeffect(target,
+    EF_AUTOCOUNTER, AREA)` call in the `SC_KNIGHTCOUNTER` retaliation check,
+    so a successful counter no longer flashes/dings on every proc.
+  - `lua files/skillinfoz/skilldescript.lub` — body no longer says
+    "counterattacking twice"; describes a single normal attack that can crit.
+- **Retaliation (follow-up):** Now additionally requires **Two-Hand Quicken
+  Rank 5** to learn, on top of the existing Two-Handed Sword Mastery
+  (`SM_TWOHAND`) Rank 1 requirement. *Developer Comments: Retaliation is a
+  standalone combat stance now, not a reactive one-shot, so it makes sense to
+  gate it behind a Knight actually committing to the two-handed weapon
+  identity Two-Hand Quicken represents, rather than the token single rank of
+  Blade/Two-Handed Sword Mastery it inherited from the old Swordman tree.*
+  - `db/import/skill_tree.yml` — `KN_AUTOCOUNTER` gained a `Requires:
+    KN_TWOHANDQUICKEN Level: 5` entry under the Knight job tree (merges
+    alongside the inherited `SM_TWOHAND` Level 1 requirement; propagates to
+    Lord_Knight through inheritance).
+- **Retaliation (follow-up):** Trigger chance is now `5%` per skill level
+  (down from `10%`), the stance now lasts `10 seconds` (down from `15`), the
+  cooldown is `30 seconds` (down from `60`), and the SP cost is now a flat
+  `15 SP` (up from `10`). The proc roll also now happens before the
+  triggering attack's own hit/miss is resolved, so a Knight can counter an
+  attack that whiffs against them, not just one that lands.
+  *Developer Comments: at up to 50% per swing the old proc rate was drowning
+  out the Knight's own offense, and the long duration/cooldown pair made the
+  stance feel more like a toggle than an active decision. A shorter window,
+  a shorter cooldown, and a lower per-swing rate turn Retaliation into
+  something you time around a fight rather than leave running constantly;
+  rewarding a stand-and-defend Knight even when the enemy misses closes off
+  a case where the stance previously gave nothing back.*
+  - `db/import/skill_db.yml` — `KN_AUTOCOUNTER` `Duration1` changed to
+    `10000`, `Cooldown` changed to `30000`, `Requires.SpCost` changed to `15`.
+  - `src/map/battle.cpp` — the `SC_KNIGHTCOUNTER` proc chance in
+    `battle_weapon_attack` changed from `10 * skill_lv` to `5 * skill_lv`;
+    the roll already runs ahead of `battle_calc_attack`'s hit/miss
+    resolution, so no code change was needed for it to fire on a miss -
+    only the comment was updated to call this out explicitly.
+  - `src/map/status.hpp` — updated the `SC_KNIGHTCOUNTER` comment to match
+    the new duration, rate, and hit-or-miss trigger.
+  - `lua files/skillinfoz/skilldescript.lub` — body updated to `10 seconds`,
+    `5% chance per skill level`, `hit or miss`, `15 SP`, and `30 second
+    cooldown`.
+  - `lua files/skillinfoz/skillinfolist.lub` — `SpAmount` changed to
+    `{ 15, 15, 15, 15, 15 }`.
+- **Retaliation (follow-up):** Trigger chance raised to `8%` per skill level
+  (up from `5%`, `8%` at Lv1 up to `40%` at Lv5), and the skill's position in
+  the Knight skill tree has been moved down one row.
+  *Developer Comments: 5% per level made the stance feel like it rarely paid
+  off outside of a full 5-point investment; 8% keeps a meaningful floor at
+  low levels while still topping out well short of a guaranteed proc.*
+  - `src/map/battle.cpp` — the `SC_KNIGHTCOUNTER` proc chance in
+    `battle_weapon_attack` changed from `5 * skill_lv` to `8 * skill_lv`.
+  - `src/map/status.hpp` — updated the `SC_KNIGHTCOUNTER` comment to match
+    the new `8%` rate.
+  - `db/import/skill_db.yml` — updated the rebalance comment to match the
+    new `8%` rate.
+  - `lua files/skillinfoz/skilldescript.lub` — body updated to `8% chance
+    per skill level`.
+  - `lua files/skillinfoz/skilltreeview.lub` — `KN_AUTOCOUNTER` moved from
+    grid index `8` to `15` in the `JT_KNIGHT` tree (one row down, same
+    column).
+- **Retaliation (follow-up):** Now requires **only Bowling Bash Rank 5** to
+  learn - the Two-Hand Quicken Rank 5 and Two-Handed Sword Mastery
+  (`SM_TWOHAND`) Rank 1 requirements have been removed. Bowling Bash, in
+  turn, no longer requires Retaliation.
+  *Developer Comments: an earlier pass gated Retaliation behind Bowling
+  Bash Rank 5 without accounting for Bowling Bash's own base-game
+  requirement of Retaliation Rank 5 - the two skills pointed at each other
+  and became permanently unlearnable, which also blocked Sundering Strike
+  (`KN_ONEHAND`) since it sits behind Bowling Bash Rank 10. Breaking the
+  cycle by erasing Bowling Bash's Retaliation requirement, and simplifying
+  Retaliation down to a single clean Bowling Bash Rank 5 gate, restores a
+  learnable one-directional progression: Bowling Bash first, Retaliation
+  (and Sundering Strike) after.*
+  - `db/import/skill_tree.yml` — `KN_AUTOCOUNTER`'s `Requires` list is now
+    `SM_TWOHAND Level: 0` (erases the inherited Rank 1 gate) plus
+    `KN_BOWLINGBASH Level: 5`; the earlier `KN_TWOHANDQUICKEN Level: 5`
+    entry was dropped. A new `KN_BOWLINGBASH` entry was added with
+    `Requires: KN_AUTOCOUNTER Level: 0`, erasing Bowling Bash's inherited
+    base-tree requirement of Retaliation Rank 5
+    (`db/pre-re/skill_tree.yml`) so the two skills no longer gate each
+    other.
+  - `lua files/skillinfoz/skilldescript.lub` — Retaliation's Requirement
+    line is now just "Bowling Bash 5"; Bowling Bash's Requirement line no
+    longer lists "Auto Counter 5".
+- **Peco Peco Ride:** Is now a properly castable skill instead of a passive
+  prerequisite gate. Casting it takes a `2 second` fixed cast (unaffected by
+  DEX, INT, cast-reducing items, or status effects), has a `5 second`
+  cooldown, and costs no SP. Completing the cast toggles the caster between
+  mounted and dismounted on a Peco Peco. *Developer Comments: Riding used to
+  only be togglable through `@ride` or item scripts, with the skill itself
+  doing nothing when used — a Knight clicking their own Peco Peco Ride icon
+  got no feedback at all. Giving it a real cast makes the skill icon
+  actually do what its tooltip always implied.*
+  - `db/import/skill_db.yml` — `KN_RIDING` gained `TargetType: Self`,
+    `DamageFlags.NoDamage: true`, `CastTime: 2000` with `CastTimeFlags`
+    (`IgnoreDex`, `IgnoreStatus`, `IgnoreItemBonus`) so the cast time can't be
+    reduced, `Cooldown: 5000`, and `Requires.SpCost: 0`.
+  - `src/map/skill.cpp` — `skill_castend_nodamage_id` gained a `KN_RIDING`
+    case that calls `pc_setriding` to toggle the mount state on cast
+    completion.
+
+- **One-Hand Quicken → Sundering Strike:** Repurposed from a no-damage,
+  Soul-Link-gated ASPD buff into **Sundering Strike**, a 5-level offensive
+  Two-Handed Sword strike gated behind Bowling Bash level 10 instead of
+  Two-Hand Quicken level 10 (Aegis name `KN_ONEHAND` is unchanged). The blow
+  deals `100% ATK` per skill level plus `100% ATK` per stack of Momentum (the
+  stacking buff Two-Hand Quicken builds, see `SC_MOMENTUM`) consumed on hit,
+  capped at `1000%` total. At 5 stacks the blow also strikes every enemy in a
+  3x3 area around the target and has a `50%` chance to Stun each target hit
+  for `2` seconds. Momentum stacks are consumed once, after all hits resolve,
+  so a full-stack cast sees every splash target hit at the same scaled
+  damage. The strike plays Crush Strike's (`RK_CRUSHSTRIKE`) swing animation
+  — a damage-less visual-only packet, the same trick already used for Wyvern
+  Bolt borrowing Crescive Bolt's projectile — but keeps its own icon and SP
+  cost (`30` SP flat, `15` second cooldown). *Developer Comments: One-Hand
+  Quicken was a dead pick — it required Soul Link, gave nothing a maxed
+  Two-Hand Quicken didn't already provide, and dealt no damage. Turning it
+  into a payoff strike for the Momentum stacks a Knight already builds by
+  fighting gives sustained melee pressure an actual damage payoff, and the
+  5-stack AoE/stun spike rewards staying on a target instead of hunting for a
+  fresh audience each fight.*
+  - `src/map/skills/swordman/sunderingstrike.cpp` /
+    `src/map/skills/swordman/sunderingstrike.hpp` — new `SkillSunderingStrike`
+    (`WeaponSkillImpl`). `calculateSkillRatio` reads `SC_MOMENTUM`'s `val1`
+    (stack count) off the caster and adds `100%` per skill level plus `100%`
+    per stack, capped at `1000%`. `castendDamageId` plays the
+    `RK_CRUSHSTRIKE` visual via a `DMGVAL_IGNORE` `clif_skill_damage` call,
+    then either a plain `skill_attack` (below 5 stacks) or a
+    `map_foreachinrange`/`skill_area_sub` 3x3 splash (at 5 stacks), and
+    consumes `SC_MOMENTUM` once at the end regardless of path.
+    `applyAdditionalEffects` rolls the `50%`/`2s` Stun (`Duration2`, read via
+    `skill_get_time2`) at 5 stacks.
+  - `src/map/skills/swordman/skill_factory_swordman.cpp` — `KN_ONEHAND` now
+    maps to `SkillSunderingStrike` instead of `StatusSkillImpl`.
+  - `src/map/map-server.vcxproj` / `.vcxproj.filters` — added the new
+    `sunderingstrike.cpp`/`.hpp` source pair alongside the other Swordman skill
+    files.
+  - `db/import/skill_db.yml` — `TargetType: Attack`, `MaxLevel: 5`,
+    `Range: 2`, `Element: Weapon`, `Duration2: 2000` (stun length),
+    `Cooldown: 15000`, `Requires.SpCost: 30`; `DamageFlags.NoDamage` and
+    `Flags.IsSpirit` cleared so the skill deals damage and can be learned
+    with skill points; `Requires.Weapon` switched from `1hSword` to
+    `2hSword`. The old `Duration1`/`Status: OneHand` fields are left in the
+    base entry inert — the code path that read them no longer runs now that
+    the factory returns `SkillSunderingStrike`.
+  - `db/import/skill_tree.yml` — Knight tree: `KN_ONEHAND` `MaxLevel` raised
+    to `5`, its `KN_TWOHANDQUICKEN` prerequisite erased (`Level: 0`) and
+    replaced with `KN_BOWLINGBASH` level `10`. Propagates to Lord Knight
+    through inheritance.
+  - `lua files/skillinfoz/skillinfolist.lub` — `SkillName` changed to
+    "Sundering Strike", `MaxLv: 5`, `SpAmount` flattened to `30` at every level,
+    `AttackRange: 2` at every level, `Type` changed from `"Soul"` to
+    `"Offensive"`, and `_NeedSkillList` changed to Bowling Bash level 10.
+  - `lua files/skillinfoz/skilldescript.lub` — tooltip rewritten: title
+    "Sundering Strike", Bowling Bash 10 requirement, Active/Enemy-targeted, and
+    a description covering the per-level/per-stack damage formula, the
+    `1000%` cap, and the 5-stack AoE/Stun payoff.
+  - `lua files/skillinfoz/skilltreeview.lub` — Knight tree grid slot moved
+    from `[13]` to `[15]`, directly under Bowling Bash (`[8]`).
+- **Sundering Strike (follow-up):** Now plays Sonic Wave's (`RK_SONICWAVE`) swing
+  animation instead of Crush Strike's, the 5-stack payoff now strikes a
+  3-cell-wide, 5-cell-long line straight in front of the caster instead of a
+  3x3 box around the target, its Stun no longer silently fails to trigger,
+  and it is now a non-targeted skill that auto-fires on the caster's current
+  target instead of requiring a target click. *Developer Comments: the Stun
+  bug was a Momentum timing race — `applyAdditionalEffects` only runs after
+  `battle_delay_damage`'s `amotion`-delayed timer fires, but Momentum was
+  already consumed by the time that timer went off, so the stack count it
+  read back was always `0` and the `>= 5` check never passed. Rolling the
+  Stun immediately when each hit lands, before Momentum is consumed, fixes
+  that. A line read better than a box centered on the target - it's a
+  frontal strike, so its area should follow where the Knight is facing, not
+  where the target happens to be standing. Removing the target-click fits
+  the "chain it off whatever you're already hitting" identity a Momentum
+  payoff strike is going for.*
+  - `src/map/skills/swordman/sunderingstrike.cpp` — `castendDamageId` now plays
+    `RK_SONICWAVE` instead of `RK_CRUSHSTRIKE` in its visual-only
+    `clif_skill_damage` call, and always hits the cast-at target directly
+    first (it is no longer guaranteed to be lined up with the caster's
+    facing, since the cast is no longer aimed by hand). The 5-stack payoff
+    replaced its `map_foreachinrange`/`skill_area_sub` 3x3 splash with a
+    stepped sweep along the caster's `unit_getdir`/`dirx`/`diry` facing
+    direction (`CRUSHINGBLOW_LINE_LENGTH = 5` cells deep) and its 90-degree
+    rotation (`(dir + 2) % 8`) for the 3-cell width, calling a new
+    file-scope `skill_crushingblow_line_sub` callback per cell via
+    `map_foreachincell`. The callback calls `battle_check_target` directly,
+    then `skill_attack` and rolls the `50%`/`2s` Stun itself right after a
+    successful hit - synchronously, while `SC_MOMENTUM` is still present
+    (the cast-at target's own Stun roll is done inline in
+    `castendDamageId`). The `applyAdditionalEffects` override (where the
+    Stun roll used to live) was removed, along with the header declaration
+    in `sunderingstrike.hpp`.
+  - `db/import/skill_db.yml` — `TargetType` changed from `Attack` to `Self`
+    and `Flags.NoTargetSelf: true` added, so `skill_get_casttype` resolves
+    to `CAST_DAMAGE` and `unit_skilluse_id2` (`src/map/unit.cpp`)
+    auto-redirects the cast onto the caster's current target
+    (`ud->target`) - native engine behavior, no further C++ change needed.
+  - `lua files/skillinfoz/skilldescript.lub` — `Target:` line changed to
+    "Current Target"; description rewritten for the line (was "3x3 area");
+    added the standard blue "Fires on your current target" note.
+- **Sundering Strike (follow-up):** Damage now lands in 3 successive waves,
+  roughly `125ms` apart, instead of a single hit - matching Sonic Wave's
+  animation, which already plays as 3 quick pulses. *Developer Comments: the
+  single lump-sum hit didn't read as 3 pulses landing, it read as 1 big hit
+  with some extra flair playing after the fact. Splitting the damage across 3
+  waves timed to the pulses makes the number actually track what's on
+  screen.*
+  - `src/map/skills/swordman/sunderingstrike.cpp` — new
+    `skill_sunderingstrike_schedule_waves` helper fires an immediate
+    `skill_attack` plus two more via `skill_addtimerskill` at
+    `CRUSHINGBLOW_WAVE_INTERVAL` (`125ms`) and double that, reusing the
+    engine's existing generic fallback in `skill_timerskill` (`skill.cpp`) to
+    land the delayed hits - no core-engine change needed. `calculateSkillRatio`
+    now divides the total ratio by `3` so the waves sum back to the original
+    total. Because Momentum is still consumed immediately on cast (right
+    after `castendDamageId` fires) but the 2nd/3rd waves land after that,
+    `calculateSkillRatio` can no longer just re-read live `SC_MOMENTUM` - it
+    would see `0` for the delayed waves, the same class of bug the Stun fix
+    above ran into. Fixed with a new file-scope
+    `sunderingstrike_stack_snapshot` map (keyed by caster id) that
+    `castendDamageId` populates once at cast time and every wave's
+    `calculateSkillRatio` call reads instead; safe to leave unentered since
+    the skill's cooldown guarantees no re-cast can land before a 3-wave
+    sequence (max `250ms`) finishes. The 5-stack line sweep's Stun is
+    now rolled once per target (before scheduling its 3 waves) rather than
+    per wave, so it stays a flat `50%` chance instead of drifting to
+    `1 - 0.5^3 ≈ 87.5%`.
+- **Sundering Strike (follow-up):** Its 5-stack payoff no longer sweeps a
+  uniform 3-cell-wide, 5-cell-long line; it now sweeps a narrower cone that
+  tapers in close to the caster and reaches out to 11 cells: 1 cell wide for
+  the first 3 cells, widening to 3 cells for the next 4, then 5 cells for the
+  final 4. *Developer Comments: a uniform-width line that's 3 cells wide
+  right next to the caster read as unreasonably generous up close for a
+  skill this cheap; tapering the width in tightens the "free" hits near the
+  caster while still rewarding a Knight who lines up a long, clean swing at
+  range.*
+  - `src/map/skills/swordman/sunderingstrike.cpp` /
+    `src/map/skills/swordman/sunderingstrike.hpp` — renamed from
+    `crushingblow.cpp`/`.hpp`; `SkillCrushingBlow` renamed to
+    `SkillSunderingStrike`, `skill_crushingblow_line_sub` renamed to
+    `skill_sunderingstrike_cone_sub`, `skill_crushingblow_schedule_waves` to
+    `skill_sunderingstrike_schedule_waves`, `crushingblow_stack_snapshot` to
+    `sunderingstrike_stack_snapshot`, and `CRUSHINGBLOW_WAVE_INTERVAL` to
+    `SUNDERINGSTRIKE_WAVE_INTERVAL`. `CRUSHINGBLOW_LINE_LENGTH` (`5`,
+    constant width `-1..1`) replaced with `SUNDERINGSTRIKE_CONE_LENGTH`
+    (`11`); the per-cell sweep loop now computes `half_width =
+    min(step / 4, 2)` so the swept width grows from `1` to `3` to `5` cells
+    as `step` increases, instead of staying fixed at `3`.
+  - `src/map/skills/swordman/skill_factory_swordman.cpp` — `KN_ONEHAND` now
+    maps to `SkillSunderingStrike`; `#include` moved from the `crushingblow`
+    slot to the alphabetically correct `sunderingstrike` slot.
+  - `src/map/map-server.vcxproj` / `.vcxproj.filters` — `crushingblow.cpp`/
+    `.hpp` entries removed, `sunderingstrike.cpp`/`.hpp` added in their
+    alphabetically correct position.
+  - `db/import/skill_db.yml` — `Description` changed to "Sundering Strike".
+  - `lua files/skillinfoz/skillinfolist.lub` — `SkillName` changed to
+    "Sundering Strike".
+  - `lua files/skillinfoz/skilldescript.lub` — title changed to "Sundering
+    Strike"; description updated from "every enemy in a line" to "every
+    enemy in a narrow cone up to 11 cells".
+- **Sundering Strike (follow-up):** The Sonic Wave visual now travels as far
+  on screen as the hit actually reaches, instead of always stopping at the
+  cast-at target's position. *Developer Comments: `clif_skill_damage`'s
+  destination parameter is a unit id, not a coordinate - the client animates
+  the wave traveling to wherever that specific unit is standing, not out to
+  some fixed distance. Sundering Strike is cast at melee range (it's a
+  non-targeted skill firing on the current target, which is always within
+  `Range: 2`), so anchoring the visual there made an 11-cell cone hit look
+  like it stopped dead after two cells the moment any of the farther targets
+  actually got hit.*
+  - `src/map/skills/swordman/sunderingstrike.cpp` — factored the cone's
+    step/width loop out into a new template helper,
+    `skill_sunderingstrike_walk_cone`, shared by two passes. Before playing
+    the visual, a new `skill_sunderingstrike_find_farthest_sub` callback
+    walks the cone read-only (just `battle_check_target`, no `skill_attack`)
+    and records the last (i.e. deepest) enemy it finds into a local
+    `visual_target`, which the existing damage sweep pass then reuses
+    unchanged. `clif_skill_damage` now targets `visual_target` instead of
+    always targeting the cast-at `target`; it still falls back to `target`
+    when the cone is empty (below 5 stacks, or nothing else caught in it).
+- **Sundering Strike (follow-up):** Cooldown raised from `15` seconds to
+  `45` seconds.
+  - `db/import/skill_db.yml` — `Cooldown: 45000`.
+  - `lua files/skillinfoz/skilldescript.lub` — description updated from "15
+    second cooldown" to "45 second cooldown".
+  - `src/map/skills/swordman/sunderingstrike.cpp` — updated the
+    `sunderingstrike_stack_snapshot` comment's cooldown reference for
+    accuracy (the snapshot-safety argument itself is unaffected — it holds
+    at any cooldown longer than the ~250ms 3-wave sequence).
+
+- **Bowling Bash (rework):** Turned from a spammable double-hit into a
+  committed burst strike. It now fires on your current target with no cursor
+  selection (`TargetType: Self` + `NoTargetSelf`, the same non-targeted "combo
+  skill" behavior Sundering Strike uses), lands as a single hit instead of two
+  (`div_` 2 → 1), and carries a `5` second cooldown. Every splash and chain hit
+  can now roll a critical (`NK_CRITICAL`). Base damage is unchanged at
+  `100% + 40% per level` (500% at level 10), but it now also consumes up to 5
+  `Momentum` stacks — the ones Two-Hand Quicken builds — for `+60% ATK per
+  stack`, up to `+300%` (800% total at level 10 with a full stack). Splash,
+  knockback pinball, range and SP cost are untouched.
+  - `db/import/skill_db.yml` — `TargetType: Self`, `Flags.NoTargetSelf: true`,
+    `DamageFlags.Critical: true`, `Cooldown: 5000`.
+  - `src/map/skills/swordman/bowlingbash.cpp` — `modifyDamageData` now sets
+    `div_ = 1`; `calculateSkillRatio` adds `60 * min(5, Momentum stacks)`
+    (read live, `#ifndef RENEWAL`); `castendDamageId` consumes `SC_MOMENTUM`
+    once at the end of the initial cast (flag depth 0), after the whole
+    synchronous splash/chain cascade has already scored off the live stacks.
+  - `lua files/skillinfoz/skilldescript.lub` — rewritten to the current-target,
+    single-hit, crit, Momentum and 5s-cooldown behavior; the stale Renewal
+    "up to four hits" multi-hit text and per-level ATK list were removed in
+    favor of the scaling formula. *Developer Comments: Bowling Bash and
+    Sundering Strike had drifted into the same "2H frontal AoE nuke" niche.
+    Slowing Bowling Bash down (5s cooldown, one hit) and paying it back through
+    crits and a Momentum dump gives it a distinct high-commitment feel while
+    keeping its signature pinball. Momentum is now a shared resource both
+    Knight burst skills can spend — pick your dump.*
+
+- **Bowling Bash (damage tuning):** Base damage lowered from `100% + 40% per
+  level` to `100% + 30% per level` (400% at level 10, down from 500%). The
+  Momentum consumption mechanic (up to `+60% ATK` per stack, `+300%` at 5
+  stacks) is unchanged.
+  - `src/map/skills/swordman/bowlingbash.cpp` — `calculateSkillRatio` now adds
+    `30 * skill_lv` instead of `40 * skill_lv`; the Momentum bonus block below
+    it is untouched.
+  - `lua files/skillinfoz/skilldescript.lub` — updated "40% per skill level"
+    to "30% per skill level". *Developer Comments: 800% total damage at level
+    10 with a full Momentum stack was landing too hard relative to Sundering
+    Strike's damage ceiling. Trimming the base ratio pulls the non-Momentum
+    floor down to a more reasonable 400% while leaving the Momentum payoff
+    (the skill's signature "spend your stacks" moment) exactly as strong as
+    before.*
+
+- **Sundering Strike (rework):** Given its own identity as an armor-breaking
+  setup strike instead of a second AoE nuke. It now plays Cart Termination's
+  animation (`WS_CARTTERMINATION`) instead of Sonic Wave's, and lands as a
+  single hit instead of 3 delayed waves (see the follow-up entry below for
+  the animation fix that made this land correctly as a weapon swing).
+  Damage is
+  `200% + 100% per skill level` (700% at level 5), consuming up to 5
+  `Momentum` stacks for `+50% ATK per stack` (up to +250%, 950% total at
+  level 5 with a full stack — down from the old +100%/stack). Cooldown is
+  lowered from `45` to `30` seconds. On every cast it also crushes the
+  target's armor: a new `Sunder` debuff reduces `DEF` by `5% per skill level`
+  (25% at level 5) for `12` seconds, no PC exemption (applies in PvP/WoE too).
+  At 5 stacks, the existing 11-cell frontal cone also sunders (not just
+  stuns) every enemy it catches.
+  - `src/map/status.hpp` — new `SC_SUNDER` enum entry (`val1` = DEF reduction
+    %).
+  - `src/map/script_constants.hpp` — `export_constant(SC_SUNDER)`; required
+    for the status DB's YAML loader to resolve `Status: Sunder` to the new
+    enum value (it looks up `SC_<NAME>` via `script_get_constant`, which only
+    finds constants registered here, not just declared in `status.hpp`).
+  - `src/map/status.cpp` — `status_calc_def` subtracts
+    `def * SC_SUNDER->val1 / 100`.
+  - `db/pre-re/status.yml` — new `Sunder` status, `CalcFlags.Def: true`,
+    borrowed `EFST_BROKENARMOR` icon.
+  - `db/import/skill_db.yml` — `Cooldown: 30000`; `Duration1` repurposed from
+    the dead old buff duration into the `Sunder` debuff length (`12000`,
+    read via `skill_get_time`).
+  - `src/map/skills/swordman/sunderingstrike.cpp` — rewritten for a single
+    synchronous hit: removed the `sunderingstrike_stack_snapshot` map, the
+    125ms wave interval, and the `skill_addtimerskill` scheduling now that
+    there's nothing delayed left to desync from live `SC_MOMENTUM`;
+    `calculateSkillRatio` reads Momentum live; `castendDamageId` applies
+    `SC_SUNDER` to the cast-at target every cast and to every cone target at
+    5 stacks, then plays the Cart Termination visual and consumes Momentum
+    once at the end.
+  - `lua files/skillinfoz/skilldescript.lub` — rewritten for the new damage
+    formula, armor-crush debuff, and 30s cooldown; dropped the redundant
+    "fires on your current target" note now that the `Target: Current
+    Target` line already states it (per the tooltip format spec). *Developer
+    Comments: with Bowling Bash now doing the "spend Momentum for a bigger
+    number" job, Sundering Strike needed a reason to exist beyond a worse
+    version of the same nuke. Making it a DEF-shred plants "Sundering" in
+    the name for real and turns it into a setup tool the whole party
+    benefits from, not just a personal damage line.*
+
+- **Sundering Strike (follow-up):** Fixed the raise-hand/cast pose players
+  kept seeing instead of a weapon swing, after three borrowed visuals
+  (`RK_SONICWAVE`, `WS_CARTTERMINATION`, `LK_HEADCRUSH`) were all tried and
+  none fixed it — because the borrowed visual was never the cause. The real
+  damage hit (`skill_attack(..., KN_ONEHAND, ...)`) sends its *own*, separate
+  `clif_skill_damage` packet using `KN_ONEHAND`'s real id (495), and the
+  client's per-skill-id animation table still had 495 mapped to its old
+  "One-Hand Quicken" self-buff cast pose (One-Hand Quicken was never a
+  damage skill in retail, so it never needed a combat animation) — entirely
+  independent of whatever plays in the borrowed visual packet beforehand.
+  This is exactly why Bowling Bash never had this problem: its own id has
+  always been a genuine attack skill with a real swing baked in. The fix
+  adds `KN_ONEHAND` to `skill.cpp`'s "Display damage" switch, in the same
+  `clif_damage` (plain weapon-swing, no per-id animation lookup) branch
+  `KN_AUTOCOUNTER` already uses for the identical reason. The visual is back
+  on Cart Termination now that the real hit displays correctly regardless of
+  which flourish plays first.
+  - `src/map/skill.cpp` — added `case KN_ONEHAND:` to the `clif_damage`
+    whitelist alongside `KN_AUTOCOUNTER`, `TF_DOUBLE`, `GS_CHAINACTION`, etc.
+  - `src/map/skills/swordman/sunderingstrike.cpp` — visual reverted to
+    `WS_CARTTERMINATION`.
+  *Developer Comments: three borrowed-visual swaps in a row failing for
+  different in-client symptoms should have been the signal that the visual
+  packet wasn't the variable that mattered. The actual damage packet was
+  the one carrying the stale animation the whole time. Lesson for any future
+  skill built by repurposing an old buff/no-damage id: check this switch in
+  skill.cpp before touching the visual at all.*
+
+- **Sundering Strike (follow-up):** The floating skill-name text above the
+  caster read "Cart Termination !!" instead of "Sundering Strike !!" after
+  the animation fix above, since the borrowed visual packet's id was the
+  only `clif_skill_damage`-family packet left carrying a name once the real
+  hit moved to the nameless `clif_damage` path. Fixed by announcing the real
+  skill name explicitly: `clif_skill_nodamage(src, *target, KN_ONEHAND,
+  skill_lv)` is now called (using the genuine id) immediately before the
+  Cart Termination visual packet, following the same pairing
+  `abyssflame.cpp` already uses elsewhere in this codebase.
+  - `src/map/skills/swordman/sunderingstrike.cpp` — added the
+    `clif_skill_nodamage` call in `castendDamageId`.
+
+- **Sundering Strike (rebalance):** Simplified back down to a pure
+  single-target strike. The 5-stack frontal cone AoE and its 50%/2s Stun are
+  both removed entirely (no more `stacks >= 5` payoff of any kind — the
+  Momentum-fed damage bonus still scales smoothly from 0 to 5 stacks, just
+  with no special threshold behavior). The armor-crush debuff is stronger to
+  compensate for losing its AoE spread: `DEF` reduction raised from `5%` to
+  `10% per skill level` (`50%` at level 5, up from `25%`), still main-target
+  only. SP cost is now a flat `22` at every level (was a flat `30`).
+  Cooldown is cut from `30` to `5` seconds, and it now shares that cooldown
+  with Bowling Bash — casting either one puts both on cooldown, so they can
+  no longer be alternated to bypass each other's downtime.
+  - `db/import/skill_db.yml` — `Cooldown: 5000`, `SpCost: 22`; `Duration2`
+    (the now-unused stun length) removed from the override.
+  - `src/map/skill.cpp` — added a Bowling Bash / Sundering Strike mutual
+    cooldown lockout in the same `BL_PC` cooldown-application block that
+    already pairs `HT_BLITZBEAT`/`HT_PHANTASMIC`.
+  - `src/map/status.hpp` — `SC_SUNDER` comment updated to `10 * skill level`
+    and main-target-only (the 5-stack cone application is gone).
+  - `src/map/skills/swordman/sunderingstrike.cpp` — removed the cone-walk
+    helpers (`skill_sunderingstrike_walk_cone`,
+    `skill_sunderingstrike_find_farthest_sub`,
+    `skill_sunderingstrike_cone_sub`), the `SUNDERINGSTRIKE_CONE_LENGTH`
+    constant, and the entire `stacks >= 5` branch (stun rolls, cone sweep,
+    visual re-anchoring); `SC_SUNDER`'s `val1` changed from `5 * skill_lv` to
+    `10 * skill_lv`; dropped the now-unused `map/battle.hpp`, `map/map.hpp`,
+    and `map/unit.hpp` includes.
+  - `lua files/skillinfoz/skilldescript.lub` — removed the "At 5 stacks..."
+    cone/stun paragraph, updated the `DEF` formula and SP/cooldown numbers,
+    and added a `Comments:` line noting the shared cooldown with Bowling
+    Bash (mirrored onto Bowling Bash's own entry too, for the same reason).
+  - `lua files/skillinfoz/skillinfolist.lub` — `SpAmount` changed from
+    `{ 30, 30, 30, 30, 30 }` to `{ 22, 22, 22, 22, 22 }`.
+
+- **Sundering Strike (follow-up):** Fixed the armor-crush debuff's
+  `EFST_BROKENARMOR` icon not appearing on monster targets (the DEF
+  reduction itself was always applying correctly — only the icon was
+  missing). `SC_SUNDER` borrows its icon from the vanilla `SC_BROKENARMOR`
+  status, and the engine code that decides which unit types (`BL_PC`,
+  `BL_MOB`, etc.) are allowed to show a given icon was aggregating that
+  shared icon slot in hash-table iteration order rather than a safe union:
+  whichever of the two statuses happened to be processed last could
+  overwrite the other's bits, so depending on load order the `BL_MOB` bit
+  `SC_SUNDER` needs would sometimes get silently dropped.
+  - `src/map/status.cpp` — in `StatusDatabase::loadingFinished()`, the
+    non-`BlEffect` branch now OR's `BL_PC` into `StatusRelevantBLTypes`
+    instead of overwriting it, so it can no longer clobber `BL_SCEFFECT`
+    bits a colliding icon's `BlEffect` status already set. This is a
+    general engine fix, not specific to Sundering Strike - it protects
+    every icon-borrowing status in the database from the same race.
+  *Developer Comments: the AoE/stun payoff never got much play time before
+  being cut, so this isn't walking back something proven - it's trading
+  breadth for a much tighter, faster, harder-hitting single-target tool that
+  can't just be chained back-to-back with Bowling Bash for permanent uptime
+  on one or the other.*
+
+- **Two-Hand Quicken (Momentum tuning):** `Momentum`'s per-stack duration is
+  cut from `15` to `7` seconds; stacks still cap at 5, refresh on any new
+  stack, and reduce weapon swing delay by `7%` per stack (`35%` at 5 stacks).
+  *Developer Comments: 15 seconds let a Knight coast on a maxed stack through
+  long lulls between hits; 7 seconds keeps the ASPD payoff tied to actually
+  staying in a fight rather than a hit landed a while back.*
+  - `src/map/skill.cpp` — both `sc_start(..., SC_MOMENTUM, ...)` calls (landing
+    an auto-attack in `skill_additional_effect`, taking a melee hit in
+    `skill_counter_additional_effect`) changed from `15000` to `7000`.
+  - `src/map/status.hpp` — `SC_MOMENTUM` comment updated to `7s duration`.
+  - `lua files/skillinfoz/skilldescript.lub` — `KN_TWOHANDQUICKEN`'s Momentum
+    line updated from `15 sec` to `7 sec`. No SP/range/max-level change, so
+    `skillinfolist.lub` is untouched.
+
+- **Two-Hand Quicken (Momentum retuning):** `Momentum`'s duration is raised
+  from `7` to `10` seconds and its stack cap is doubled from `5` to `10`. The
+  per-stack ASPD payoff is halved to compensate, dropping from `7%` to `3%`
+  per stack, so the cap still tops out close to where it was (`30%` at 10
+  stacks, versus `35%` at 5). Bowling Bash and Sundering Strike's
+  Momentum-fed damage bonuses are halved in the same pass — `60%` to `30%`
+  per stack on Bowling Bash, `50%` to `25%` per stack on Sundering Strike —
+  so their maximum damage at full stacks (`+300%` and `+250%` respectively)
+  is unchanged, only smoothed across twice as many stacks. *Developer
+  Comments: the 5-stack cap made Momentum swingy - a Knight either had it
+  maxed or didn't, with no meaningful in-between. Spreading the same total
+  payoff across 10 stacks over a longer window makes partial stacks matter
+  and rewards sustained engagement instead of one lucky hit topping the bar.*
+  - `src/map/skill.cpp` — both `sc_start(..., SC_MOMENTUM, ...)` calls changed
+    from `min(5, stacks + 1), 7000` to `min(10, stacks + 1), 10000`.
+  - `src/map/status.cpp` — `status_calc_aspd_rate`'s Momentum block changed
+    from `min(350, 70 * stacks)` to `min(300, 30 * stacks)`.
+  - `src/map/status.hpp` — `SC_MOMENTUM` comment updated to `max 10` stacks,
+    `3%` per stack (`30%` cap), `10s duration`.
+  - `src/map/skills/swordman/bowlingbash.cpp` — `calculateSkillRatio` changed
+    from `60 * min(5, stacks)` to `30 * min(10, stacks)`.
+  - `src/map/skills/swordman/sunderingstrike.cpp` — both `calculateSkillRatio`
+    and `castendDamageId` changed their stack clamp from `min(5, ...)` to
+    `min(10, ...)`; the damage term changed from `50 * stacks` to
+    `25 * stacks`.
+  - `lua files/skillinfoz/skilldescript.lub` — `KN_TWOHANDQUICKEN`'s Momentum
+    lines updated to `max 10, 10 sec` and `3%, up to 30%`; `KN_BOWLINGBASH`
+    updated to `up to 10 Momentum stacks` / `30% ATK each`; `KN_ONEHAND`
+    (Sundering Strike) updated to `10 stacks of Momentum` / `extra 25% ATK
+    each`. No SP/range/max-level change on any of the three, so
+    `skillinfolist.lub` is untouched.
+
+- **Sundering Strike (Momentum cap trim):** The stack clamp is lowered from
+  `10` to `5`, and the per-stack bonus is doubled from `25% ATK` to `50% ATK`,
+  so the maximum payout is unchanged at `+250% ATK` from a full Momentum bar.
+  *Developer Comments: Sundering Strike's own cap didn't need to track Two-Hand
+  Quicken's 10-stack ceiling — this just compresses its consumption curve so
+  the skill pays out its full bonus off a half-full Momentum bar instead of
+  requiring the Knight to sit on stacks all the way to 10 before dumping them.*
+  - `src/map/skills/swordman/sunderingstrike.cpp` — both `calculateSkillRatio`
+    and `castendDamageId` changed their stack clamp from `min(10, ...)` to
+    `min(5, ...)`; the damage term changed from `25 * stacks` to `50 *
+    stacks`. Since Momentum can hold up to 10 stacks (built by Two-Hand
+    Quicken) but Sundering Strike now only spends 5, `castendDamageId` no
+    longer unconditionally ends the whole buff — it ends it and then
+    re-applies `SC_MOMENTUM` with whatever stacks were left over
+    (`total_stacks - 5`) so a fuller bar isn't discarded on cast.
+  - `lua files/skillinfoz/skilldescript.lub` — `KN_ONEHAND` updated to `up to
+    5 stacks of Momentum` / `extra 50% ATK each`. No SP/range/max-level
+    change, so `skillinfolist.lub` is untouched.
+
+- **Two-Hand Quicken (Momentum icon tooltip fix):** The borrowed Striking status
+  icon's hover text still read `Reduces weapon swing delay by 7% per stack`, the
+  pre-retuning value — the Momentum retuning pass that halved the per-stack ASPD
+  from `7%` to `3%` updated `skilldescript.lub` but missed this one. Corrected to
+  `3% per stack` so the icon tooltip matches the actual `30%`-at-10-stacks cap.
+  Purely a text fix; no gameplay numbers change.
+  - `lua files/stateicon/stateiconinfo.lub` — `EFST_STRIKING`'s descript line
+    changed from `7%` to `3%` per stack.
+
+- **Two-Hand Quicken (Momentum max-stacks aura):** When Momentum reaches its
+  `10`-stack cap, a spinning brown aura (Chaos Panic's `EF_BOTTOM_ANI`, effect
+  id `827`) now plays under the Knight's feet so it is immediately clear the bar
+  is maxed. The aura is torn down the instant the stack count drops below `10` —
+  whether the buff expires, is consumed by Bowling Bash or Sundering Strike, or
+  is otherwise removed — so it is only ever visible at a full `10`-stack bar.
+  Purely visual; no gameplay numbers change. *Developer Comments: the Striking
+  status icon shows the running stack count, but nothing on the character model
+  told a Knight (or an onlooker) they'd actually hit the cap and stopped gaining
+  ASPD. A max-only aura makes the "spend it now" moment read at a glance.*
+  - `src/map/skill.cpp` — both Momentum-building sites (`skill_additional_effect`
+    on a landed auto-attack, `skill_counter_additional_effect` on taking a melee
+    hit) fire `clif_specialeffect(..., EF_BOTTOM_ANI, AREA)` on the `9`→`10`
+    transition (`stacks == 9`), so the looping aura starts exactly once when the
+    bar tops out and is not re-sent while sitting at cap.
+  - `src/map/status.cpp` — `status_change_end` removes the aura via
+    `clif_specialeffect_remove(..., EF_BOTTOM_ANI, AREA, bl)` for `SC_MOMENTUM`,
+    the single choke point every stack-loss path (expiry, Bowling Bash/Sundering
+    Strike consumption) already runs through. Harmless no-op if the player never
+    reached `10` stacks. No client tooltip change, so the `lua files` are
+    untouched.
+
+- **Charge Attack:** No longer a quest skill — it is now a 5-level
+  skill-point skill gated behind Cavalier Mastery Rank 5. SP cost is cut from
+  a flat `40` to a flat `5`, and it gains a `30/25/20/15/10` second cooldown
+  across ranks 1-5. Damage is now `100% ATK, +50% ATK per skill level for
+  every 3 cells of distance` (capped at 4 steps, 12+ cells), up from the old
+  flat `+100% per 3 cells`. The target is no longer knocked back on hit (the
+  Knight still charges to melee range). It remains a normal player-targeted
+  skill — the player still picks the enemy with the cursor — but the cast is
+  now instant (was 500ms-1500ms, scaling with distance), so the Knight
+  resumes auto-attacking the same target the instant the charge lands instead
+  of standing idle. *Developer Comments: Charge Attack was a one-off quest
+  curiosity nobody built around. Turning it into a ranked, cooldown-gated gap
+  closer that scales with Cavalier Mastery gives mounted Knights a real spam
+  tool; the instant cast keeps the charge from interrupting the Knight's
+  attack flow, and dropping the knockback keeps it from fighting with the
+  rest of the kit's positioning.*
+  - `src/map/skills/swordman/chargeattack.cpp` — `calculateSkillRatio`'s
+    pre-renewal branch changed from `base_skillratio += 100 * k;` to
+    `base_skillratio += 50 * skill_lv * k;`; the pre-renewal `skill_blown`
+    knockback call in `castendDamageId` moved inside the `RENEWAL`-only
+    branch so pre-re no longer knocks the target back.
+  - `db/import/skill_db.yml` — `MaxLevel: 5`, `CastTime: 0`,
+    `Flags: { IsQuest: false }`, a per-level `Cooldown` (`30000` down to
+    `10000`), and `Requires.SpCost: 5`. `TargetType` is left at its base
+    `Attack` value (still player-targeted).
+  - `src/map/unit.cpp` — the `case KN_CHARGEATK` distance-based cast-time
+    multiplier is left in place with a comment noting it is now inert against
+    the 0 base cast time.
+  - `db/import/skill_tree.yml` — added to the `Knight` tree requiring
+    `KN_CAVALIERMASTERY` level 5.
+  - `lua files/skillinfoz/skilldescript.lub` — rewrote the `KN_CHARGEATK`
+    entry to the current Cavalier Mastery requirement, `Enemy` targeting, the
+    instant cast, and the new damage/SP/cooldown formula.
+  - `lua files/skillinfoz/skillinfolist.lub` — `MaxLv: 5`,
+    `SpAmount: { 5, 5, 5, 5, 5 }`, `AttackRange` restated per level, `Type`
+    field (formerly `"Quest"`) removed, and `_NeedSkillList` added for
+    Cavalier Mastery 5.
+
+- **Bowling Bash & Sundering Strike (unlinked cooldowns):** The two skills no
+  longer share a cooldown — casting one no longer puts the other on cooldown
+  as well, so a Knight can freely alternate between them. Bowling Bash keeps
+  its own `5 second` cooldown; Sundering Strike's is raised from `5` to
+  `10 seconds` to stand on its own now that it isn't riding Bowling Bash's
+  shorter timer. Bowling Bash now consumes up to `5` Momentum stacks (down
+  from `10`) for `+60% ATK` each instead of `+30%`, so the total damage
+  payoff at full stacks is unchanged (`+300%`) — it just arrives twice as
+  fast per stack, matching Sundering Strike's own 5-stack cap. Sundering
+  Strike's armor-crush debuff is nerfed to compensate for its longer uptime
+  as an independent skill: `DEF` reduction drops from `10%` to `5% per skill
+  level` (`25%` at level 5, down from `50%`).
+  *Developer Comments: the shared-cooldown lockout was meant to stop players
+  from alternating the two skills to bypass their downtime, but it made them
+  feel like one skill wearing two faces instead of two distinct tools. Cutting
+  the link lets each skill stand on its own cooldown and identity; Sundering
+  Strike's longer cooldown and softer DEF shred keep it from just being
+  Bowling Bash's on-demand backup now that it's free to fire independently.*
+  - `src/map/skill.cpp` — removed the `KN_BOWLINGBASH`/`KN_ONEHAND` mutual
+    `skill_blockpc_start` lockout from the `BL_PC` cooldown-application block.
+  - `db/import/skill_db.yml` — `KN_ONEHAND` (Sundering Strike) `Cooldown`
+    raised from `5000` to `10000`.
+  - `src/map/skills/swordman/bowlingbash.cpp` — `calculateSkillRatio`'s
+    Momentum bonus changed from `30 * min(10, stacks)` to
+    `60 * min(5, stacks)`; `castendDamageId` now consumes only up to `5`
+    stacks and re-applies any remainder, mirroring Sundering Strike's
+    partial-consumption pattern instead of ending the whole buff outright.
+  - `src/map/skills/swordman/sunderingstrike.cpp` — `SC_SUNDER`'s `val1`
+    changed from `10 * skill_lv` to `5 * skill_lv`.
+  - `src/map/status.hpp` — `SC_SUNDER` comment updated to `5 * skill level`
+    (max `25%` at Lv 5).
+  - `lua files/skillinfoz/skilldescript.lub` — `KN_BOWLINGBASH` and
+    `KN_ONEHAND` entries updated to the new stack counts/percentages and
+    cooldown, and both lost their now-inaccurate `Comments:` line about
+    sharing a cooldown.
+
+- **Battle Rhythm (Momentum active-play rework):** Momentum stacks are no
+  longer built by landing or taking auto attacks — they are now granted by
+  landing an offensive skill while Two-Hand Quicken is active. Max stacks
+  drops from `10` to `3`, and each stack now reduces weapon swing delay by
+  `10%` (up from `3%`), so the cap is still `30%` at max stacks, just reached
+  in a third of the hits. Bowling Bash and Sundering Strike no longer consume
+  Momentum stacks for bonus damage — their former max-stack payoff is now a
+  flat, unconditional part of their base damage: Bowling Bash deals
+  `400% + 30% per skill level` (was `100% + 30%` plus up to `+300%` consumed),
+  and Sundering Strike deals `450% + 100% per skill level` (was
+  `200% + 100%` plus up to `+250%` consumed). *Developer Comments: passively
+  farming Momentum off auto attacks or getting hit rewarded standing still
+  and tanking damage, not playing the class. Tying stacks to landing offensive
+  skills makes Momentum a payoff for an active Knight rotation, and letting
+  Bowling Bash and Sundering Strike keep their old damage ceiling unconditionally
+  removes the awkward tension where spending ASPD stacks for damage undercut
+  the very buff that made the next few swings faster.*
+  - `src/map/skill.cpp` — the stack grant moved from `skill_additional_effect`
+    into `skill_counter_additional_effect` (keyed on `skill_id != 0` instead
+    of the old `skill_id == 0` auto-attack check), because
+    `skill_additional_effect` is skipped whenever the hit kills the target —
+    a killing blow with e.g. Bowling Bash was silently failing to grant a
+    stack under the old auto-attack-only placement. Cap lowered to
+    `min(3, ...)` from `min(10, ...)`; the max-stacks aura now fires on the
+    `2->3` transition. The damage-received stack grant (the old `BF_SHORT`
+    melee-hits-taken block) has been removed entirely.
+  - `src/map/status.cpp` — `status_calc_aspd_rate`'s Momentum bonus changed
+    from `30 * min(10, stacks)` (3%/stack, cap 300) to `100 * val1` (10%/stack,
+    still capped at `300`, i.e. `30%` at 3 stacks).
+  - `src/map/status.hpp` — `SC_MOMENTUM` comment updated to reflect the new
+    grant trigger, 3-stack cap, and 10%-per-stack ASPD bonus.
+  - `src/map/skills/swordman/bowlingbash.cpp` — `calculateSkillRatio` now adds
+    a flat `300 + 30 * skill_lv` instead of reading and consuming Momentum;
+    `castendDamageId` no longer ends/re-applies `SC_MOMENTUM`.
+  - `src/map/skills/swordman/sunderingstrike.cpp` — `calculateSkillRatio` now
+    adds a flat `350 + 100 * skill_lv` instead of reading and consuming
+    Momentum; `castendDamageId` no longer ends/re-applies `SC_MOMENTUM`.
+  - `lua files/skillinfoz/skilldescript.lub` — `KN_TWOHANDQUICKEN`'s Momentum
+    paragraph rewritten for the new grant trigger, 3-stack cap, and 10% swing
+    delay reduction; `KN_BOWLINGBASH` and `KN_ONEHAND` lost their Momentum
+    consumption lines and now state the flat damage formulas directly.
+  - `lua files/stateicon/stateiconinfo.lub` — the `EFST_STRIKING` (Momentum)
+    tooltip updated from `3%` to `10%` per stack.
 
 ### Crusader Skill Changes
 
@@ -568,6 +1538,59 @@ added in future passes.
   additive that gear quickly drowns out. The per-level bonus was subsequently trimmed from 2.5% to
   2% of ATK (25% -> 20% at max level) to pull the falcon's ATK-scaled ceiling back in line with the
   other Hunter skills.*
+- **Hunting Party (formerly Falcon Assault):** Falcon Assault's single-target Misc nuke is reworked
+  into `Hunting Party`, an active self-buff. It is now a no-damage self-cast with a `fixed 0.5 second
+  cast time` (unreducible by DEX, status or gear) and no after-cast delay, and calls in two
+  more falcons for `12 seconds` at level 1, `+2 seconds per level` up to `20 seconds` at level 5,
+  on a flat `60 second cooldown` (SP cost, the Falcon requirement and the skill's learning
+  prerequisites are unchanged). While the buff is active: every plain auto attack has a flat `30%`
+  chance to trigger a single-target Blitz Beat from a second, "Ranger" falcon — this strike never
+  reads or consumes a `Hunted` mark, even if the target happens to carry one. Separately, every time
+  the Hunter's own falcon lands a Blitz Beat — whether cast manually or fired automatically by the
+  falcon assist off a `Hunted` mark — a third, "Windhawk" falcon echoes it `500ms` later for the
+  exact same damage, displayed with the Hawk Rush strike animation. An empowered 5x5 Blitz Beat is
+  echoed on each enemy it struck. The Ranger falcon's own strike is deliberately never echoed.
+  For the duration, the two extra falcons are also physically present: casting the skill spawns two
+  cosmetic companions (an owl for the Ranger falcon and a second falcon for the Windhawk) that dive
+  through their victims, then fly back to the Sniper, and vanish when the buff ends.
+  Both of the strikes above are drawn from their own bird, so the extra Blitz Beat visibly comes from
+  the Ranger falcon and the echo from the Windhawk, rather than both firing off the Sniper. The
+  companions remain strictly decorative — they cannot be targeted, damaged, or aggroed onto, deal no
+  damage of their own, and grant no experience or drops; all damage is still dealt and credited by
+  the Sniper, so drops and aggro are unaffected. Because Falcon Assault no longer deals damage
+  itself, it drops out of Steel Crow's per-strike ATK bonus list (Blitz Beat and Predatory Strike
+  still benefit). *Developer Comments: Falcon Assault was just a Blitz-Beat-flavored Misc nuke with
+  a clunky 3-second After Cast Delay, competing directly with Blitz Beat and Predatory Strike for the
+  same button. Turning it into a stance instead gives the Hunter/Sniper falcon kit a burst window
+  with its own identity — more frequent, lower-commitment falcon strikes rather than one more hard
+  nuke — and gives Steel Crow investment (which now only touches Blitz Beat and Predatory Strike) a
+  cleaner story.*
+- **Hunting Party — prerequisites:** Now gated solely behind `Predatory Strike Lv. 5`
+  (previously `Vulture's Eye 5`, `Falconry Mastery 1`, `Blitz Beat 5`, and
+  `Steel Crow 3`). *Developer Comments: Predatory Strike already sits behind Steel Crow
+  10 in the tree, so gating Hunting Party on the four older, lower-tier falcon skills
+  individually was redundant bookkeeping rather than a real choice — collapsing it to
+  the one high-tier falcon skill keeps the falcon line's capstone gaps meaningful
+  without making the player re-clear prerequisites Predatory Strike already implies.*
+- **Hunting Party — cast effect:** The cosmetic flourish played when the stance goes up
+  no longer reuses the old attack skill's `EF_FALCONASSAULT` dive effect (which spins the
+  caster in place before the throw); it now plays a plain buff-activation aura
+  (`EF_INCAGILITY`) that doesn't touch the caster's facing or animation. *Developer
+  Comments: the spin animation made sense for a one-off nuke but looked wrong on a stance
+  that gets recast every 60 seconds — players were visibly spinning in combat every time
+  the buff came off cooldown.*
+- **Hunting Party — status visual:** The buff's status icon now borrows Guillotine Cross's
+  Dark Crow (`EFST_DARKCROW`) for its crow/bird imagery, with no persistent aura — just the
+  status-bar icon. `GC_DARKCROW` has no pre-re skill tree entry so nothing else on this
+  server uses it. *Developer Comments: an earlier pass tried a persistent green aura
+  (Calamity Gale) to make the stance more visible in combat, but it read as too flashy for
+  a buff this cheap and frequent; a plain bird icon on the buff bar is a better fit.*
+- **Hunting Party — SP cost:** Now a flat `60 SP` at every level (previously `30 SP`, `+4
+  per level`, topping out at `46 SP` at Lv 5). *Developer Comments: the buff's payoff (extra
+  falcon procs) doesn't scale with level nearly as much as its cost did — the falcon's own
+  duration and proc chance are both fixed regardless of skill level — so the rising cost was
+  taxing investment in the skill for no real return. A flat, higher cost values the stance
+  for what it does rather than what level it's cast at.*
 
 - **Tranquillizing Dart (formerly Sandman):** The old Sandman ground trap is rebuilt into
   `Tranquillizing Dart`, a single-rank (`MaxLevel 5 -> 1`) targeted bow skill. Instead of
@@ -583,6 +1606,89 @@ added in future passes.
   opener; the 1% ATK hit is only the delivery vehicle (the engine drops on-hit effects for
   zero-damage shots), and the long 60s cooldown and 30 SP cost are the price for a guaranteed
   15-second sleep.*
+
+### Sniper Skill Changes
+
+- **Lethal Arrow (formerly Sharpshooting/Focused Arrow Strike):** Rebuilt into an
+  instant-cast execution shot. Damage is now `200% ATK + 80% per skill level` (600%
+  at level 5), with an added execution bonus of `+1% ATK for every 1% of the target's
+  missing HP` (up to `+100% ATK` against a near-dead target), landing on the target
+  and every enemy in a `5x5` area around it. The old 14x3 piercing corridor is gone —
+  it no longer needs a line of enemies between the caster and the target. Cast time
+  is removed entirely (was 2 seconds), and cooldown is a flat `10 seconds`. SP cost
+  is a flat `60` at every level (was `18`-`30`). It rolls crits off the Sniper's own
+  `CRIT` stat and now actually deals bonus crit damage, replacing the old flat `+20`
+  Critical bonus that rolled crits but was silently stripped back down to normal
+  damage on the hit itself. The cast now plays Chain Reaction Shot's detonation
+  animation instead of the old arrow-corridor effect (mob-cast Sharpshooting inherits
+  the same visual). *Developer Comments: Sharpshooting advertised itself as one of
+  the only skills in the game that can crit, but the damage-calc path quietly zeroed
+  out the crit bonus every time, so the tooltip was lying. Turning it into a real
+  execution shot — burst that spikes as a target nears death, backed by a crit rate
+  and cost that actually mean something — gives Snipers a genuine finisher instead
+  of a corridor nuke that happened to need perfect line-up with the enemy.*
+
+- **Lethal Arrow (rebalance):** Dropped the `5x5` splash entirely — it now strikes only
+  the single target it's cast on, firing `4 hits` in rapid succession instead of one.
+  Each hit deals `100% ATK + 40% per skill level` (300% at level 5), so the 4-hit total
+  is `400% + 160% per skill level` (1200% at level 5) — double the old single-hit
+  total. The execution bonus (`+1% ATK per 1% of the target's missing HP`, up to
+  `+100% ATK`) and the crit-off-your-own-CRIT behavior are unchanged. Cooldown is
+  raised from `10` to `15 seconds`; SP cost, cast time, and the borrowed Chain
+  Reaction Shot visual are unchanged. *Developer Comments: the 5x5 splash made Lethal
+  Arrow a pull-clearing AoE nuke on top of being a single-target execution tool, which
+  blurred its identity with the Sniper's other AoE options. Concentrating the same
+  (now doubled) damage into 4 hits on one target keeps it a dedicated finisher and
+  gives the crit roll more chances to matter per cast, at the cost of a longer
+  cooldown to pay for the higher ceiling.*
+
+- **Lethal Arrow (follow-up):** The floating skill-name text above the caster read
+  a blank `"!!"` on cast instead of `"Lethal Arrow !!"`. Neither borrowed id used for
+  the visual (`ABC_CHAIN_REACTION_SHOT` for the cast, `ABC_CHAIN_REACTION_SHOT_ATK`
+  for the hit) has a name entry on this client — they're 4th-job ids without
+  localized skill data here — so every packet sent for the cast was nameless. Fixed
+  by re-announcing the real name after the hit lands:
+  `clif_skill_nodamage(src, *target, SN_SHARPSHOOTING, skill_lv)` is now called last,
+  using the genuine id (which does have a "Lethal Arrow" entry). This briefly flashes
+  `SN_SHARPSHOOTING`'s own registered cast effect right after the damage number
+  appears — the same tradeoff already accepted for Sundering Strike's borrowed Cart
+  Termination visual, since there is no packet that carries a name without also
+  carrying an effect for that id.
+  - `src/map/skills/archer/focusedarrowstrike.cpp` — added the trailing
+    `clif_skill_nodamage` call in `castendDamageId`.
+
+- **Lethal Arrow (untargeted):** No longer requires picking a target with the
+  cursor — it now auto-fires on whatever the Sniper is currently attacking, same
+  aiming style as Double Strafe. `TargetType: Self` plus the `NoTargetSelf` flag
+  route the cast through the engine's existing "auto-select target" rewrite
+  (`unit.cpp`), which redirects a self-target combo cast onto the caster's current
+  target; if there is no current target, the cast simply does nothing. No damage,
+  cost, or visual changes. *Developer Comments: an instant-cast, 15-second-cooldown
+  finisher is meant to be pressed the instant it's off cooldown - a cursor click in
+  between just adds latency and misclicks for no gameplay value.*
+  - `db/import/skill_db.yml` — added `TargetType: Self` and `Flags.NoTargetSelf: true`
+    to the existing override (the base entry's `TargetTrap` flag is untouched,
+    since `Flags` merges per-field).
+  - `lua files/skillinfoz/skilldescript.lub` — `Target:` line changed from `Enemy`
+    to `Current Target`.
+
+- **Lethal Arrow (prerequisites and placement):** Now gated solely behind `Wyvern
+  Bolt (HT_POWER) level 5` (previously `Improve Concentration 10` and `Double Strafe
+  5`). Moved down 4 rows and left 2 columns in the Sniper skill tree grid to sit
+  alongside its new prerequisite instead of the Archer-tier skills it no longer
+  needs. *Developer Comments: Lethal Arrow's old gates were leftover from when it
+  was a corridor nuke that wanted a fast-attacking, well-aimed Sniper; as a single-
+  target execution finisher its real prerequisite is a Sniper actually having
+  Wyvern Bolt's piercing damage online first, so the tree now reflects that
+  dependency directly instead of two unrelated Archer-tier skills.*
+  - `db/import/skill_tree.yml` — added `SN_SHARPSHOOTING` under the `Sniper` job
+    block; `AC_CONCENTRATION` and `AC_DOUBLE` erased with `Level: 0` (import
+    merges `Requires` by keyed skill name rather than replacing them), `HT_POWER`
+    `Level: 5` added.
+  - `lua files/skillinfoz/skilltreeview.lub` — `[SKID.SN_SHARPSHOOTING]` moved
+    from grid index `6` to `32` in `JT_HUNTER_H` (row 0, col 6 → row 4, col 4).
+  - `lua files/skillinfoz/skilldescript.lub` — `Requirement:` line changed to
+    `Wyvern Bolt 5`.
 
 ### Thief Skill Changes
 

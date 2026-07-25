@@ -8,6 +8,7 @@
 #include <common/db.hpp>
 
 #include "map/battle.hpp"
+#include "map/status.hpp"
 #include "map/unit.hpp"
 
 SkillBowlingBash::SkillBowlingBash() : SkillImpl(KN_BOWLINGBASH) {
@@ -24,14 +25,22 @@ void SkillBowlingBash::modifyDamageData(Damage& dmg, const block_list& src, cons
 			dmg.div_ = 3;
 	}
 #else
-	// Payon Stories rebalance: skill hits twice (400% per hit, up to 800% total)
-	dmg.div_ = 2;
+	// Payon Stories rebalance: single heavy hit (knockback handled by the
+	// splash/chain pinball in castendDamageId, so no default knockback here)
+	dmg.div_ = 1;
 	dmg.blewcount = 0;
 #endif
 }
 
 void SkillBowlingBash::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
-	base_skillratio += 40 * skill_lv;
+#ifndef RENEWAL
+	// Momentum rework: Bowling Bash no longer consumes Momentum stacks for
+	// bonus damage - the old 5-stack ceiling (+300% ATK) is now baked in
+	// unconditionally, so Momentum is a pure ASPD reward for landing skills.
+	base_skillratio += 300 + 30 * skill_lv;
+#else
+	base_skillratio += 30 * skill_lv;
+#endif
 }
 
 void SkillBowlingBash::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {

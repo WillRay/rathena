@@ -985,6 +985,7 @@
 	export_constant(SC_PROVOKE);
 	export_constant(SC_ENDURE);
 	export_constant(SC_TWOHANDQUICKEN);
+	export_constant(SC_MOMENTUM);
 	export_constant(SC_CONCENTRATE);
 	export_constant(SC_HIDING);
 	export_constant(SC_CLOAKING);
@@ -2010,6 +2011,9 @@
 	export_constant(SC_LANDMINE_BLEED);
 	export_constant(SC_RAZORWING_SLOW);
 	export_constant(SC_TWOHANDBOOST);
+	export_constant(SC_KNIGHTCOUNTER);
+	export_constant(SC_SUNDER);
+	export_constant(SC_HUNTINGPARTY);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)

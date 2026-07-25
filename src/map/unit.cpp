@@ -2420,6 +2420,11 @@ int32 unit_skilluse_id2(block_list *src, int32 target_id, uint16 skill_id, uint1
 #ifndef RENEWAL_CAST
 		case KN_CHARGEATK:
 		{
+			// Payon Stories rebalance: KN_CHARGEATK's base CastTime is now 0
+			// (db/import/skill_db.yml) so the skill casts instantly and can
+			// trigger the auto-resume-attack behavior in skill.cpp. This
+			// distance-based multiplier is left in place but is inert against
+			// a 0 base (casttime + casttime * k == 0 for any k).
 			int32 k = static_cast<int32>(distance_math_bl(src, target));
 			k = cap_value((k - 1) / 3, 0, 2); //Range 0-3: 500ms, Range 4-6: 1000ms, Range 7+: 1500ms
 			casttime += casttime * k;

@@ -12,3 +12,9 @@
  **/
 
 { "mob_ele_view",                       &battle_config.mob_ele_view,                    0,      0,      1,              },
+
+// VIT redesign
+{ "vit_def2_quadratic_divisor",         &battle_config.vit_def2_quadratic_divisor,      150,    0,      10000,          },
+{ "vit_mdef2_quadratic_divisor",        &battle_config.vit_mdef2_quadratic_divisor,     400,    0,      10000,          },
+{ "vit_sc_def_halfpoint",               &battle_config.vit_sc_def_halfpoint,            60,     1,      10000,          },
+{ "vit_flat_hp_cap",                    &battle_config.vit_flat_hp_cap,                 1000,   0,      1000000,        },

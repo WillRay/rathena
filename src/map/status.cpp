@@ -2496,6 +2496,42 @@ uint16 status_base_atk(const block_list *bl, const struct status_data *status, i
 	return cap_value(str, 0, USHRT_MAX);
 }
 
+#ifndef RENEWAL
+/**
+ * VIT-based soft DEF bonus (VIT redesign). Players get a quadratic bonus on top of the
+ * linear stock term; other unit types keep the stock linear-only formula.
+ * @param bl: Object to calculate for
+ * @param vit: VIT stat value
+ * @return def2 contribution from VIT
+ */
+static int32 status_calc_vit_def2_bonus(const block_list *bl, int32 vit)
+{
+	int32 bonus = vit;
+	if (bl->type == BL_PC && battle_config.vit_def2_quadratic_divisor > 0)
+		bonus += vit * vit / battle_config.vit_def2_quadratic_divisor;
+	return bonus;
+}
+
+/**
+ * Soft MDEF bonus (VIT redesign). Players derive mdef2 purely from VIT (linear + quadratic
+ * term); other unit types keep the stock int_ + vit/2 formula.
+ * @param bl: Object to calculate for
+ * @param vit: VIT stat value
+ * @param int_: INT stat value
+ * @return mdef2 contribution from VIT/INT
+ */
+static int32 status_calc_vit_mdef2_bonus(const block_list *bl, int32 vit, int32 int_)
+{
+	if (bl->type == BL_PC) {
+		int32 bonus = vit;
+		if (battle_config.vit_mdef2_quadratic_divisor > 0)
+			bonus += vit * vit / battle_config.vit_mdef2_quadratic_divisor;
+		return bonus;
+	}
+	return int_ + (vit / 2);
+}
+#endif
+
 #ifdef RENEWAL
 /**
  * Weapon attack value calculated for Players
@@ -2708,11 +2744,11 @@ void status_calc_misc(block_list *bl, struct status_data *status, int32 level)
 	status->flee = cap_value(stat, 1, SHRT_MAX);
 	// Def2
 	stat = status->def2;
-	stat += status->vit;
+	stat += status_calc_vit_def2_bonus(bl, status->vit);
 	status->def2 = cap_value(stat, 0, SHRT_MAX);
 	// Mdef2
 	stat = status->mdef2;
-	stat += status->int_ + (status->vit / 2);
+	stat += status_calc_vit_mdef2_bonus(bl, status->vit, status->int_);
 	status->mdef2 = cap_value(stat, 0, SHRT_MAX);
 #endif
 
@@ -3526,6 +3562,13 @@ static uint32 status_calc_maxhp_pc( map_session_data& sd, uint32 vit ){
 	}else if( pc_is_taekwon_ranker( &sd ) ){
 		dmax *= 3;
 	}
+
+#ifndef RENEWAL
+	// VIT redesign: flat MaxHP bonus, capped so it only matters at low-to-mid VIT
+	if( vit > 0 && battle_config.vit_flat_hp_cap > 0 ){
+		dmax += umin( static_cast<uint32>( pow( vit, 1.5 ) ), static_cast<uint32>( battle_config.vit_flat_hp_cap ) );
+	}
+#endif
 
 	// Vit from equip gives +1 additional HP
 	dmax += sd.indexed_bonus.param_equip[PARAM_VIT];
@@ -5281,7 +5324,12 @@ void status_calc_regen(block_list *bl, struct status_data *status, struct regen_
 	sd = BL_CAST(BL_PC,bl);
 	sc = status_get_sc(bl);
 
+#ifndef RENEWAL
+	// VIT redesign: smooth the vit/5 step so the fractional remainder isn't lost at the boundary
+	val = static_cast<int32>(status->vit / 5.0 + max(1.0, status->max_hp / 200.0));
+#else
 	val = (status->vit/5) + max(1, status->max_hp/200);
+#endif
 
 	if( sd && sd->hprecov_rate != 100 )
 		val = val*sd->hprecov_rate/100;
@@ -6063,7 +6111,7 @@ void status_calc_bl_main(block_list& bl, std::bitset<SCB_MAX> flag)
 #ifdef RENEWAL
 			+ (int32)( ((float)status->vit/2 - (float)b_status->vit/2) + ((float)status->agi/5 - (float)b_status->agi/5) )
 #else
-			+ (status->vit - b_status->vit)
+			+ (status_calc_vit_def2_bonus(&bl, status->vit) - status_calc_vit_def2_bonus(&bl, b_status->vit))
 #endif
 		);
 	}
@@ -6083,11 +6131,12 @@ void status_calc_bl_main(block_list& bl, std::bitset<SCB_MAX> flag)
 			)
 			status->mdef2 = status_calc_mdef2(&bl, sc, b_status->mdef2);
 		else
-			status->mdef2 = status_calc_mdef2(&bl, sc, b_status->mdef2 +(status->int_ - b_status->int_)
+			status->mdef2 = status_calc_mdef2(&bl, sc, b_status->mdef2
 #ifdef RENEWAL
+			+(status->int_ - b_status->int_)
 			+ (int32)( ((float)status->dex/5 - (float)b_status->dex/5) + ((float)status->vit/5 - (float)b_status->vit/5) )
 #else
-			+ ((status->vit - b_status->vit) / 2)
+			+ (status_calc_vit_mdef2_bonus(&bl, status->vit, status->int_) - status_calc_vit_mdef2_bonus(&bl, b_status->vit, b_status->int_))
 #endif
 			);
 	}
@@ -7810,6 +7859,8 @@ static defType status_calc_def(block_list *bl, status_change *sc, int32 def)
 		def = def * 75 / 100; //Should round down
 	if(sc->getSCE(SC_SIGNUMCRUCIS))
 		def -= def * sc->getSCE(SC_SIGNUMCRUCIS)->val2/100;
+	if(sc->getSCE(SC_SUNDER)) // Knight rebalance: Sundering Strike armor crush - no PC gate, applies to players too
+		def -= def * sc->getSCE(SC_SUNDER)->val1/100;
 	if(sc->getSCE(SC_CONCENTRATION))
 		def -= def * sc->getSCE(SC_CONCENTRATION)->val4/100;
 	if(sc->getSCE(SC_SKE))
@@ -8270,7 +8321,7 @@ static int16 status_calc_aspd(block_list *bl, status_change *sc, bool fixed)
 
 		if (!sc->getSCE(SC_QUAGMIRE)) {
 			// !TODO: How does Two-Hand Quicken, Adrenaline Rush, and Spear quick change? (+10%)
-			if (bonus < 7 && (sc->getSCE(SC_TWOHANDQUICKEN) || sc->getSCE(SC_ONEHAND) || sc->getSCE(SC_MERC_QUICKEN) || sc->getSCE(SC_ADRENALINE) || sc->getSCE(SC_SPEARQUICKEN)))
+			if (bonus < 7 && (sc->getSCE(SC_ONEHAND) || sc->getSCE(SC_MERC_QUICKEN) || sc->getSCE(SC_ADRENALINE) || sc->getSCE(SC_SPEARQUICKEN)))
 				bonus = 7;
 			else if (bonus < 6 && sc->getSCE(SC_ADRENALINE2))
 				bonus = 6;
@@ -8438,10 +8489,6 @@ static int16 status_calc_aspd_rate(block_list *bl, status_change *sc, int32 aspd
 	if (sc->getSCE(SC_STAR_COMFORT))
 		max = sc->getSCE(SC_STAR_COMFORT)->val2;
 
-	if (sc->getSCE(SC_TWOHANDQUICKEN) &&
-		max < sc->getSCE(SC_TWOHANDQUICKEN)->val2)
-		max = sc->getSCE(SC_TWOHANDQUICKEN)->val2;
-
 	if (sc->getSCE(SC_ONEHAND) &&
 		max < sc->getSCE(SC_ONEHAND)->val2)
 		max = sc->getSCE(SC_ONEHAND)->val2;
@@ -8461,6 +8508,14 @@ static int16 status_calc_aspd_rate(block_list *bl, status_change *sc, int32 aspd
 	if (sc->getSCE(SC_SPEARQUICKEN) &&
 		max < sc->getSCE(SC_SPEARQUICKEN)->val2)
 		max = sc->getSCE(SC_SPEARQUICKEN)->val2;
+
+	// Two-Hand Quicken rework: Momentum reduces weapon swing delay by 10% per
+	// stack (100 in the 1000 = 100% aspd_rate scale), capped at 30% at 3 stacks.
+	if (sc->getSCE(SC_MOMENTUM)) {
+		int32 momentum_rate = min(300, 100 * sc->getSCE(SC_MOMENTUM)->val1);
+		if (max < momentum_rate)
+			max = momentum_rate;
+	}
 
 	if (sc->getSCE(SC_GATLINGFEVER) &&
 		max < sc->getSCE(SC_GATLINGFEVER)->val2)
@@ -9587,6 +9642,21 @@ const status_change* status_get_sc(const block_list* bl){
 }
 
 
+#ifndef RENEWAL
+/**
+ * Continuous (breakpoint-free) status resistance curve for the VIT redesign.
+ * @param stat: Resisting stat value (VIT)
+ * @return sc_def/tick_def on the 10000 = 100% scale; asymptotically approaches but never
+ *         reaches 10000 from the stat alone (stat == vit_sc_def_halfpoint -> 5000, i.e. 50%).
+ */
+static int32 status_sc_def_curve(int32 stat)
+{
+	if (stat <= 0)
+		return 0;
+	return static_cast<int32>((int64)10000 * stat / (stat + battle_config.vit_sc_def_halfpoint));
+}
+#endif
+
 /*========================================== [Playtester]
 * Returns the interval for status changes that iterate multiple times
 * through the timer (e.g. those that deal damage in regular intervals)
@@ -9688,17 +9758,12 @@ t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type ty
 		case SC_POISON:
 		case SC_DPOISON:
 #ifndef RENEWAL
-			sc_def = status->vit*100;
-			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-			if (sd) {
-				// For players: 60000 - 450*vit - 100*luk
-				tick_def = status->vit*75;
-				tick_def2 = status->luk*100;
-			} else {
-				// For monsters: 30000 - 200*vit
-				tick /= 2;
-				tick_def = (status->vit*200)/3;
-			}
+			// VIT redesign: continuous resistance curve, no LUK component
+			sc_def = status_sc_def_curve(status->vit);
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
+			tick_def = sc_def * 3 / 4; // Duration resists slightly slower than chance
+			if (!sd)
+				tick /= 2; // Monsters take poison ticks twice as fast
 #else
 			sc_def = status->vit * 100 - levelAdv;
 			tick_def2 = -2000;
@@ -9706,9 +9771,9 @@ t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type ty
 			break;
 		case SC_STUN:
 #ifndef RENEWAL
-			sc_def = status->vit*100;
-			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-			tick_def2 = status->luk*10;
+			// VIT redesign: continuous resistance curve, no LUK component
+			sc_def = status_sc_def_curve(status->vit);
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
 #else
 			sc_def = status->vit * 100 - levelAdv;
 			tick_def2 = -500;
@@ -9716,9 +9781,9 @@ t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type ty
 			break;
 		case SC_SILENCE:
 #ifndef RENEWAL
-			sc_def = status->vit*100;
-			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-			tick_def2 = status->luk*10;
+			// VIT redesign: continuous resistance curve, no LUK component
+			sc_def = status_sc_def_curve(status->vit);
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
 #else
 			sc_def = status->int_ * 100 - levelAdv;
 			tick_def2 = -2000;
@@ -9726,9 +9791,9 @@ t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type ty
 			break;
 		case SC_BLEEDING:
 #ifndef RENEWAL
-			sc_def = status->vit*100;
-			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-			tick_def2 = status->luk*10;
+			// VIT redesign: continuous resistance curve, no LUK component
+			sc_def = status_sc_def_curve(status->vit);
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
 #else
 			sc_def = status->agi * 100 - levelAdv;
 			tick_def2 = -12000;
@@ -9736,9 +9801,9 @@ t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type ty
 			break;
 		case SC_SLEEP:
 #ifndef RENEWAL
-			sc_def = status->int_*100;
-			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-			tick_def2 = status->luk*10;
+			// VIT redesign: moved from INT to VIT, continuous resistance curve
+			sc_def = status_sc_def_curve(status->vit);
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
 #else
 			sc_def = status->agi * 100 - levelAdv;
 			tick_def2 = -2000;
@@ -9746,8 +9811,9 @@ t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type ty
 			break;
 		case SC_STONEWAIT:
 #ifndef RENEWAL
+			// VIT redesign: kept on hard MDEF (equipment counterplay), LUK component dropped
 			sc_def = status->mdef*100;
-			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
 			tick_def = 0; // No duration reduction
 #else
 			sc_def = status->mdef * 100 - levelAdv;
@@ -9756,33 +9822,34 @@ t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type ty
 			break;
 		case SC_FREEZE:
 #ifndef RENEWAL
+			// VIT redesign: kept on hard MDEF (equipment counterplay), LUK component dropped
 			sc_def = status->mdef*100;
-			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-			tick_def2 = status_src->luk*-10; // Caster can increase final duration with luk
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
+			tick_def2 = status_src->luk*-10; // Caster can increase final duration with luk (offensive LUK, unaffected)
 #else
 			sc_def = status->mdef * 100 - levelAdv;
 			tick_def2 = -3000;
 #endif
 			break;
 		case SC_CURSE:
+#ifndef RENEWAL
+			// VIT redesign: moved from LUK to VIT, continuous resistance curve.
+			// The old "immunity when luk is zero" quirk is removed along with LUK's defensive role.
+			sc_def = status_sc_def_curve(status->vit);
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
+#else
 			// Special property: immunity when luk is zero
 			if (status->luk == 0)
 				return 0;
-#ifndef RENEWAL
-			sc_def = status->luk*100;
-			sc_def2 = status->luk*10 - status_get_lv(src)*10; // Curse only has a level penalty and no resistance
-			tick_def = status->vit*100;
-			tick_def2 = status->luk*10;
-#else
 			sc_def = status->luk * 100 - levelAdv;
 			tick_def2 = -2000;
 #endif
 			break;
 		case SC_BLIND:
 #ifndef RENEWAL
-			sc_def = (status->vit + status->int_)*50;
-			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-			tick_def2 = status->luk*10;
+			// VIT redesign: moved fully to VIT, continuous resistance curve
+			sc_def = status_sc_def_curve(status->vit);
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
 #else
 			sc_def = status->int_ * 100 - levelAdv;
 			tick_def2 = -2000;
@@ -9790,9 +9857,9 @@ t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type ty
 			break;
 		case SC_CONFUSION:
 #ifndef RENEWAL
-			sc_def = (status->str + status->int_)*50;
-			sc_def2 = status_get_lv(src)*10 - status_get_lv(bl)*10 - status->luk*10; // Reversed sc_def2
-			tick_def2 = status->luk*10;
+			// VIT redesign: moved from STR/INT to VIT, continuous resistance curve
+			sc_def = status_sc_def_curve(status->vit);
+			sc_def2 = status_get_lv(bl)*10 - status_get_lv(src)*10;
 #else
 			sc_def = status->luk * 100 - levelAdv;
 			tick_def2 = -2000;
@@ -9964,8 +10031,12 @@ t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type ty
 			}
 		}
 
+#ifdef RENEWAL
 		// Aegis accuracy
 		if(rate > 0 && rate%10 != 0) rate += (10 - rate%10);
+#endif
+		// VIT redesign: rounding removed for pre-renewal so the continuous resist curve
+		// isn't quantized back up to the attacker's favor.
 	}
 
 	std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
@@ -11082,7 +11153,6 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 				unit_stop_walking( bl, USW_FIXPOS|USW_FORCE_STOP );
 			break;
 		case SC_ONEHAND:
-		case SC_TWOHANDQUICKEN:
 			val2 = 300;
 			if (val1 > 10) // For boss casted skills [Skotlex]
 				val2 += 20*(val1-10);
@@ -13593,11 +13663,34 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 			// when the status expires or is otherwise removed.
 			clif_specialeffect_remove(bl, EF_MARKING_USE_CHANGEMONSTER, AREA, bl);
 			break;
+		case SC_MOMENTUM:
+			// Two-Hand Quicken rework: tear down the max-stacks aura
+			// (EF_BOTTOM_ANI) started in skill.cpp when Momentum hit 3 stacks,
+			// so it disappears the moment the buff expires or is otherwise
+			// removed. Harmless no-op if the aura was never shown (the player
+			// never reached 3 stacks).
+			clif_specialeffect_remove(bl, EF_BOTTOM_ANI, AREA, bl);
+			break;
 		case SC_ANKLE:
 			// Remove the persistent "bound" cage shown while rooted (e.g. by
 			// Snaring Arrow). Harmless no-op for SC_ANKLE sources that never
 			// started the effect.
 			clif_specialeffect_remove(bl, EF_NPC_STOP, AREA, bl);
+			break;
+		case SC_KNIGHTCOUNTER:
+			// Remove the same persistent "bound" cage shown while the Retaliation
+			// stance's NoMove root is up (see counterattack.cpp castendNoDamageId).
+			clif_specialeffect_remove(bl, EF_NPC_STOP, AREA, bl);
+			break;
+		case SC_HUNTINGPARTY:
+			// Sniper rebalance: send away the two extra falcons the Hunting Party
+			// stance called in. Their mob ids were stashed in val2/val3 when the
+			// buff started (see falconassault.cpp castendNoDamageId). Each
+			// companion also carries its own delete timer as a backstop, and the
+			// slave AI kills them if their master dies or logs out, so this is
+			// only what makes them leave promptly when the buff itself ends.
+			mob_despawn_summon(val2);
+			mob_despawn_summon(val3);
 			break;
 		case SC_KEEPING:
 		case SC_BARRIER:
@@ -16540,7 +16633,13 @@ void StatusDatabase::loadingFinished(){
 		}else if( status->flag[SCF_BLEFFECT] ){
 			this->StatusRelevantBLTypes[status->icon] |= BL_SCEFFECT;
 		}else{
-			this->StatusRelevantBLTypes[status->icon] = BL_PC;
+			// OR in BL_PC rather than overwrite: two different statuses can share
+			// an icon (icon-borrowing, e.g. SC_SUNDER borrows EFST_BROKENARMOR from
+			// SC_BROKENARMOR). Overwriting here would clobber BL_SCEFFECT bits a
+			// BlEffect status already set for the same icon slot, depending on
+			// unordered_map iteration order - silently hiding the icon for any
+			// non-PC (BL_MOB, etc.) target.
+			this->StatusRelevantBLTypes[status->icon] |= BL_PC;
 		}
 	}
 

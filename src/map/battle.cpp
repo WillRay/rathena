@@ -3059,19 +3059,32 @@ static bool is_attack_critical(struct Damage* wd, block_list *src, const block_l
 
 		switch(skill_id) {
 			case 0:
-				if(sc && !sc->getSCE(SC_AUTOCOUNTER))
-					break;
-				clif_specialeffect(src, EF_AUTOCOUNTER, AREA);
-				status_change_end(src, SC_AUTOCOUNTER);
-				[[fallthrough]];
+				// Counter Instinct (ST_REJECTSWORD) is the only remaining user of SC_AUTOCOUNTER;
+				// its reactive counterstrike still lands a guaranteed crit. KN_AUTOCOUNTER's own
+				// counterstrike (SC_KNIGHTCOUNTER, see battle_weapon_attack) is a plain hit and no
+				// longer forces a crit here.
+				if(sc && sc->getSCE(SC_AUTOCOUNTER)) {
+					clif_specialeffect(src, EF_AUTOCOUNTER, AREA);
+					status_change_end(src, SC_AUTOCOUNTER);
+					if(battle_config.auto_counter_type &&
+						(battle_config.auto_counter_type&src->type))
+						return true;
+					else
+						cri *= 2;
+				}
+				break;
 			case KN_AUTOCOUNTER:
-				if(battle_config.auto_counter_type &&
-					(battle_config.auto_counter_type&src->type))
-					return true;
-				else
-					cri *= 2;
+				// Each of the counterstrike's two hits rolls crit at double the Knight's
+				// normal crit rate, rather than the flat ATK bonus this skill used to carry.
+				cri *= 2;
 				break;
 			case SN_SHARPSHOOTING:
+#ifdef RENEWAL
+				cri += 300; // !TODO: Confirm new bonus
+#else
+				// Lethal Arrow: no flat bonus - it rolls off the Sniper's own CRIT rate.
+#endif
+				break;
 			case MA_SHARPSHOOTING:
 #ifdef RENEWAL
 				cri += 300; // !TODO: Confirm new bonus
@@ -4183,7 +4196,7 @@ static void battle_calc_skill_base_damage(struct Damage* wd, block_list *src,blo
 						break;
 				}
 			}
-			if (skill_id == SN_SHARPSHOOTING || skill_id == MA_SHARPSHOOTING)
+			if (skill_id == MA_SHARPSHOOTING)
 				bflag &= ~(BDMG_CRIT); // Sharpshooting just ignores DEF/FLEE but damage is like a normal attack
 			wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, bflag);
 			if (is_attack_left_handed(src, skill_id))
@@ -4834,14 +4847,9 @@ static void battle_calc_defense_reduction( Damage* wd, block_list* src, block_li
 	//Damage reduction based on vitality
 	if (tsd) {	//Sd vit-eq
 		int32 skill;
-#ifndef RENEWAL
-		//Damage reduction: [VIT*0.3] + RND(0, [VIT^2/150] - [VIT*0.3] - 1) + [VIT*0.5]
-		vit_def = ((3 * def2) / 10);
-		vit_def += rnd_value(0, max(0, (def2 * def2) / 150 - ((3 * def2) / 10) - 1));
-		vit_def += (def2 / 2);
-#else
+		// VIT redesign: soft DEF reduction is deterministic for players, equal to def2
+		// (def2 already carries the VIT redesign's quadratic scaling from status.cpp).
 		vit_def = def2;
-#endif
 		if (src->type == BL_MOB && (battle_check_undead(sstatus->race, sstatus->def_ele) || sstatus->race == RC_DEMON) && //This bonus already doesn't work vs players
 			(skill = pc_checkskill(tsd, AL_DP)) > 0)
 			vit_def += (int32)(((float)tsd->status.base_level / 25.0 + 3.0) * skill + 0.5);
@@ -6447,8 +6455,11 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 				// (SC_HUNTED) hits 100% harder (double damage). The same mark also
 				// turns the strike into a 5x5 area attack in
 				// src/map/skills/archer/blitzbeat.cpp; this is the damage half of
-				// that bonus.
-				if (skill_id == HT_BLITZBEAT) {
+				// that bonus. Excluded for the Hunting Party "Ranger falcon" auto-attack
+				// proc (see skill_additional_effect, case 0) - that strike is a
+				// separate, independent falcon and must never interact with the
+				// Hunted mark, whether or not the target happens to carry one.
+				if (skill_id == HT_BLITZBEAT && !(mflag & SD_HUNTINGPARTY_RANGER_STRIKE)) {
 					status_change* tsc = status_get_sc(target);
 
 					if (tsc != nullptr && tsc->getSCE(SC_HUNTED))
@@ -7330,6 +7341,24 @@ enum damage_lv battle_weapon_attack(block_list* src, block_list* target, t_tick 
 			status_change_end(target, SC_AUTOCOUNTER);
 			skill_attack(BF_WEAPON,target,target,src,KN_AUTOCOUNTER,skill_lv,tick,0);
 			return ATK_BLOCK;
+		}
+	}
+
+	// Knight rebalance: Retaliation active retaliation stance. Unlike Counter
+	// Instinct's SC_AUTOCOUNTER above, this does not block the incoming hit - the
+	// Knight simply has an 8% * skill level chance to also swing back, melee or
+	// ranged, while SC_KNIGHTCOUNTER is active. This roll happens here, before
+	// wd = battle_calc_attack(...) below resolves the incoming attack's own
+	// hit/miss, so the counter can trigger even when the triggering attack
+	// misses. Deferred 100ms so it resolves cleanly after the triggering hit
+	// (no re-entrancy if it kills the attacker). No special-effect cue is
+	// played here (unlike Counter Instinct's guaranteed counter above) since
+	// it fires often enough at higher levels that the cue became noise.
+	if (tsc && tsc->getSCE(SC_KNIGHTCOUNTER) && status_check_skilluse(target, src, KN_AUTOCOUNTER, 1)) {
+		uint16 skill_lv = tsc->getSCE(SC_KNIGHTCOUNTER)->val1;
+
+		if (rnd()%100 < 8 * skill_lv) {
+			skill_addtimerskill(target, tick + 100, src->id, 0, 0, KN_AUTOCOUNTER, skill_lv, BF_WEAPON, 0);
 		}
 	}
 

@@ -27,14 +27,16 @@ void SkillChargeAttack::castendDamageId(block_list* src, block_list* target, uin
 	if (skill_check_unit_movepos(5, src, target->x + dirx[dir], target->y + diry[dir], 0, true))
 		clif_blown(src);
 
-	// cause damage and knockback if the path to target was a straight one
+	// cause damage if the path to target was a straight one
 	if (path) {
 		if(skill_attack(BF_WEAPON, src, src, target, getSkillId(), skill_lv, tick, dist)) {
 #ifdef RENEWAL
 			if (map_getmapdata(src->m)->getMapFlag(MF_PVP))
 				dist += 2; // Knockback is 4 on PvP maps
-#endif
 			skill_blown(src, target, dist, dir, BLOWN_NONE);
+#endif
+			// Pre-renewal no longer knocks the target back - the knight closes
+			// the gap, but the target holds its ground.
 		}
 	}
 }
@@ -43,12 +45,13 @@ void SkillChargeAttack::calculateSkillRatio(const Damage* wd, const block_list* 
 #ifdef RENEWAL
 	base_skillratio += 600;
 #else
-	// +100% every 3 cells of distance but hard-limited to 500%
+	// +50% ATK per skill level every 3 cells of distance, hard-limited to 4
+	// steps (12+ cells)
 	int32 k = (wd->miscflag - 1) / 3;
 	if (k < 0)
 		k = 0;
 	else if (k > 4)
 		k = 4;
-	base_skillratio += 100 * k;
+	base_skillratio += 50 * skill_lv * k;
 #endif
 }

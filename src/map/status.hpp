@@ -1464,6 +1464,18 @@ enum sc_type : int16 {
 	// Swordsman rebalance: Two-Handed Sword Mastery passive
 	SC_TWOHANDBOOST, // Granted to self after landing any offensive skill (not gated on BF_MAGIC - the Swordsman tree has no magic skills). val1 = SM_TWOHAND skill level. 5s window; empowers the next auto attack with +10%*level damage, then consumes itself. See battle_calc_attack_skill_ratio.
 
+	// Knight rebalance: Two-Hand Quicken stacking ASPD
+	SC_MOMENTUM, // Stacks while Two-Hand Quicken is active, built by landing offensive skills. val1 = stack count (max 3). Reduces weapon swing delay by 10% per stack (max 30% at 3 stacks) via the aspd_rate max group. 10s duration, refreshes on stack. Own icon (EFST_STRIKING, borrowed) so it does not share Two-Hand Quicken's slot. See status_calc_aspd_rate.
+
+	// Knight rebalance: Retaliation active retaliation stance
+	SC_KNIGHTCOUNTER, // Active self-buff from KN_AUTOCOUNTER ("Retaliation"). val1 = KN_AUTOCOUNTER skill level. 10s duration; while active, any physical auto-attack (melee or ranged, hit or miss) against the Knight has an 8% * skill level chance to trigger a deferred counterstrike. See battle_weapon_attack.
+
+	// Knight rebalance: Sundering Strike armor-crush debuff
+	SC_SUNDER, // Inflicted by KN_ONEHAND ("Sundering Strike") on its cast-at target every cast. val1 = DEF reduction % (5 * skill level, max 25% at Lv 5). 12s duration, no PC gate (applies in PvP/WoE too). See status_calc_def.
+
+	// Sniper rebalance: Hunting Party active falcon-swarm stance (SN_FALCONASSAULT)
+	SC_HUNTINGPARTY, // Active self-buff from SN_FALCONASSAULT ("Hunting Party"). val1 = SN_FALCONASSAULT skill level. val2/val3 = mob ids of the two cosmetic falcon companions spawned on cast, despawned in status_change_end (see falconassault.cpp). Duration 12s + 2s per level (20s at Lv5). While active: (1) plain auto attacks have a flat 30% chance to trigger a single-target Blitz Beat "Ranger falcon" strike (see skill_additional_effect, case 0), and (2) whenever the falcon-assist Blitz Beat fires off a Hunted mark, a Windhawk "echo" strike lands 500ms later for the same damage, shown with the Hawk Rush visual (see skill_additional_effect, falcon-assist block). No stat calc flags - this SC only gates procs.
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 

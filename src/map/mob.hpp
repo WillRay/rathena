@@ -543,6 +543,7 @@ void do_init_mob(void);
 void do_final_mob(bool is_reload);
 
 TIMER_FUNC(mob_timer_delete);
+void mob_despawn_summon(int32 mob_id);
 int32 mob_deleteslave(mob_data *md);
 
 int32 mob_random_class ( const int32 *value, size_t count );

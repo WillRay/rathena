@@ -208,6 +208,112 @@ Body:
     Ai: 02
     Modes:
       FixedItemDrop: true
+# Sniper rebalance: Hunting Party (SN_FALCONASSAULT) cosmetic companions. These
+# two exist only to be looked at - they are the second and third falcon the buff
+# calls in, spawned in src/map/skills/archer/falconassault.cpp and despawned when
+# SC_HUNTINGPARTY ends. Ids 20830/20832 are the client's own reserved 4th-job
+# falcon sprites (JT_4JOB_H_FALCON and JT_4JOB_R_FALCON, see the client's
+# datainfo/npcidentity.lub and jobname.lub); upstream ships them commented out and
+# unfilled in db/re/mob_db.yml, so filling them in here is what makes the sprites
+# reachable. 20832 is an OWL sprite, which is what the Ranger falcon actually is.
+#
+# They must never be a combat participant: the spawn code additionally sets
+# ud.immune_attack, which makes battle_check_target return "not a valid target"
+# (src/map/battle.cpp) so wild monsters cannot aggro onto them and the falcons
+# cannot soak hits meant for the Sniper. The Ignore*/Immune modes below are the
+# belt-and-braces half of that, and no Attack/AttackDelay/Drops/Exp are defined so
+# they cannot deal damage, drop anything, or be farmed for experience. CanMove is
+# required - it is what lets the slave AI walk them back to their master.
+  - Id: 20830
+    AegisName: 4JOB_H_FALCON
+    Name: Falcon
+    Level: 1
+    Hp: 1
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    AttackRange: 0
+    SkillRange: 0
+    ChaseRange: 0
+    Size: Small
+    Race: Brute
+    Element: Wind
+    ElementLevel: 1
+    # Far below DEFAULT_WALK_SPEED (120) so the falcons dart rather than trudge.
+    # This is the single knob for how quick they feel: it drives both how fast the
+    # client animates a dive across to the target and the real cell-by-cell walk
+    # back to the Sniper afterwards (see skill_huntingparty_dive in
+    # src/map/skill.cpp). The return trip is the slower-feeling half, since it
+    # covers the whole distance to the target plus the dive's overshoot as an
+    # actual walk, which is what this value is tuned for. MIN_WALK_SPEED is 20 if
+    # they ever need to be quicker still.
+    WalkSpeed: 40
+    # These never actually attack - the motion values only exist so the client
+    # has sane animation timings when one of them is used as the visual source of
+    # a Hunting Party strike (see skill_additional_effect in src/map/skill.cpp).
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 300
+    Ai: 06
+    Modes:
+      CanMove: true
+      NoRandomWalk: true
+      NoCast: true
+      IgnoreMelee: true
+      IgnoreMagic: true
+      IgnoreRanged: true
+      IgnoreMisc: true
+      KnockbackImmune: true
+      StatusImmune: true
+      SkillImmune: true
+  - Id: 20832
+    AegisName: 4JOB_R_FALCON
+    Name: Falcon
+    Level: 1
+    Hp: 1
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    AttackRange: 0
+    SkillRange: 0
+    ChaseRange: 0
+    Size: Small
+    Race: Brute
+    Element: Wind
+    ElementLevel: 1
+    # Far below DEFAULT_WALK_SPEED (120) so the falcons dart rather than trudge.
+    # This is the single knob for how quick they feel: it drives both how fast the
+    # client animates a dive across to the target and the real cell-by-cell walk
+    # back to the Sniper afterwards (see skill_huntingparty_dive in
+    # src/map/skill.cpp). The return trip is the slower-feeling half, since it
+    # covers the whole distance to the target plus the dive's overshoot as an
+    # actual walk, which is what this value is tuned for. MIN_WALK_SPEED is 20 if
+    # they ever need to be quicker still.
+    WalkSpeed: 40
+    # These never actually attack - the motion values only exist so the client
+    # has sane animation timings when one of them is used as the visual source of
+    # a Hunting Party strike (see skill_additional_effect in src/map/skill.cpp).
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 300
+    Ai: 06
+    Modes:
+      CanMove: true
+      NoRandomWalk: true
+      NoCast: true
+      IgnoreMelee: true
+      IgnoreMagic: true
+      IgnoreRanged: true
+      IgnoreMisc: true
+      KnockbackImmune: true
+      StatusImmune: true
+      SkillImmune: true
 #Body:
 # eAthena Dev Team
 #=============================================================
