@@ -20,3 +20,9 @@ int vit_def2_quadratic_divisor;
 int vit_mdef2_quadratic_divisor;
 int vit_sc_def_halfpoint;
 int vit_flat_hp_cap;
+
+// DEX redesign
+int aspd_dex_weight;
+int dex_variance_max;
+int dex_variance_min;
+int dex_variance_halfpoint;

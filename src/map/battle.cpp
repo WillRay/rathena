@@ -2489,6 +2489,41 @@ static int32 battle_calc_base_weapon_attack(block_list *src, struct status_data 
 }
 #endif
 
+/**
+ * DEX redesign: rolls base damage inside a variance band whose width shrinks with DEX.
+ * Replaces the stock behaviour where DEX raised the weapon roll's floor until damage
+ * became a single deterministic value.
+ *
+ *   band% = dex_variance_max - (dex_variance_max - dex_variance_min) * DEX / (DEX + halfpoint)
+ *
+ * The band narrows quickly over the first points of DEX and then flattens out, so DEX always
+ * helps a little but can never remove variance entirely.
+ * @param damage: Base damage before variance (weapon roll + base ATK)
+ * @param dex: Attacker's total DEX
+ * @return Base damage after the variance roll
+ */
+static int64 battle_calc_dex_variance(int64 damage, int32 dex)
+{
+	int32 spread_max = battle_config.dex_variance_max;
+	int32 spread_min = battle_config.dex_variance_min;
+
+	if (damage <= 0 || spread_max <= 0 || spread_max <= spread_min)
+		return damage;
+
+	int32 halfpoint = battle_config.dex_variance_halfpoint;
+	int32 spread = spread_max;
+
+	if (halfpoint > 0 && dex > 0)
+		spread -= (spread_max - spread_min) * dex / (dex + halfpoint);
+
+	int64 damage_min = damage * (100 - spread) / 100;
+
+	if (damage_min >= damage)
+		return damage;
+
+	return rnd_value(damage_min, damage);
+}
+
 /*==========================================
  * Calculates the standard damage of a normal attack assuming it hits
  * This applies to pre-renewal and non-sd in renewal
@@ -2553,6 +2588,12 @@ static int64 battle_calc_base_damage(block_list *src, struct status_data *status
 					if (atkmin > atkmax)
 						atkmax = atkmin;
 				}
+
+				// DEX redesign: the weapon roll becomes deterministic and variance is applied
+				// to the full base damage instead, in battle_calc_dex_variance() below. The bow
+				// promotion above is deliberately kept, so DEX still raises maximum damage.
+				if (battle_config.dex_variance_max > 0)
+					atkmin = atkmax;
 			}
 		}
 	}
@@ -2619,6 +2660,12 @@ static int64 battle_calc_base_damage(block_list *src, struct status_data *status
 
 	if (sd)
 		battle_add_weapon_damage(sd, &damage, type);
+
+	// DEX redesign: variance is rolled on the full base damage (weapon + base ATK), because
+	// base ATK is the majority of a DEX build's damage and is otherwise fully deterministic.
+	// Criticals and Maximize Power keep dealing maximum damage.
+	if (sd != nullptr && !(flag&(BDMG_MAGIC|BDMG_CRIT)) && !(sc != nullptr && sc->getSCE(SC_MAXIMIZEPOWER)))
+		damage = battle_calc_dex_variance(damage, status->dex);
 
 #ifdef RENEWAL
 	if (flag&BDMG_CRIT)

@@ -2407,7 +2407,8 @@ int32 status_base_amotion_pc(map_session_data* sd, struct status_data* status)
 	 : (job->aspd_base[sd->weapontype1] + job->aspd_base[sd->weapontype2]) * 7 / 10; // Dual-wield
 
 	// Percentual delay reduction from stats
-	amotion -= amotion * (4 * status->agi + status->dex) / 1000;
+	// DEX redesign: its ASPD contribution is scaled by aspd_dex_weight (100 = official)
+	amotion -= amotion * (4 * status->agi + status->dex * battle_config.aspd_dex_weight / 100) / 1000;
 
 	// Raw delay adjustment from bAspd bonus
 	amotion += sd->bonus.aspd_add;

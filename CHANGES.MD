@@ -119,6 +119,77 @@ Full design rationale and value tables live in `doc/vit_redesign.md`.
   cosmetic change (±1 HP per regen tick at the boundary) with no new tunable.
   - `src/map/status.cpp` — `status_calc_regen()`.
 
+### DEX Redesign
+
+DEX had quietly become the best offensive stat in the game, and two of the
+reasons were invisible from the status window. It bought attack speed on the
+same linear curve as AGI (at a quarter of the rate, but with no diminishing
+returns and no cap short of the hard 190 ASPD ceiling), and it bought damage
+*consistency* so aggressively that past a fairly low threshold every hit landed
+for an identical number. On a level 4 bow, damage stopped varying at 63 DEX.
+This pass keeps DEX's identity as the accuracy-and-precision stat — it still
+raises maximum damage exactly as much as it used to — while making attack speed
+primarily AGI's job again and giving damage rolls their randomness back.
+
+- **DEX contributes half as much attack speed.** Attack delay is now reduced by
+  `(4×AGI + DEX×50%) / 1000` instead of `(4×AGI + DEX) / 1000`. AGI is
+  completely unaffected. *Developer Comments: On a 600-base weapon every point
+  of DEX was worth 0.06 ASPD, so a DEX 200 hunter was carrying 12 ASPD they
+  never had to spend a stat point on — DEX was already the stat they wanted for
+  damage and accuracy. Because ASPD is far easier to acquire here than on
+  official servers (it appears as a flat random option on equipment), that
+  free contribution was pushing ranged builds into the 190 cap almost by
+  accident. Halving it costs a DEX 200 build 6 ASPD and a DEX 150 build 4.5,
+  while a melee build carrying 50 incidental DEX for accuracy loses only 1.5 —
+  the nerf scales with how hard you were leaning on the stat.*
+  - `src/map/status.cpp` — `status_base_amotion_pc()`.
+  - Tunable: `aspd_dex_weight` in `conf/battle/status.conf` (default `50`;
+    `100` restores official behavior, `0` removes DEX's ASPD role entirely).
+  - Note: the reduction is proportional to the weapon's base ASPD value, so it
+    is slightly larger on slow weapons (0.08 ASPD per DEX on a two-handed axe)
+    than on fast ones (0.04 on bare fists).
+
+- **Damage variance now applies to total damage, and DEX can no longer erase
+  it.** Previously DEX raised the *weapon roll's* floor until it met the
+  ceiling, at which point damage became a single deterministic value. Now the
+  weapon roll is deterministic and a variance band is applied to the full base
+  damage (weapon + base ATK) instead, with the width of that band shrinking on
+  a saturating curve:
+  `band% = 100 − (100 − 15) × DEX / (DEX + 20)`.
+  Damage then rolls uniformly between `(100 − band)%` and `100%` of maximum.
+  Criticals and Maximize Power still deal maximum damage, and maximum damage
+  itself is unchanged — including the bow bonus where high DEX raises the
+  weapon's ceiling above its listed ATK. *Developer Comments: The old system
+  only ever governed the weapon roll, which for a pre-renewal DEX build is the
+  minority of the damage — a DEX 142 archer with a 100 ATK bow draws roughly
+  78% of their damage from base ATK, which had no variance at all. That is why
+  raising DEX past the threshold produced a stream of identical numbers. Moving
+  the band onto the total is the only way to give those hits any texture. The
+  curve is deliberately front-loaded: the first 40 points of DEX buy about
+  three quarters of the available consistency, and everything past that is a
+  long shallow tail, so DEX still rewards investment without ever flattening
+  damage to a constant.*
+  - `src/map/battle.cpp` — new `battle_calc_dex_variance()` helper, applied at
+    the end of `battle_calc_base_damage()`; the DEX floor logic in that
+    function's player branch now sets the weapon roll to its maximum.
+  - Tunable in `conf/battle/status.conf`: `dex_variance_max` (default `100`,
+    the band at zero DEX; `0` disables the whole system and restores official
+    behavior), `dex_variance_min` (default `15`, the floor the band narrows
+    toward — damage can never become fully deterministic), and
+    `dex_variance_halfpoint` (default `20`, the DEX value at which half the
+    total narrowing has been reached; lower values front-load it further).
+  - Resulting band width by DEX at the defaults:
+
+    | DEX | 0 | 20 | 40 | 60 | 80 | 100 | 142 | 200 |
+    |---|---|---|---|---|---|---|---|---|
+    | Band | 100% | 58% | 44% | 36% | 32% | 29% | 26% | 23% |
+
+  - Because the band hangs below maximum rather than being centred on it, this
+    also reduces average damage by half the band width — roughly 13% for a DEX
+    142 build. That reduction is intentional and is the damage half of this
+    pass; server operators who want the variance without the damage change can
+    raise `dex_variance_min` and `dex_variance_max` together toward each other.
+
 ---
 
 ## Class Changes

@@ -18,3 +18,9 @@
 { "vit_mdef2_quadratic_divisor",        &battle_config.vit_mdef2_quadratic_divisor,     400,    0,      10000,          },
 { "vit_sc_def_halfpoint",               &battle_config.vit_sc_def_halfpoint,            60,     1,      10000,          },
 { "vit_flat_hp_cap",                    &battle_config.vit_flat_hp_cap,                 1000,   0,      1000000,        },
+
+// DEX redesign
+{ "aspd_dex_weight",                    &battle_config.aspd_dex_weight,                 50,     0,      100,            },
+{ "dex_variance_max",                   &battle_config.dex_variance_max,                100,    0,      100,            },
+{ "dex_variance_min",                   &battle_config.dex_variance_min,                15,     0,      100,            },
+{ "dex_variance_halfpoint",             &battle_config.dex_variance_halfpoint,          20,     0,      1000,           },
