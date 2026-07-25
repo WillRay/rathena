@@ -13682,6 +13682,16 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 			// stance's NoMove root is up (see counterattack.cpp castendNoDamageId).
 			clif_specialeffect_remove(bl, EF_NPC_STOP, AREA, bl);
 			break;
+		case SC_HUNTINGPARTY:
+			// Sniper rebalance: send away the two extra falcons the Hunting Party
+			// stance called in. Their mob ids were stashed in val2/val3 when the
+			// buff started (see falconassault.cpp castendNoDamageId). Each
+			// companion also carries its own delete timer as a backstop, and the
+			// slave AI kills them if their master dies or logs out, so this is
+			// only what makes them leave promptly when the buff itself ends.
+			mob_despawn_summon(val2);
+			mob_despawn_summon(val3);
+			break;
 		case SC_KEEPING:
 		case SC_BARRIER:
 			if (unit_data* ud = unit_bl2ud(bl); ud != nullptr) {

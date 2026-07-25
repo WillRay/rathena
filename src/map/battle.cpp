@@ -3079,6 +3079,12 @@ static bool is_attack_critical(struct Damage* wd, block_list *src, const block_l
 				cri *= 2;
 				break;
 			case SN_SHARPSHOOTING:
+#ifdef RENEWAL
+				cri += 300; // !TODO: Confirm new bonus
+#else
+				// Lethal Arrow: no flat bonus - it rolls off the Sniper's own CRIT rate.
+#endif
+				break;
 			case MA_SHARPSHOOTING:
 #ifdef RENEWAL
 				cri += 300; // !TODO: Confirm new bonus
@@ -4190,7 +4196,7 @@ static void battle_calc_skill_base_damage(struct Damage* wd, block_list *src,blo
 						break;
 				}
 			}
-			if (skill_id == SN_SHARPSHOOTING || skill_id == MA_SHARPSHOOTING)
+			if (skill_id == MA_SHARPSHOOTING)
 				bflag &= ~(BDMG_CRIT); // Sharpshooting just ignores DEF/FLEE but damage is like a normal attack
 			wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, bflag);
 			if (is_attack_left_handed(src, skill_id))
@@ -6449,8 +6455,11 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 				// (SC_HUNTED) hits 100% harder (double damage). The same mark also
 				// turns the strike into a 5x5 area attack in
 				// src/map/skills/archer/blitzbeat.cpp; this is the damage half of
-				// that bonus.
-				if (skill_id == HT_BLITZBEAT) {
+				// that bonus. Excluded for the Hunting Party "Ranger falcon" auto-attack
+				// proc (see skill_additional_effect, case 0) - that strike is a
+				// separate, independent falcon and must never interact with the
+				// Hunted mark, whether or not the target happens to carry one.
+				if (skill_id == HT_BLITZBEAT && !(mflag & SD_HUNTINGPARTY_RANGER_STRIKE)) {
 					status_change* tsc = status_get_sc(target);
 
 					if (tsc != nullptr && tsc->getSCE(SC_HUNTED))

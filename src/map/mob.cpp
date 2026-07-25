@@ -2633,6 +2633,39 @@ TIMER_FUNC(mob_timer_delete){
 	return 0;
 }
 
+/**
+ * Immediately despawn a summoned monster by its block_list id, cancelling any
+ * pending delete timer first so the timer cannot fire on freed memory. Uses the
+ * same clear type as mob_timer_delete, so a summon dismissed early looks
+ * identical to one that simply ran out its own timer.
+ *
+ * Safe to call with an id of 0, or with one whose monster is already gone.
+ *
+ * Currently used by Hunting Party (SN_FALCONASSAULT) to send its two cosmetic
+ * falcon companions away the moment the buff ends (see status_change_end in
+ * src/map/status.cpp) and to clean them up if the buff failed to apply at all
+ * (see src/map/skills/archer/falconassault.cpp).
+ *
+ * @param mob_id: block_list id of the summoned monster to remove.
+ */
+void mob_despawn_summon(int32 mob_id) {
+	if (mob_id == 0)
+		return;
+
+	block_list *bl = map_id2bl(mob_id);
+	mob_data *md = BL_CAST(BL_MOB, bl);
+
+	if (md == nullptr)
+		return;
+
+	if (md->deletetimer != INVALID_TIMER) {
+		delete_timer(md->deletetimer, mob_timer_delete);
+		md->deletetimer = INVALID_TIMER;
+	}
+
+	unit_free(bl, CLR_TELEPORT);
+}
+
 /*==========================================
  *
  *------------------------------------------*/

@@ -1201,6 +1201,113 @@ struct s_skill_unit_layout *skill_get_unit_layout(uint16 skill_id, uint16 skill_
  */
 int32 skill_area_temp[8];
 
+// Sniper rebalance: Hunting Party Windhawk echo. A bare heap record carried by a
+// one-off timer so a Blitz Beat's exact damage number (captured in skill_attack,
+// the one place every Blitz Beat path converges on and knows the final figure) can
+// be replayed 500ms later under the Hawk Rush visual, instead of recomputing
+// WH_HAWKRUSH's own damage formula. See skill_huntingparty_windhawk_echo.
+struct s_huntingparty_echo {
+	int32 src_id;
+	int32 target_id;
+	int32 companion_id; // Windhawk falcon companion the strike is drawn from, if still alive.
+	int64 damage;
+	uint16 skill_lv;
+};
+
+// How many cells a diving Hunting Party falcon carries on past its victim. A
+// bird of prey does not stop dead on the thing it hit, it sweeps through and
+// wheels back around - the slave AI supplies the "back around" half by walking it
+// home to its master afterwards.
+static constexpr int32 HUNTINGPARTY_DIVE_OVERSHOOT = 2;
+
+/**
+ * Fly a Hunting Party falcon companion through its victim so a strike reads as a
+ * dive rather than the bird flashing an attack from wherever it happened to be
+ * hovering. unit_movepos (src/map/unit.cpp) deliberately sets CLIF_WALK_TIMER
+ * while it resends the unit, so the client receives walking packets and animates
+ * the trip across instead of snapping the sprite to the destination - this is the
+ * same "has slide effect" trick Knuckle Arrow uses for its dash. How quickly that
+ * trip animates is driven by the companion's WalkSpeed in db/import/mob_db.yml,
+ * which is set well below DEFAULT_WALK_SPEED to keep the dive sharp.
+ *
+ * Path checking is off: these are birds, and they should be able to cross gaps
+ * and obstacles the ground-bound pathfinder would refuse. Nothing needs to send
+ * the companion home afterwards - the slave AI (mob_ai_sub_hard_slavemob) walks
+ * it back to its master on its own once it stops being flung around, so while the
+ * Sniper keeps attacking the falcons stay swarming the target and only drift back
+ * when the shooting stops.
+ *
+ * @return the companion if it is alive and usable as the visual source of the
+ *         strike, or nullptr to fall back to drawing the strike from the Sniper.
+ */
+static block_list *skill_huntingparty_dive(int32 companion_id, block_list *target) {
+	block_list *companion = map_id2bl(companion_id);
+
+	if (companion == nullptr || companion->prev == nullptr || companion->m != target->m)
+		return nullptr;
+
+	// The line the bird is coming in on, so it can carry on through its victim
+	// rather than pulling up short and hovering on top of it.
+	uint8 dir = map_calc_dir(companion, target->x, target->y);
+
+	// Overshoot a couple of cells past the target, taking the furthest cell along
+	// that line which is actually passable. unit_movepos is called with checkpath
+	// off below (birds should cross gaps and obstacles a walker could not), and
+	// that also means it will not vet the destination for us - so an unchecked
+	// overshoot could park a falcon inside a wall. Falling all the way back to the
+	// target's own cell is fine: something is standing there, so it is passable.
+	int16 x = target->x;
+	int16 y = target->y;
+
+	for (int32 past = HUNTINGPARTY_DIVE_OVERSHOOT; past > 0; past--) {
+		int16 past_x = target->x + dirx[dir] * past;
+		int16 past_y = target->y + diry[dir] * past;
+
+		if (map_getcell(target->m, past_x, past_y, CELL_CHKPASS)) {
+			x = past_x;
+			y = past_y;
+			break;
+		}
+	}
+
+	unit_movepos(companion, x, y, 1, 0);
+
+	// Keep looking back at what it just went through, so the strike animation
+	// still plays toward the victim rather than away from it.
+	unit_setdir(companion, map_calc_dir(companion, target->x, target->y));
+
+	return companion;
+}
+
+static TIMER_FUNC(skill_huntingparty_windhawk_echo){
+	s_huntingparty_echo *echo = (s_huntingparty_echo *)data;
+	block_list *src = map_id2bl(echo->src_id);
+	block_list *target = map_id2bl(echo->target_id);
+
+	if (src && target && src->prev != nullptr && target->prev != nullptr && src->m == target->m && !status_isdead(*target)) {
+		// Send the Windhawk falcon diving at the victim and draw the strike from
+		// it, so the echo visibly comes from that bird rather than from the
+		// Sniper. Falls back to the Sniper if the companion is gone or ended up on
+		// another map. Only the animation moves - the damage below is still dealt
+		// by the Sniper, so credit, drops and aggro are unaffected.
+		block_list *companion = skill_huntingparty_dive(echo->companion_id, target);
+		block_list *vsrc = (companion != nullptr) ? companion : src;
+
+		// Show the Hawk Rush skill animation carrying the pre-computed damage,
+		// then apply that exact damage - deliberately not routed through
+		// skill_attack/skill_castend_damage_id, which would recompute
+		// WH_HAWKRUSH's own weapon-skill formula instead of echoing the Blitz
+		// Beat number this strike is meant to mirror.
+		// Timing still comes from the Sniper's attack motion, matching how the
+		// engine passes the src-derived amotion even for skills drawn from a
+		// different unit; only the source of the animation changes.
+		clif_skill_damage(*vsrc, *target, tick, status_get_amotion(src), 0, echo->damage, 1, WH_HAWKRUSH, echo->skill_lv, DMG_SINGLE);
+		battle_damage(src, target, echo->damage, 0, echo->skill_lv, WH_HAWKRUSH, ATK_DEF, BF_WEAPON | BF_SHORT | BF_SKILL, true, tick, false);
+	}
+	delete echo;
+	return 0;
+}
+
 /*==========================================
  * Add effect to skill when hit successfully target
  *------------------------------------------*/
@@ -1427,6 +1534,10 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			// manual-cast slow (10%/level). Restore the prior state afterwards.
 			bool prev_autocast = sd->state.autocast;
 			sd->state.autocast = 1;
+			// The Hunting Party Windhawk echo for this strike is scheduled inside
+			// skill_attack (see the HT_BLITZBEAT block at the end of it), which
+			// this call reaches through blitzbeat.cpp's splashSearch - so the
+			// assist and a manually cast Blitz Beat are echoed by the same code.
 			skill_castend_damage_id(src, bl, HT_BLITZBEAT, (blitz_lv < rate) ? blitz_lv : rate, tick, SD_LEVEL);
 			sd->state.autocast = prev_autocast;
 		}
@@ -1449,6 +1560,33 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 
 						if (rnd() % 1000 <= rate)
 							skill_castend_damage_id(src, bl, RA_WUGSTRIKE, skill, tick, 0);
+					}
+					// Sniper rebalance: Hunting Party "Ranger falcon" proc. While the
+					// Hunting Party stance (SC_HUNTINGPARTY, from SN_FALCONASSAULT)
+					// is active, every plain auto attack has a flat 30% chance to
+					// send in a second, independent falcon strike. Called via
+					// skill_attack directly (not skill_castend_damage_id), so it
+					// bypasses blitzbeat.cpp's splashSearch entirely - the strike
+					// always lands as a single target hit and never reads or
+					// consumes the Hunted mark (SC_HUNTED), regardless of whether
+					// the target happens to carry one.
+					status_change_entry *huntingparty_sce = (sc != nullptr) ? sc->getSCE(SC_HUNTINGPARTY) : nullptr;
+
+					if (huntingparty_sce != nullptr && pc_isfalcon(sd) && sd->status.weapon == W_BOW && (skill = pc_checkskill(sd, HT_BLITZBEAT)) > 0) {
+						if (rnd() % 100 < 30) {
+							// Send the Ranger falcon companion (val2, spawned by
+							// falconassault.cpp) diving at the target and strike
+							// from it, so the dive visibly comes from that bird
+							// instead of the Sniper. Only the animation moves:
+							// skill_attack computes the damage from src (the
+							// Sniper), and dsrc merely decides where the attack is
+							// drawn from - see the default case of the
+							// damage-display switch in skill_attack.
+							block_list *ranger = skill_huntingparty_dive(huntingparty_sce->val2, bl);
+							block_list *dsrc = (ranger != nullptr) ? ranger : src;
+
+							skill_attack(skill_get_type(HT_BLITZBEAT), src, dsrc, bl, HT_BLITZBEAT, skill, tick, SD_HUNTINGPARTY_RANGER_STRIKE);
+						}
 					}
 					// Automatic trigger of Hawk Rush
 					if (pc_isfalcon(sd) && sd->status.weapon == W_BOW && (skill = pc_checkskill(sd, WH_HAWKRUSH)) > 0) {
@@ -3157,6 +3295,12 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 		case GN_FIRE_EXPANSION_ACID:
 			clif_skill_damage( *dsrc, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, CR_ACIDDEMONSTRATION, skill_lv, DMG_MULTI_HIT );
 			break;
+		case SN_SHARPSHOOTING:
+			// Lethal Arrow displays as Chain Reaction Shot's detonation. The real id
+			// (382) still carries the old arrow-corridor animation in the client's
+			// per-skill-id table, so the damage packet has to borrow the ABC id.
+			clif_skill_damage( *dsrc, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, ABC_CHAIN_REACTION_SHOT_ATK, skill_lv, (dmg.type == DMG_CRITICAL) ? DMG_CRITICAL : DMG_MULTI_HIT );
+			break;
 		case GN_SLINGITEM_RANGEMELEEATK:
 			clif_skill_damage( *src, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, GN_SLINGITEM, -2, DMG_SINGLE );
 			break;
@@ -3410,6 +3554,32 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 				if (status_get_lv(src) > 29 && rnd() % 100 < 10 * status_get_lv(src) / 30)
 					skill_addtimerskill(src, tick + dmg.amotion + skill_get_delay(skill_id, skill_lv), bl->id, 0, 0, skill_id, skill_lv, attack_type, flag|2);
 				break;
+		}
+	}
+
+	// Sniper rebalance: Hunting Party Windhawk echo. Whenever the Sniper's own
+	// falcon lands a Blitz Beat - cast manually, or fired automatically by the
+	// falcon assist off a Hunted mark - the Windhawk companion dives in 500ms later
+	// and repeats the hit for the exact same damage, shown with the Hawk Rush
+	// visual. This is hooked here rather than in skill_additional_effect because
+	// this is the only point that knows the final damage number, and it is the one
+	// place every Blitz Beat path converges on (a manual cast reaches it through
+	// blitzbeat.cpp's splashSearch, so an empowered 5x5 Blitz echoes on each enemy
+	// it struck).
+	//
+	// The Hunting Party "Ranger falcon" auto-attack proc is deliberately excluded:
+	// that is the other companion striking on its own, and the echo mirrors only
+	// the Sniper's own falcon. Reflected damage is skipped for the same reason the
+	// reflect check below returns 0 - it is no longer the Sniper's strike.
+	if (skill_id == HT_BLITZBEAT && damage > 0 && !rmdamage && !(flag&SD_HUNTINGPARTY_RANGER_STRIKE)) {
+		status_change_entry *huntingparty_sce = (sc != nullptr) ? sc->getSCE(SC_HUNTINGPARTY) : nullptr;
+
+		if (huntingparty_sce != nullptr) {
+			// val3 is the Windhawk falcon companion spawned by the buff (see
+			// falconassault.cpp); the echo is drawn from it so the strike visibly
+			// comes from that bird.
+			s_huntingparty_echo *echo = new s_huntingparty_echo{ src->id, bl->id, huntingparty_sce->val3, damage, skill_lv };
+			add_timer(tick + 500, skill_huntingparty_windhawk_echo, src->id, (intptr_t)echo);
 		}
 	}
 
@@ -16594,6 +16764,7 @@ void do_init_skill(void)
 	add_timer_func_list(skill_timerskill,"skill_timerskill");
 	add_timer_func_list(skill_blockpc_end, "skill_blockpc_end");
 	add_timer_func_list(skill_keep_using, "skill_keep_using");
+	add_timer_func_list(skill_huntingparty_windhawk_echo, "skill_huntingparty_windhawk_echo");
 
 	add_timer_interval(gettick()+SKILLUNITTIMER_INTERVAL,skill_unit_timer,0,0,SKILLUNITTIMER_INTERVAL);
 }

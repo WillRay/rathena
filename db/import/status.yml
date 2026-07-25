@@ -158,3 +158,24 @@ Body:
       NoMove: true
     Flags:
       NoWarning: true
+
+  # Sniper rebalance: Hunting Party (SN_FALCONASSAULT, renamed from "Falcon
+  # Assault") active falcon-swarm stance. val1 = SN_FALCONASSAULT skill level.
+  # While active: (1) plain auto attacks have a flat 30% chance to trigger a
+  # single-target Blitz Beat "Ranger falcon" strike, and (2) every falcon-assist
+  # Blitz Beat is echoed 500ms later by a Windhawk "Hawk Rush"-visual strike for
+  # the same damage. See skill_additional_effect in src/map/skill.cpp for both
+  # procs. Icon borrowed from Guillotine Cross's Dark Crow (EFST_DARKCROW,
+  # GC_DARKCROW's status) for the crow/bird imagery - no persistent aura this
+  # time (just the status-bar icon), and GC_DARKCROW has no pre-re skill tree
+  # entry so nothing else on this server uses it. The icon's hover tooltip
+  # (client lua files/stateicon/stateiconinfo.lub) is repurposed to describe
+  # Hunting Party instead of the original Dark Claw text. No CalcFlags - this
+  # SC only gates procs, it does not modify any stat.
+  - Status: Huntingparty
+    Icon: EFST_DARKCROW
+    DurationLookup: SN_FALCONASSAULT
+    Flags:
+      NoWarning: true
+      BlEffect: true
+      DisplayPc: true

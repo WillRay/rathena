@@ -1221,3 +1221,84 @@ Body:
       Weapon:
         1hSword: false
         2hSword: true
+  # Sniper rebalance: SN_FALCONASSAULT reworked from a single-target Misc nuke
+  # into "Hunting Party", an active self-buff stance. TargetType Self +
+  # DamageFlags.NoDamage (mirrors AC_CONCENTRATION's shape) route the cast
+  # through castendNoDamageId instead of the old castendDamageId (see
+  # src/map/skills/archer/falconassault.cpp), which now just starts the
+  # Huntingparty status. Cast is a fixed 0.5s (see CastTime/CastTimeFlags below)
+  # and AfterCastActDelay is cleared to 0, so the only commitment is the cast
+  # itself. Duration scales +2s per level (12s at Lv1 to 20s at Lv5, see
+  # Duration1 below); Cooldown is a flat 60s at every level. Requires (SpCost,
+  # State: Falcon) are unchanged from the base entry so they're not restated
+  # here. While the status is active: (1) plain auto attacks have a flat 30%
+  # chance to trigger a single-target Blitz Beat "Ranger falcon" strike, and
+  # (2) every falcon-assist Blitz Beat is echoed 500ms later by a Windhawk
+  # "Hawk Rush"-visual strike for the same damage - both procs live in
+  # skill_additional_effect (src/map/skill.cpp).
+  - Id: 381
+    Name: SN_FALCONASSAULT
+    Description: Hunting Party
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      IgnoreFlee: false
+      NoDamage: true
+    Status: Huntingparty
+    # 0.5s cast, fixed against DEX/status/item reduction via CastTimeFlags below -
+    # pre-renewal has no separate FixedCastTime field, so an unreducible cast is
+    # expressed as CastTime plus those flags (same as KN_RIDING above).
+    CastTime: 500
+    CastTimeFlags:
+      IgnoreDex: true
+      IgnoreStatus: true
+      IgnoreItemBonus: true
+    AfterCastActDelay: 0
+    Duration1:
+      - Level: 1
+        Time: 12000
+      - Level: 2
+        Time: 14000
+      - Level: 3
+        Time: 16000
+      - Level: 4
+        Time: 18000
+      - Level: 5
+        Time: 20000
+    Cooldown: 60000
+    # Flat SP cost regardless of level - the buff's value (extra falcon procs)
+    # doesn't scale with level as much as the falcon's own duration/proc chance
+    # (both fixed), so a rising SP cost just taxed leveling it up for no reason.
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 60
+        - Level: 2
+          Amount: 60
+        - Level: 3
+          Amount: 60
+        - Level: 4
+          Amount: 60
+        - Level: 5
+          Amount: 60
+  - Id: 382
+    Name: SN_SHARPSHOOTING
+    Description: Lethal Arrow
+    Hit: Multi_Hit
+    HitCount: 4
+    # Non-targeted: TargetType Self + NoTargetSelf together make this auto-fire
+    # on the caster's current target (see unit.cpp's "Auto-select target"
+    # rewrite) instead of requiring a cursor pick. TargetTrap from the base
+    # entry is untouched since Flags merges per-field.
+    TargetType: Self
+    Flags:
+      NoTargetSelf: true
+    DamageFlags:
+      Critical: true
+      Splash: false
+    SplashArea: 0
+    CastTime: 0
+    Cooldown: 15000
+    Requires:
+      SpCost: 60
+

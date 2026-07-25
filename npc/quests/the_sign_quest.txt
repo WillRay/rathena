@@ -551,65 +551,41 @@ prt_in,227,45,0	script	Archeologist#sign	804,{
 		mes "You've brought me,";
 		mes "'The Sign!' I've finally";
 		mes "proven its existence!";
-		mes "Please let me handle";
-		mes "this and come back later~";
+		mes "Just give me a moment";
+		mes "to look it over~";
 		delitem 7314,1; //The_Sign
 		set sign_q,138;
-		set .@stime_s,gettime(DT_HOUR);
-		if (.@stime_s < 1) set sign_sq,1;
-		else if (.@stime_s < 3) set sign_sq,2;
-		else if (.@stime_s < 5) set sign_sq,3;
-		else if (.@stime_s < 7) set sign_sq,4;
-		else if (.@stime_s < 9) set sign_sq,5;
-		else if (.@stime_s < 11) set sign_sq,6;
-		else if (.@stime_s < 13) set sign_sq,7;
-		else if (.@stime_s < 15) set sign_sq,8;
-		else if (.@stime_s < 17) set sign_sq,9;
-		else if (.@stime_s < 19) set sign_sq,10;
-		else if (.@stime_s < 21) set sign_sq,11;
-		else set sign_sq,12;
 	}
 	else if (sign_q == 138) {
-		set .@stime_s1,gettime(DT_HOUR);
-		set .@pass_s,1;
-		if (.@pass_s == 1) {
-			mes "Fascinating...";
-			mes "This was made with";
-			mes "a material outside of";
-			mes "Midgard! See this";
-			mes "blue lens? That must be";
-			mes "its incredible power source!";
-			next;
-			mes "[Metz]";
-			mes "I've found that the runes";
-			mes "around the lens control some";
-			mes "kind of seals placed at the Geffen Tower and Geffen Fountain. But with this in your hands, the seals should be broken...";
-			next;
-			mes "[Metz]";
-			mes "I... I think";
-			mes "you can even use this";
-			mes "to enter Valhalla. There";
-			mes "may be even other applications";
-			mes "using the power of this item...";
-			next;
-			mes "[Metz]";
-			mes "I can only think of";
-			mes "one person who can";
-			mes "handle working with";
-			mes "this: Engel Howard,";
-			mes "Midgard's best";
-			mes "Blacksmith.";
-			set sign_q,139;
-			set sign_sq,0;
-			getitem 7314,1; //The_Sign
-		}
-		else {
-			mes "I'm sorry, but I'm";
-			mes "still examining the";
-			mes "artifact you've lent to";
-			mes "me. Would you please";
-			mes "give me some more time?";
-		}
+		mes "Fascinating...";
+		mes "This was made with";
+		mes "a material outside of";
+		mes "Midgard! See this";
+		mes "blue lens? That must be";
+		mes "its incredible power source!";
+		next;
+		mes "[Metz]";
+		mes "I've found that the runes";
+		mes "around the lens control some";
+		mes "kind of seals placed at the Geffen Tower and Geffen Fountain. But with this in your hands, the seals should be broken...";
+		next;
+		mes "[Metz]";
+		mes "I... I think";
+		mes "you can even use this";
+		mes "to enter Valhalla. There";
+		mes "may be even other applications";
+		mes "using the power of this item...";
+		next;
+		mes "[Metz]";
+		mes "I can only think of";
+		mes "one person who can";
+		mes "handle working with";
+		mes "this: Engel Howard,";
+		mes "Midgard's best";
+		mes "Blacksmith.";
+		set sign_q,139;
+		set sign_sq,0;
+		getitem 7314,1; //The_Sign
 	}
 	else if (sign_q < 141) {
 		mes "Have you visited";
@@ -1200,11 +1176,11 @@ morocc_in,115,154,5	script	Rogue#sign	810,{
 			next;
 			mes "[Arian]";
 			mes "The first item?";
-			mes "Gimme ^FF000010 Fluff^000000.";
+			mes "Gimme ^FF000010 Poison Spores^000000.";
 			mes "Bring that and I'll";
 			mes "tell you what to";
 			mes "bring next.";
-			set sign_q,4;
+			set sign_q,5;
 			close;
 		case 3:
 			mes "[Arian]";
@@ -1223,55 +1199,18 @@ morocc_in,115,154,5	script	Rogue#sign	810,{
 		}
 	}
 	else if (sign_q < 15) {
+		// Fluff, Scorpion Tail, Rotten Bandage and Little Evil Horn are no longer
+		// required. Pull anyone still sitting on one of those steps forward.
+		if (sign_q == 4) set sign_q,5;
+		else if (sign_q == 6 || sign_q == 7 || sign_q == 8) set sign_q,9;
 		switch(sign_q) {
-		case 4:
-			mes "[Arian]";
-			mes "...";
-			if (countitem(914) > 9) {
-				delitem 914,10; //Fluff
-				if (countitem(7033) > 9) {
-					delitem 7033,10; //Poison_Spore
-					if (countitem(904) > 9) {
-						delitem 904,10; //Scorpion's_Tail
-						if (countitem(930) > 9) {
-							delitem 930,10; //Rotten_Bandage
-							if (countitem(1038) > 4) {
-								delitem 1038,5; //Petite_DiablOfs_Horn
-								if (countitem(7013) > 9) {
-									delitem 7013,10; //Coral_Reef
-								}
-							}
-						}
-					}
-				}
-			}
-			else {
-				mes "Hey. What the hell's wrong";
-				mes "with you? Hurry and get me";
-				mes "^FF000010 Fluff^000000, ya slacker.";
-				close;
-			}
-			mes "Alright, that looks like";
-			mes "enough Fluff. Now, go and";
-			mes "get me ^FF000010 Poison Spores^000000.";
-			set sign_q,5;
-			close;
 		case 5:
 			mes "[Arian]";
 			mes "...";
 			if (countitem(7033) > 9) {
 				delitem 7033,10; //Poison_Spore
-				if (countitem(904) > 9) {
-					delitem 9041,10; //Scorpion's_Tail
-					if (countitem(930) > 9) {
-						delitem 930,10; //Rotten_Bandage
-						if (countitem(1038) > 4) {
-							delitem 1038,5; //Petite_DiablOfs_Horn
-							if (countitem(7013) > 9) {
-								delitem 7013,10; //Coral_Reef
-							}
-						}
-					}
+				if (countitem(7013) > 9) {
+					delitem 7013,10; //Coral_Reef
 				}
 			}
 			else {
@@ -1283,92 +1222,9 @@ morocc_in,115,154,5	script	Rogue#sign	810,{
 			}
 			mes "It's about time you";
 			mes "got here with those";
-			mes "Poison Spores. Now, go";
-			mes "and get ^FF000010 Scorpion Tails^000000.";
-			set sign_q,6;
-			close;
-		case 6:
-			mes "[Arian]";
-			mes "...";
-			if (countitem(904) > 9) {
-				delitem 904,10; //Scorpion's_Tail
-				if (countitem(930) > 19) {
-					delitem 930,10; //Rotten_Bandage
-					if (countitem(1038) > 4) {
-						delitem 1038,5; //Petite_DiablOfs_Horn
-						if (countitem(7013) > 9) {
-							delitem 7013,10; //Coral_Reef
-						}
-					}
-				}
-			}
-			else {
-				mes "What, your mom drop you on the";
-				mes "head right after you were born?";
-				mes "Stop bein' stupid and get me";
-				mes "^FF000010 Scorpion Tails^000000, nimrod.";
-				close;
-			}
-			mes "Damn, you sure took your";
-			mes "sweet time bringing over this";
-			mes "over this crap. Okay, now bring";
-			mes "^FF000010 Rotten Bandages^000000.";
-			set sign_q,7;
-			close;
-		case 7:
-			mes "[Arian]";
-			mes "...";
-			if (countitem(930) > 9) {
-				delitem 930,10; //Rotten_Bandage
-				if (countitem(1038) > 4) {
-					delitem 1038,5; //Petite_DiablOfs_Horn
-					if (countitem(7013) > 9) {
-						delitem 7013,10; //Coral_Reef
-					}
-				}
-			}
-			else {
-				mes "Is it really that hard to get";
-				mes "^FF000010 Rotten Bandages^000000? Cuz if it";
-				mes "is, then you must really blow.";
-				mes "Now hustle it up, punk!";
-				close;
-			}
-			mes "You brought the bandages.";
-			mes "Okay short stuff, go and get";
-			mes "me ^FF00005 Little Evil Horn^000000. What";
-			mes "are you waiting for, a memo?";
-			mes "Get outta here~!";
-			set sign_q,8;
-			close;
-		case 8:
-			mes "[Arian]";
-			mes "...";
-			if (countitem(1038) > 4) {
-				delitem 1038,5; //Petite_DiablOfs_Horn
-				if (countitem(7013) > 9) {
-					delitem 7013,10; //Coral_Reef
-				}
-			}
-			else {
-				mes "I don't get it.";
-				mes "You don't have the";
-				mes "^FF00005 Little Evil Horn^000000";
-				mes "I told you to get.";
-				next;
-				mes "[Arian]";
-				mes "I see, so it's my";
-				mes "fault for not telling you";
-				mes "not to bring your crap face";	
-				mes "back without 'em. ^333333*A-hem*^000000";
-				mes "Don't bring your crap face here without 5 Little Evil Horns!!";
-				close;
-			}
-			mes "My grandma coulda grown";
-			mes "out her beard in the time";
-			mes "it tookyou to come back.";
-			mes "Now hurry it up and get";
-			mes "me ^FF000010 Coral Reefs^000000!";
+			mes "Poison Spores. Now, hurry";
+			mes "it up and get me";
+			mes "^FF000010 Coral Reefs^000000!";
 			set sign_q,9;
 			close;
 		case 9:
@@ -2510,358 +2366,291 @@ aldeba_in,139,103,5	script	Monograph#sign	111,{
 
 aldeba_in,155,101,3	script	Sir Jore#sign	805,7,7,{
 	callfunc "F_UpdateSignVars";
-	if ((gettime(DT_HOUR) > 16) && (gettime(DT_HOUR) < 22)) {
-		if (sign_q == 15) {
-			mes "["+ strcharinfo(0) +"]";
-			mes "Excuse me...";
-			next;
-			emotion ET_HUK;
-			mes "^313FFF*Clink*^000000";
-			next;
+	// Time gate removed: Sir Jore is available at any hour.
+	if (sign_q == 15) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "Excuse me...";
+		next;
+		emotion ET_HUK;
+		mes "^313FFF*Clink*^000000";
+		next;
+		mes "[Sir Jore]";
+		mes "...";
+		mes "......";
+		next;
+		emotion ET_PROFUSELY_SWEAT;
+		mes "[Sir Jore]";
+		mes "...";
+		mes "......";
+		mes "...No!";
+		mes "Look what";
+		mes "you made me do!";
+		next;
+		emotion ET_CRY;
+		mes "[Sir Jore]";
+		mes "I've been fiddling";
+		mes "with this sample for";
+		mes "five hours. And now";
+		mes "it's ruined! ^333333*Sob*^000000";
+		next;
+		emotion ET_CRY;
+		mes "[Sir Jore]";
+		mes "^333333*Sob*^000000";
+		mes "I came to this town";
+		mes "so I could focus on";
+		mes "my research without";
+		mes "any interruptions. So";
+		mes "why are you here?";
+		next;
+		switch(select("Daewoon sent me.:Oops, sorry. Later~")) {
+		case 1:
+			emotion ET_SWEAT;
 			mes "[Sir Jore]";
-			mes "...";
-			mes "......";
+			mes "O-oh!";
+			mes "That's right.";
+			mes "You're here to be";
+			mes "tested for the piece";
+			mes "of the Sobbing Starlight.";
 			next;
 			emotion ET_PROFUSELY_SWEAT;
 			mes "[Sir Jore]";
-			mes "...";
-			mes "......";
-			mes "...No!";
-			mes "Look what";
-			mes "you made me do!";
+			mes "So...";
+			mes "Er. Then, what...";
+			mes "W-what's your name?";
 			next;
+			select(strcharinfo(0) +", thanks.");
+			mes "[Sir Jore]";
+			mes "N-nice to meet you.";
+			mes "My name is Jore. Just";
+			mes "a normal person who loves";
+			mes "research. S-sorry if I seem";
+			mes "a little nervous! I'm actually";
+			mes "quite... shy around people.";
+			next;
+			mes "[Sir Jore]";
+			mes "Oh no...!";
+			mes "If you were able to";
+			mes "find me, there will be";
+			mes "others! When would I get";
+			mes "the time to do my research?!";
+			mes "N-no! I h-h-hate people!!";
+			next;
+			mes "[Sir Jore]";
+			mes "Still, I did promise";
+			mes "M-M-Metz and he is my";
+			mes "friend. So I must accept";
+			mes "some guests. Even if hundreds";
+			mes "of them knock on my door...";
+			next;
+			mes "[Sir Jore]";
+			mes "But first of all,";
+			mes "I'm going to need";
+			mes "a new research sample.";
+			mes "I think it's only fair that";
+			mes "you get it for me since you";
+			mes "made me ruin the last one.";
+			next;
+			mes "[Sir Jore]";
+			mes "N-now, d-don't worry.";
+			mes "The items are actually";
+			mes "quite easy to get. It's";
+			mes "five hours part that's";
+			mes "hard. Now, let's see...";
+			next;
+			set sign_q,16;
+			mes "[Sir Jore]";
+			mes "Just bring me";
+			mes "10 Empty Test Tubes";
+			mes "and 10 Green Herbs.";
+			next;
+			mes "[Sir Jore]";
+			mes "You see, l-lately I've";
+			mes "been studying Biology. ";
+			mes "I think the secret to life";
+			mes "can be found in the humble";
+			mes "Green Herb. They're the base";
+			mes "of every potion, after all.";
+			next;
+			emotion ET_SWEAT;
+			mes "[Sir Jore]";
+			mes "Oh, and don't worry about";
+			mes "the hour. I've given up on";
+			mes "having a regular sleeping";
+			mes "schedule, so just bring";
+			mes "those things whenever";
+			mes "you have them.";
+			close;
+		case 2:
 			emotion ET_CRY;
 			mes "[Sir Jore]";
-			mes "I've been fiddling";
-			mes "with this sample for";
-			mes "five hours. And now";
-			mes "it's ruined! ^333333*Sob*^000000";
-			next;
-			emotion ET_CRY;
-			mes "[Sir Jore]";
-			mes "^333333*Sob*^000000";
-			mes "I came to this town";
-			mes "so I could focus on";
-			mes "my research without";
-			mes "any interruptions. So";
-			mes "why are you here?";
-			next;
-			switch(select("Daewoon sent me.:Oops, sorry. Later~")) {
-			case 1:
-				emotion ET_SWEAT;
-				mes "[Sir Jore]";
-				mes "O-oh!";
-				mes "That's right.";
-				mes "You're here to be";
-				mes "tested for the piece";
-				mes "of the Sobbing Starlight.";
-				next;
-				emotion ET_PROFUSELY_SWEAT;
-				mes "[Sir Jore]";
-				mes "So...";
-				mes "Er. Then, what...";
-				mes "W-what's your name?";
-				next;
-				select(strcharinfo(0) +", thanks.");
-				mes "[Sir Jore]";
-				mes "N-nice to meet you.";
-				mes "My name is Jore. Just";
-				mes "a normal person who loves";
-				mes "research. S-sorry if I seem";
-				mes "a little nervous! I'm actually";
-				mes "quite... shy around people.";
-				next;
-				mes "[Sir Jore]";
-				mes "Oh no...!";
-				mes "If you were able to";
-				mes "find me, there will be";
-				mes "others! When would I get";
-				mes "the time to do my research?!";
-				mes "N-no! I h-h-hate people!!";
-				next;
-				mes "[Sir Jore]";
-				mes "Still, I did promise";
-				mes "M-M-Metz and he is my";
-				mes "friend. So I must accept";
-				mes "some guests. Even if hundreds";
-				mes "of them knock on my door...";
-				next;
-				mes "[Sir Jore]";
-				mes "But first of all,";
-				mes "I'm going to need";
-				mes "a new research sample.";
-				mes "I think it's only fair that";
-				mes "you get it for me since you";
-				mes "made me ruin the last one.";
-				next;
-				mes "[Sir Jore]";
-				mes "N-now, d-don't worry.";
-				mes "The items are actually";
-				mes "quite easy to get. It's";
-				mes "five hours part that's";
-				mes "hard. Now, let's see...";
-				next;
-				set sign_q,16;
-				mes "[Sir Jore]";
-				mes "Just bring me";
-				mes "10 Empty Test Tubes,";
-				mes "10 Green Herbs and";
-				mes "2 Yggdrasil Leafs.";
-				next;
-				mes "[Sir Jore]";
-				mes "You see, l-lately I've";
-				mes "been studying Biology. ";
-				mes "I think the secret to life";
-				mes "can be found in the Leaf of";
-				mes "Yggdrasil. They can be used";
-				mes "to revive the dead, after all.";
-				next;
-				emotion ET_SWEAT;
-				mes "[Sir Jore]";
-				mes "Oh, and make sure to";
-				mes "bring those things to me";
-				mes "me before I go to bed at";
-				mes "precisely 10:00 PM PST.";
-				mes "I do have a regular sleeping";
-				mes "schedule, you know.";
-				close;
-			case 2:
-				emotion ET_CRY;
-				mes "[Sir Jore]";
-				mes "I spent five hours";
-				mes "observing the changes";
-				mes "in that research sample.";
-				mes "All of that hard work lost!";
-				mes "^333333*Wah~!*^000000";
-				close;
-			}
-		}
-		else if (sign_q == 16) {
-			if ((countitem(1092) > 9) && (countitem(610) > 1) && (countitem(511) > 9)) {
-				delitem 1092,10; //Empty_Cylinder
-				delitem 610,2; //Leaf_Of_Yggdrasil
-				delitem 511,10; //Green_Herb
-				set sign_q,17;
-				emotion ET_THANKS;
-				mes "[Sir Jore]";
-				mes "Ah! Th-thank you for";
-				mes "bringing what I need.";
-				mes "Now I can continue my";
-				mes "research. Oh, and see if";
-				mes "you're worthy of obtaining";
-				mes "the Sobbing Starlight.";
-				next;
-				mes "[Sir Jore]";
-				mes "Now, for your assignment.";
-				mes "Have you ever heard about";
-				mes "the ^CE3131Stone of Sage^000000? Rumors about";
-				mes "it have been spreading around, but no one has confirmed the truth about it, "+ strcharinfo(0) +".";
-				next;
-				mes "[Sir Jore]";
-				mes "Although I have no clue";
-				mes "what the Stone of S-S-age";
-				mes "may actually be, I have a gut";
-				mes "feeling that I need it to bring";
-				mes "my Biology research to the next step. This is how you'll help me.";
-				next;
-				set sign_q,17;
-				mes "[Sir Jore]";
-				mes "I need you to investigate";
-				mes "this Stone of Sage by finding";
-				mes "a father and daughter who were";
-				mes "famous for being great Alchemists. They vanished deep into a forest, but I believe they know something.";
-				close;
-			}
-			else {
-				mes "[Sir Jore]";
-				mes "Please bring m-me";
-				mes "10 Empty Test Tube,";
-				mes "10 Green Herb and";
-				mes "2 Leaf of Yggdrasil";
-				mes "so that I can make a";
-				mes "new research sample.";
-				close;
-			}
-		}
-		else if (sign_q == 17) {
-			mes "[Sir Jore]";
-			mes "I want you to find two";
-			mes "Alchemists, a father and";
-			mes "daughter, who have gone into";
-			mes "seclusion deep in some forest";
-			mes "so that I can learn more about";
-			mes "the Stone of Sage.";
-			next;
-			mes "[Sir Jore]";
-			mes "Of course, this will";
-			mes "possibly further my";
-			mes "research, but it's also";
-			mes "how I'll judge whether or";
-			mes "not you're qualified for my";
-			mes "piece of the Sobbing Starlight.";
+			mes "I spent five hours";
+			mes "observing the changes";
+			mes "in that research sample.";
+			mes "All of that hard work lost!";
+			mes "^333333*Wah~!*^000000";
 			close;
 		}
-		else if (sign_q < 15) {
+	}
+	else if (sign_q == 16) {
+		if ((countitem(1092) > 9) && (countitem(511) > 9)) {
+			delitem 1092,10; //Empty_Cylinder
+			delitem 511,10; //Green_Herb
+			set sign_q,17;
+			emotion ET_THANKS;
 			mes "[Sir Jore]";
-			mes "The mystery of life.";
-			mes "The desire to discover its";
-			mes "secrets drives me through";
-			mes "all the research and sacrifice.";
+			mes "Ah! Th-thank you for";
+			mes "bringing what I need.";
+			mes "Now I can continue my";
+			mes "research. Oh, and see if";
+			mes "you're worthy of obtaining";
+			mes "the Sobbing Starlight.";
 			next;
 			mes "[Sir Jore]";
-			mes "I-I'm not that confident in";
-			mes "my abilities, but I do believe that everything in this world is created by certain rules. Still, would I be punished by God for trying to create life he did not intend?";
+			mes "Now, for your assignment.";
+			mes "Have you ever heard about";
+			mes "the ^CE3131Stone of Sage^000000? Rumors about";
+			mes "it have been spreading around, but no one has confirmed the truth about it, "+ strcharinfo(0) +".";
 			next;
 			mes "[Sir Jore]";
-			mes "But I can't stop now.";
-			mes "One of these days, someone";
-			mes "will reveal the secret of life.";
-			mes "Why not me? That knowledge";
-			mes "would make humans greater";
-			mes "than any other race...";
-			close;
-		}
-		else if (sign_q == 19) {
-			mes "[Sir Jore]";
-			mes "Ah, you've returned.";
-			mes "So, did you learn what";
-			mes "exactly is the Stone of Sage?";
+			mes "Although I have no clue";
+			mes "what the Stone of S-S-age";
+			mes "may actually be, I have a gut";
+			mes "feeling that I need it to bring";
+			mes "my Biology research to the next step. This is how you'll help me.";
 			next;
-			mes "["+ strcharinfo(0) +"]";
-			mes "Well, I'm not sure,";
-			mes "but I was told that it's";
-			mes "red and can cure people.";
-			mes "But it might be something";
-			mes "we're already familiar with.";
-			next;
+			set sign_q,17;
 			mes "[Sir Jore]";
-			mes "That's all...?";
-			mes "Maybe it was nothing";
-			mes "but a rumor after all.";
-			mes "A-anyway, please tell me";
-			mes "what you think it might be.";
-			next;
-			input .@input$;
-			if (compare(.@input$,"red gemstone")) {
-				mes "[Sir Jore]";
-				mes "What...! Huh.";
-				mes "Perhaps I should just";
-				mes "forget about the Stone of";
-				mes "Sage and just research.";
-				mes "Still, I'm so ashamed of";
-				mes "relying on a rumor...";
-				next;
-				set sign_q,20;
-				getitem 7177,1; //Part_Of_Star's_Sob
-				mes "[Sir Jore]";
-				mes "Thank you very much";
-				mes "for helping me. Now I can";
-				mes "go back to my studies and";
-				mes "hope that nobody bothers me.";
-				mes "But that'll never happen.";
-				mes "^333333*Sigh...*^000000";
-				next;
-				mes "[Sir Jore]";
-				mes "W-well, you've earned this";
-				mes "piece of the Sobbing Starlight.";
-				mes "For the next piece, you must visit ^0063FFLady Jesqurienne^000000 in Geffen, the city of magic. Since she travels often, she's probably in the Inn.";
-				next;
-				mes "[Sir Jore]";
-				mes "O-o-okay then.";
-				mes "Good luck getting";
-				mes "all the pieces of ";
-				mes "Sobbing Starlight,";
-				mes ""+ strcharinfo(0) +". Farewell~";
-				close;
-			}
-			else {
-				mes "[Sir Jore]";
-				mes "Err...?";
-				mes "I don't think";
-				mes "I quite understood";
-				mes "you. What did you say?";
-				close;
-			}
-		}
-		else if (sign_q == 20) {
-			mes "[Sir Jore]";
-			mes "Now you must visit";
-			mes "^0063FFLady Jesqurienne^000000 in";
-			mes "Geffen. Good luck";
-			mes "passing her test.";
+			mes "I need you to investigate";
+			mes "this Stone of Sage by finding";
+			mes "a father and daughter who were";
+			mes "famous for being great Alchemists. They vanished deep into a forest, but I believe they know something.";
 			close;
 		}
 		else {
 			mes "[Sir Jore]";
-			mes "H-how is this supposed";
-			mes "to work? Like this? No!";
-			mes "No, that's not right!";
-			mes "Think, Jore, think...";
-			mes "What's the answer?!";
+			mes "Please bring m-me";
+			mes "10 Empty Test Tube";
+			mes "and 10 Green Herb";
+			mes "so that I can make a";
+			mes "new research sample.";
 			close;
 		}
 	}
-	else if ((gettime(DT_HOUR) > 6) && (gettime(DT_HOUR) < 17)) {
-		mes "^3355FFYou find a tense man";
-		mes "holding test tubes between";
-		mes "his fingers, standing in a pile";
-		mes "of books. He seems to be in";
-		mes "agony for some reason.";
+	else if (sign_q == 17) {
+		mes "[Sir Jore]";
+		mes "I want you to find two";
+		mes "Alchemists, a father and";
+		mes "daughter, who have gone into";
+		mes "seclusion deep in some forest";
+		mes "so that I can learn more about";
+		mes "the Stone of Sage.";
 		next;
-		switch(select("Speak to him.:Ignore him.")) {
-		case 1:
-			mes "["+ strcharinfo(0) +"]";
-			mes "Excuse me...";
+		mes "[Sir Jore]";
+		mes "Of course, this will";
+		mes "possibly further my";
+		mes "research, but it's also";
+		mes "how I'll judge whether or";
+		mes "not you're qualified for my";
+		mes "piece of the Sobbing Starlight.";
+		close;
+	}
+	else if (sign_q < 15) {
+		mes "[Sir Jore]";
+		mes "The mystery of life.";
+		mes "The desire to discover its";
+		mes "secrets drives me through";
+		mes "all the research and sacrifice.";
+		next;
+		mes "[Sir Jore]";
+		mes "I-I'm not that confident in";
+		mes "my abilities, but I do believe that everything in this world is created by certain rules. Still, would I be punished by God for trying to create life he did not intend?";
+		next;
+		mes "[Sir Jore]";
+		mes "But I can't stop now.";
+		mes "One of these days, someone";
+		mes "will reveal the secret of life.";
+		mes "Why not me? That knowledge";
+		mes "would make humans greater";
+		mes "than any other race...";
+		close;
+	}
+	else if (sign_q == 19) {
+		mes "[Sir Jore]";
+		mes "Ah, you've returned.";
+		mes "So, did you learn what";
+		mes "exactly is the Stone of Sage?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Well, I'm not sure,";
+		mes "but I was told that it's";
+		mes "red and can cure people.";
+		mes "But it might be something";
+		mes "we're already familiar with.";
+		next;
+		mes "[Sir Jore]";
+		mes "That's all...?";
+		mes "Maybe it was nothing";
+		mes "but a rumor after all.";
+		mes "A-anyway, please tell me";
+		mes "what you think it might be.";
+		next;
+		input .@input$;
+		if (compare(.@input$,"red gemstone")) {
+			mes "[Sir Jore]";
+			mes "What...! Huh.";
+			mes "Perhaps I should just";
+			mes "forget about the Stone of";
+			mes "Sage and just research.";
+			mes "Still, I'm so ashamed of";
+			mes "relying on a rumor...";
+			next;
+			set sign_q,20;
+			getitem 7177,1; //Part_Of_Star's_Sob
+			mes "[Sir Jore]";
+			mes "Thank you very much";
+			mes "for helping me. Now I can";
+			mes "go back to my studies and";
+			mes "hope that nobody bothers me.";
+			mes "But that'll never happen.";
+			mes "^333333*Sigh...*^000000";
 			next;
 			mes "[Sir Jore]";
-			mes "...";
-			mes "......";
+			mes "W-well, you've earned this";
+			mes "piece of the Sobbing Starlight.";
+			mes "For the next piece, you must visit ^0063FFLady Jesqurienne^000000 in Geffen, the city of magic. Since she travels often, she's probably in the Inn.";
 			next;
-			mes "^3355FFToo preoccupied with";
-			mes "his thoughts, this strange";
-			mes "man is unable to hear you.^000000";
-			next;
-			switch(select("Try again.:Ignore him.")) {
-			case 1:
-				mes "["+ strcharinfo(0) +"]";
-				mes "EXCUSE ME!";
-				next;
-				mes "[Sir Jore]";
-				mes "...!";
-				mes "Oh, h-h-hello.";
-				mes "Sorry, but I'm kind of";
-				mes "busy right now. Yes, yes,";
-				mes "would you come back at";
-				mes "precisely 5:00 PM PST?";
-				next;
-				mes "[Sir Jore]";
-				mes "Let's see...";
-				mes "Now if I recalibrated";
-				mes "the faust exhaust, then";
-				mes "the bioneutron analyzer";
-				mes "would need to be adjusted";
-				mes "for cytoplasmic balance...";
-				close;
-			case 2:
-				mes "^3355FFYou decide to leave";
-				mes "him alone and let him";
-				mes "continue mumbling to";
-				mes "himself and playing";
-				mes "with his test tubes.^000000";
-				close;
-			}
-		case 2:
-			mes "^3355FFYou decide to leave";
-			mes "him alone and let him";
-			mes "continue mumbling to";
-			mes "himself and playing";
-			mes "with his test tubes.^000000";
+			mes "[Sir Jore]";
+			mes "O-o-okay then.";
+			mes "Good luck getting";
+			mes "all the pieces of ";
+			mes "Sobbing Starlight,";
+			mes ""+ strcharinfo(0) +". Farewell~";
 			close;
 		}
+		else {
+			mes "[Sir Jore]";
+			mes "Err...?";
+			mes "I don't think";
+			mes "I quite understood";
+			mes "you. What did you say?";
+			close;
+		}
+	}
+	else if (sign_q == 20) {
+		mes "[Sir Jore]";
+		mes "Now you must visit";
+		mes "^0063FFLady Jesqurienne^000000 in";
+		mes "Geffen. Good luck";
+		mes "passing her test.";
+		close;
 	}
 	else {
 		mes "[Sir Jore]";
-		mes "...z...z...Z";
+		mes "H-how is this supposed";
+		mes "to work? Like this? No!";
+		mes "No, that's not right!";
+		mes "Think, Jore, think...";
+		mes "What's the answer?!";
 		close;
 	}
 	close;
@@ -2881,69 +2670,16 @@ OnTouch_:
 aldeba_in,156,118,4	script	Piru Piru#sign	102,{
 	callfunc "F_UpdateSignVars";
 	mes "[Piru Piru]";
-	if ((gettime(DT_HOUR) >= 12) && (gettime(DT_HOUR) <= 24)) { //235959
-		if (sign_q == 17) {
-			emotion ET_CRY;
-			mes "Oh, I'm sooo tired~";
-			mes "But we can't sleep yet.";
-			mes "*Sob* Master, can't we";
-			mes "just call it a day already?";
-			next;
-			switch(select("What do you do in here?:About vanished Alchemists:What is the Stone of Sage?")) {
-			case 1:
-				mes "[Piru Piru]";
-				mes "My master, Sir Jore,";
-				mes "is researching a way to";
-				mes "create artificial life! Still,";
-				mes "it's not easy and we haven't";
-				mes "accomplished anything yet...";
-				next;
-				mes "[Piru Piru]";
-				mes "It doesn't help that my";
-				mes "master spends all of his";
-				mes "time on research. He hasn't";
-				mes "been taking care of himself";
-				mes "and is losing a lot of weight.";
-				mes "I'm really worried about him.";
-				close;
-			case 2:
-				mes "[Piru Piru]";
-				mes "Oh, the father and daughter";
-				mes "who were both Alchemists, right? Did you know they vanished because they invented the monster potion summoning skill?";
-				next;
-				mes "[Piru Piru]";
-				mes "Their discovery caused";
-				mes "such great hysteria in the";
-				mes "scientific community. In the";
-				mes "end they had no choice but";
-				mes "to live in seclusion deep";
-				mes "in the ^CE3131forest to the south^000000.";
-				next;
-				mes "[Piru Piru]";
-				mes "They devoted their lives";
-				mes "to their research, just like";
-				mes "my master. If he makes a major";
-				mes "breakthrough, we'll have to";
-				mes "disappear like they did...";
-				close;
-			case 3:
-				mes "[Piru Piru]";
-				mes "Hmm? Well, I wouldn't";
-				mes "know anything about that.";
-				mes "In fact, I'm always staying";
-				mes "in this lab, so I never hear";
-				mes "any rumors or news outside.";
-				close;
-			}
-		}
-		else {
-			emotion ET_CRY;
-			mes "Oh, I'm sooo tired~";
-			mes "But we can't sleep yet.";
-			mes "*Sob* Master, can't we";
-			mes "just call it a day already?";
-			next;
-			select("What do you do in here?");
+	// Time gate removed: Piru Piru is available at any hour.
+	if (sign_q == 17) {
+		emotion ET_CRY;
+		mes "Oh, I'm sooo tired~";
+		mes "But we can't sleep yet.";
+		mes "*Sob* Master, can't we";
+		mes "just call it a day already?";
+		next;
+		switch(select("What do you do in here?:About vanished Alchemists:What is the Stone of Sage?")) {
+		case 1:
 			mes "[Piru Piru]";
 			mes "My master, Sir Jore,";
 			mes "is researching a way to";
@@ -2959,43 +2695,59 @@ aldeba_in,156,118,4	script	Piru Piru#sign	102,{
 			mes "and is losing a lot of weight.";
 			mes "I'm really worried about him.";
 			close;
-		}
-	}
-	else if ((gettime(DT_HOUR) >= 6) && (gettime(DT_HOUR) < 12)) {
-		mes "Everyday we study and";
-		mes "take notes and test and";
-		mes "experiment and record";
-		mes "results and... Horrible!";
-		next;
-		mes "[Piru Piru]";
-		mes "Although my master and I are the only ones who use this lab, we do have a set working schedule. We work from 10 AM to 5 PM and have our free time from 5 PM to 10 PM, which is when Master goes to bed.";
-		next;
-		mes "[Piru Piru]";
-		mes "Of course, Master";
-		mes "is happy if he can";
-		mes "just do more research.";
-		mes "In any case, please visit";
-		mes "us after 5 PM if you have";
-		mes "any business with us.";
-		close;
-	}
-	else {
-		mes "....Zzz...Zzz...";
-		mes "Zzz....Zzz......";
-		next;
-		switch(select("Wake her up:Leave her sleep")) {
-		case 1:
-			mes "[Piru Piru]";
-			mes "Wh-wha...?";
-			mes "Why do you gotta";
-			mes "wake me up? Come back";
-			mes "after 10:00 AM tomorrow, kay?";
-			close;
 		case 2:
 			mes "[Piru Piru]";
-			mes "Zzzz.....Zzzzz...";
+			mes "Oh, the father and daughter";
+			mes "who were both Alchemists, right? Did you know they vanished because they invented the monster potion summoning skill?";
+			next;
+			mes "[Piru Piru]";
+			mes "Their discovery caused";
+			mes "such great hysteria in the";
+			mes "scientific community. In the";
+			mes "end they had no choice but";
+			mes "to live in seclusion deep";
+			mes "in the ^CE3131forest to the south^000000.";
+			next;
+			mes "[Piru Piru]";
+			mes "They devoted their lives";
+			mes "to their research, just like";
+			mes "my master. If he makes a major";
+			mes "breakthrough, we'll have to";
+			mes "disappear like they did...";
+			close;
+		case 3:
+			mes "[Piru Piru]";
+			mes "Hmm? Well, I wouldn't";
+			mes "know anything about that.";
+			mes "In fact, I'm always staying";
+			mes "in this lab, so I never hear";
+			mes "any rumors or news outside.";
 			close;
 		}
+	}
+	else {
+		emotion ET_CRY;
+		mes "Oh, I'm sooo tired~";
+		mes "But we can't sleep yet.";
+		mes "*Sob* Master, can't we";
+		mes "just call it a day already?";
+		next;
+		select("What do you do in here?");
+		mes "[Piru Piru]";
+		mes "My master, Sir Jore,";
+		mes "is researching a way to";
+		mes "create artificial life! Still,";
+		mes "it's not easy and we haven't";
+		mes "accomplished anything yet...";
+		next;
+		mes "[Piru Piru]";
+		mes "It doesn't help that my";
+		mes "master spends all of his";
+		mes "time on research. He hasn't";
+		mes "been taking care of himself";
+		mes "and is losing a lot of weight.";
+		mes "I'm really worried about him.";
+		close;
 	}
 }
 
@@ -4458,9 +4210,9 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 			else {
 				mes "Heh heh~";
 				mes "That's thirty grand,";
-				mes "alright! Okay, come back";
-				mes "to me tomorrow night and";
-				mes "we'll start your test...";
+				mes "alright! Okay, talk to me";
+				mes "again whenever you're ready";
+				mes "and we'll start your test...";
 				set sign_q,27;
 				set Zeny, Zeny-30000;
 			}
@@ -4476,28 +4228,21 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 		}
 	}
 	else if (sign_q == 27) {
-		if ((gettime(DT_HOUR) > 0) && (gettime(DT_HOUR) < 24)) {
-			mes "Nice, you're here";
-			mes "just in time. Well,";
-			mes "all that matters is that";
-			mes "you come during the night.";
-			next;
-			mes "[Dearles]";
-			mes "You're wondering how";
-			mes "a guy like me is pals with";
-			mes "Metz, but that's none of your";
-			mes "business. I guess I gotta keep";
-			mes "this promise to him, so when";
-			mes "you're ready, say the word.";
-			set sign_q,28;
-			close;
-		}
-		else {
-			mes "Hey... When I say";
-			mes "''tomorrow night,'' I mean,";
-			mes "come and talk to me at nighttime! Don't you know anything about shady dealings?! Pfft! Adventurers...";
-			close;
-		}
+		// Time gate removed: Dearles will meet you at any hour.
+		mes "Nice, you're here";
+		mes "already. Well, all that";
+		mes "matters is that you";
+		mes "showed up at all.";
+		next;
+		mes "[Dearles]";
+		mes "You're wondering how";
+		mes "a guy like me is pals with";
+		mes "Metz, but that's none of your";
+		mes "business. I guess I gotta keep";
+		mes "this promise to him, so when";
+		mes "you're ready, say the word.";
+		set sign_q,28;
+		close;
 	}
 	else if (sign_q== 28) {
 		mes "Alright! I want you to";
@@ -7478,47 +7223,26 @@ mjo_dun02,88,295,4	script	Flaming Spirit Man	85,{
 		mes "But I'll do my best for you.";
 		delitem 7314,1; //The_Sign
 		set sign_q,140;
-		set .@stime_e,gettime(DT_HOUR);
-		if (.@stime_e < 2) set sign_sq,1;
-		else if (.@stime_e < 4) set sign_sq,2;
-		else if (.@stime_e < 6) set sign_sq,3;
-		else if (.@stime_e < 8) set sign_sq,4;
-		else if (.@stime_e < 10) set sign_sq,5;
-		else if (.@stime_e < 12) set sign_sq,6;
-		else if (.@stime_e < 14) set sign_sq,7;
-		else if (.@stime_e < 16) set sign_sq,8;
-		else if (.@stime_e < 18) set sign_sq,9;
-		else if (.@stime_e < 20) set sign_sq,10;
-		else if (.@stime_e < 22) set sign_sq,11;
-		else set sign_sq,12;
 		close;
 	}
 	else if (sign_q == 140) {
-		set .@stime_e1,gettime(DT_HOUR);
-		set .@pass_s1,1;
-		if (.@pass_s1 == 1) {
-			mes "It's so...";
-			mes "Beautiful! I don't know";
-			mes "if I'll ever see anything";
-			mes "like this again in my life...";
-			next;
-			mes "[Engel]";
-			mes "Oh, you're back just in time.";
-			mes "Although it was one of my most difficult jobs, I believe you'll be pleased with my work. Only a few smiths are privileged enough to work with this, even just once.";
-			next;
-			mes "[Engel]";
-			mes "This is now yours to keep.";
-			mes "Thank you for giving me the";
-			mes "honor of working on a worthy";
-			mes "smithing challenge.";
-			set sign_q,141;
-			getitem 2644,1; //The_Sign_
-			close;
-		}
-		else {
-			mes "I haven't completed it yet, but please understand that I've got to be really careful when working with something so valuable. But don't worry, its inner power will be revealed when I'm finished.";
-			close;
-		}
+		mes "It's so...";
+		mes "Beautiful! I don't know";
+		mes "if I'll ever see anything";
+		mes "like this again in my life...";
+		next;
+		mes "[Engel]";
+		mes "Oh, you're back just in time.";
+		mes "Although it was one of my most difficult jobs, I believe you'll be pleased with my work. Only a few smiths are privileged enough to work with this, even just once.";
+		next;
+		mes "[Engel]";
+		mes "This is now yours to keep.";
+		mes "Thank you for giving me the";
+		mes "honor of working on a worthy";
+		mes "smithing challenge.";
+		set sign_q,141;
+		getitem 2644,1; //The_Sign_
+		close;
 	}
 	else {
 		mes "Sometimes, you can only";
@@ -7618,12 +7342,11 @@ umbala,163,256,3	script	Native#_s	781,{
 	if (event_umbala >= 3) {
 		mes "[Laotan]";
 		if (sign_q < 73) {
-			mes "Oh, I wish I had";
-			mes "a Mr. Smile mask!";
-			mes "But where can I get";
-			mes "one of those? Well, I'd";
-			mes "be happy if I had some";
-			mes "Meat to eat, I guess!";
+			mes "La la la~!";
+			mes "Nothing to do today!";
+			mes "Well, I'd be happy if I";
+			mes "had some Meat to eat,";
+			mes "I guess!";
 			emotion ET_DELIGHT;
 			close;
 		}
@@ -7633,49 +7356,17 @@ umbala,163,256,3	script	Native#_s	781,{
 			mes "I think I know him! Yea, I do!";
 			next;
 			mes "[Laotan]";
-			if (countitem(2278) > 0) {
-				mes "Oh my gosh!";
-				mes "You've got a Mr. Smile mask!";
-				mes "Would you give that to me?";
-				mes "Pretty please...?";
-				next;
-				switch(select("Sure~:^FF0000No.^000000")) {
-				case 1:
-					mes "[Laotan]";
-					mes "Hooooray!";
-					mes "Thank you thank you";
-					mes "thank you thank you";
-					mes "soooooooooo much!";
-					next;
-					mes "[Laotan]";
-					mes "Oh right~!";
-					mes "The weird man in the funny clothes was in our village for a while, but ever since he went into that big tree, nobody's seen him!";
-					delitem 2278,1; //Mr_Smile
-					set sign_q,74;
-					close;
-				case 2:
-					mes "[Laotan]";
-					mes "I...";
-					mes "I was...";
-					mes "I just...";
-					mes "Waaaaaaahhhh!";
-					close;
-				}
-			}
-			else {
-				mes "Waaaait.";
-				mes "I knooow~!";
-				mes "I know if you get";
-				mes "me a Mr. Smile, okay?";
-				close;
-			}
+			mes "Oh right~!";
+			mes "The weird man in the funny clothes was in our village for a while, but ever since he went into that big tree, nobody's seen him!";
+			set sign_q,74;
+			close;
 		}
 		else {
-			mes "I love my Mr. Smile mask";
-			mes "soooo much! I'm gonna show";
-			mes "it to all my friends! Thank you";
-			mes "so much again! You're really";
-			mes "really nice, you know that?";
+			mes "That weird man really did";
+			mes "go into the big tree, you";
+			mes "know! I'm gonna tell all my";
+			mes "friends I helped you out.";
+			mes "You're really really nice!";
 			close;
 		}
 	}
@@ -8004,7 +7695,7 @@ alberta,165,83,4	script	Fastidious Old Man	755,{
 
 gef_fild07,182,241,0	script	#Valkyrie Warp	111,1,1,{
 	callfunc "F_UpdateSignVars";
-	if ((sign_q == 80) && (countitem(907) > 3) && (countitem(953) > 11) && (countitem(7013) > 364)) {
+	if (sign_q == 80) {
 		mes "^6B8E23It seems that";
 		mes "something in the";
 		mes "vicinity is reacting";

@@ -1538,6 +1538,59 @@ Full design rationale and value tables live in `doc/vit_redesign.md`.
   additive that gear quickly drowns out. The per-level bonus was subsequently trimmed from 2.5% to
   2% of ATK (25% -> 20% at max level) to pull the falcon's ATK-scaled ceiling back in line with the
   other Hunter skills.*
+- **Hunting Party (formerly Falcon Assault):** Falcon Assault's single-target Misc nuke is reworked
+  into `Hunting Party`, an active self-buff. It is now a no-damage self-cast with a `fixed 0.5 second
+  cast time` (unreducible by DEX, status or gear) and no after-cast delay, and calls in two
+  more falcons for `12 seconds` at level 1, `+2 seconds per level` up to `20 seconds` at level 5,
+  on a flat `60 second cooldown` (SP cost, the Falcon requirement and the skill's learning
+  prerequisites are unchanged). While the buff is active: every plain auto attack has a flat `30%`
+  chance to trigger a single-target Blitz Beat from a second, "Ranger" falcon — this strike never
+  reads or consumes a `Hunted` mark, even if the target happens to carry one. Separately, every time
+  the Hunter's own falcon lands a Blitz Beat — whether cast manually or fired automatically by the
+  falcon assist off a `Hunted` mark — a third, "Windhawk" falcon echoes it `500ms` later for the
+  exact same damage, displayed with the Hawk Rush strike animation. An empowered 5x5 Blitz Beat is
+  echoed on each enemy it struck. The Ranger falcon's own strike is deliberately never echoed.
+  For the duration, the two extra falcons are also physically present: casting the skill spawns two
+  cosmetic companions (an owl for the Ranger falcon and a second falcon for the Windhawk) that dive
+  through their victims, then fly back to the Sniper, and vanish when the buff ends.
+  Both of the strikes above are drawn from their own bird, so the extra Blitz Beat visibly comes from
+  the Ranger falcon and the echo from the Windhawk, rather than both firing off the Sniper. The
+  companions remain strictly decorative — they cannot be targeted, damaged, or aggroed onto, deal no
+  damage of their own, and grant no experience or drops; all damage is still dealt and credited by
+  the Sniper, so drops and aggro are unaffected. Because Falcon Assault no longer deals damage
+  itself, it drops out of Steel Crow's per-strike ATK bonus list (Blitz Beat and Predatory Strike
+  still benefit). *Developer Comments: Falcon Assault was just a Blitz-Beat-flavored Misc nuke with
+  a clunky 3-second After Cast Delay, competing directly with Blitz Beat and Predatory Strike for the
+  same button. Turning it into a stance instead gives the Hunter/Sniper falcon kit a burst window
+  with its own identity — more frequent, lower-commitment falcon strikes rather than one more hard
+  nuke — and gives Steel Crow investment (which now only touches Blitz Beat and Predatory Strike) a
+  cleaner story.*
+- **Hunting Party — prerequisites:** Now gated solely behind `Predatory Strike Lv. 5`
+  (previously `Vulture's Eye 5`, `Falconry Mastery 1`, `Blitz Beat 5`, and
+  `Steel Crow 3`). *Developer Comments: Predatory Strike already sits behind Steel Crow
+  10 in the tree, so gating Hunting Party on the four older, lower-tier falcon skills
+  individually was redundant bookkeeping rather than a real choice — collapsing it to
+  the one high-tier falcon skill keeps the falcon line's capstone gaps meaningful
+  without making the player re-clear prerequisites Predatory Strike already implies.*
+- **Hunting Party — cast effect:** The cosmetic flourish played when the stance goes up
+  no longer reuses the old attack skill's `EF_FALCONASSAULT` dive effect (which spins the
+  caster in place before the throw); it now plays a plain buff-activation aura
+  (`EF_INCAGILITY`) that doesn't touch the caster's facing or animation. *Developer
+  Comments: the spin animation made sense for a one-off nuke but looked wrong on a stance
+  that gets recast every 60 seconds — players were visibly spinning in combat every time
+  the buff came off cooldown.*
+- **Hunting Party — status visual:** The buff's status icon now borrows Guillotine Cross's
+  Dark Crow (`EFST_DARKCROW`) for its crow/bird imagery, with no persistent aura — just the
+  status-bar icon. `GC_DARKCROW` has no pre-re skill tree entry so nothing else on this
+  server uses it. *Developer Comments: an earlier pass tried a persistent green aura
+  (Calamity Gale) to make the stance more visible in combat, but it read as too flashy for
+  a buff this cheap and frequent; a plain bird icon on the buff bar is a better fit.*
+- **Hunting Party — SP cost:** Now a flat `60 SP` at every level (previously `30 SP`, `+4
+  per level`, topping out at `46 SP` at Lv 5). *Developer Comments: the buff's payoff (extra
+  falcon procs) doesn't scale with level nearly as much as its cost did — the falcon's own
+  duration and proc chance are both fixed regardless of skill level — so the rising cost was
+  taxing investment in the skill for no real return. A flat, higher cost values the stance
+  for what it does rather than what level it's cast at.*
 
 - **Tranquillizing Dart (formerly Sandman):** The old Sandman ground trap is rebuilt into
   `Tranquillizing Dart`, a single-rank (`MaxLevel 5 -> 1`) targeted bow skill. Instead of
@@ -1553,6 +1606,89 @@ Full design rationale and value tables live in `doc/vit_redesign.md`.
   opener; the 1% ATK hit is only the delivery vehicle (the engine drops on-hit effects for
   zero-damage shots), and the long 60s cooldown and 30 SP cost are the price for a guaranteed
   15-second sleep.*
+
+### Sniper Skill Changes
+
+- **Lethal Arrow (formerly Sharpshooting/Focused Arrow Strike):** Rebuilt into an
+  instant-cast execution shot. Damage is now `200% ATK + 80% per skill level` (600%
+  at level 5), with an added execution bonus of `+1% ATK for every 1% of the target's
+  missing HP` (up to `+100% ATK` against a near-dead target), landing on the target
+  and every enemy in a `5x5` area around it. The old 14x3 piercing corridor is gone —
+  it no longer needs a line of enemies between the caster and the target. Cast time
+  is removed entirely (was 2 seconds), and cooldown is a flat `10 seconds`. SP cost
+  is a flat `60` at every level (was `18`-`30`). It rolls crits off the Sniper's own
+  `CRIT` stat and now actually deals bonus crit damage, replacing the old flat `+20`
+  Critical bonus that rolled crits but was silently stripped back down to normal
+  damage on the hit itself. The cast now plays Chain Reaction Shot's detonation
+  animation instead of the old arrow-corridor effect (mob-cast Sharpshooting inherits
+  the same visual). *Developer Comments: Sharpshooting advertised itself as one of
+  the only skills in the game that can crit, but the damage-calc path quietly zeroed
+  out the crit bonus every time, so the tooltip was lying. Turning it into a real
+  execution shot — burst that spikes as a target nears death, backed by a crit rate
+  and cost that actually mean something — gives Snipers a genuine finisher instead
+  of a corridor nuke that happened to need perfect line-up with the enemy.*
+
+- **Lethal Arrow (rebalance):** Dropped the `5x5` splash entirely — it now strikes only
+  the single target it's cast on, firing `4 hits` in rapid succession instead of one.
+  Each hit deals `100% ATK + 40% per skill level` (300% at level 5), so the 4-hit total
+  is `400% + 160% per skill level` (1200% at level 5) — double the old single-hit
+  total. The execution bonus (`+1% ATK per 1% of the target's missing HP`, up to
+  `+100% ATK`) and the crit-off-your-own-CRIT behavior are unchanged. Cooldown is
+  raised from `10` to `15 seconds`; SP cost, cast time, and the borrowed Chain
+  Reaction Shot visual are unchanged. *Developer Comments: the 5x5 splash made Lethal
+  Arrow a pull-clearing AoE nuke on top of being a single-target execution tool, which
+  blurred its identity with the Sniper's other AoE options. Concentrating the same
+  (now doubled) damage into 4 hits on one target keeps it a dedicated finisher and
+  gives the crit roll more chances to matter per cast, at the cost of a longer
+  cooldown to pay for the higher ceiling.*
+
+- **Lethal Arrow (follow-up):** The floating skill-name text above the caster read
+  a blank `"!!"` on cast instead of `"Lethal Arrow !!"`. Neither borrowed id used for
+  the visual (`ABC_CHAIN_REACTION_SHOT` for the cast, `ABC_CHAIN_REACTION_SHOT_ATK`
+  for the hit) has a name entry on this client — they're 4th-job ids without
+  localized skill data here — so every packet sent for the cast was nameless. Fixed
+  by re-announcing the real name after the hit lands:
+  `clif_skill_nodamage(src, *target, SN_SHARPSHOOTING, skill_lv)` is now called last,
+  using the genuine id (which does have a "Lethal Arrow" entry). This briefly flashes
+  `SN_SHARPSHOOTING`'s own registered cast effect right after the damage number
+  appears — the same tradeoff already accepted for Sundering Strike's borrowed Cart
+  Termination visual, since there is no packet that carries a name without also
+  carrying an effect for that id.
+  - `src/map/skills/archer/focusedarrowstrike.cpp` — added the trailing
+    `clif_skill_nodamage` call in `castendDamageId`.
+
+- **Lethal Arrow (untargeted):** No longer requires picking a target with the
+  cursor — it now auto-fires on whatever the Sniper is currently attacking, same
+  aiming style as Double Strafe. `TargetType: Self` plus the `NoTargetSelf` flag
+  route the cast through the engine's existing "auto-select target" rewrite
+  (`unit.cpp`), which redirects a self-target combo cast onto the caster's current
+  target; if there is no current target, the cast simply does nothing. No damage,
+  cost, or visual changes. *Developer Comments: an instant-cast, 15-second-cooldown
+  finisher is meant to be pressed the instant it's off cooldown - a cursor click in
+  between just adds latency and misclicks for no gameplay value.*
+  - `db/import/skill_db.yml` — added `TargetType: Self` and `Flags.NoTargetSelf: true`
+    to the existing override (the base entry's `TargetTrap` flag is untouched,
+    since `Flags` merges per-field).
+  - `lua files/skillinfoz/skilldescript.lub` — `Target:` line changed from `Enemy`
+    to `Current Target`.
+
+- **Lethal Arrow (prerequisites and placement):** Now gated solely behind `Wyvern
+  Bolt (HT_POWER) level 5` (previously `Improve Concentration 10` and `Double Strafe
+  5`). Moved down 4 rows and left 2 columns in the Sniper skill tree grid to sit
+  alongside its new prerequisite instead of the Archer-tier skills it no longer
+  needs. *Developer Comments: Lethal Arrow's old gates were leftover from when it
+  was a corridor nuke that wanted a fast-attacking, well-aimed Sniper; as a single-
+  target execution finisher its real prerequisite is a Sniper actually having
+  Wyvern Bolt's piercing damage online first, so the tree now reflects that
+  dependency directly instead of two unrelated Archer-tier skills.*
+  - `db/import/skill_tree.yml` — added `SN_SHARPSHOOTING` under the `Sniper` job
+    block; `AC_CONCENTRATION` and `AC_DOUBLE` erased with `Level: 0` (import
+    merges `Requires` by keyed skill name rather than replacing them), `HT_POWER`
+    `Level: 5` added.
+  - `lua files/skillinfoz/skilltreeview.lub` — `[SKID.SN_SHARPSHOOTING]` moved
+    from grid index `6` to `32` in `JT_HUNTER_H` (row 0, col 6 → row 4, col 4).
+  - `lua files/skillinfoz/skilldescript.lub` — `Requirement:` line changed to
+    `Wyvern Bolt 5`.
 
 ### Thief Skill Changes
 
