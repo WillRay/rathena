@@ -57,14 +57,14 @@ Body:
       Novice: true
     Tree:
       - Name: SM_SWORD
-        MaxLevel: 10
+        MaxLevel: 5
       - Name: SM_TWOHAND
-        MaxLevel: 10
+        MaxLevel: 5
         Requires:
           - Name: SM_SWORD
             Level: 1
       - Name: SM_RECOVERY
-        MaxLevel: 10
+        MaxLevel: 5
       - Name: SM_BASH
         MaxLevel: 10
       - Name: SM_PROVOKE
@@ -75,7 +75,7 @@ Body:
           - Name: SM_BASH
             Level: 5
       - Name: SM_ENDURE
-        MaxLevel: 10
+        MaxLevel: 5
         Requires:
           - Name: SM_PROVOKE
             Level: 5
@@ -670,7 +670,7 @@ Body:
       - Name: HT_ANKLESNARE
         MaxLevel: 5
       - Name: HT_SANDMAN
-        MaxLevel: 5
+        MaxLevel: 1
       - Name: AC_MAKINGARROW
         MaxLevel: 1
       - Name: HT_FALCON
@@ -1092,7 +1092,7 @@ Body:
       Thief: true
     Tree:
       - Name: SM_SWORD
-        MaxLevel: 10
+        MaxLevel: 5
       - Name: AC_VULTURE
         MaxLevel: 10
       - Name: AC_DOUBLE
@@ -1485,9 +1485,9 @@ Body:
       Novice: true
     Tree:
       - Name: SM_SWORD
-        MaxLevel: 10
+        MaxLevel: 5
       - Name: SM_RECOVERY
-        MaxLevel: 10
+        MaxLevel: 5
       - Name: SM_BASH
         MaxLevel: 10
       - Name: SM_PROVOKE
@@ -1498,7 +1498,7 @@ Body:
           - Name: SM_BASH
             Level: 5
       - Name: SM_ENDURE
-        MaxLevel: 10
+        MaxLevel: 5
         Requires:
           - Name: SM_PROVOKE
             Level: 5
@@ -1966,7 +1966,7 @@ Body:
         MaxLevel: 10
         Requires:
           - Name: SM_TWOHAND
-            Level: 10
+            Level: 5
           - Name: SM_PROVOKE
             Level: 5
           - Name: KN_TWOHANDQUICKEN
@@ -1984,7 +1984,7 @@ Body:
         MaxLevel: 1
         Requires:
           - Name: SM_RECOVERY
-            Level: 10
+            Level: 5
           - Name: SM_PROVOKE
             Level: 5
           - Name: SM_ENDURE
@@ -2733,9 +2733,9 @@ Body:
       Baby: true
     Tree:
       - Name: SM_SWORD
-        MaxLevel: 10
+        MaxLevel: 5
       - Name: SM_RECOVERY
-        MaxLevel: 10
+        MaxLevel: 5
       - Name: SM_BASH
         MaxLevel: 10
       - Name: SM_PROVOKE
@@ -2746,7 +2746,7 @@ Body:
           - Name: SM_BASH
             Level: 5
       - Name: SM_ENDURE
-        MaxLevel: 10
+        MaxLevel: 5
         Requires:
           - Name: SM_PROVOKE
             Level: 5

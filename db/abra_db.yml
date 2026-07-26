@@ -111,8 +111,9 @@ Body:
   - Skill: BS_WEAPONPERFECT
   - Skill: BS_OVERTHRUST
   - Skill: BS_MAXIMIZE
+  # HT_LANDMINE (Jagged Fletching) and HT_SPRINGTRAP (Crippling Talons) are now
+  # passive skills (see db/import/skill_db.yml), so Abra cannot cast them.
   - Skill: HT_SKIDTRAP
-  - Skill: HT_LANDMINE
   - Skill: HT_ANKLESNARE
   - Skill: HT_SHOCKWAVE
   - Skill: HT_SANDMAN
@@ -124,7 +125,6 @@ Body:
   - Skill: HT_TALKIEBOX
   - Skill: HT_BLITZBEAT
   - Skill: HT_DETECTING
-  - Skill: HT_SPRINGTRAP
   - Skill: AS_CLOAKING
   - Skill: AS_SONICBLOW
   - Skill: AS_GRIMTOOTH

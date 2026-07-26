@@ -66,6 +66,12 @@
 	}
 
 	OnInit:
+		// Each map-placed duplicate below runs this label on its own, but so
+		// does this floating source NPC, which has no map. questinfo() requires
+		// one (see buildin_questinfo in src/map/script.cpp), so skip the source.
+		// strnpcinfo(4) is the map name, empty when the NPC has no map.
+		if (strnpcinfo(4) == "")
+			end;
 		questinfo(QTYPE_QUEST, QMARK_NONE, "BaseLevel < 99");
 		end;
 }
