@@ -5439,6 +5439,13 @@ TIMER_FUNC(skill_castend_id){
 					else if (ud->skill_id == HT_PHANTASMIC)
 						skill_blockpc_start(*sd, HT_BLITZBEAT, cooldown);
 
+					// Shared cooldown: Bash and Pierce lock each other out. Casting
+					// either one puts the other on the same cooldown as well.
+					else if (ud->skill_id == SM_BASH)
+						skill_blockpc_start(*sd, KN_PIERCE, cooldown);
+					else if (ud->skill_id == KN_PIERCE)
+						skill_blockpc_start(*sd, SM_BASH, cooldown);
+
 				}
 			}
 			break;

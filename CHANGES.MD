@@ -308,6 +308,23 @@ primarily AGI's job again and giving damage rolls their randomness back.
 
 ### Knight Skill Changes
 
+- **Spear Stab:** The area is widened from a 1-cell-wide, 4-cell-long line into a
+  `3 by 4` cell swath running from the target back toward the caster (12 cells
+  instead of 4). The skill now counts every enemy standing in that swath and hits
+  each of them once per target caught, to a maximum of `3` hits — one enemy takes
+  `1` hit, two enemies take `2` hits each, three or more take `3` hits each. Damage
+  per hit is unchanged at `100% + 20% per skill level`, so a full swath is
+  effectively triple damage on every target. To pay for it, knockback is reduced
+  from `6` cells to `4`. *Developer Comments: Spear Stab's own tooltip used to admit
+  it was only worth taking for the pushback — it was a 6-cell shove with a damage
+  number attached, and the single-file hitbox meant you rarely caught more than the
+  one enemy you clicked. Widening the swath makes the mob-lining actually achievable,
+  tying the hit count to how many enemies you skewer makes it the point of the skill
+  rather than a side effect, and trimming two cells off the knockback stops it from
+  being the best displacement in the game and a strong AoE at the same time. Both
+  dimensions are `SPEARSTAB_LENGTH` / `SPEARSTAB_WIDTH` at the top of
+  `src/map/skills/swordman/spearstab.cpp` if the swath needs further tuning.*
+
 - **Tension Relax:** Its Increase HP Recovery prerequisite is lowered from
   level 10 to level 5. *Developer Comments: Increase HP Recovery was trimmed
   to a 5-level skill, so the old level 10 gate was no longer reachable and
@@ -1209,6 +1226,137 @@ primarily AGI's job again and giving damage rolls their randomness back.
   - `lua files/stateicon/stateiconinfo.lub` — the `EFST_STRIKING` (Momentum)
     tooltip updated from `3%` to `10%` per stack.
 
+- **Pierce:** Is now a non-targeted skill — press it with no target cursor and
+  it auto-fires on your current target (`TargetType: Self` + `NoTargetSelf`,
+  the same native "combo skill" aiming used by Bash). It also gains a
+  **2 second cooldown** that is shared with **Bash**: casting either skill
+  puts both on cooldown. *Developer Comments: Pierce and Bash are the two
+  early spear/sword pokes a Knight leans on before the class opens up, and
+  letting them free-cast independently made alternating them a way to ignore
+  cooldowns entirely. Sharing the cooldown keeps both as clean single-target
+  pokes without one silently doubling the other's uptime.*
+  - `src/map/skill.cpp` — extended the Blitz Beat / Phantasmic Arrow
+    shared-cooldown block in `skill_castend_id` with a matching
+    `SM_BASH` / `KN_PIERCE` pairing.
+
+- **Pierce (hit count):** Now hits **2 times** on Small monsters, **3 times**
+  on Medium monsters, and **4 times** on Large monsters (up from `1`/`2`/`3`).
+  *Developer Comments: Pierce's size-scaling hit count was its whole identity,
+  but the old 1/2/3 spread made it barely register against Small targets. Bumping
+  each tier by one hit keeps the size scaling intact while making the skill
+  worth casting regardless of what you're fighting.*
+  - `src/map/skills/swordman/pierce.cpp` — `modifyDamageData` now sets
+    `dmg.div_` to `tstatus->size + 2` instead of `tstatus->size + 1`.
+
+- **Pierce (critical hits):** Can now land Critical Hits, the same as a
+  normal weapon attack. *Developer Comments: Pierce is a plain weapon poke
+  with no reason to be excluded from crits the way a normal attack isn't —
+  letting it crit gives Spear Knights leaning on CRIT builds a payoff on
+  their active rotation, not just their auto-attacks.*
+  - `db/import/skill_db.yml` — `KN_PIERCE` already carries
+    `DamageFlags.Critical: true` (`NK_CRITICAL`), so no server change was
+    needed; only the tooltip below was missing the note.
+
+- **Pierce (fix — critical hits dealt no visible damage):** A critical Pierce
+  produced no damage numbers, no hit animation and no reaction at all, while
+  still consuming the skill's cooldown. Players saw the skill "not fire", and
+  it looked worse the higher their ASPD because on this server CRIT and ASPD
+  rise together (Battle Rhythm grants both, so a faster Knight crits more
+  often). Pierce advertises 2-4 hits depending on target size, but it never
+  marked its damage packet as multi-hit, so the crit branch of
+  `battle_calc_weapon_attack` picked `DMG_CRITICAL` — a *single*-hit packet
+  type — while the hit count was still 2-4. The client cannot render that
+  combination and drew nothing. *Developer Comments: this was latent from the
+  moment the size-based hit count was written, but harmless until Pierce was
+  given `NK_CRITICAL`, since `is_attack_critical` returns early for skills
+  without that flag — the crit flag is what exposed it. Bash was never
+  affected: it is a single-hit skill and carries no crit flag, which is why it
+  behaved correctly throughout.*
+  - `src/map/skills/swordman/pierce.cpp` — `modifyDamageData` now also sets
+    `dmg.type = DMG_MULTI_HIT`, so the crit branch resolves to
+    `DMG_MULTI_HIT_CRITICAL` instead of `DMG_CRITICAL`. Matches the existing
+    precedent in `doubleattack.cpp` and `chainaction.cpp`, the only other
+    skills that set a multi-hit `div_` from `modifyDamageData`. Also added
+    `#include "map/clif.hpp"` — `battle.hpp` only forward-declares
+    `e_damage_type`, so the enumerators are not otherwise in scope.
+
+- **Spear Boomerang:** Now inflicts a guaranteed **5 second Silence** on the
+  target it hits, and gains a **15 second cooldown**. Its damage also scales
+  with distance: it still deals `150% + 50% per level` at point-blank range,
+  but that ratio climbs the farther the target is, up to **double damage** at
+  the skill's maximum range for that level (3/5/7/9/11 cells at levels 1-5).
+  *Developer Comments: Spear Boomerang was a flat-ratio poke with no reason to
+  actually use its range — you got the same payoff whether you threw it from
+  1 cell or 11. Scaling the damage with distance rewards using it as the
+  ranged skill it is, and the Silence plus a real cooldown give it a
+  lockdown niche instead of being just a worse melee combo filler.*
+  - `src/map/skills/swordman/spearboomerang.cpp` / `.hpp` — added a distance
+    ratio bonus in `calculateSkillRatio` (`base_skillratio * dist / range`,
+    capped at the skill's max range so it tops out at doubling), and a new
+    `applyAdditionalEffects` override that starts `SC_SILENCE` at a guaranteed
+    rate for a flat 5 seconds.
+  - `db/import/skill_db.yml` — added `Cooldown: 15000`.
+  - `lua files/skillinfoz/skilldescript.lub` — `KN_SPEARBOOMERANG` rewritten
+    to the canonical format (dropped the duplicate `Skill Form`/stray
+    `Physical Ranged` lines and the flavor Comments block), collapsed the
+    per-level damage lines into a single scaling formula, and documented the
+    distance bonus, Silence effect, and new cooldown.
+
+- **Brandish Spear:** Redesigned into the Knight's signature spear follow-up
+  and mob-control tool. Splash radius is widened to **5 cells at every level**
+  (from `2`), and damage now scales `250% + 50% per level` (up to **700%** at
+  Lv 10) instead of the old per-level staggered directional falloff, and it
+  now carries a **10 second cooldown**. On a successful hit it pulls every
+  target caught in the splash back to the impact point — gathering the group
+  for a follow-up AoE instead of scattering it, so the skill's old knockback
+  has been removed — and inflicts a guaranteed **5 second Blind**.
+  *Developer Comments: Brandish Spear's old staggered per-level hit pattern
+  was a relic of the pre-refactor line-splash mechanic and didn't read as a
+  "signature" move for spear Knights. A wide pull-and-blind turns it into the
+  opener a Knight wants to lead a pack into a corner with, then follow up on
+  while everything caught in it is bunched up and fighting half-blind; the
+  per-level damage curve keeps low levels from being a full-power AoE the
+  moment it's learned.*
+  - `src/map/skills/swordman/brandishspear.cpp` / `.hpp` — `castendNoDamageId`
+    now hits a flat circular splash centered on the clicked target instead of
+    the old per-level directional falloff; `calculateSkillRatio` scales
+    `100 + 50 * skill_lv` (`250%` at Lv 1 up to `700%` at Lv 10); new
+    `applyAdditionalEffects` override starts a guaranteed `SC_BLIND` for 5
+    seconds and pulls each hit target back to the impact point via
+    `unit_movepos`. Renewal's original behavior is untouched (`#ifdef
+    RENEWAL` branches unchanged).
+  - `db/import/skill_db.yml` — `SplashArea: 5`, `Knockback: 0`,
+    `Cooldown: 10000`.
+  - `lua files/skillinfoz/skilldescript.lub` — `KN_BRANDISHSPEAR` rewritten to
+    the canonical format describing the new splash, scaling damage, pull, and
+    Blind.
+  - `lua files/skillinfoz/skilldescript.lub` — `KN_BRANDISHSPEAR` rewritten to
+    the canonical format and to describe the new splash, damage, pull, and
+    Off Balance debuff.
+
+- **Spear Stab → Spear Thrust:** Renamed to **Spear Thrust** (display name
+  only — the Aegis name `KN_SPEARSTAB` is unchanged, and no mechanics were
+  touched). All in-client references to the old name were updated to match,
+  including its own tooltip and the skills that name it in their Requirement
+  lines (Brandish Spear, Spiral Pierce, and the mercenary Brandish Spear /
+  Spiral Pierce entries), plus the Knight job-change quiz that lists it as an
+  answer option. *Developer Comments: "Stab" described the old skill — a
+  single thrust at the one enemy you clicked. The skill now sweeps a 3 by 4
+  cell swath and hits everything in it up to three times each, so the name
+  was underselling it to anyone reading the skill tree. "Thrust" keeps the
+  plain physical verb and the "Spear ___" prefix shared with Spear Boomerang
+  and Spear Mastery, so nothing else in the line has to move.*
+  - `lua files/skillinfoz/skillinfolist.lub` — `KN_SPEARSTAB`'s `SkillName`
+    changed to "Spear Thrust".
+  - `lua files/skillinfoz/skilldescript.lub` — `KN_SPEARSTAB`'s title changed
+    to "Spear Thrust"; the Requirement lines of `KN_BRANDISHSPEAR`,
+    `LK_SPIRALPIERCE`, `ML_BRANDISH` and `ML_SPIRALPIERCE` updated to match
+    and re-wrapped to the 40-character limit (all four were over it).
+  - `npc/jobs/2-1/knight.txt` — the Sir Siracuse job-change quiz answer
+    "Spear Stab Lv.3" renamed; the correct-answer index is unchanged.
+  - `db/import/skill_db.yml` — `KN_SPEARSTAB`'s internal `Description` field
+    updated for clarity (server-internal, not player-visible).
+
 ### Crusader Skill Changes
 
 - **Holy Cross:** Damage raised from `100% + 35% per level` to
@@ -1760,6 +1908,24 @@ primarily AGI's job again and giving damage rolls their randomness back.
     from grid index `6` to `32` in `JT_HUNTER_H` (row 0, col 6 → row 4, col 4).
   - `lua files/skillinfoz/skilldescript.lub` — `Requirement:` line changed to
     `Wyvern Bolt 5`.
+
+- **Lethal Arrow (fix — critical hits dealt no visible damage):** A critical
+  Lethal Arrow produced no damage numbers, no hit animation and no reaction at
+  all, while still consuming the skill's cooldown, and it looked worse the more
+  CRIT a Sniper stacked. Lethal Arrow strikes 4 times but never marked its
+  damage packet as multi-hit, so the crit branch of
+  `battle_calc_weapon_attack` picked `DMG_CRITICAL` — a *single*-hit packet
+  type — while the hit count was still 4. The client cannot render that
+  combination and drew nothing. *Developer Comments: identical cause to the
+  Pierce fix in the Knight section — any skill that combines a hit count above
+  1 with `NK_CRITICAL` hits this, because `DMG_MULTI_HIT` is only ever set for
+  plain auto attacks (`battle_calc_multi_attack` is gated on `!skill_id`). The
+  crit flag is what exposes it; the four-hit count had been correct all along.*
+  - `src/map/skills/archer/focusedarrowstrike.cpp` / `.hpp` — added a
+    `modifyDamageData` override that sets `dmg.type = DMG_MULTI_HIT` whenever
+    `div_ > 1`, so the crit branch resolves to `DMG_MULTI_HIT_CRITICAL`. The
+    `div_ > 1` guard keeps it inert on the renewal path, where the skill is a
+    splash attack rather than a 4-hit single-target strike.
 
 ### Thief Skill Changes
 

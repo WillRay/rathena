@@ -270,8 +270,17 @@ Body:
       SpRateCost: -2
   - Id: 48
     Name: TF_DOUBLE
+  # Non-targeted: Self + NoTargetSelf make Pierce auto-fire on the caster's
+  # current target (no target cursor), same as Bash. A 2s cooldown is added
+  # and shared with SM_BASH (see the shared-cooldown block in
+  # skill_castend_id, src/map/skill.cpp) so the two can't be alternated to
+  # bypass each other's cooldown.
   - Id: 56
     Name: KN_PIERCE
+    TargetType: Self
+    Flags:
+      NoTargetSelf: true
+    Cooldown: 2000
     DamageFlags:
       Critical: true
   - Id: 111
@@ -1281,6 +1290,27 @@ Body:
           Amount: 60
         - Level: 5
           Amount: 60
+  - Id: 59
+    Name: KN_SPEARBOOMERANG
+    Description: Spear Boomerang
+    # Payon Stories rebalance: guaranteed 3-second Silence on hit, plus a 15s
+    # cooldown to offset the added utility and the new distance-scaled damage.
+    Cooldown: 15000
+  - Id: 57
+    Name: KN_BRANDISHSPEAR
+    Description: Brandish Spear
+    # Payon Stories rebalance: redesigned into the Knight's signature spear
+    # follow-up/mob-control tool. Splash widened to 5 cells (from 2) at every
+    # level so a single cast reliably covers a pack. Damage now scales
+    # 250% + 50% per level, up to 700% at Lv 10 (see calculateSkillRatio in
+    # brandishspear.cpp). Knockback is zeroed out since the skill now pulls
+    # targets together instead of scattering them (see
+    # castendNoDamageId/applyAdditionalEffects in brandishspear.cpp for the
+    # pull-together + guaranteed Blind application). A 10s cooldown keeps it
+    # from being spammed as a repeatable stun-lock.
+    SplashArea: 5
+    Knockback: 0
+    Cooldown: 10000
   - Id: 382
     Name: SN_SHARPSHOOTING
     Description: Lethal Arrow
@@ -1301,4 +1331,11 @@ Body:
     Cooldown: 15000
     Requires:
       SpCost: 60
+
+  - Id: 58
+    Name: KN_SPEARSTAB
+    Description: Spear Thrust
+    # Knockback trimmed 6 -> 4 to pay for the new multi-hit behavior in
+    # src/map/skills/swordman/spearstab.cpp (up to 3 hits on a packed line).
+    Knockback: 4
 

@@ -887,7 +887,7 @@ prt_in,71,91,0	script	Sir Siracuse#knt	65,{
 		mes "[Sir Siracuse]";
 		mes "Knights can also use Spears, unlike other jobs, and have skills related to Spears as well. What skills are not necessary to learn the skill Brandish Spear?";
 		next;
-		if (select("Pierce Lv.5:Spear Stab Lv.3:Spear Boomerang Lv.3:Peco Peco Ride Lv.1") != 3) {
+		if (select("Pierce Lv.5:Spear Thrust Lv.3:Spear Boomerang Lv.3:Peco Peco Ride Lv.1") != 3) {
 			set KNIGHT_Q,5;
 			mes "[Sir Siracuse]";
 			mes "Wrong! You need to learn that to learn Brandish Spear! How can you not know about Knights if you want to become one?";

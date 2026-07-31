@@ -12,6 +12,17 @@
 SkillFocusedArrowStrike::SkillFocusedArrowStrike() : SkillImplRecursiveDamageSplash(SN_SHARPSHOOTING) {
 }
 
+void SkillFocusedArrowStrike::modifyDamageData(Damage &dmg, const block_list &src, const block_list &target, uint16 skill_lv) const {
+	// Lethal Arrow lands 4 hits (HitCount in skill_db) and carries NK_CRITICAL, so
+	// it must advertise itself as a multi-hit packet. Without this the type stays
+	// DMG_NORMAL, and the crit branch in battle_calc_weapon_attack then picks
+	// DMG_CRITICAL - a single-hit packet type - while div_ is still 4. The client
+	// cannot render that combination and draws no damage and no animation at all.
+	// Same fix, and same cause, as KN_PIERCE (see skills/swordman/pierce.cpp).
+	if (dmg.div_ > 1)
+		dmg.type = DMG_MULTI_HIT;
+}
+
 void SkillFocusedArrowStrike::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	if (src->type == BL_MOB) { // TODO: Did these formulas change in the renewal balancing?
 		skillratio += 100 + 50 * skill_lv;

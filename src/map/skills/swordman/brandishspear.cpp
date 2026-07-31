@@ -5,8 +5,10 @@
 
 #include <config/core.hpp>
 
+#include "map/clif.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
+#include "map/unit.hpp"
 
 SkillBrandishSpear::SkillBrandishSpear() : SkillImpl(KN_BRANDISHSPEAR) {
 }
@@ -18,28 +20,18 @@ void SkillBrandishSpear::castendNoDamageId(block_list* src, block_list* target, 
 		src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | 0,
 		skill_castend_damage_id);
 #else
-	map_session_data* sd = BL_CAST(BL_PC, src);
-
+	// Payon Stories rebalance: Brandish Spear redesigned into the Knight's
+	// signature spear follow-up/mob-control tool. The old per-level staggered
+	// directional falloff is gone; every level now does the same thing - a
+	// flat circular splash centered on the clicked target (skill_area_temp[4]/
+	// [5] stash the epicenter so applyAdditionalEffects can pull every hit
+	// target back to the same spot after damage lands).
 	skill_area_temp[1] = target->id;
+	skill_area_temp[4] = target->x;
+	skill_area_temp[5] = target->y;
 
-	if(skill_lv >= 10)
-		map_foreachindir(skill_area_sub, src->m, src->x, src->y, target->x, target->y,
-			skill_get_splash(getSkillId(), skill_lv), 1, skill_get_maxcount(getSkillId(), skill_lv)-1, splash_target(src),
-			src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | (sd?3:0),
-			skill_castend_damage_id);
-	if(skill_lv >= 7)
-		map_foreachindir(skill_area_sub, src->m, src->x, src->y, target->x, target->y,
-			skill_get_splash(getSkillId(), skill_lv), 1, skill_get_maxcount(getSkillId(), skill_lv)-2, splash_target(src),
-			src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | (sd?2:0),
-			skill_castend_damage_id);
-	if(skill_lv >= 4)
-		map_foreachindir(skill_area_sub, src->m, src->x, src->y, target->x, target->y,
-			skill_get_splash(getSkillId(), skill_lv), 1, skill_get_maxcount(getSkillId(), skill_lv)-3, splash_target(src),
-			src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | (sd?1:0),
-			skill_castend_damage_id);
-	map_foreachindir(skill_area_sub, src->m, src->x, src->y, target->x, target->y,
-		skill_get_splash(getSkillId(), skill_lv), skill_get_maxcount(getSkillId(), skill_lv)-3, 0, splash_target(src),
-		src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | 0,
+	map_foreachinrange(skill_area_sub, target, skill_get_splash(getSkillId(), skill_lv), splash_target(src),
+		src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1,
 		skill_castend_damage_id);
 #endif
 }
@@ -62,20 +54,24 @@ void SkillBrandishSpear::calculateSkillRatio(const Damage* wd, const block_list*
 
 	base_skillratio += -100 + 400 + 100 * skill_lv + sstatus->str * 3;
 #else
-	int32 ratio = 100 + 20 * skill_lv;
+	// Payon Stories rebalance: 250% weapon ATK at Lv 1, +50% per level, capping
+	// at 700% at Lv 10. base_skillratio starts at 100, so the addition below
+	// yields a displayed (200 + 50 * skill_lv)% at every level.
+	base_skillratio += 100 + 50 * skill_lv;
+#endif
+}
 
-	base_skillratio += -100 + ratio;
-	if (skill_lv > 3 && wd->miscflag == 0)
-		base_skillratio += ratio / 2;
-	if (skill_lv > 6 && wd->miscflag == 0)
-		base_skillratio += ratio / 4;
-	if (skill_lv > 9 && wd->miscflag == 0)
-		base_skillratio += ratio / 8;
-	if (skill_lv > 6 && wd->miscflag == 1)
-		base_skillratio += ratio / 2;
-	if (skill_lv > 9 && wd->miscflag == 1)
-		base_skillratio += ratio / 4;
-	if (skill_lv > 9 && wd->miscflag == 2)
-		base_skillratio += ratio / 2;
+void SkillBrandishSpear::applyAdditionalEffects(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
+#ifndef RENEWAL
+	int16 x = skill_area_temp[4], y = skill_area_temp[5];
+
+	sc_start(src, target, SC_BLIND, 100, skill_lv, 5000);
+
+	// Pull every target caught in the splash back to the impact point,
+	// gathering the group for a follow-up AoE.
+	if ((target->x != x || target->y != y) && !unit_blown_immune(target, 0x1)) {
+		unit_movepos(target, x, y, 0, 0);
+		clif_fixpos(*target);
+	}
 #endif
 }
