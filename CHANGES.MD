@@ -1385,6 +1385,23 @@ primarily AGI's job again and giving damage rolls their randomness back.
   other mastery reworks, this exists to make the skill points feel earned.
   (Verified — already in line with this rebalance on the live tree.)*
 
+- **Divine Protection and Demon Bane:** Both skills are removed from the
+  Crusader skill tree entirely (Acolyte, Priest, Monk and their descendants are
+  untouched and keep both). *Developer Comments: Twenty skill points of
+  situational Demon/Undead defense and ATK were the toll every Crusader paid
+  just to reach the Acolyte branch, and almost nobody wanted them for their own
+  sake. Deleting the toll booth hands those points back to Faith, Devotion and
+  the shield line, where Crusader identity actually lives.*
+
+- **Heal:** For Crusaders, Heal now requires only `Cure Rank 1` — the old
+  `Faith 10` and `Demon Bane 5` gates are gone. Faith is still in the chain
+  because Cure itself requires `Faith 5`. *Developer Comments: With Demon Bane
+  removed the old gate no longer existed, and rehanging Heal off Cure keeps the
+  Acolyte branch a short, deliberate three-skill detour instead of a
+  twenty-point tax. Providence and Guardian Gospel had their Divine Protection
+  and Demon Bane prerequisites erased at the same time so neither becomes
+  unreachable.*
+
 ### Archer Skill Changes
 
 - **Owl's Eye:** In addition to its usual `+1 DEX per skill level` (+10 DEX at level 10), the skill now also grants `+3 ATK per skill level` (+30 ATK at level 10) as a passive. *Developer Comments: With arrows no longer required to fire a bow, Archers lost the flat ATK that their ammunition used to contribute; folding a small ATK bonus into Owl's Eye — a skill every Archer already maxes for the DEX — restores that lost damage without adding another button to press.*
@@ -2240,6 +2257,94 @@ primarily AGI's job again and giving damage rolls their randomness back.
   passively losing their copied skill mid-fight. Granting it early avoids
   the awful loop of having to ask another player to recast something
   every time you change maps.*
+
+---
+
+## Item Changes
+
+### Class Souls
+
+A long-horizon prestige item for transcendent 2nd classes. The server caps at
+base 99 with no 3rd or 4th jobs, so once a character finishes their gear there
+is nothing left to chase. Class Souls add a visible, purely cosmetic goal earned
+by playing, with no power creep whatsoever — no stat bonuses exist anywhere in
+the system.
+
+- **Thirteen Class Souls, one per transcendent 2nd class.** Each is named for its
+  4th-class counterpart (a Paladin carries the *Imperial Guard's Soul*, a Lord
+  Knight the *Dragon Knight's Soul*) and reuses that class's renewal `*_Soul_*`
+  artwork. The soul is worn in the **ammo slot**, is account-bound in every
+  direction, and cannot be refined at any refiner. While it is equipped, mob
+  kills have a `3%` chance to drop a **Soul Fragment**, which is likewise bound.
+  Fragments upgrade the soul from `+1` to `+10` at a cost of `50` fragments for
+  `+1` and `+25` more per tier after that — `1,625` fragments in total. Each tier
+  unlocks another appearance from the wearer's own class lineage (Novice, 1st
+  class, non-transcendent 2nd class, 3rd class, its alternate and mounted forms,
+  plus four festival costumes), ending at `+10` with the **4th-class sprite**.
+  Every unlock is a toggle at the Soul Warden in Prontera, so nothing is ever
+  superseded. *Developer Comments: The upgrade level is stored as the item's
+  refine, which is why the souls are `Type: Armor` rather than `Type: Etc` —
+  non-stackable items are the only ones the client sends through
+  `clif_item_equip`, and therefore the only ones that render a "+N" prefix.
+  Fragments stop dropping at `+10`, and never drop from monsters more than 20
+  levels beneath the player, so the intended path is fighting things worth
+  fighting rather than farming the fastest-respawning trash on the server.*
+  - `db/import/item_db.yml` — Soul Fragment (`60000`) and the thirteen souls
+    (`60001`-`60013`). Class locking is `Jobs:` plus `Classes: { Upper: true }`;
+    Clown and Gypsy share the `BardDancer` job key and are separated by
+    `Gender:`.
+  - `npc/custom/class_souls.txt` — new. Fragment drops (`OnNPCKillEvent`),
+    appearance restore on relog (`OnPCLoginEvent`), the lineage table, and the
+    Soul Warden upgrade/wardrobe NPC. All tunables are in `OnInit`.
+  - `npc/scripts_custom.conf` — registered the script.
+  - `SystemEN/itemInfo_C.lua` (client) — names, artwork and descriptions.
+
+- **The ammo slot now tolerates a non-ammo item.** A `Type: Armor` item whose
+  `Locations:` is `Ammo` can be equipped by any class and is treated as an empty
+  ammo slot by the combat code, rather than as mismatched ammo. *Developer
+  Comments: This is what makes the ammo slot usable as a "soul slot" at all. The
+  existing `arrow_require` change only covered an* empty *slot — with something
+  actually sitting in it, `battle_weapon_attack` fell through to the
+  mismatched-ammo check and returned `ATK_NONE`, which would have blocked every
+  normal attack for Sniper, Clown and Gypsy. Three of the thirteen eligible
+  classes use bows, so this was not optional. Real arrows are unaffected: the
+  mismatched-ammo checks still run for anything that is genuinely `IT_AMMO`.*
+  - `src/map/battle.cpp` — the normal-attack ammo branch now routes a non-`IT_AMMO`
+    occupant into the existing `arrow_require` path instead of the subtype check.
+    `battle_consume_ammo` additionally refuses to delete a non-`IT_AMMO` item, so
+    re-enabling `arrow_decrement` can never destroy a soul.
+  - `src/map/pc.cpp` — `ammo_unequip` on both the equip and unequip paths is now
+    gated on the ammo-slot item being `IT_AMMO`, so putting away a bow or gun no
+    longer strips the soul. Real ammo still auto-unequips as before.
+
+### Cosmetic Shadow Gear
+
+- **Imperial Guard's Regalia (`60100`).** A shadow accessory worn in the **left
+  Shadow Accessory slot** that changes the wearer's sprite to the **Imperial
+  Guard** and does nothing else. No stats, no refine, account-bound in every
+  direction, available to every class. *Developer Comments: This is the same
+  wardrobe idea as the Class Souls, unbundled from the grind — the souls gate the
+  4th-class look behind 1,625 fragments and a class requirement, and this is the
+  slot to hand the look out directly when we want to (events, rewards, the cash
+  shop) without touching the soul progression. It lives in a shadow slot rather
+  than a costume slot because shadow gear is otherwise entirely unused on a
+  pre-renewal server, so nothing real is being displaced. The look is applied
+  with `changebase` from the `EquipScript`, which the engine re-runs on login for
+  gear that is already equipped, so the disguise survives a relog without any
+  supporting NPC or `OnPCLoginEvent` handler; the `UnEquipScript` restores the
+  character's real sprite. As with the souls, `@changedress` will reset the
+  appearance until the item is re-equipped.*
+  - `db/import/item_db.yml` — the item, in a new "Cosmetic Shadow Gear" block
+    after the Class Souls.
+  - `SystemEN/itemInfo_C.lua` (client) — name and description. The inventory
+    icon is `identifiedResourceName = "IG_Soul_RS"`, copied directly from
+    `Soul_Imperial_Guard` (item `60002`) since that resource is already
+    deployed and confirmed to render on this client; two earlier placeholder
+    guesses (`Apple`, then `Bakonawa_Tattoo`) both failed to load from this
+    client's `data.grf`. Accessories have no visible body sprite, so this
+    field only affects the icon shown in the inventory/storage grid, not the
+    `changebase` disguise itself.
+  - No source changes.
 
 ---
 

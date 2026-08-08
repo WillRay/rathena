@@ -2703,8 +2703,12 @@ void battle_consume_ammo(map_session_data*sd, int32 skill, int32 lv)
 		}
 	}
 
-	if (sd->equip_index[EQI_AMMO] >= 0) //Qty check should have been done in skill_check_condition
-		pc_delitem(sd,sd->equip_index[EQI_AMMO],qty,0,1,LOG_TYPE_CONSUME);
+	int16 ammo_idx = sd->equip_index[EQI_AMMO];
+
+	//Qty check should have been done in skill_check_condition.
+	//Never consume a non-ammo item occupying the ammo slot (e.g. Class Souls).
+	if (ammo_idx >= 0 && sd->inventory_data[ammo_idx] != nullptr && sd->inventory_data[ammo_idx]->type == IT_AMMO)
+		pc_delitem(sd,ammo_idx,qty,0,1,LOG_TYPE_CONSUME);
 
 	sd->state.arrow_atk = 0;
 }
@@ -7324,7 +7328,9 @@ enum damage_lv battle_weapon_attack(block_list* src, block_list* target, t_tick 
 		if (sd->state.arrow_atk)
 		{
 			int16 index = sd->equip_index[EQI_AMMO];
-			if (index < 0) {
+			// A non-ammo item occupying the ammo slot (e.g. Class Souls) is treated as
+			// an empty slot rather than as mismatched ammo, so it never blocks attacks.
+			if (index < 0 || sd->inventory_data[index] == nullptr || sd->inventory_data[index]->type != IT_AMMO) {
 				if (battle_config.arrow_require) {
 					if (sd->weapontype1 > W_KATAR && sd->weapontype1 < W_HUUMA)
 						clif_skill_fail( *sd, 0, USESKILL_FAIL_NEED_MORE_BULLET );
@@ -7335,7 +7341,7 @@ enum damage_lv battle_weapon_attack(block_list* src, block_list* target, t_tick 
 				// arrow_require off: fire without ammo equipped (no arrow bonus/consumption)
 			}
 			//Ammo check by Ishizu-chan
-			else if (sd->inventory_data[index]) {
+			else {
 				switch (sd->status.weapon) {
 					case W_BOW:
 						if (sd->inventory_data[index]->subtype != AMMO_ARROW) {

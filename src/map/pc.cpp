@@ -3052,6 +3052,26 @@ void pc_updateweightstatus(map_session_data& sd)
 	sd.regen.state.overweight = new_overweight != 0;
 }
 
+/**
+ * Applies the view data of a disguise class to a player.
+ * Sprite IDs that exist in the client but have no entry in any server side db have no view
+ * data, and status_set_viewdata() would leave sd->vd untouched. A bare view data is built for
+ * those instead, so any raw client sprite ID can be used as a disguise.
+ * @param sd: Player to apply the view data to
+ * @param class_: Class id of the disguise
+ */
+void pc_set_disguise_viewdata(map_session_data *sd, int32 class_)
+{
+	nullpo_retv(sd);
+
+	if (!pcdb_checkid(class_) && status_get_viewdata_by_class(class_) == nullptr) {
+		memset(&sd->vd, 0, sizeof(sd->vd));
+		sd->vd.look[LOOK_BASE] = class_;
+		sd->vd.sex = sd->status.sex;
+	} else
+		status_set_viewdata(sd, class_);
+}
+
 int32 pc_disguise(map_session_data *sd, int32 class_)
 {
 	if (!class_ && !sd->disguise)
@@ -3076,7 +3096,10 @@ int32 pc_disguise(map_session_data *sd, int32 class_)
 	} else
 		sd->disguise=class_;
 
-	status_set_viewdata(sd, class_);
+	if (sd->disguise)
+		pc_set_disguise_viewdata(sd, class_);
+	else
+		status_set_viewdata(sd, class_);
 	clif_changeoption(sd);
 
 	if (sd->prev != nullptr) {
@@ -12212,7 +12235,9 @@ bool pc_equipitem(map_session_data *sd,int16 n,int32 req_pos,bool equipswitch)
 	if (battle_config.ammo_unequip && (pos&EQP_ARMS) && id->type == IT_WEAPON) {
 		int16 idx = sd->equip_index[EQI_AMMO];
 
-		if (idx >= 0) {
+		// Only real ammo is auto-unequipped on a weapon change; custom items occupying
+		// the ammo slot (e.g. Class Souls) must stay equipped.
+		if (idx >= 0 && sd->inventory_data[idx] != nullptr && sd->inventory_data[idx]->type == IT_AMMO) {
 			switch (sd->inventory_data[idx]->subtype) {
 				case AMMO_ARROW:
 					if (id->subtype != W_BOW && id->subtype != W_MUSICAL && id->subtype != W_WHIP)
@@ -12481,7 +12506,9 @@ bool pc_unequipitem(map_session_data *sd, int32 n, int32 flag) {
 				case W_GRENADE: {
 					int16 idx = sd->equip_index[EQI_AMMO];
 
-					if (idx >= 0) {
+					// Only real ammo is auto-unequipped on a weapon change; custom items
+					// occupying the ammo slot (e.g. Class Souls) must stay equipped.
+					if (idx >= 0 && sd->inventory_data[idx] != nullptr && sd->inventory_data[idx]->type == IT_AMMO) {
 						sd->equip_index[EQI_AMMO] = -1;
 						clif_unequipitemack(*sd, idx, sd->inventory.u.items_inventory[idx].equip, true);
 						pc_unequipitem_sub(sd, idx, 0);

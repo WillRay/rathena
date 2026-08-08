@@ -1706,6 +1706,7 @@ void pc_inventory_rental_clear(map_session_data *sd);
 void pc_inventory_rental_add(map_session_data *sd, uint32 seconds);
 
 int32 pc_read_motd(void); // [Valaris]
+void pc_set_disguise_viewdata(map_session_data *sd, int32 class_);
 int32 pc_disguise(map_session_data *sd, int32 class_);
 bool pc_isautolooting(map_session_data *sd, t_itemid nameid);
 

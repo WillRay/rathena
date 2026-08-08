@@ -336,3 +336,45 @@ Body:
         Requires:
           - Name: SM_RECOVERY
             Level: 5
+  # Crusader Acolyte-branch trim: Divine Protection (AL_DP) and Demon Bane
+  # (AL_DEMONBANE) are removed from the Crusader tree entirely (MaxLevel: 0 is
+  # erased on loadingFinished, after inheritance, so this also clears them from
+  # Crusader2, Paladin, Paladin2, Baby_Crusader and Baby_Crusader2). The
+  # Acolyte-lineage classes keep both skills - only the Crusader branch loses
+  # them. Heal now hangs directly off Cure Rank 1, and the two skills that were
+  # gated behind the removed pair have those gates erased (Level: 0) so they
+  # don't become permanently unreachable: Providence loses its AL_DP 5 gate
+  # here, and Guardian Gospel loses its AL_DP 3 / AL_DEMONBANE 5 gate in the
+  # Paladin block below.
+  - Job: Crusader
+    Tree:
+      - Name: AL_DP
+        MaxLevel: 0
+      - Name: AL_DEMONBANE
+        MaxLevel: 0
+      # Heal's base gates were Demon Bane 5 and Faith (CR_TRUST) 10; both are
+      # erased and replaced by Cure Rank 1. Faith is still gated in the chain
+      # because Cure itself requires Faith 5.
+      - Name: AL_HEAL
+        MaxLevel: 10
+        Requires:
+          - Name: AL_DEMONBANE
+            Level: 0
+          - Name: CR_TRUST
+            Level: 0
+          - Name: AL_CURE
+            Level: 1
+      - Name: CR_PROVIDENCE
+        MaxLevel: 5
+        Requires:
+          - Name: AL_DP
+            Level: 0
+  - Job: Paladin
+    Tree:
+      - Name: PA_GOSPEL
+        MaxLevel: 10
+        Requires:
+          - Name: AL_DP
+            Level: 0
+          - Name: AL_DEMONBANE
+            Level: 0

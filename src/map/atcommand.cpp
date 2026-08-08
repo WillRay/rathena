@@ -1146,7 +1146,7 @@ ACMD_FUNC(hide)
 	if (pc_isinvisible(sd)) {
 		sd->sc.option &= ~OPTION_INVISIBLE;
 		if (sd->disguise)
-			status_set_viewdata(sd, sd->disguise);
+			pc_set_disguise_viewdata(sd, sd->disguise);
 		else
 			status_set_viewdata(sd, sd->status.class_);
 		clif_displaymessage(fd, msg_txt(sd,10)); // Invisible: Off
@@ -5748,8 +5748,10 @@ ACMD_FUNC(disguise)
 
 	if ((id = atoi(message)) > 0)
 	{	//Acquired an ID
-		if (!mobdb_checkid(id) && !npcdb_checkid(id))
-			id = 0; //Invalid id for either mobs or npcs.
+		// Any ID that fits the sprite field of the unit packets is accepted, not just the ones
+		// known to the mob/npc dbs, so client side sprites without a db entry can be used too.
+		if (id > INT16_MAX)
+			id = 0; //Cannot be sent to the client.
 	}	else	{ //Acquired a Name
 		if ((id = mobdb_searchname(message)) == 0)
 		{

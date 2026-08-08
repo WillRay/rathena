@@ -42,7 +42,7 @@ Header:
   Version: 2
 
 Body:
-  - Id: 1
+  - Id: 80
     Name: Invaded Prontera
     TimeLimit: 14400
     Enter:
