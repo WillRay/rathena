@@ -3680,6 +3680,7 @@ int32 status_get_emblem_id(const block_list* bl);
 std::vector<e_race2> status_get_race2(const block_list* bl);
 
 struct view_data *status_get_viewdata(block_list *bl);
+struct view_data *status_get_viewdata_by_class(int32 class_);
 const struct view_data *status_get_viewdata(const block_list* bl);
 void status_set_viewdata(block_list *bl, int32 class_);
 status_change* status_get_sc(block_list* bl);

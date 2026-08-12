@@ -9450,28 +9450,39 @@ const struct view_data* status_get_viewdata(const block_list* bl){
 }
 
 /**
+ * Get the view data that belongs to a class id
+ * Looks the class id up in every server side db that provides view data.
+ * @param class_: class of the object [MOB|NPC|HOM|MER|ELEM]
+ * @return view data of the class, or nullptr if no db knows this class
+ */
+struct view_data* status_get_viewdata_by_class(int32 class_)
+{
+	if (mobdb_checkid(class_) || mob_is_clone(class_))
+		return mob_get_viewdata(class_);
+	else if (npcdb_checkid(class_))
+		return npc_get_viewdata(class_);
+	else if (homdb_checkid(class_))
+		return hom_get_viewdata(class_);
+	else if (mercenary_db.exists(class_))
+		return mercenary_get_viewdata(class_);
+	else if (elemental_db.exists(class_))
+		return elemental_get_viewdata(class_);
+
+	return nullptr;
+}
+
+/**
  * Set view data of an object
  * This function deals with class, mount, and item views
- * SC views are set in clif_getareachar_unit() 
+ * SC views are set in clif_getareachar_unit()
  * @param bl: Object whose view data to set [PC|MOB|PET|HOM|MER|ELEM|NPC]
  * @param class_: class of the object
  */
 void status_set_viewdata(block_list *bl, int32 class_)
 {
-	struct view_data* vd;
 	nullpo_retv(bl);
-	if (mobdb_checkid(class_) || mob_is_clone(class_))
-		vd = mob_get_viewdata(class_);
-	else if (npcdb_checkid(class_))
-		vd = npc_get_viewdata(class_);
-	else if (homdb_checkid(class_))
-		vd = hom_get_viewdata(class_);
-	else if (mercenary_db.exists(class_))
-		vd = mercenary_get_viewdata(class_);
-	else if (elemental_db.exists(class_))
-		vd = elemental_get_viewdata(class_);
-	else
-		vd = nullptr;
+
+	struct view_data* vd = status_get_viewdata_by_class(class_);
 
 	switch (bl->type) {
 	case BL_PC:
