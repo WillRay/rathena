@@ -1,0 +1,22 @@
+//===== rAthena Script =======================================
+//= mag_dun03 - Nogg Road 3F monster spawns
+//===== Description: =========================================
+//= Back-ported from npc/re/mobs/dungeons/mag_dun.txt:36-44.
+//=
+//= Mob definitions live in db/import/mob_db.yml and their
+//= skills in db/import/mob_skill_db.txt. Both were rebalanced
+//= for pre-renewal; only the spawn counts are untouched.
+//=
+//= 167 normals is dense, and deliberately so - packs are part
+//= of the intended difficulty. Rigid Muspellskoll is the MVP
+//= on the official 1h respawn / 10m variance.
+//============================================================
+
+mag_dun03	monster	Rigid Lava Golem	20378,9
+mag_dun03	monster	Rigid Kaho	20377,10
+mag_dun03	monster	Rigid Explosion	20376,10
+mag_dun03	monster	Rigid Sky Deleter	20374,16
+mag_dun03	monster	Rigid Earth Deleter	20375,16
+mag_dun03	monster	Rigid Nightmare Terror	20373,14
+mag_dun03	monster	Rigid Blazer	20372,9
+mag_dun03	boss_monster	Rigid Muspellskoll	20419,1,3600000,600000,1

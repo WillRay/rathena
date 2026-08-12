@@ -2866,3 +2866,80 @@ Body:
       DropEffect: RED_PILLAR
     Script: |
       bonus bMatk,100;
+# mag_dun03 (Nogg Road 3F) - see db/import/mob_db.yml
+#
+# Five of the eight Rigid mobs had no shadow card in this catalog.
+# These carry the effects of their renewal Firm_* cards verbatim
+# (db/re/item_db_etc.yml:41805-41911); the renewal Left_Hand and
+# Right_Hand slots map to Shadow_Shield and Shadow_Weapon.
+#
+# The Firm_* items (27346-27353) are deliberately NOT created -
+# these replace them, matching how db/pre-re/mob_db.yml already
+# substitutes shadow cards for the classic 4xxx card on 256 mobs.
+#
+# The other three mobs drop cards that already exist above:
+#   20373 Rigid Nightmare Terror -> 30166 S_Card_4166
+#   20374 Rigid Sky Deleter      -> 30158 S_Card_4158
+#   20375 Rigid Earth Deleter    -> 30279 S_Card_4279
+#
+# 20376 Rigid Explosion was originally mapped to 30267 S_Card_4267
+# (Shadow Explosion Card), which is the *classic* Explosion mob's
+# card and carries an entirely different effect - a -20% Dragon
+# resist penalty traded for Dragon exp. It gets its own card below
+# instead, carrying Firm_Explosion_Card's real effect.
+  - Id: 30452
+    AegisName: S_Card_Firm_Blazzer
+    Name: Shadow Rigid Blazer Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Demon,15;
+      bonus2 bSubEle,Ele_Neutral,15;
+  - Id: 30453
+    AegisName: S_Card_Firm_Kaho
+    Name: Shadow Rigid Kaho Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bMagicAddEle,Ele_Earth,10;
+  - Id: 30454
+    AegisName: S_Card_Firm_Lava_G
+    Name: Shadow Rigid Lava Golem Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bMagicAddEle,Ele_Neutral,3+((.@r>=7)*5)+((.@r>=9)*7);
+  - Id: 30455
+    AegisName: S_Card_Firm_Muspell
+    Name: Shadow Rigid Muspellskoll Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Dragon,30;
+      bonus2 bSubRace,RC_Demon,30;
+      bonus2 bSubRace,RC_Brute,30;
+      bonus2 bSubRace,RC_Player_Doram,30;
+  - Id: 30456
+    AegisName: S_Card_Firm_Explosion
+    Name: Shadow Rigid Explosion Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus2 bSubRace,RC_Dragon,15;
+      bonus2 bSubEle,Ele_Fire,15;

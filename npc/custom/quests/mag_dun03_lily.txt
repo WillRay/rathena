@@ -1,0 +1,345 @@
+//===== rAthena Script =======================================
+//= mag_dun03 - Lily Blanc, daily research quests
+//===== Description: =========================================
+//= Ported from the mag_dun03 block of
+//= npc/re/quests/quests_exp_175.txt:299-604. The Nillem and
+//= Sally NPCs in that file belong to other dungeons and are
+//= deliberately left behind.
+//=
+//= Quest entries are in db/import/quest_db.yml (8550-8561).
+//=
+//= Four changes from the renewal original:
+//=
+//=  1. Moved from yuno_fild03 38,146 to inside the dungeon.
+//=     The map is already transcendent-gated at the door
+//=     (npc/custom/warps/mag_dun03.txt), so standing here is
+//=     itself the qualification.
+//=
+//=  2. Level gate 175 -> 90.
+//=
+//=  3. Exp rewards retuned. The renewal values run through
+//=     quest_exp_rate: 500 (conf/import/battle_conf.txt:14),
+//=     which made a 30-kill request worth 24.2M effective -
+//=     most of a level. Each turn-in is now 1.5x the raw kill
+//=     exp of the mobs it asks for. All four in a day comes to
+//=     ~34.8M effective base on top of ~23.2M from the kills
+//=     themselves. Generous, but each chain is hard-gated to
+//=     one run per 4h so it cannot be farmed.
+//=
+//=  4. Fixed an upstream bug in the OnInit questinfo block:
+//=     two of the "not started" conditions tested the wrong
+//=     quest id (8553 and 8555 where 8554 and 8557 were meant),
+//=     so the marker over her head was wrong for two of the
+//=     four chains. See the note at the bottom.
+//=
+//= Her dialogue is also rewritten where it claimed she cannot
+//= enter the 3rd floor, which is no longer true.
+//============================================================
+
+mag_dun03,124,124,5	script	Lily Blanc	-1,{
+	if (BaseLevel < 90) {
+		mes "[Lily]";
+		mes "...oh! Oh, you startled me.";
+		mes "I'm sorry, I - how did you get down here?";
+		next;
+		mes "[Lily]";
+		mes "It isn't that I don't want the help. It's that I'd rather not write your name in a casualty report.";
+		mes "Come back at level 90 and I'll have work for you.";
+		close;
+	}
+	mes "[Lily]";
+	mes "Friendly adventurer, would you mind helping us with the research for our conference report?";
+	mes "Only an adventurer's eye is the only way for us to live.";
+	next;
+	switch( select( "Listen to the request", "Why are you down here?", "Reject" ) ) {
+	case 1:
+		mes "[Lily]";
+		mes "Generous adventurer! Thank you.";
+		mes "I can take notes from where I'm standing, but I can't get close enough to any of them to matter...";
+		next;
+		setarray .@quest_list[1], 8550, 8553, 8556, 8559;
+		.@s = select( "Dealer that caused abnormal evolution", "Eradicate the nightmare that became a reality", "Check density", "Small things crumbling", "Next time" );
+
+		if (.@s < 5) {
+			.@quest_first = .@quest_list[.@s];
+			.@quest_delay = .@quest_first + 1;
+			.@quest_daily = .@quest_first + 2;
+
+			callsub( S_CheckDelay, .@quest_delay );
+
+			if (isbegin_quest(.@quest_first) < 2)
+				.@quest_ongoing = .@quest_first;
+			else
+				.@quest_ongoing = .@quest_daily;
+		}
+
+		switch( .@s ) {
+		case 1:
+			switch( checkquest(.@quest_ongoing,HUNTING) ) {
+			case -1:
+				if (.@quest_ongoing == .@quest_first) {
+					mes "[Lily]";
+					mes "Our doctor said that monsters change their characteristics and appearance when they live in different places...";
+					mes "Dr. and me too... Because combat isn't my major.";
+					next;
+					mes "[Lily]";
+					mes "So here... Let's see.";
+					mes "^0000FFThere is a report that the " + getmonsterinfo("DELETER2_H", MOB_NAME) + " and " + getmonsterinfo("DELETER1_H", MOB_NAME) + "^000000 caused abnormal evolution.";
+					mes "But I can't even approach them because of their ferocious personality...";
+					next;
+				}
+				mes "[Lily]";
+				mes "Here on the 3rd floor of Nogg Road,";
+				mes "^0000FFKill 15 " + getmonsterinfo("DELETER1_H", MOB_NAME) + "^000000";
+				mes "and 15 ^0000FF" + getmonsterinfo("DELETER2_H", MOB_NAME) + "^000000 and tell me how hard they were.";
+				callsub( S_Give, .@quest_ongoing );
+			case 0:
+			case 1:
+				mes "[Lily]";
+				mes "Here on the 3rd floor of Nogg Road,";
+				mes "^0000FFKill 15 " + getmonsterinfo("DELETER1_H", MOB_NAME) + "^000000";
+				mes "and 15 ^0000FF" + getmonsterinfo("DELETER2_H", MOB_NAME) + "^000000 and tell me how hard they were.";
+				close;
+			case 2:
+				mes "[Lily]";
+				mes "How was it?";
+				mes "How was it different from just an air or ground Deleter?";
+				next;
+				mes "[Lily]";
+				mes "Hmm... are you okay?";
+				mes "Hmmmm. Okay";
+				callsub( S_SetDelay, .@quest_ongoing, .@quest_first, .@quest_delay, 2790000,2925000 );
+			}
+			end;
+		case 2:
+			switch( checkquest(.@quest_ongoing,HUNTING) ) {
+			case -1:
+				if (.@quest_ongoing == .@quest_first) {
+					mes "[Lily]";
+					mes "" + getmonsterinfo("NIGHTMARE_TERROR_H", MOB_NAME) + " is a hardened nightmare terror...";
+					mes "I've only seen Nightmare terror. Just looking at it made me stiff and unable to move. Although the professor dragged me out...";
+					next;
+					mes "[Lily]";
+					mes "So here... Let's see.";
+				}
+				else {
+					mes "[Lily]";
+				}
+				mes "Here on the 3rd floor of Nogg Road,";
+				mes "^0000FFDefeat 10 " + getmonsterinfo("NIGHTMARE_TERROR_H", MOB_NAME) + "^000000 and tell me how hard it is.";
+				callsub( S_Give, .@quest_ongoing );
+			case 0:
+			case 1:
+				mes "[Lily]";
+				mes "Here on the 3rd floor of Nogg Road,";
+				mes "^0000FF Defeat 10 " + getmonsterinfo("NIGHTMARE_TERROR_H", MOB_NAME) + "^000000 and tell me how hard it is.";
+				close;
+			case 2:
+				mes "[Lily]";
+				mes "How was it?";
+				mes "How was it different from just a Nightmare Terror?";
+				next;
+				mes "[Lily]";
+				mes "Huh... Really?";
+				mes "What should I do... my God. Is it real?";
+				mes "Hmmmm. Okay";
+				callsub( S_SetDelay, .@quest_ongoing, .@quest_first, .@quest_delay, 1050000,1095000 );
+			}
+			end;
+		case 3:
+			switch( checkquest(.@quest_ongoing,HUNTING) ) {
+			case -1:
+				if (.@quest_ongoing == .@quest_first) {
+					mes "[Lily]";
+					mes "I've heard that there is a huge difference in density between a Lava Golem and a " + getmonsterinfo("LAVA_GOLEM_H", MOB_NAME) + ".";
+				}
+				else {
+					mes "[Lily]";
+				}
+				mes "Here on the 3rd floor of Nogg Road,";
+				mes "^0000FFDefeat 10 " + getmonsterinfo("LAVA_GOLEM_H", MOB_NAME) + "^000000 and tell me the density difference.";
+				callsub( S_Give, .@quest_ongoing );
+			case 0:
+			case 1:
+				mes "[Lily]";
+				mes "Here on the 3rd floor of Nogg Road,";
+				mes "^0000FFDefeat 10 " + getmonsterinfo("LAVA_GOLEM_H", MOB_NAME) + "^000000 and tell me the density difference.";
+				close;
+			case 2:
+				mes "[Lily]";
+				mes "How was it?";
+				mes "How was it different from just a Lava Golem?";
+				next;
+				mes "[Lily]";
+				mes "Um... that's right. The shell...";
+				mes "Yes? The soles of the feet? Indeed...";
+				mes "Hmmmm. Okay";
+				callsub( S_SetDelay, .@quest_ongoing, .@quest_first, .@quest_delay, 1230000,1290000 );
+			}
+			end;
+		case 4:
+			switch( checkquest(.@quest_ongoing,HUNTING) ) {
+			case -1:
+				if (.@quest_ongoing == .@quest_first) {
+					mes "[Lily]";
+					mes "" + getmonsterinfo("EXPLOSION_H", MOB_NAME) + " and " + getmonsterinfo("BLAZZER_H", MOB_NAME) + " are said to crumble much better than normal Explosion and Blazers.";
+					mes "...our professor.";
+					next;
+					mes "[Lily]";
+					mes "Here on the 3rd floor of Nogg Road,";
+					mes "^0000FFKill 10 " + getmonsterinfo("EXPLOSION_H", MOB_NAME) + "^000000";
+					mes "^0000FFand 10 " + getmonsterinfo("BLAZZER_H", MOB_NAME) + "^000000 and tell them how they feel.";
+					mes "You don't have to touch it. You can tell just by looking at it...";
+				}
+				else {
+					mes "[Lily]";
+					mes "Here on the 3rd floor of Nogg Road,";
+					mes "^0000FFKill 10 " + getmonsterinfo("EXPLOSION_H", MOB_NAME) + "^000000";
+					mes "^0000FFand 10 " + getmonsterinfo("BLAZZER_H", MOB_NAME) + "^000000 and tell them how they feel.";
+				}
+				callsub( S_Give, .@quest_ongoing );
+			case 0:
+			case 1:
+				mes "[Lily]";
+				mes "Here on the 3rd floor of Nogg Road,";
+				mes "^0000FFKill 10 " + getmonsterinfo("EXPLOSION_H", MOB_NAME) + "^000000";
+				mes "^0000FFand 10 " + getmonsterinfo("BLAZZER_H", MOB_NAME) + "^000000 and tell them how they feel.";
+				close;
+			case 2:
+				mes "[Lily]";
+				mes "How was it?";
+				mes "How is it different from just Explosion or Blazer?";
+				next;
+				mes "[Lily]";
+				mes "Um... that's right. Pass...";
+				mes "It's much more crumbly...";
+				mes "Aha, that's a lot more dust.";
+				mes "Hmmmm. Okay";
+				callsub( S_SetDelay, .@quest_ongoing, .@quest_first, .@quest_delay, 1890000,1980000 );
+			}
+			end;
+		case 5:
+			mes "[Lily]";
+			mes "Ah...";
+			mes "When will I ever be able to escape from the professor's magic...";
+			close;
+		}
+		end;
+	case 2:
+		mes "[Lily]";
+		mes "As you can see, I'm just an incompetent sage.";
+		mes "The professor I'm serving is a bit stubborn... I mean, someone has to investigate.";
+		next;
+		mes "[Lily]";
+		mes "The guards at the entrance told me I'd never be let in. Then the professor told me the report was due.";
+		mes "So I waited until the shift changed and I walked past them.";
+		next;
+		mes "[Lily]";
+		mes "...I have not moved from this spot since. Please don't tell anyone.";
+		mes "I can see quite a lot from here! It's just that everything worth seeing is on the other side of something that would like to eat me.";
+		next;
+		mes "[Lily]";
+		mes "Don't worry. I'll use the adventurer's name when I report it to the professor...";
+		mes "Yes...  " + strcharinfo(0) + ".";
+		mes "All right.";
+		next;
+		mes "[Lily]";
+		mes "There is a list of monsters that will be research materials, so please check the quests if you are interested.";
+		close;
+	case 3:
+		mes "[Lily]";
+		mes "Ah, no...!";
+		mes "Generous adventurer, please free me from the professor's magic...!";
+		close;
+	}
+	end;
+
+S_CheckDelay:
+	switch( checkquest(getarg(0),PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Lily]";
+		mes "You have already completed today's report.";
+		mes "Will you help me with tomorrow's report...?";
+		close;
+	case 2:
+		erasequest getarg(0);
+		break;
+	}
+	return;
+
+S_Give:
+	next;
+	if (select( "I accept.", "I'm busy." ) == 2) {
+		mes "[Lily]";
+		mes "Originally, research is about persistence.";
+		mes "Help me when you're not busy.";
+		close;
+	}
+	mes "[Lily]";
+	mes "Thank you!";
+	mes "I'll be waiting here.";
+	setquest getarg(0);
+	close;
+
+S_SetDelay:
+	.@quest_ongoing = getarg(0);
+	.@quest_first = getarg(1);
+	.@quest_delay = getarg(2);
+	next;
+	mes "[Lily]";
+	mes "Thank you for your kind explanation.";
+	mes "But I don't think you can understand the whole story by just that. Although this is the beauty of requesting an investigation...";
+	mes "I'll ask you again tomorrow.";
+	if (.@quest_ongoing == .@quest_first)
+		completequest .@quest_ongoing;
+	else
+		erasequest .@quest_ongoing;
+	setquest .@quest_delay;
+	getexp getarg(3), getarg(4);
+	close;
+
+OnInit:
+	setunitdata getnpcid(0), UNPC_CLASS, JOB_SAGE;
+	setunitdata getnpcid(0), UNPC_SEX, SEX_FEMALE;
+	setunitdata getnpcid(0), UNPC_HAIRCOLOR, 6;
+	setunitdata getnpcid(0), UNPC_HAIRSTYLE, 22;
+	setunitdata getnpcid(0), UNPC_HEADTOP, 316;
+
+	// completed first quest
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8550,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8553,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8556,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8559,HUNTING) == 2" );
+
+	// completed daily
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8552,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8555,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8558,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8561,HUNTING) == 2" );
+
+	// timeout
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8551,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8554,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8557,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8560,PLAYTIME) == 2" );
+
+	// not started first quest
+	// Upstream (npc/re/quests/quests_exp_175.txt:593-596) tested the
+	// standby quest as 8551 / 8553 / 8555 / 8557. Only the first is
+	// right: the standby for a chain is always first+1, so the set is
+	// 8551 / 8554 / 8557 / 8560. Corrected here.
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8550) == 0 && checkquest(8551,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8553) == 0 && checkquest(8554,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8556) == 0 && checkquest(8557,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8559) == 0 && checkquest(8560,PLAYTIME) == -1" );
+
+	// not started daily
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8550) == 2 && isbegin_quest(8552) == 0 && checkquest(8551,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8553) == 2 && isbegin_quest(8555) == 0 && checkquest(8554,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8556) == 2 && isbegin_quest(8558) == 0 && checkquest(8557,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8559) == 2 && isbegin_quest(8561) == 0 && checkquest(8560,PLAYTIME) == -1" );
+	end;
+}

@@ -138,3 +138,104 @@
 //3014,Halloween Whisper@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,,
 
 // Here you can place your custom mob skills
+
+//=============================================================
+// mag_dun03 - Nogg Road 3F ("Rigid" family)
+// Ported from db/re/mob_skill_db.txt:13514-13577. Mobs are in
+// db/import/mob_db.yml, spawns in npc/custom/mobs/mag_dun03.txt.
+//
+// Three changes from the renewal source:
+//
+// 1. Four skill IDs do not exist in db/pre-re/skill_db.yml and
+//    would silently fail to load:
+//      NPC_HELLJUDGEMENT2 (768) -> NPC_HELLJUDGEMENT (663)
+//      NPC_WIDECURSE2     (761) -> NPC_WIDECURSE     (665)
+//      NPC_WIDESILENCE2   (757) -> NPC_WIDESILENCE   (662)
+//      NPC_MOVE_COORDINATE(755) -> row removed, no pre-re analog
+//    WZ_METEOR was also cast at level 11 by Muspellskoll; the
+//    pre-re MaxLevel is 10 (db/pre-re/skill_db.yml:3033-3036).
+//
+// 2. DAMAGING skill levels are HALVED (floor 1). The official
+//    rows are tuned for level-175 renewal targets; unchanged,
+//    a Meteor Storm or Pulse Strike deletes a level-99 trans
+//    character outright. Status and utility rows keep their
+//    official level - NPC_CRITICALWOUND, NPC_WIDESILENCE,
+//    NPC_WIDECURSE, NPC_MENTALBREAKER, NPC_STUNATTACK,
+//    NPC_AGIUP, NPC_CHEAL, NPC_GUIDEDATTACK, MG_SIGHT,
+//    NPC_CALLSLAVE, NPC_SUMMONSLAVE, AL_TELEPORT - because
+//    their level controls duration and chance, not damage.
+//
+// 3. Cast rates are raised and delays cut so the mobs cast far
+//    more often. Net effect is roughly 2-3x the casts for well
+//    under half the damage per cast, which is the intended
+//    difficulty profile for this dungeon.
+//
+// Muspellskoll's NPC_SUMMONSLAVE calls 1834/1835 - verified
+// present in db/pre-re/mob_db.yml as G_SALAMANDER and G_KASA.
+//=============================================================
+20372,BLAZZER_H@NPC_EMOTION,chase,197,1,1000,0,30000,yes,self,always,0,19,0x81,,,,,
+20372,BLAZZER_H@NPC_EMOTION,idle,197,1,8000,0,30000,yes,self,always,0,44,0x3885,,,,,
+20372,BLAZZER_H@NPC_CRITICALWOUND,attack,673,2,2500,0,45000,yes,target,always,0,,,,,,,
+20372,BLAZZER_H@NPC_PIERCINGATT,attack,158,3,3000,500,20000,no,target,always,0,,,,,,,
+20372,BLAZZER_H@MG_FIREBALL,chase,17,3,7000,500,5000,yes,target,always,0,,,,,,3,
+20372,BLAZZER_H@NPC_MAGICALATTACK,chase,192,1,8000,500,20000,no,target,skillused,89,,,,,,,
+20372,BLAZZER_H@SM_MAGNUM,attack,7,3,3000,0,20000,yes,self,always,0,,,,,,,
+20372,BLAZZER_H@WZ_SIGHTRASHER,attack,81,1,3000,500,20000,yes,self,always,0,,,,,,,
+20373,NIGHTMARE_TERROR_H@NPC_EMOTION,chase,197,1,1000,0,30000,yes,self,always,0,19,0x81,,,,,
+20373,NIGHTMARE_TERROR_H@NPC_EMOTION,idle,197,1,8000,0,30000,yes,self,always,0,44,0x3885,,,,,
+20373,NIGHTMARE_TERROR_H@NPC_HELLJUDGEMENT,attack,663,1,3000,500,45000,yes,target,always,0,,,,,,6,
+20373,NIGHTMARE_TERROR_H@NPC_DARKCROSS,attack,338,2,3000,500,12000,yes,target,always,0,,,,,,,
+20373,NIGHTMARE_TERROR_H@NPC_DARKSTRIKE,chase,340,2,3000,500,20000,yes,target,always,0,,,,,,,
+20373,NIGHTMARE_TERROR_H@NPC_MENTALBREAKER,chase,159,3,2500,0,20000,yes,target,always,0,,,,,,,
+20373,NIGHTMARE_TERROR_H@NPC_WIDECURSE,chase,665,3,2500,500,90000,yes,target,always,0,,,,,,,
+20374,DELETER1_H@NPC_EMOTION,chase,197,1,500,0,30000,yes,self,always,0,19,0x81,,,,,
+20374,DELETER1_H@NPC_EMOTION,idle,197,1,8000,0,30000,yes,self,always,0,44,0x3885,,,,,
+20374,DELETER1_H@NPC_PIERCINGATT,chase,158,3,3000,500,20000,no,target,always,0,,,,,,,
+20374,DELETER1_H@NPC_GUIDEDATTACK,chase,172,5,3000,0,45000,yes,target,always,0,,,,,,,
+20374,DELETER1_H@WZ_FIREPILLAR,idle,80,3,3000,0,60000,yes,target,always,0,,,,,,,
+20374,DELETER1_H@SM_MAGNUM,attack,7,3,3000,0,20000,yes,self,always,0,,,,,,,
+20374,DELETER1_H@MG_FIREWALL,chase,18,4,5000,300,40000,no,target,always,0,,,,,,,
+20374,DELETER1_H@NPC_MAGICALATTACK,chase,192,1,6000,500,20000,no,target,always,0,,,,,,,
+20375,DELETER2_H@NPC_EMOTION,chase,197,1,500,0,30000,yes,self,always,0,19,0x81,,,,,
+20375,DELETER2_H@NPC_EMOTION,idle,197,1,8000,0,30000,yes,self,always,0,44,0x3885,,,,,
+20375,DELETER2_H@NPC_PIERCINGATT,attack,158,3,3000,500,20000,no,target,always,0,,,,,,,
+20375,DELETER2_H@WZ_FIREPILLAR,idle,80,2,2500,500,60000,no,target,always,0,,,,,,,
+20375,DELETER2_H@NPC_AGIUP,attack,350,3,3000,0,180000,yes,self,always,0,,,,,,,
+20375,DELETER2_H@SM_MAGNUM,attack,7,3,3000,0,20000,yes,self,always,0,,,,,,,
+20375,DELETER2_H@NPC_MAGICALATTACK,chase,192,1,8000,500,20000,no,target,always,0,,,,,,,
+20375,DELETER2_H@NPC_CHEAL,idle,729,3,5000,500,30000,no,self,always,0,,,,,,,
+20376,EXPLOSION_H@NPC_EMOTION,chase,197,1,500,0,30000,yes,self,always,0,19,0x81,,,,,
+20376,EXPLOSION_H@NPC_EMOTION,idle,197,1,8000,0,30000,yes,self,always,0,44,0x3885,,,,,
+20376,EXPLOSION_H@MG_SIGHT,idle,10,1,5000,0,15000,yes,self,always,0,,,,,,,
+20376,EXPLOSION_H@MG_FIREBALL,chase,17,3,4000,500,5000,yes,target,always,0,,,,,,,
+20376,EXPLOSION_H@WZ_SIGHTRASHER,attack,81,1,3000,500,20000,yes,self,always,0,,,,,,,
+20376,EXPLOSION_H@SM_MAGNUM,attack,7,3,3000,0,20000,yes,self,always,0,,,,,,,
+20376,EXPLOSION_H@NPC_MAGICALATTACK,chase,192,1,8000,500,20000,no,target,always,0,,,,,,,
+20377,KAHO_H@NPC_EMOTION,chase,197,1,500,0,30000,yes,self,always,0,19,0x81,,,,,
+20377,KAHO_H@NPC_EMOTION,idle,197,1,8000,0,30000,yes,self,always,0,44,0x3885,,,,,
+20377,KAHO_H@MG_FIREBALL,chase,17,3,4000,500,5000,yes,target,always,0,,,,,,,
+// Replaces the removed NPC_MOVE_COORDINATE row. Kaho is meant to
+// be a caster and was left with only four live rows once the
+// repositioning skill was dropped.
+20377,KAHO_H@MG_FIREBOLT,chase,19,3,4000,500,10000,no,target,always,0,,,,,,,
+20377,KAHO_H@NPC_FIREATTACK,attack,186,2,5000,0,12000,yes,target,always,0,,,,,,,
+20377,KAHO_H@NPC_PIERCINGATT,attack,158,3,3000,500,20000,no,target,always,0,,,,,,,
+20378,LAVA_GOLEM_H@NPC_EMOTION,chase,197,1,500,0,30000,yes,self,always,0,19,0x81,,,,,
+20378,LAVA_GOLEM_H@NPC_EMOTION,idle,197,1,8000,0,30000,yes,self,always,0,44,0x3885,,,,,
+20378,LAVA_GOLEM_H@NPC_PIERCINGATT,attack,158,3,3000,500,20000,no,target,always,0,,,,,,,
+20378,LAVA_GOLEM_H@NPC_STUNATTACK,chase,179,4,5000,500,15000,no,target,always,0,,,,,,,
+20378,LAVA_GOLEM_H@WZ_METEOR,chase,83,2,3000,500,40000,no,target,always,0,,,,,,,
+20378,LAVA_GOLEM_H@NPC_PULSESTRIKE,attack,661,1,2000,3000,120000,no,self,always,0,,,,,,,
+20419,MUSPELLSKOLL_H@NPC_FIREATTACK,chase,186,5,3000,500,5000,no,target,always,0,,,,,,,
+20419,MUSPELLSKOLL_H@MG_FIREBOLT,chase,19,5,3000,500,10000,no,target,always,0,,,,,,,
+20419,MUSPELLSKOLL_H@NPC_FIREBREATH,chase,654,2,3000,3000,20000,no,target,always,0,,,,,,,
+20419,MUSPELLSKOLL_H@NPC_WIDESILENCE,chase,662,5,5000,1000,30000,no,target,always,0,,,,,,,
+20419,MUSPELLSKOLL_H@SM_MAGNUM,attack,7,3,3000,0,5000,yes,self,always,0,,,,,,,
+20419,MUSPELLSKOLL_H@MG_FIREWALL,attack,18,4,5000,300,40000,no,target,always,0,,,,,,,
+20419,MUSPELLSKOLL_H@WZ_METEOR,attack,83,5,3000,500,20000,no,target,always,0,,,,,,,
+20419,MUSPELLSKOLL_H@NPC_WIDESILENCE,attack,662,5,5000,1000,30000,no,target,always,0,,,,,,,
+20419,MUSPELLSKOLL_H@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,self,always,0,,,,,,,
+20419,MUSPELLSKOLL_H@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,,
+20419,MUSPELLSKOLL_H@NPC_SUMMONSLAVE,attack,196,1,10000,700,10000,no,self,slavele,2,1834,1835,,,,,
+20419,MUSPELLSKOLL_H@NPC_SUMMONSLAVE,idle,196,1,10000,700,10000,no,self,slavele,2,1834,1835,,,,,
+20419,MUSPELLSKOLL_H@AL_TELEPORT,walk,26,1,10000,0,0,yes,self,rudeattacked,0,,,,,,,

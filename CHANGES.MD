@@ -131,19 +131,22 @@ This pass keeps DEX's identity as the accuracy-and-precision stat — it still
 raises maximum damage exactly as much as it used to — while making attack speed
 primarily AGI's job again and giving damage rolls their randomness back.
 
-- **DEX contributes half as much attack speed.** Attack delay is now reduced by
-  `(4×AGI + DEX×50%) / 1000` instead of `(4×AGI + DEX) / 1000`. AGI is
+- **DEX contributes a quarter less attack speed.** Attack delay is now reduced
+  by `(4×AGI + DEX×75%) / 1000` instead of `(4×AGI + DEX) / 1000`. AGI is
   completely unaffected. *Developer Comments: On a 600-base weapon every point
   of DEX was worth 0.06 ASPD, so a DEX 200 hunter was carrying 12 ASPD they
   never had to spend a stat point on — DEX was already the stat they wanted for
   damage and accuracy. Because ASPD is far easier to acquire here than on
   official servers (it appears as a flat random option on equipment), that
   free contribution was pushing ranged builds into the 190 cap almost by
-  accident. Halving it costs a DEX 200 build 6 ASPD and a DEX 150 build 4.5,
-  while a melee build carrying 50 incidental DEX for accuracy loses only 1.5 —
-  the nerf scales with how hard you were leaning on the stat.*
+  accident. Trimming it by a quarter costs a DEX 200 build 3 ASPD and a DEX 150
+  build 2.25, while a melee build carrying 50 incidental DEX for accuracy loses
+  only 0.75 — the nerf scales with how hard you were leaning on the stat. This
+  is deliberately the gentler of the two halves of this pass: the damage
+  variance change below is doing most of the work, and attack speed only needed
+  a nudge rather than a correction.*
   - `src/map/status.cpp` — `status_base_amotion_pc()`.
-  - Tunable: `aspd_dex_weight` in `conf/battle/status.conf` (default `50`;
+  - Tunable: `aspd_dex_weight` in `conf/battle/status.conf` (default `75`;
     `100` restores official behavior, `0` removes DEX's ASPD role entirely).
   - Note: the reduction is proportional to the weapon's base ASPD value, so it
     is slightly larger on slow weapons (0.08 ASPD per DEX on a two-handed axe)

@@ -20,7 +20,7 @@
 { "vit_flat_hp_cap",                    &battle_config.vit_flat_hp_cap,                 1000,   0,      1000000,        },
 
 // DEX redesign
-{ "aspd_dex_weight",                    &battle_config.aspd_dex_weight,                 50,     0,      100,            },
+{ "aspd_dex_weight",                    &battle_config.aspd_dex_weight,                 75,     0,      100,            },
 { "dex_variance_max",                   &battle_config.dex_variance_max,                100,    0,      100,            },
 { "dex_variance_min",                   &battle_config.dex_variance_min,                15,     0,      100,            },
 { "dex_variance_halfpoint",             &battle_config.dex_variance_halfpoint,          20,     0,      1000,           },

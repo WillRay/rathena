@@ -314,6 +314,475 @@ Body:
       KnockbackImmune: true
       StatusImmune: true
       SkillImmune: true
+
+#=============================================================
+# mag_dun03 - Nogg Road 3F ("Rigid" family), back-ported from
+# renewal (db/re/mob_db.yml:102662-103010, 103269-103329) and
+# rebalanced for pre-renewal, transcendent level 90-99.
+#
+# Spawns:  npc/custom/mobs/mag_dun03.txt
+# Skills:  db/import/mob_skill_db.txt
+# Entry:   npc/custom/warps/mag_dun03.txt (mag_dun02 246,70)
+#
+# What changed from the renewal source, and why:
+#
+#  * Attack/Attack2 are MIN/MAX here, not base/matk. The renewal
+#    values are meaningless under pre-re semantics (Blazer would
+#    read as min 2158 / max 1555) so every pair is re-authored.
+#
+#  * Defense is a straight % damage reduction pre-renewal, so a
+#    mob at DEF 100 is literally immune. The renewal values
+#    (194-791) are replaced with 26-68. Lava Golem's 68 is just
+#    under Ice Titan's 71, the pre-re high-water mark for a
+#    farmable mob.
+#
+#  * MagicDefense is capped at 45 for the same reason - wizards
+#    are the primary pre-re leveling class. Lava Golem inverts
+#    the pattern (DEF 68 / MDEF 20) so magic is the answer to it
+#    while Kaho and Nightmare Terror punish casters instead.
+#
+#  * Agi and Vit are pulled down from renewal inflation. Mob flee
+#    is level+agi and mob soft DEF scales off Vit as a FLAT
+#    subtraction on top of the % from Defense, so renewal's
+#    Agi 149 / Vit 179 would stack into something unhittable.
+#
+#  * Exp is tuned so the map is the primary 90->99 path. The
+#    spawn-weighted average is ~65.8k BaseExp; against the trans
+#    curve (1,002,274,900 base for 90->99) and this server's 5x
+#    base_exp_rate that is ~3,050 kills. JobExp runs ~1.05x so
+#    job 50->70 finishes at roughly the same kill count.
+#
+#  * Drops: Shadowdecon(_Ore) -> Bradium, Zelunium(_Ore) ->
+#    Carnium. Magma_Essence is dropped entirely (its script is
+#    laphine_upgrade(), and there is no pre-re laphine system).
+#    RandomOptionGroup: MAGMA3 is dropped - renewal's own groups
+#    were never back-ported. The Armor/Garment/Shoes groups used
+#    below are this server's own, in
+#    db/import/item_randomopt_group.yml.
+#    Lava Leather rates went 50 -> 20 because item_rate_equip is
+#    1000 (10x) in conf/import/battle_conf.txt, then 20 -> 40
+#    (2% effective per field mob) once the set was given random
+#    options: a piece is only worth farming if you can re-roll it,
+#    so the drop has to land often enough to be re-rolled. The MVP's
+#    three armors went 100 -> 200 on the same reasoning, and boss
+#    drops use item_rate_equip_boss, which is also 1000 - so those
+#    are 20% each, not 2%.
+#
+#  * Cards: the Firm_* (27346-27353) cards are not created at
+#    all. Each mob drops a shadow card instead, matching the
+#    convention already used by 256 monsters in pre-re/mob_db.yml.
+#    Four already existed; 30452-30455 are new.
+#
+# Mob IDs are deliberately unchanged - a mob's view id is its mob
+# id, and the client already maps 20372-20419 to the *_mj sprites
+# in npcidentity.lub / jobname.lub, so no mob_avail alias needed.
+#=============================================================
+  - Id: 20372
+    AegisName: BLAZZER_H
+    Name: Rigid Blazer
+    Level: 96
+    Hp: 105000
+    BaseExp: 68000
+    JobExp: 71000
+    Attack: 1500
+    Attack2: 2400
+    Defense: 40
+    MagicDefense: 35
+    Str: 97
+    Agi: 60
+    Vit: 73
+    Int: 131
+    Dex: 110
+    Luk: 67
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 180
+    AttackDelay: 1732
+    AttackMotion: 1332
+    ClientAttackMotion: 468
+    DamageMotion: 540
+    Ai: 21
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Burning_Heart
+        Rate: 2000
+      - Item: Live_Coal
+        Rate: 1200
+      - Item: White_Herb
+        Rate: 700
+      - Item: Bradium
+        Rate: 80
+      - Item: Lava_Leather_Suits
+        Rate: 40
+        RandomOptionGroup: Armor
+      - Item: Lava_Leather_Shoes
+        Rate: 40
+        RandomOptionGroup: Shoes
+      - Item: S_Card_Firm_Blazzer
+        Rate: 1
+        StealProtected: true
+  - Id: 20373
+    AegisName: NIGHTMARE_TERROR_H
+    Name: Rigid Nightmare Terror
+    Level: 97
+    Hp: 110000
+    BaseExp: 70000
+    JobExp: 73000
+    Attack: 1400
+    Attack2: 2600
+    Defense: 28
+    MagicDefense: 38
+    Str: 81
+    Agi: 85
+    Vit: 21
+    Int: 186
+    Dex: 115
+    Luk: 61
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 165
+    AttackDelay: 1216
+    AttackMotion: 816
+    ClientAttackMotion: 720
+    DamageMotion: 432
+    Ai: 21
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Burning_Horse_Shoe
+        Rate: 2100
+      - Item: Blue_Potion
+        Rate: 15
+      - Item: Blue_Herb
+        Rate: 25
+      - Item: Bradium
+        Rate: 80
+      - Item: Lava_Leather_Manteau
+        Rate: 40
+        RandomOptionGroup: Garment
+      - Item: Carnium
+        Rate: 80
+      - Item: S_Card_4166
+        Rate: 1
+        StealProtected: true
+  - Id: 20374
+    AegisName: DELETER1_H
+    Name: Rigid Sky Deleter
+    Level: 93
+    Hp: 95000
+    BaseExp: 62000
+    JobExp: 65000
+    Attack: 1700
+    Attack2: 2500
+    Defense: 38
+    MagicDefense: 30
+    Str: 116
+    Agi: 65
+    Vit: 63
+    Int: 76
+    Dex: 105
+    Luk: 47
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Dragon
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 175
+    AttackDelay: 1020
+    AttackMotion: 720
+    ClientAttackMotion: 336
+    DamageMotion: 384
+    Ai: 21
+    Drops:
+      - Item: Dragon's_Skin
+        Rate: 1015
+      - Item: Dragon_Canine
+        Rate: 1334
+      - Item: Dragon_Train
+        Rate: 920
+      - Item: Bradium
+        Rate: 80
+      - Item: Lava_Leather_Robe
+        Rate: 40
+        RandomOptionGroup: Armor
+      - Item: Carnium
+        Rate: 80
+      # Renewal has this mob drop Firm_Deleter2_Card, whose display
+      # name is "Rigid Sky Deleter Card" - the AegisName numbering
+      # is offset but the name matches the mob. Mapped by name.
+      - Item: S_Card_4158
+        Rate: 1
+        StealProtected: true
+  - Id: 20375
+    AegisName: DELETER2_H
+    Name: Rigid Earth Deleter
+    Level: 93
+    Hp: 95000
+    BaseExp: 62000
+    JobExp: 65000
+    Attack: 1700
+    Attack2: 2500
+    Defense: 38
+    MagicDefense: 32
+    Str: 116
+    Agi: 80
+    Vit: 63
+    Int: 97
+    Dex: 110
+    Luk: 29
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Dragon
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 175
+    AttackDelay: 1024
+    AttackMotion: 624
+    ClientAttackMotion: 336
+    DamageMotion: 336
+    Ai: 21
+    Drops:
+      - Item: Dragon's_Skin
+        Rate: 1016
+      - Item: Dragon_Canine
+        Rate: 1334
+      - Item: Dragon_Train
+        Rate: 820
+      - Item: Bradium
+        Rate: 80
+      - Item: Lava_Leather_Armor
+        Rate: 40
+        RandomOptionGroup: Armor
+      - Item: Carnium
+        Rate: 80
+      - Item: S_Card_4279
+        Rate: 1
+        StealProtected: true
+  - Id: 20376
+    AegisName: EXPLOSION_H
+    Name: Rigid Explosion
+    Level: 92
+    Hp: 88000
+    BaseExp: 58000
+    JobExp: 61000
+    Attack: 1300
+    Attack2: 2100
+    Defense: 30
+    MagicDefense: 34
+    Str: 89
+    Agi: 70
+    Vit: 39
+    Int: 136
+    Dex: 95
+    Luk: 69
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 165
+    AttackDelay: 1260
+    AttackMotion: 960
+    ClientAttackMotion: 480
+    DamageMotion: 336
+    Ai: 21
+    Drops:
+      - Item: Wing_Of_Red_Bat
+        Rate: 1325
+      - Item: Burning_Heart
+        Rate: 550
+      - Item: Hot_Hair
+        Rate: 750
+      - Item: Bradium
+        Rate: 80
+      - Item: Lava_Leather_Sandle
+        Rate: 40
+        RandomOptionGroup: Shoes
+      - Item: Carnium
+        Rate: 80
+      - Item: S_Card_Firm_Explosion
+        Rate: 1
+        StealProtected: true
+  - Id: 20377
+    AegisName: KAHO_H
+    Name: Rigid Kaho
+    Level: 94
+    Hp: 98000
+    BaseExp: 64000
+    JobExp: 67000
+    Attack: 1500
+    Attack2: 2400
+    Defense: 26
+    MagicDefense: 40
+    Str: 96
+    Agi: 78
+    Vit: 29
+    Int: 149
+    Dex: 105
+    Luk: 51
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1700
+    AttackMotion: 1000
+    ClientAttackMotion: 432
+    DamageMotion: 500
+    Ai: 21
+    Drops:
+      - Item: Flame_Heart
+        Rate: 15
+      - Item: Coal
+        Rate: 75
+      - Item: Burning_Heart
+        Rate: 1500
+      - Item: Fire_Scroll_1_3
+        Rate: 50
+      - Item: Bradium
+        Rate: 80
+      - Item: Lava_Leather_Hode
+        Rate: 40
+        RandomOptionGroup: Garment
+      - Item: S_Card_Firm_Kaho
+        Rate: 1
+        StealProtected: true
+  - Id: 20378
+    AegisName: LAVA_GOLEM_H
+    Name: Rigid Lava Golem
+    Level: 98
+    Hp: 140000
+    BaseExp: 82000
+    JobExp: 86000
+    Attack: 1900
+    Attack2: 2700
+    Defense: 68
+    MagicDefense: 20
+    Str: 121
+    Agi: 40
+    Vit: 110
+    Int: 76
+    Dex: 95
+    Luk: 45
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 300
+    AttackDelay: 2190
+    AttackMotion: 2040
+    ClientAttackMotion: 720
+    DamageMotion: 336
+    Ai: 21
+    Drops:
+      - Item: Cold_Magma
+        Rate: 921
+      - Item: White_Herb
+        Rate: 625
+      - Item: Bradium
+        Rate: 80
+      - Item: Lava_Leather_Muffler
+        Rate: 40
+        RandomOptionGroup: Garment
+      - Item: Lava_Leather_Boots
+        Rate: 40
+        RandomOptionGroup: Shoes
+      - Item: Carnium
+        Rate: 80
+      - Item: S_Card_Firm_Lava_G
+        Rate: 1
+        StealProtected: true
+  - Id: 20419
+    AegisName: MUSPELLSKOLL_H
+    Name: Rigid Muspellskoll
+    Level: 99
+    # Renewal is 48,530,254 HP with DamageTaken: 10 - a 485M
+    # effective pool. DamageTaken is removed entirely and the HP
+    # set below Ktullanux (4,417,000), the pre-re MVP benchmark.
+    Hp: 2500000
+    BaseExp: 1200000
+    JobExp: 1200000
+    # mvp_exp_rate is NOT overridden in conf/import/battle_conf.txt,
+    # so this 500k is 1x while the BaseExp above is 5x.
+    MvpExp: 500000
+    Attack: 3000
+    Attack2: 4500
+    Defense: 60
+    MagicDefense: 45
+    Str: 150
+    Agi: 90
+    Vit: 130
+    Int: 188
+    Dex: 140
+    Luk: 66
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 200
+    # Renewal AttackDelay is 608. At 3000-4500 damage that is an
+    # unavoidable melee shred; slowed to 900 per the "difficulty
+    # from casts, not raw hits" brief.
+    AttackDelay: 900
+    AttackMotion: 408
+    ClientAttackMotion: 1056
+    DamageMotion: 336
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Old_Card_Album
+        Rate: 1000
+      - Item: Flame_Heart
+        Rate: 5000
+    Drops:
+      - Item: Bradium
+        Rate: 50
+      - Item: Old_Violet_Box
+        Rate: 3500
+      - Item: Yggdrasilberry
+        Rate: 3500
+      - Item: Carnium
+        Rate: 50
+      - Item: Lava_Leather_Suits
+        Rate: 200
+        RandomOptionGroup: Armor
+      - Item: Lava_Leather_Robe
+        Rate: 200
+        RandomOptionGroup: Armor
+      - Item: Lava_Leather_Armor
+        Rate: 200
+        RandomOptionGroup: Armor
+      - Item: S_Card_Firm_Muspell
+        Rate: 1
+        StealProtected: true
 #Body:
 # eAthena Dev Team
 #=============================================================
