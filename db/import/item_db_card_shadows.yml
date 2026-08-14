@@ -2870,12 +2870,18 @@ Body:
 #
 # Five of the eight Rigid mobs had no shadow card in this catalog.
 # These carry the effects of their renewal Firm_* cards verbatim
-# (db/re/item_db_etc.yml:41805-41911); the renewal Left_Hand and
-# Right_Hand slots map to Shadow_Shield and Shadow_Weapon.
+# (db/re/item_db_etc.yml:41805-41911); the renewal Left_Hand slot
+# maps to Shadow_Shield.
 #
 # The Firm_* items (27346-27353) are deliberately NOT created -
 # these replace them, matching how db/pre-re/mob_db.yml already
 # substitutes shadow cards for the classic 4xxx card on 256 mobs.
+#
+# Only three of the five survive. The two that were Shadow_Weapon
+# (30453 Firm_Kaho, 30454 Firm_Lava_G) were removed: weapon cards
+# on this server are regular cards, not shadow cards. Rigid Kaho
+# and Rigid Lava Golem drop Kaho_Card (4065) and Lava_Golem_Card
+# (4184) instead.
 #
 # The other three mobs drop cards that already exist above:
 #   20373 Rigid Nightmare Terror -> 30166 S_Card_4166
@@ -2898,27 +2904,12 @@ Body:
     Script: |
       bonus2 bSubRace,RC_Demon,15;
       bonus2 bSubEle,Ele_Neutral,15;
-  - Id: 30453
-    AegisName: S_Card_Firm_Kaho
-    Name: Shadow Rigid Kaho Card
-    Type: Shadowgear
-    Locations:
-      Shadow_Weapon: true
-    Flags:
-      DropEffect: RED_PILLAR
-    Script: |
-      bonus2 bMagicAddEle,Ele_Earth,10;
-  - Id: 30454
-    AegisName: S_Card_Firm_Lava_G
-    Name: Shadow Rigid Lava Golem Card
-    Type: Shadowgear
-    Locations:
-      Shadow_Weapon: true
-    Flags:
-      DropEffect: RED_PILLAR
-    Script: |
-      .@r = getequiprefinerycnt(EQI_HAND_R);
-      bonus2 bMagicAddEle,Ele_Neutral,3+((.@r>=7)*5)+((.@r>=9)*7);
+  # 30453 S_Card_Firm_Kaho and 30454 S_Card_Firm_Lava_G were here.
+  # Both were Shadow_Weapon, and weapon cards on this server are
+  # regular cards, not shadow cards. Rigid Kaho and Rigid Lava
+  # Golem now drop Kaho_Card (4065) and Lava_Golem_Card (4184)
+  # instead - see db/import/mob_db.yml. Nothing dropped these two,
+  # so they are removed rather than left orphaned.
   - Id: 30455
     AegisName: S_Card_Firm_Muspell
     Name: Shadow Rigid Muspellskoll Card
@@ -2943,3 +2934,75 @@ Body:
     Script: |
       bonus2 bSubRace,RC_Dragon,15;
       bonus2 bSubEle,Ele_Fire,15;
+# iz_dun05 (Undersea Tunnel F6) - see db/import/mob_db.yml
+#
+# None of the five iz_dun05 mobs had a shadow card in this
+# catalog, and none of their classic cards (4521-4525) exists in
+# pre-renewal either. These carry the effects of those cards
+# verbatim from db/re/item_db_etc.yml:10173-10245; the classic
+# items are deliberately NOT created, matching how
+# db/pre-re/mob_db.yml already substitutes shadow cards for the
+# 4xxx card on 256 mobs.
+#
+# Ids follow this file's canonical rule - shadow id = classic
+# card id + 26000 - which the mag_dun03 block above does not
+# (its S_Card_Firm_* at 30452/30455/30456 have no counterpart).
+# That rule is load-bearing: npc/custom/card_merchant.txt:54-55
+# computes .@base_id = nameid - 26000 for anything in
+# 30000-31000, so an off-convention id resolves to a nonexistent
+# base item there.
+#
+# Slot mapping from the renewal originals:
+#   4521 Right_Hand -> stays a regular card (weapon slot)
+#   4522 Right_Hand -> stays a regular card (weapon slot)
+#   4523 Armor      -> Shadow_Armor
+#   4524 Head_*     -> Shadow_Shield  (no shadow headgear position)
+#   4525 Garment    -> Shadow_Shoes   (no shadow garment position)
+  # Sedora and Sropho are weapon-slot cards, so they are NOT here -
+  # weapon cards on this server are regular cards. They live in
+  # db/import/item_db_cards.yml as 4521 Sedora_Card and 4522
+  # Sropho_Card. Only the three non-weapon slots are shadow cards.
+  - Id: 30523
+    AegisName: S_Card_4523
+    Name: Shadow Pot Dofle Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bDefEle,Ele_Water;
+      bonus2 bSubRace,RC_Fish,10;
+  - Id: 30524
+    AegisName: S_Card_4524
+    Name: Shadow King Dramoh Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    # The renewal original is a headgear card and reads the
+    # headgear's refine. On a shadow shield, getrefine() reads
+    # the shadow shield instead, which is the intended behaviour
+    # for this slot.
+    Script: |
+      bonus bStr,2;
+      if (BaseClass == Job_Swordman)
+         bonus bStr,getrefine()/3;
+  - Id: 30525
+    AegisName: S_Card_4525
+    Name: Shadow Kraken Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    # The renewal original also grants skill "TF_HIDING",1 and
+    # skill "RG_RAID",1 (with an UnEquipScript ending SC_HIDING).
+    # Handing every class Hiding from a shadow shoe is far too
+    # strong on a transcendent server, so the two skill grants
+    # and the UnEquipScript are dropped. The Raid autospell is
+    # kept - it still rewards a Rogue/Stalker who has the skill.
+    Script: |
+      bonus bFlee,10;
+      bonus5 bAutoSpellOnSkill,"RG_RAID","NPC_WIDEBLEEDING",1,250,1;

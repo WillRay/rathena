@@ -1,0 +1,326 @@
+//===== rAthena Script =======================================
+//= iz_dun05 - Nerin, daily survey requests
+//===== Description: =========================================
+//= Brand new custom quests, structurally modelled on
+//= npc/custom/quests/mag_dun03_lily.txt. Nothing here is ported
+//= from renewal - no official quest targets these mobs.
+//=
+//= Quest entries are in db/import/quest_db.yml (8562-8573).
+//=
+//= The mechanics are deliberately identical to Lily's, because
+//= they are the part worth copying:
+//=
+//=  1. NO account or char variables. All state lives in the
+//=     quest log - setquest / erasequest / completequest plus
+//=     checkquest(<standby>,PLAYTIME) against the TimeLimit: 4h
+//=     entry. Nothing to migrate, nothing to leak.
+//=
+//=  2. Each chain is three quests: N first-time, N+1 the 4h
+//=     standby, N+2 the repeatable daily. N+1 and N+2 are
+//=     derived arithmetically, so quest_db.yml ordering matters.
+//=
+//=  3. Level gate 90, matching mag_dun03. The map is already
+//=     transcendent-gated at the door
+//=     (npc/custom/warps/iz_dun05.txt), so standing here is
+//=     itself half the qualification.
+//=
+//= Exp rewards use Lily's calibration: 1.5x the raw kill exp of
+//= the mobs the chain asks for, against the BaseExp/JobExp in
+//= db/import/mob_db.yml. These then run through
+//= quest_exp_rate: 500 (conf/import/battle_conf.txt:14). All
+//= four chains sit on the formula with no exceptions.
+//=
+//= Chain D originally asked for 5 Kraken Tentacles alongside the
+//= King Dramoh. That was wrong: tentacles are summoned by the
+//= MVP and exist nowhere else, so the chain was uncompletable
+//= outside a 2h boss window - a daily that is not daily. It is
+//= 10 King Dramoh now. That is still the hardest chain on the
+//= map (boss-class, 130k HP, 15 spawns) and it is always
+//= available, which is the point of a daily.
+//============================================================
+
+iz_dun05,144,187,4	script	Nerin	-1,{
+	if (BaseLevel < 90) {
+		mes "[Nerin]";
+		mes "Stop. Don't come any further in.";
+		next;
+		mes "[Nerin]";
+		mes "I don't know how you got past the diver, and right now I don't care. What I care about is that the things in this water do not care how brave you are.";
+		mes "Come back at level 90. I'll have work for you then, and you'll survive collecting it.";
+		close;
+	}
+	mes "[Nerin]";
+	mes "Another one. Good - I was starting to think the surface had forgotten this floor existed.";
+	mes "I'm surveying what lives down here. I can't do it from behind a rock forever.";
+	next;
+	switch( select( "Listen to the request", "Why are you down here alone?", "Reject" ) ) {
+	case 1:
+		mes "[Nerin]";
+		mes "Thank you. Genuinely.";
+		mes "I can count them from here. I can't get close enough to any of them to learn anything worth writing down.";
+		next;
+		setarray .@quest_list[1], 8562, 8565, 8568, 8571;
+		.@s = select( "Counting the drift", "The charge in the water", "What the pots carry", "The shell that will not open", "Not today" );
+
+		if (.@s < 5) {
+			.@quest_first = .@quest_list[.@s];
+			.@quest_delay = .@quest_first + 1;
+			.@quest_daily = .@quest_first + 2;
+
+			callsub( S_CheckDelay, .@quest_delay );
+
+			if (isbegin_quest(.@quest_first) < 2)
+				.@quest_ongoing = .@quest_first;
+			else
+				.@quest_ongoing = .@quest_daily;
+		}
+
+		switch( .@s ) {
+		case 1:
+			switch( checkquest(.@quest_ongoing,HUNTING) ) {
+			case -1:
+				if (.@quest_ongoing == .@quest_first) {
+					mes "[Nerin]";
+					mes "The ^0000FF" + getmonsterinfo("SEDORA", MOB_NAME) + "^000000 shoals move together, and they move wrong. Not with the current - across it, all at once, like something told them to.";
+					mes "I want to know whether they're reacting to each other or to something else.";
+					next;
+				}
+				mes "[Nerin]";
+				mes "Here on the sixth floor of the tunnel,";
+				mes "^0000FFDefeat 15 " + getmonsterinfo("SEDORA", MOB_NAME) + "^000000 and tell me whether the rest of the shoal turned when the first one died.";
+				callsub( S_Give, .@quest_ongoing );
+			case 0:
+			case 1:
+				mes "[Nerin]";
+				mes "Here on the sixth floor of the tunnel,";
+				mes "^0000FFDefeat 15 " + getmonsterinfo("SEDORA", MOB_NAME) + "^000000 and tell me whether the rest of the shoal turned when the first one died.";
+				close;
+			case 2:
+				mes "[Nerin]";
+				mes "They turned. All of them, at once.";
+				next;
+				mes "[Nerin]";
+				mes "That's not a shoal reacting. That's a shoal being told.";
+				mes "I need to know what's doing the telling. Thank you - go rest, that's a lot of water to be in.";
+				callsub( S_SetDelay, .@quest_ongoing, .@quest_first, .@quest_delay, 1305000,1350000 );
+			}
+			end;
+		case 2:
+			switch( checkquest(.@quest_ongoing,HUNTING) ) {
+			case -1:
+				if (.@quest_ongoing == .@quest_first) {
+					mes "[Nerin]";
+					mes "" + getmonsterinfo("SROPHO", MOB_NAME) + " carries a charge. That much is obvious - you can taste it in the water from here.";
+					mes "What I don't understand is why the water around them goes hard instead of hot.";
+					next;
+					mes "[Nerin]";
+					mes "Heat I could explain. Ice I could explain. This is neither. It's more like the water forgets it's water.";
+					next;
+				}
+				mes "[Nerin]";
+				mes "Here on the sixth floor of the tunnel,";
+				mes "^0000FFDefeat 10 " + getmonsterinfo("SROPHO", MOB_NAME) + "^000000 and tell me what the water did when it discharged.";
+				callsub( S_Give, .@quest_ongoing );
+			case 0:
+			case 1:
+				mes "[Nerin]";
+				mes "Here on the sixth floor of the tunnel,";
+				mes "^0000FFDefeat 10 " + getmonsterinfo("SROPHO", MOB_NAME) + "^000000 and tell me what the water did when it discharged.";
+				close;
+			case 2:
+				mes "[Nerin]";
+				mes "It set. Around you. Like it was deciding to be a solid.";
+				next;
+				mes "[Nerin]";
+				mes "...you're sure you're alright? You'd tell me if you weren't?";
+				mes "Right. Write it down, Nerin, don't fuss at the person who just did the dangerous part.";
+				mes "Thank you.";
+				callsub( S_SetDelay, .@quest_ongoing, .@quest_first, .@quest_delay, 960000,990000 );
+			}
+			end;
+		case 3:
+			switch( checkquest(.@quest_ongoing,HUNTING) ) {
+			case -1:
+				if (.@quest_ongoing == .@quest_first) {
+					mes "[Nerin]";
+					mes "Every ^0000FF" + getmonsterinfo("POT_DOFLE", MOB_NAME) + "^000000 down here is carrying something, and it isn't food.";
+					mes "I've seen one drag a shell twice its size across the floor for an hour and then put it down and leave.";
+					next;
+				}
+				mes "[Nerin]";
+				mes "Here on the sixth floor of the tunnel,";
+				mes "^0000FFDefeat 10 " + getmonsterinfo("POT_DOFLE", MOB_NAME) + "^000000 and tell me what was inside them.";
+				callsub( S_Give, .@quest_ongoing );
+			case 0:
+			case 1:
+				mes "[Nerin]";
+				mes "Here on the sixth floor of the tunnel,";
+				mes "^0000FFDefeat 10 " + getmonsterinfo("POT_DOFLE", MOB_NAME) + "^000000 and tell me what was inside them.";
+				close;
+			case 2:
+				mes "[Nerin]";
+				mes "Ink. Grit. Coral broken small enough to swallow.";
+				next;
+				mes "[Nerin]";
+				mes "They're not carrying. They're gathering. Something down here asked for materials and they're bringing them.";
+				mes "I would very much like to be wrong about that. Thank you.";
+				callsub( S_SetDelay, .@quest_ongoing, .@quest_first, .@quest_delay, 1020000,1050000 );
+			}
+			end;
+		case 4:
+			switch( checkquest(.@quest_ongoing,HUNTING) ) {
+			case -1:
+				if (.@quest_ongoing == .@quest_first) {
+					mes "[Nerin]";
+					mes "This one I won't dress up. It's the dangerous one.";
+					mes "^0000FF" + getmonsterinfo("KING_DRAMOH", MOB_NAME) + "^000000. The big shelled ones that don't run when you come at them.";
+					next;
+					mes "[Nerin]";
+					mes "I've never got one open. Not once. Whatever's inside that shell, it stays inside, and I've started to wonder whether there's anything in there at all or whether the shell is the animal.";
+					next;
+				}
+				mes "[Nerin]";
+				mes "Here on the sixth floor of the tunnel,";
+				mes "^0000FFDefeat 10 " + getmonsterinfo("KING_DRAMOH", MOB_NAME) + "^000000 and tell me what was inside the shell.";
+				mes "Take your time with these. They don't tire and you do.";
+				callsub( S_Give, .@quest_ongoing );
+			case 0:
+			case 1:
+				mes "[Nerin]";
+				mes "Here on the sixth floor of the tunnel,";
+				mes "^0000FFDefeat 10 " + getmonsterinfo("KING_DRAMOH", MOB_NAME) + "^000000 and tell me what was inside the shell.";
+				close;
+			case 2:
+				mes "[Nerin]";
+				mes "Ten of them. And?";
+				next;
+				mes "[Nerin]";
+				mes "...nothing. Every one of them. You're certain.";
+				mes "No, I believe you. I'd hoped I was wrong, but I believe you.";
+				next;
+				mes "[Nerin]";
+				mes "Then the shell is the animal, and something down here is growing them.";
+				mes "Sit down before you fall down. You've more than earned it.";
+				callsub( S_SetDelay, .@quest_ongoing, .@quest_first, .@quest_delay, 1350000,1380000 );
+			}
+			end;
+		case 5:
+			mes "[Nerin]";
+			mes "Fair enough. The water isn't going anywhere.";
+			mes "Neither, apparently, am I.";
+			close;
+		}
+		end;
+	case 2:
+		mes "[Nerin]";
+		mes "Alone wasn't the plan.";
+		mes "There were four of us. We were meant to map the fifth floor and come back up. The floor kept going.";
+		next;
+		mes "[Nerin]";
+		mes "The other three went back for line and lamps. That was some time ago now.";
+		mes "I told myself I'd wait here. I've been telling myself that for a while.";
+		next;
+		mes "[Nerin]";
+		mes "Don't misread me - I'm not stranded. I can leave whenever I choose. I just haven't finished, and I'm not going up with half a survey.";
+		next;
+		mes "[Nerin]";
+		mes "I'll credit you properly in the report. By name.";
+		mes "Yes... " + strcharinfo(0) + ". That'll do nicely.";
+		next;
+		mes "[Nerin]";
+		mes "There's a list of what I still need. Check your quest log if any of it interests you.";
+		close;
+	case 3:
+		mes "[Nerin]";
+		mes "No, that's - that's a reasonable position, actually.";
+		mes "If you change your mind I'll be here. I'm always here.";
+		close;
+	}
+	end;
+
+S_CheckDelay:
+	switch( checkquest(getarg(0),PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Nerin]";
+		mes "You've already brought me that one today.";
+		mes "Give it a few hours - the water changes, and I'd rather have two readings than one taken twice.";
+		close;
+	case 2:
+		erasequest getarg(0);
+		break;
+	}
+	return;
+
+S_Give:
+	next;
+	if (select( "I'll do it.", "Not right now." ) == 2) {
+		mes "[Nerin]";
+		mes "Of course. Surveys keep.";
+		mes "Come find me when the water suits you.";
+		close;
+	}
+	mes "[Nerin]";
+	mes "Good. Thank you.";
+	mes "I'll be right here, behind this rock, being no help whatsoever.";
+	setquest getarg(0);
+	close;
+
+S_SetDelay:
+	.@quest_ongoing = getarg(0);
+	.@quest_first = getarg(1);
+	.@quest_delay = getarg(2);
+	next;
+	mes "[Nerin]";
+	mes "That's one reading. One reading is an anecdote.";
+	mes "Come back in a few hours and give me another, and then it's data.";
+	if (.@quest_ongoing == .@quest_first)
+		completequest .@quest_ongoing;
+	else
+		erasequest .@quest_ongoing;
+	setquest .@quest_delay;
+	getexp getarg(3), getarg(4);
+	close;
+
+OnInit:
+	setunitdata getnpcid(0), UNPC_CLASS, JOB_SAGE;
+	setunitdata getnpcid(0), UNPC_SEX, SEX_MALE;
+	setunitdata getnpcid(0), UNPC_HAIRCOLOR, 3;
+	setunitdata getnpcid(0), UNPC_HAIRSTYLE, 15;
+
+	// completed first quest
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8562,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8565,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8568,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8571,HUNTING) == 2" );
+
+	// completed daily
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8564,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8567,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8570,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8573,HUNTING) == 2" );
+
+	// timeout
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8563,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8566,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8569,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8572,PLAYTIME) == 2" );
+
+	// not started first quest
+	// The standby for a chain is always first+1 - see the note at
+	// the bottom of mag_dun03_lily.txt, where upstream had this
+	// wrong for two of four chains.
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8562) == 0 && checkquest(8563,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8565) == 0 && checkquest(8566,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8568) == 0 && checkquest(8569,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8571) == 0 && checkquest(8572,PLAYTIME) == -1" );
+
+	// not started daily
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8562) == 2 && isbegin_quest(8564) == 0 && checkquest(8563,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8565) == 2 && isbegin_quest(8567) == 0 && checkquest(8566,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8568) == 2 && isbegin_quest(8570) == 0 && checkquest(8569,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8571) == 2 && isbegin_quest(8573) == 0 && checkquest(8572,PLAYTIME) == -1" );
+	end;
+}

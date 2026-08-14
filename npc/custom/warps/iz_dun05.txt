@@ -1,0 +1,78 @@
+//===== rAthena Script =======================================
+//= iz_dun05 - Undersea Tunnel F6 entrance
+//===== Description: =========================================
+//= Adapted from npc/re/warps/dungeons/iz_dun.txt, which is a
+//= renewal-only file and is not loaded in this build.
+//=
+//= Three changes from the renewal original:
+//=
+//=  1. The entrance moves from iz_dun04 130,234 to iz_dun04
+//=     237,39. Nothing in the common warp file
+//=     npc/warps/dungeons/iz_dun.txt (lines 17-30) is anywhere
+//=     near there - its highest iz_dun04 object is the return
+//=     stair at 26,24.
+//=
+//=  2. The gate is TRANSCENDENT CLASS, not the renewal level
+//=     check. The eaclass()&EAJL_UPPER test covers High Novice
+//=     through the trans 2nd classes and excludes everyone
+//=     else. There is deliberately no level requirement on the
+//=     door itself - the monsters enforce that on their own.
+//=
+//=  3. The renewal Guard NPC on the far side is replaced with
+//=     a plain warp2. The class check only needs to happen on
+//=     the way in; anyone standing on iz_dun05 already passed
+//=     it, and a scripted exit would just be a click in the
+//=     way of leaving.
+//=
+//= Portal tiles and arrival tiles are offset from each other so
+//= entering and leaving cannot loop:
+//=   iz_dun04 237,39  ->  iz_dun05 141,187
+//=   iz_dun05 141,189 ->  iz_dun04 237,41
+//=
+//= NOTE: npc/custom/warper.txt lists this map too, but both of
+//= its entries are already renewal-gated - Restrict("RE",6) at
+//= line 360 blocks menu option 6 whenever checkre(0) is false,
+//= and the naviregisterwarp at line 1006 sits inside an
+//= if (checkre(0)). So the warper cannot be used to walk around
+//= this gate, and needs no change. If that restriction is ever
+//= lifted, the eaclass() check below has to be duplicated there.
+//============================================================
+
+iz_dun04,239,41,3	script	Tideworn Diver#izd05	4W_M_01,{
+	mes "[Tideworn Diver]";
+	mes "You feel that? The current's pulling down, not along. There's a hole under this shelf and it goes further than the maps say.";
+	next;
+	mes "[Tideworn Diver]";
+	if (eaclass()&EAJL_UPPER) {
+		mes "...ah. You've drowned once already, haven't you. I know the look.";
+		mes "Then it can't take anything from you it hasn't taken before. Go on down.";
+	} else {
+		mes "Don't. I've watched better swimmers than you go under that shelf, and I've watched the water go still afterward.";
+		mes "Come back when you've already died once. It seems to matter to whatever lives down there.";
+	}
+	close;
+}
+
+iz_dun04,237,39,0	script	izd04a_izd05a	WARPNPC,1,1,{
+	end;
+
+OnTouch:
+	if (!(eaclass()&EAJL_UPPER)) {
+		npctalk "Tideworn Diver: Not you. Not yet. Get back from the edge.", "Tideworn Diver#izd05", bc_self;
+		end;
+	}
+	warp "iz_dun05",141,187;
+	end;
+}
+
+iz_dun05,141,189,0	warp2	izd05a_izd04a	1,1,iz_dun04,237,41
+
+// Renewal sets nomemo and privateairship on this map
+// (npc/re/mapflag/nomemo.txt:65, privateairship.txt:155/506).
+// nomemo is ported and nowarpto added to match the mag_dun03
+// treatment; privateairship has no pre-re meaning.
+// iz_dun00-iz_dun04 already carry nomemo via the common file
+// npc/mapflag/nomemo.txt:313-317 - iz_dun05 is set here so the
+// whole floor stays self-contained in this file.
+iz_dun05	mapflag	nomemo
+iz_dun05	mapflag	nowarpto

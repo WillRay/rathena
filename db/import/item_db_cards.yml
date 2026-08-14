@@ -5332,6 +5332,54 @@ Body:
     DropEffect: RED_PILLAR
   Script: |
     bonus bBaseAtk,25;
+# iz_dun05 (Undersea Tunnel F6) - see db/import/mob_db.yml
+#
+# The two weapon-slot cards for this dungeon. Weapon cards on this
+# server are regular cards, not shadow cards - which is the rule
+# this whole file encodes: Right_Hand entries keep Type: Card,
+# everything else was retyped to Shadowgear with a Shadow_* slot.
+#
+# Unlike the other entries here these are not overrides - 4521 and
+# 4522 do not exist in db/pre-re/item_db_etc.yml at all, so Buy and
+# Weight are spelled out rather than inherited. Effects are ported
+# verbatim from db/re/item_db_etc.yml:10173 and :10186. Both ids
+# are already present in the client's official itemInfo table, so
+# no client-side work is needed for them.
+#
+# The other three iz_dun05 cards are non-weapon and stay shadow:
+#   Pot Dofle   -> 30523 S_Card_4523 (Shadow Armor)
+#   King Dramoh -> 30524 S_Card_4524 (Shadow Shield)
+#   Kraken      -> 30525 S_Card_4525 (Shadow Shoes)
+- Id: 4521
+  AegisName: Sedora_Card
+  Name: Sedora Card
+  Type: Card
+  Buy: 20
+  Weight: 10
+  Locations:
+    Right_Hand: true
+  Flags:
+    BuyingStore: true
+    DropEffect: RED_PILLAR
+  Script: |
+    bonus bCritAtkRate,15;
+# First pre-renewal item on the server to use Eff_Crystalize. The
+# constant is exported unconditionally (src/map/script_constants.hpp
+# :963) and SC_CRYSTALIZE has no RENEWAL gating anywhere in src/,
+# with - Status: Crystalize present in db/pre-re/status.yml.
+- Id: 4522
+  AegisName: Sropho_Card
+  Name: Sropho Card
+  Type: Card
+  Buy: 20
+  Weight: 10
+  Locations:
+    Right_Hand: true
+  Flags:
+    BuyingStore: true
+    DropEffect: RED_PILLAR
+  Script: |
+    bonus4 bAddEff,Eff_Crystalize,500,ATF_SHORT,3000;
 - Id: 4700
   AegisName: Strength1
   Name: STR+1

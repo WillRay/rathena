@@ -370,8 +370,14 @@ Body:
 #
 #  * Cards: the Firm_* (27346-27353) cards are not created at
 #    all. Each mob drops a shadow card instead, matching the
-#    convention already used by 256 monsters in pre-re/mob_db.yml.
-#    Four already existed; 30452-30455 are new.
+#    convention already used by 256 monsters in pre-re/mob_db.yml
+#    - EXCEPT for the two weapon-slot ones. Weapon cards on this
+#    server are regular cards, not shadow cards, so Rigid Kaho
+#    and Rigid Lava Golem drop the plain Kaho_Card (4065) and
+#    Lava_Golem_Card (4184), both of which already exist in
+#    pre-renewal and in the client.
+#    Four shadow cards already existed; 30452, 30455 and 30456
+#    are new.
 #
 # Mob IDs are deliberately unchanged - a mob's view id is its mob
 # id, and the client already maps 20372-20419 to the *_mj sprites
@@ -664,7 +670,11 @@ Body:
       - Item: Lava_Leather_Hode
         Rate: 40
         RandomOptionGroup: Garment
-      - Item: S_Card_Firm_Kaho
+      # Weapon-slot cards on this server are regular cards, not
+      # shadow cards - see db/import/item_db_cards.yml, where the
+      # Right_Hand cards keep Type: Card while everything else was
+      # retyped to Shadowgear. Kaho_Card (4065) is the default.
+      - Item: Kaho_Card
         Rate: 1
         StealProtected: true
   - Id: 20378
@@ -712,7 +722,8 @@ Body:
         RandomOptionGroup: Shoes
       - Item: Carnium
         Rate: 80
-      - Item: S_Card_Firm_Lava_G
+      # Weapon slot - regular card, not a shadow card.
+      - Item: Lava_Golem_Card
         Rate: 1
         StealProtected: true
   - Id: 20419
@@ -781,6 +792,400 @@ Body:
         Rate: 200
         RandomOptionGroup: Armor
       - Item: S_Card_Firm_Muspell
+        Rate: 1
+        StealProtected: true
+#=============================================================
+# iz_dun05 - Undersea Tunnel F6 (Byalan), back-ported from
+# renewal (db/re/mob_db.yml:50297-50347, 50419-50626, 50653-50688)
+# and rebalanced for pre-renewal, transcendent level 90-99.
+#
+# Spawns:  npc/custom/mobs/iz_dun05.txt
+# Skills:  db/import/mob_skill_db.txt
+# Entry:   npc/custom/warps/iz_dun05.txt (iz_dun04 237,39)
+#
+# Same treatment as the mag_dun03 block above. What changed from
+# the renewal source, and why:
+#
+#  * Attack/Attack2 are MIN/MAX here, not base/matk, so every
+#    pair is re-authored rather than copied. They are kept
+#    deliberately low - this map's difficulty is meant to come
+#    from cast frequency and HP pools, not melee damage.
+#
+#  * Defense is a straight % damage reduction pre-renewal. The
+#    renewal values (44-480) would make King Dramoh literally
+#    immune; the range here is 26-55, under Lava Golem's 68 in
+#    the mag_dun03 block. MagicDefense is capped at 45 for the
+#    same reason - Sropho and Kraken sit at the cap since they
+#    are the casters.
+#
+#  * Agi and Vit are pulled down from renewal inflation.
+#
+#  * Exp is tuned to match mag_dun03 so the two maps are peers
+#    as a 90->99 path. The spawn-weighted average here is
+#    ~66.5k BaseExp (60 Sedora + 50 Sropho + 30 Pot Dofle +
+#    25 King Dramoh) against mag_dun03's ~65.8k.
+#
+#  * Drops: Shadowdecon -> Bradium on Kraken. Zelunium has no
+#    source on this map at all (only Shadowdecon is dropped
+#    here; the _Ore variants and Zelunium belong to EP17.1
+#    Illusion content), so Carnium is spread across the normals
+#    instead, matching how the mag_dun03 roster carries both.
+#    None of 25728-25731 are created.
+#
+#  * Kraken's Bs_Making_S (23817) is dropped entirely. It does
+#    not exist pre-renewal and its script calls
+#    getgroupitem(IG_BS_MAKING_S), a group that exists only in
+#    db/re/item_group_db.yml - not worth porting for one MVP
+#    roll. Mistic_Frozen takes its place.
+#
+#  * Cards split by slot. Weapon-slot cards on this server are
+#    regular cards, not shadow cards, so Sedora and Sropho drop
+#    the classic 4521 / 4522 - created in
+#    db/import/item_db_cards.yml, since neither existed in
+#    pre-renewal. The other three are non-weapon and become
+#    shadow cards at the canonical id + 26000 (30523-30525,
+#    db/import/item_db_card_shadows.yml) so
+#    npc/custom/card_merchant.txt's base-id arithmetic keeps
+#    working. No new equipment is added by this dungeon -
+#    Sedora's Tidal_Shoes is an existing pre-re item and is the
+#    only gear drop, at a raised rate.
+#
+# 2206 KRAKEN_LEG is defined but never spawned by the script -
+# Kraken summons it via NPC_SUMMONSLAVE, so it has to exist.
+#
+# Mob IDs are unchanged; these are official kRO mobs the client
+# already has sprites and names for, so no mob_avail alias and
+# no client-side name table work is needed.
+#=============================================================
+  - Id: 2204
+    AegisName: SEDORA
+    Name: Sedora
+    Level: 93
+    Hp: 95000
+    BaseExp: 58000
+    JobExp: 60000
+    Attack: 900
+    Attack2: 1400
+    Defense: 30
+    MagicDefense: 35
+    Str: 126
+    Agi: 70
+    Vit: 60
+    Int: 107
+    Dex: 109
+    Luk: 84
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Fish
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 768
+    AttackMotion: 792
+    ClientAttackMotion: 288
+    DamageMotion: 432
+    Ai: 04
+    Drops:
+      - Item: Tentacle
+        Rate: 2500
+      - Item: Chinese_Ink
+        Rate: 1500
+      # Renewal drops these shoes at Rate 3. This is the only
+      # gear this dungeon drops, so it is raised to 30 - twice
+      # what Ragged Zombie already gives (db/pre-re/mob_db.yml).
+      # The item itself is untouched; it stays a level 55 piece.
+      - Item: Tidal_Shoes
+        Rate: 30
+        RandomOptionGroup: Shoes
+      - Item: Carnium
+        Rate: 80
+      - Item: Crystal_Blue
+        Rate: 25
+      - Item: Ice_Fragment
+        Rate: 15
+      - Item: Elder_Branch
+        Rate: 15
+      - Item: Old_Blue_Box
+        Rate: 5
+      # Weapon slot - regular card, not a shadow card. 4521 is
+      # created in db/import/item_db_cards.yml.
+      - Item: Sedora_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 2201
+    AegisName: SROPHO
+    Name: Sropho
+    Level: 95
+    Hp: 100000
+    BaseExp: 64000
+    JobExp: 66000
+    # The lowest Defense on the map by design - Sropho is the
+    # caster and is meant to be killed quickly if you can reach
+    # it, not tanked while it chain-casts Frost Diver.
+    Attack: 850
+    Attack2: 1300
+    Defense: 26
+    MagicDefense: 45
+    Str: 77
+    Agi: 50
+    Vit: 45
+    Int: 133
+    Dex: 99
+    Luk: 66
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Fish
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 768
+    AttackMotion: 792
+    ClientAttackMotion: 360
+    DamageMotion: 432
+    Ai: 04
+    Drops:
+      - Item: Fin
+        Rate: 2500
+      - Item: Bradium
+        Rate: 80
+      - Item: Crystal_Arrow_Container
+        Rate: 50
+      - Item: Oridecon_Stone
+        Rate: 50
+      - Item: Light_Granule
+        Rate: 50
+      - Item: Crystal_Blue
+        Rate: 25
+      - Item: Electric_Eel
+        Rate: 2
+      - Item: Electric_Wire
+        Rate: 2
+      # Weapon slot - regular card, not a shadow card. 4522 is
+      # created in db/import/item_db_cards.yml and carries the
+      # Crystallization effect.
+      - Item: Sropho_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 2203
+    AegisName: POT_DOFLE
+    Name: Pot Dofle
+    Level: 96
+    Hp: 105000
+    BaseExp: 68000
+    JobExp: 70000
+    Attack: 1000
+    Attack2: 1500
+    Defense: 42
+    MagicDefense: 30
+    Str: 133
+    Agi: 54
+    Vit: 78
+    Int: 33
+    Dex: 114
+    Luk: 26
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Fish
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 180
+    AttackDelay: 1008
+    AttackMotion: 936
+    ClientAttackMotion: 792
+    DamageMotion: 432
+    Ai: 03
+    Drops:
+      - Item: Coral_Reef
+        Rate: 500
+      - Item: Grit
+        Rate: 500
+      - Item: Chinese_Ink
+        Rate: 500
+      - Item: Carnium
+        Rate: 80
+      - Item: Crystal_Blue
+        Rate: 25
+      - Item: Old_Violet_Box
+        Rate: 10
+      - Item: Ice_Crystal
+        Rate: 5
+      - Item: Gold
+        Rate: 1
+      - Item: S_Card_4523
+        Rate: 1
+        StealProtected: true
+  - Id: 2198
+    AegisName: KING_DRAMOH
+    Name: King Dramoh
+    Level: 98
+    Hp: 130000
+    BaseExp: 90000
+    JobExp: 92000
+    Attack: 1400
+    Attack2: 2100
+    Defense: 48
+    MagicDefense: 25
+    Str: 119
+    Agi: 44
+    Vit: 100
+    Int: 89
+    Dex: 130
+    Luk: 44
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Fish
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 140
+    # Renewal is 576. At 1400-2100 that is a shred on a Large
+    # boss-class mob with Defender and Stun Attack; slowed to
+    # 850 so the danger is the stun lock, not the auto-attack.
+    AttackDelay: 850
+    AttackMotion: 720
+    ClientAttackMotion: 360
+    DamageMotion: 720
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Nipper
+        Rate: 2500
+      - Item: Solid_Shell
+        Rate: 2500
+      - Item: Bradium
+        Rate: 80
+      - Item: Light_Granule
+        Rate: 100
+      - Item: Ice_Fragment
+        Rate: 50
+      - Item: Spike
+        Rate: 25
+      - Item: Mistic_Frozen
+        Rate: 25
+      - Item: Crystal_Blue
+        Rate: 25
+      - Item: S_Card_4524
+        Rate: 1
+        StealProtected: true
+  - Id: 2206
+    AegisName: KRAKEN_LEG
+    Name: Kraken Tentacle
+    Level: 99
+    # Summon-only - npc/custom/mobs/iz_dun05.txt never places
+    # this, Kraken calls it via NPC_SUMMONSLAVE (slavele 3).
+    # No BaseExp/JobExp, same as the renewal source: the MVP
+    # would otherwise be an infinite exp faucet.
+    Hp: 120000
+    Attack: 1200
+    Attack2: 1800
+    Defense: 40
+    MagicDefense: 40
+    Str: 130
+    Agi: 80
+    Vit: 53
+    Int: 128
+    Dex: 150
+    Luk: 54
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Fish
+    Element: Water
+    ElementLevel: 3
+    # 1000 is the renewal value and is deliberate - a tentacle
+    # is rooted where it is summoned. It fights entirely through
+    # its Wide Freeze / Wide Curse / Storm Gust rows.
+    WalkSpeed: 1000
+    AttackDelay: 800
+    AttackMotion: 864
+    ClientAttackMotion: 288
+    DamageMotion: 240
+    Ai: 10
+    Class: Boss
+    Drops:
+      - Item: Sticky_Poison
+        Rate: 1
+      - Item: Cold_Ice
+        Rate: 1
+  - Id: 2202
+    AegisName: KRAKEN
+    Name: Kraken
+    Level: 99
+    # Renewal is 5,602,800 HP with DamageTaken: 10 - a 56M
+    # effective pool. DamageTaken is removed entirely and the HP
+    # set level with Rigid Muspellskoll above, so the server's
+    # two custom MVPs are peers. The length of the fight comes
+    # from the summoned tentacles and the cast list, not from a
+    # damage-reduction multiplier.
+    Hp: 2500000
+    BaseExp: 1200000
+    JobExp: 1200000
+    # mvp_exp_rate is NOT overridden in conf/import/battle_conf.txt,
+    # so this 500k is 1x while the BaseExp above is 5x.
+    MvpExp: 500000
+    Attack: 2800
+    Attack2: 4200
+    Defense: 55
+    MagicDefense: 45
+    Str: 196
+    Agi: 85
+    Vit: 130
+    Int: 117
+    Dex: 162
+    Luk: 99
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Fish
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 130
+    # Renewal AttackDelay is 432 - twice as fast as Muspellskoll
+    # was before its own correction. Slowed to 900 for the same
+    # reason: difficulty from casts, not raw hits.
+    AttackDelay: 900
+    AttackMotion: 864
+    ClientAttackMotion: 480
+    DamageMotion: 360
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Old_Card_Album
+        Rate: 1000
+      - Item: Treasure_Box
+        Rate: 2500
+      # Replaces Bs_Making_S (23817), which has no pre-re item
+      # and no pre-re item group - see the header note above.
+      - Item: Mistic_Frozen
+        Rate: 5000
+    Drops:
+      - Item: Tentacle
+        Rate: 2500
+      - Item: Cardo
+        Rate: 250
+      - Item: Ice_Falchon
+        Rate: 250
+      - Item: Hunting_Spear
+        Rate: 250
+      - Item: Water_Sprits_Armor_
+        Rate: 250
+      - Item: Mistic_Frozen
+        Rate: 250
+      # Renewal drops Shadowdecon (25729) here at Rate 50.
+      - Item: Bradium
+        Rate: 80
+      - Item: S_Card_4525
         Rate: 1
         StealProtected: true
 #Body:

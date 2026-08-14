@@ -1,0 +1,26 @@
+//===== rAthena Script =======================================
+//= iz_dun05 - Undersea Tunnel F6 monster spawns
+//===== Description: =========================================
+//= Back-ported from npc/re/mobs/dungeons/iz_dun.txt:115-122.
+//=
+//= Mob definitions live in db/import/mob_db.yml and their
+//= skills in db/import/mob_skill_db.txt. Both were rebalanced
+//= for pre-renewal; only the spawn counts are untouched.
+//=
+//= 165 normals, dense on purpose - packs are part of the
+//= intended difficulty, same as mag_dun03. Kraken is the MVP
+//= on the official 2h respawn / 30m variance.
+//=
+//= 2206 KRAKEN_LEG is deliberately absent. It exists only as
+//= Kraken's NPC_SUMMONSLAVE target, and it is not built to be a
+//= map spawn: WalkSpeed 1000 leaves it rooted where it appears,
+//= Class: Boss makes it resist most crowd control, and it has no
+//= BaseExp/JobExp at all. A standing spawn would be a stationary
+//= zero-exp punching bag. Nothing in the quests targets it.
+//============================================================
+
+iz_dun05	monster	Sropho	2201,50,5000
+iz_dun05	monster	Sedora	2204,60,5000
+iz_dun05	monster	Pot Dofle	2203,30,5000
+iz_dun05	monster	King Dramoh	2198,25,5000
+iz_dun05,0,0,0,0	boss_monster	Kraken	2202,1,7200000,1800000,0

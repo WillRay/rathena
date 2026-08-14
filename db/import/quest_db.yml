@@ -121,6 +121,79 @@ Body:
         Count: 10
       - Mob: EXPLOSION_H
         Count: 10
+# iz_dun05 (Undersea Tunnel F6) - Nerin's daily survey requests
+#=============================================================
+# Brand new quests, not ported from renewal - nothing in
+# db/re/quest_db.yml targets these mobs. The 8562-8573 range is
+# unused in db/pre-re/quest_db.yml (which has no entries at all
+# between 8550 and 8699) and continues the mag_dun03 block above
+# contiguously, so there is no override conflict.
+#
+# Same three-quest chain shape as Lily's, because the NPC
+# (npc/custom/quests/iz_dun05_nerin.txt) derives N+1 and N+2
+# arithmetically from N - the ordering here matters:
+#   N   = the first-time version
+#   N+1 = a 4h standby timer that gates the repeat
+#   N+2 = the repeatable daily version
+#
+# All four chains target ordinary map spawns. Chain D asked for
+# Kraken Tentacles at first, which was a mistake - those exist
+# only while the MVP is alive and summoning, so the chain could
+# not be completed outside a 2h boss window. It is King Dramoh
+# only now: boss-class, 130k HP, the hardest thing on the map
+# short of the MVP, and always available.
+  - Id: 8562
+    Title: Counting the Drift
+    Targets:
+      - Mob: SEDORA
+        Count: 15
+  - Id: 8563
+    Title: Counting the Drift (Standby)
+    TimeLimit: 4h
+  - Id: 8564
+    Title: Counting the Drift Again
+    Targets:
+      - Mob: SEDORA
+        Count: 15
+  - Id: 8565
+    Title: The Charge in the Water
+    Targets:
+      - Mob: SROPHO
+        Count: 10
+  - Id: 8566
+    Title: The Charge in the Water (Standby)
+    TimeLimit: 4h
+  - Id: 8567
+    Title: Measuring the Charge Again
+    Targets:
+      - Mob: SROPHO
+        Count: 10
+  - Id: 8568
+    Title: What the Pots Carry
+    Targets:
+      - Mob: POT_DOFLE
+        Count: 10
+  - Id: 8569
+    Title: What the Pots Carry (Standby)
+    TimeLimit: 4h
+  - Id: 8570
+    Title: Opening the Pots Again
+    Targets:
+      - Mob: POT_DOFLE
+        Count: 10
+  - Id: 8571
+    Title: The Shell That Will Not Open
+    Targets:
+      - Mob: KING_DRAMOH
+        Count: 10
+  - Id: 8572
+    Title: The Shell That Will Not Open (Standby)
+    TimeLimit: 4h
+  - Id: 8573
+    Title: Prying the Shell Again
+    Targets:
+      - Mob: KING_DRAMOH
+        Count: 10
   - Id: 60429
     Title: Nightmare Hunting 100 Kills
     Targets:
