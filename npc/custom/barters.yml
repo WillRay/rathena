@@ -408,10 +408,10 @@ Body:
             Amount: 5
   - Name: Glorious Gear Shop
     Map: prontera
-    X: 131
-    Y: 217
-    Direction: East
-    Sprite: 4_M_KNIGHT_BLACK
+    X: 188
+    Y: 216
+    Direction: South
+    Sprite: 4_M_03
     Items:
       - Index: 0
         Item: Krieger_Twohand_Spear1

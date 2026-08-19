@@ -1,0 +1,20 @@
+//===== rAthena Script =======================================
+//= Verdant Prontera - Standalone Copy
+//===== Description: =========================================
+//= "verdant_prontera" also stays loaded as its own map under
+//= the name "verdant_pro" (rAthena caps map names at 11 chars).
+//=
+//= Since the custom map now overrides real Prontera, this
+//= standalone copy is only a scratch/comparison surface.
+//= Reach it with: @warp verdant_pro 156 191
+//=
+//= The prontera-side entrance NPC was removed - it would now
+//= stand on the verdant map and warp you to an identical one.
+//============================================================
+
+//===== Mapflags =============================================
+verdant_pro	mapflag	town
+verdant_pro	mapflag	nobranch
+verdant_pro	mapflag	noicewall
+verdant_pro	mapflag	nopenalty
+verdant_pro	mapflag	noexppenalty

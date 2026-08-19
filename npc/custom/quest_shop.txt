@@ -15,7 +15,7 @@
 // Shop NPCs -- supplying no argument displays entire menu.
 //	callfunc "qshop"{,<shop ID>{,<shop ID>{,...}}};
 //============================================================
-prontera,182,214,4	script	Rare Hat Merchant#1	408,{ callfunc "qshop"; }
+prontera,140,169,6	script	Rare Hat Merchant#1	408,{ callfunc "qshop"; }
 
 
 // Script Core

@@ -28,7 +28,7 @@
 
 // PecoPeco Breeder (for Knights) :: breeder
 //============================================================
-prontera,55,350,5	script	Peco Peco Breeder#knt	105,{
+prontera,52,343,5	script	Peco Peco Breeder#knt	105,{
 	if(Upper==0) set .@price,2500; //Normal Peco - default price
 	if(Upper==1) set .@price,2500; //Armored Peco
 	if(Upper==2) set .@price,2500; //Baby Peco

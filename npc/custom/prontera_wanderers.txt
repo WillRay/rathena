@@ -1,0 +1,886 @@
+//===== rAthena Script =======================================
+//= Prontera Wanderers
+//===== Description: =========================================
+//= Ambient NPCs that patrol waypoint loops around Prontera
+//= and chatter on their own schedule. Clicking one opens a
+//= normal dialogue window.
+//=
+//= Structure:
+//=   - One controller NPC (PronWander#ctrl) owns all movement
+//=     and chatter state in parallel arrays and drives each
+//=     wanderer by name. 'duplicate' cannot be used here --
+//=     duplicates SHARE the original's NPC variables, so every
+//=     copy would chase the same waypoint.
+//=   - Each wanderer block below is just dialogue + appearance.
+//=   - Routes and line pools are variable length. .wx/.wy and
+//=     .line$ are flat arrays shared by everyone; .w_cnt and
+//=     .l_cnt say how many entries each wanderer owns, and the
+//=     controller derives the start offsets at load time.
+//=
+//=   - A .w_cnt of 0 makes an NPC static: it never moves.
+//=     A .l_cnt of 0 means it never speaks on its own, which is
+//=     what group members use -- they talk via conversations.
+//=   - NPCs walking together do NOT stay together. Each has its
+//=     own route, and two routes of different lengths drift
+//=     apart even at identical speed; a speaker pausing while
+//=     the others walk on makes it cumulative. A real group
+//=     walk would need all members on one identical waypoint
+//=     list at staggered start indices, plus pausing the whole
+//=     group when any member speaks. Until that exists, keep
+//=     walking groups to a single NPC.
+//=   - Conversations (.g_*) are per-group scripted exchanges:
+//=     the group speaks its lines in order, one every
+//=     .conv_gap seconds, rests .conv_rest, then repeats.
+//=     Speakers are unique NPC names, resolved to .name$
+//=     indices once at load time.
+//=
+//= To add another wanderer:
+//=   1. Add its unique name to .name$
+//=   2. Add its x/y pairs to .wx / .wy, and the count to .w_cnt
+//=      (or 0 in .w_cnt and no pairs, for a static NPC)
+//=   3. Add its lines to .line$, and the count to .l_cnt
+//=   4. Write its NPC block at the bottom
+//=
+//= To add a conversation:
+//=   1. Add the line count to .g_cnt
+//=   2. Add one speaker name per line to .g_who$
+//=   3. Add the matching lines to .g_text$
+//=
+//= Keep every array in the same NPC order. The totals in .w_cnt,
+//= .l_cnt and .g_cnt must match the flat array lengths, and every
+//= .g_who$ name must exist in .name$ -- if not, the controller
+//= refuses to start and says which array is wrong in the
+//= map-server console.
+//=
+//= Notes:
+//= - The sprite MUST be a player job class, not an NPC sprite
+//=   (4_M_01 etc). The client has no walk animation for
+//=   NPC_EVT_TYPE units, so NPC sprites slide instead of
+//=   walking. With a job sprite the server respawns the unit
+//=   as PC_TYPE while it moves and the animation plays.
+//=   Requires PACKETVER >= 20170726 (this server: 20250319).
+//= - That respawn (unit_refresh) is a clearunit + spawn, which
+//=   ALSO destroys any chat bubble over the NPC's head. It
+//=   fires on walk start and on walk arrival, so a wanderer
+//=   must stand still while it talks -- never issue a walk in
+//=   the same tick as npctalk. npcstop does not refresh.
+//= - Walking is continuous because the next target is issued a
+//=   few cells BEFORE the current one is reached. unit_walktoxy
+//=   (unit.cpp:894) only updates the destination when a walk is
+//=   already running -- it does not stop the unit -- so the NPC
+//=   flows into the next leg. Waiting for it to go idle instead
+//=   costs a poll-length pause at every waypoint plus an
+//=   arrival refresh that pops the sprite. See .arrive.
+//= - Each walk command is capped at MAX_WALKPATH (32) cells.
+//=   The controller breaks longer legs into .hop-sized steps,
+//=   so waypoints can be far apart -- but the interpolated
+//=   midpoints are a straight line, with no knowledge of the
+//=   map. If a midpoint lands in a building the walk fails and
+//=   the NPC stalls there. Long legs across built-up ground
+//=   need real intermediate waypoints instead.
+//= - HAIRCOLOR / CLOTHCOLOR ARE A CRASH RISK. A non-zero
+//=   colour makes the client load data\palette\... for that
+//=   exact job+sex+index. If the .pal is missing the client
+//=   does not fail gracefully -- it throws a CPaletteRes
+//=   "Cannot find File" box and then dies with an access
+//=   violation the moment the NPC comes into view. Index 0
+//=   uses the sprite's built-in palette and never touches a
+//=   file, so it is always safe. Both are 0 here on purpose;
+//=   see the note on F_PronWanderLook before changing them.
+//= - NPCs are named "Display::unique", NOT "Display#hidden".
+//=   npc_parsename (npc.cpp:3673) only ever splits on "::" --
+//=   hiding the part after a "#" is a CLIENT convention, and
+//=   the client applies it to NPC-type units but not to
+//=   player-type ones. Since a walking NPC is sent as PC_TYPE
+//=   (see the job-sprite note above), a "#" name shows in full
+//=   the whole time it is moving. "::" splits server-side, so
+//=   only the display half is ever sent.
+//=   .name$ and .g_who$ hold the UNIQUE half (pw_*); the
+//=   display half is read back via strnpcinfo for chat prefixes.
+//= - Every waypoint in this file has been checked against
+//=   db/import/map_cache.dat and is walkable. If you hand-edit
+//=   coordinates, re-check them -- an unwalkable waypoint fails
+//=   silently and the NPC just stands there.
+//============================================================
+
+//============================================================
+//= Controller
+//============================================================
+-	script	PronWander#ctrl	-1,{
+	end;
+
+OnInit:
+	.map$ = "prontera";
+
+	// Seconds between one NPC's lines (randomised per line).
+	.talk_min  = 25;
+	.talk_max  = 70;
+
+	// Seconds a wanderer stands still after speaking, so the
+	// resuming walk doesn't wipe its own chat bubble.
+	.talk_hold = 5;
+
+	// Chance in % of using the NPC's own line instead of a
+	// generic one from the shared pool.
+	.own_line_chance = 65;
+
+	// A single walk command is capped at MAX_WALKPATH (32)
+	// cells, so legs longer than this are walked in hops.
+	// Leave headroom under 32 for path detours around
+	// obstacles, which cost extra steps.
+	.hop = 20;
+
+	// How close (in cells) counts as "arrived", which is when
+	// the next target gets issued. This must be larger than the
+	// distance an NPC covers between two polls, or it will reach
+	// the target first, stop, and stutter.
+	//
+	// Speed is milliseconds per cell, so at the fastest speed
+	// used here (150) a 500ms poll covers 3.3 cells -- and
+	// diagonals cost more time, so fewer. 4 clears that.
+	// If you speed an NPC up past ~125, raise this or poll
+	// faster.
+	.arrive = 4;
+
+	setarray .name$[0],
+		"pw_halden",
+		"pw_mirelle",
+		"pw_gustav",
+		"pw_bryn",
+		"pw_oskar",
+		"pw_renn",
+		"pw_marta",
+		"pw_dorn",
+		"pw_ilse",
+
+		// mage circle, static, group 0
+		"pw_ariven",
+		"pw_lysandra",
+		"pw_orin",
+		"pw_neris",
+
+		// church walk, walking, group 1
+		"pw_aldous",
+
+		// picnic, static, group 2
+		"pw_greta",
+		"pw_bo",
+		"pw_pip",
+		"pw_odile",
+
+		// picnic errand runner, walking, solo lines
+		"pw_tam";
+	.n = getarraysize(.name$);
+
+	// How many waypoints each wanderer owns, in .name$ order.
+	// Must total the length of .wx / .wy below.
+	// A count of 0 means the NPC is static and never moves.
+	setarray .w_cnt[0],
+		20,							// Halden - vendor round
+		6,							// Mirelle - south road circuit
+		6,							// Gustav - gate patrol
+		12,							// Bryn - L beat: gate road, then north street
+		26,							// Oskar - knight place to the fountain
+		4,							// Renn
+		10,							// Marta - plaza, Amatsu stall, the smith
+		20,							// Dorn - down the x=160 road, east, back
+		9,							// Ilse - north corridor + plaza circuit
+		0,0,0,0,					// mage circle - static
+		22,							// Aldous
+		0,0,0,0,					// picnic - static
+		14;							// Tam
+
+	// Waypoints, concatenated in .name$ order.
+	setarray .wx[0],
+		// Halden (20) - vendor round: chef assistant, flower,
+		// vendor, butcher, gift, and back
+		141,123,105,87,69,55,59,66,68,74,65,81,99,106,117,135,153,153,153,142,
+
+		158,158,158,144,144,144,	// Mirelle (6) - south road, down one side and up the other
+		156,156,156,156,156,156,	// Gustav (6) - south gate pace
+		// Bryn (12) - L beat. The corner (70,204) appears twice on
+		// purpose: routes loop, so without the repeat the last leg
+		// would cut a diagonal back across the map instead of
+		// retracing the arms.
+		30,48,66,70,70,70,70,70,70,70,52,34,
+		// Oskar (26) - knight place, down to the fountain,
+		// a full circuit of it, and back
+		50,68,86,104,122,140,148,148,148,148,148,156,167,156,145,127,109,91,77,77,77,77,75,69,69,56,
+		252,252,268,268,	// Renn     - NE quarter
+		149,149,163,179,173,188,173,168,164,149,	// Marta (10) - plaza to the smith and back
+		173,162,160,160,160,160,158,158,176,194,212,214,225,234,234,234,239,221,203,185,	// Dorn (20) - pathed, pinned to x=160 on the descent
+
+		156,156,156,138,156,174,178,161,158,	// Ilse (9) - north corridor, then the plaza
+		// mage circle / picnic are static: no waypoints
+		233,233,239,237,237,237,233,215,197,179,161,156,174,192,210,228,234,234,234,235,239,238,	// Aldous (22)
+		49,49,61,72,90,108,126,142,124,106,88,77,61,51;	// Tam (14)
+	setarray .wy[0],
+		180,189,190,198,201,188,183,165,147,135,126,109,92,88,106,112,125,143,161,179,	// Halden (20)
+
+		126,108,95,92,110,124,	// Mirelle (6)
+		 78, 60, 42, 25, 43, 61,	// Gustav (6)
+		203,203,203,204,222,240,255,237,219,204,204,204,	// Bryn (12)
+		342,341,335,323,323,319,301,283,265,247,229,215,204,193,204,204,204,204,210,228,246,264,282,300,318,336,	// Oskar (26)
+		262,276,276,262,	// Renn
+		289,271,253,245,228,218,231,249,267,285,	// Marta (10)
+		200,182,180,172,154,145,127,117,117,117,120,122,140,158,176,194,203,203,203,203,	// Dorn (20)
+
+		360,342,332,322,322,322,322,331,348,	// Ilse (9)
+		313,295,277,259,241,223,206,206,204,204,194,192,192,192,189,200,218,236,254,272,290,308,	// Aldous (22)
+		265,247,229,211,206,205,197,181,188,190,198,213,231,249;	// Tam (14)
+
+	// How many solo lines each wanderer owns, in .name$ order.
+	// Must total the length of .line$ below.
+	// A count of 0 means the NPC never speaks on its own -- the
+	// group members below only talk through their conversation.
+	setarray .l_cnt[0],
+		4,4,4,4,4,4,4,4,4,			// the nine wanderers
+		0,0,0,0,					// mage circle
+		0,							// Aldous
+		0,0,0,0,					// picnic
+		4;							// Tam
+
+	// Lines, concatenated in .name$ order.
+	setarray .line$[0],
+		// Halden - merchant, vendor round
+		"The butcher's prices have gone up again.",
+		"Flowers next, then the gift stall.",
+		"Never buy the first thing you're shown.",
+		"Six stalls before noon. That's the trick.",
+
+		// Mirelle - acolyte
+		"Walking keeps the mind clear.",
+		"Lovely day for it, isn't it?",
+		"They say the Kafra girls never sleep.",
+		"Headed to Payon? Take the west road.",
+
+		// Gustav - swordsman, gate pace
+		"Down to the gate and back. Again.",
+		"A guard has to know his stretch of road.",
+		"They post you where they've seen you.",
+		"One more turn, then I'll rest. Perhaps.",
+
+		// Bryn - archer, west gate road
+		"Straightest arrow in the west quarter, me.",
+		"Wind's coming off the wall today.",
+		"Gate road, north street, back again.",
+		"Never buy fletching from a man in a hurry.",
+
+		// Oskar - knight
+		"Stand up straight, adventurer.",
+		"The order isn't what it was.",
+		"Without a cause, a knight is just armour.",
+		"Ride out at dawn, that's the way of it.",
+
+		// Renn - thief
+		"You didn't see me. Nobody did.",
+		"Keep a hand on your purse in the market.",
+		"Locks are only suggestions, really.",
+		"I know six ways out of this square.",
+
+		// Marta - blacksmith, plaza to the smith
+		"Good steel starts with a good fire.",
+		"Bring me ore, I'll bring you a blade.",
+		"Off to borrow the smith's files again.",
+		"Everything breaks. Mine breaks slower.",
+
+		// Dorn - hunter
+		"Quiet feet, quiet forest.",
+		"My falcon's smarter than most people.",
+		"Tracks by the north road. Something big.",
+		"Traps are just patience you set down.",
+
+		// Ilse - assassin
+		"Most people never notice me at all.",
+		"The trick is looking like you belong.",
+		"Poison is only patience, distilled.",
+		"I've walked past you three times already.",
+
+		// Tam - picnic errand runner
+		"Supplies. And don't forget the bread.",
+		"Mother will have my ears if I dawdle.",
+		"It's a long walk for a basket of pastries.",
+		"Right. Chef's stall, then straight back.";
+
+	// Shared pool any wanderer can pull from
+	setarray .common$[0],
+		"Busy today, isn't it.",
+		"Mind how you go.",
+		"Another day in Prontera.",
+		"Have you seen the prices lately?",
+		"Trouble past the walls, they say.",
+		"Warm one today.",
+		"Long walk, but a good one.",
+		"Morning to you.",
+		"Watch your step around here.",
+		"Off to the market, myself.";
+	.common_count = getarraysize(.common$);
+
+	//--- conversations --------------------------------------
+	// A group speaks its lines in order, one every .conv_gap
+	// seconds, then goes quiet for .conv_rest before starting
+	// over. Speakers are unique NPC names resolved to .name$
+	// indices at load time.
+	.conv_gap  = 6;
+	.conv_rest = 50;
+
+	setarray .g_cnt[0], 8, 6, 6;
+	.g_n = getarraysize(.g_cnt);
+
+	setarray .g_who$[0],
+		// group 0 - the mage circle
+		"pw_ariven",
+		"pw_lysandra",
+		"pw_orin",
+		"pw_neris",
+		"pw_ariven",
+		"pw_lysandra",
+		"pw_neris",
+		"pw_orin",
+
+		// group 1 - Aldous, thinking aloud on the walk down
+		"pw_aldous",
+		"pw_aldous",
+		"pw_aldous",
+		"pw_aldous",
+		"pw_aldous",
+		"pw_aldous",
+
+		// group 2 - the picnic
+		"pw_greta",
+		"pw_bo",
+		"pw_greta",
+		"pw_pip",
+		"pw_odile",
+		"pw_bo";
+
+	setarray .g_text$[0],
+		// group 0
+		"The resonance held for nine seconds. Nine.",
+		"Held? It screamed, Ariven.",
+		"I thought the screaming was part of it.",
+		"It is never part of it.",
+		"The binding was sound. I checked it twice.",
+		"Then check it again out here. Grass grows back.",
+		"She has a point. Towers are not cheap.",
+		"...Should I be standing this close?",
+
+		// group 1
+		"Down to the fountain, then back up.",
+		"The water carriers were late again.",
+		"So I shall fetch it myself.",
+		"That is what I tell the acolytes.",
+		"They have stopped finding it funny.",
+		"...So have I, if I am honest.",
+
+		// group 2
+		"Sit down and eat something, Bo.",
+		"I'm keeping watch.",
+		"From a picnic blanket?",
+		"Can I have the last honey pastry?",
+		"You may not. Your father hasn't eaten.",
+		"...I'm keeping watch.";
+
+	// Derive where each wanderer's waypoints and lines start in
+	// the flat arrays, from the per-NPC counts above.
+	//
+	// Also cache the visible part of each name (before the '#')
+	// so lines can be prefixed "Name: message" -- npctalk does
+	// not prepend the speaker's name itself -- and stagger the
+	// first line so they don't all speak at once.
+	.@now = gettimetick(2);
+	.@wsum = 0;
+	.@lsum = 0;
+	for (.@i = 0; .@i < .n; .@i++) {
+		.w_off[.@i] = .@wsum;
+		.@wsum += .w_cnt[.@i];
+		.l_off[.@i] = .@lsum;
+		.@lsum += .l_cnt[.@i];
+
+		.disp$[.@i]     = strnpcinfo(1, getnpcid(0, .name$[.@i]));
+		.next_talk[.@i] = .@now + rand(5, .talk_max);
+
+		// -1 means "no target issued yet", so the first poll
+		// starts the NPC walking.
+		.tgt_x[.@i] = -1;
+		.tgt_y[.@i] = -1;
+	}
+
+	// Desynced arrays would silently give someone else's route
+	// or dialogue, so fail loudly instead of guessing.
+	.ready = 1;
+	if (.@wsum != getarraysize(.wx) || .@wsum != getarraysize(.wy)) {
+		debugmes "PronWander: .w_cnt totals " + .@wsum + " but .wx has " +
+			getarraysize(.wx) + " and .wy has " + getarraysize(.wy) + ". Disabled.";
+		.ready = 0;
+	}
+	if (.@lsum != getarraysize(.line$)) {
+		debugmes "PronWander: .l_cnt totals " + .@lsum + " but .line$ has " +
+			getarraysize(.line$) + ". Disabled.";
+		.ready = 0;
+	}
+
+	// Same for the conversation groups, plus resolve each speaker
+	// name to its .name$ index once instead of every line.
+	.@gsum = 0;
+	for (.@k = 0; .@k < .g_n; .@k++) {
+		.g_off[.@k]  = .@gsum;
+		.@gsum      += .g_cnt[.@k];
+		.g_idx[.@k]  = 0;
+		.g_next[.@k] = .@now + rand(10, .conv_rest);
+	}
+	if (.@gsum != getarraysize(.g_who$) || .@gsum != getarraysize(.g_text$)) {
+		debugmes "PronWander: .g_cnt totals " + .@gsum + " but .g_who$ has " +
+			getarraysize(.g_who$) + " and .g_text$ has " +
+			getarraysize(.g_text$) + ". Disabled.";
+		.ready = 0;
+	} else {
+		for (.@k = 0; .@k < .@gsum; .@k++) {
+			.@found = -1;
+			for (.@i = 0; .@i < .n; .@i++) {
+				if (.name$[.@i] == .g_who$[.@k]) {
+					.@found = .@i;
+					break;
+				}
+			}
+			if (.@found < 0) {
+				debugmes "PronWander: conversation speaker '" + .g_who$[.@k] +
+					"' is not in .name$. Disabled.";
+				.ready = 0;
+			}
+			.g_widx[.@k] = .@found;
+		}
+	}
+
+	if (!.ready)
+		end;
+
+	initnpctimer;
+	end;
+
+OnTimer500:
+	if (getmapusers(.map$) < 1) {
+		setnpctimer 0;
+		end;
+	}
+
+	.@now = gettimetick(2);
+
+	for (.@i = 0; .@i < .n; .@i++) {
+		.@nm$ = .name$[.@i];
+		if (getmapxy(.@m$, .@x, .@y, BL_NPC, .@nm$) != 0)
+			continue;
+
+		// --- standing still so a bubble can be read ----
+		if (.pause_until[.@i] > .@now)
+			continue;
+
+		// --- scheduled chatter -------------------------
+		// Purely on a timer, not triggered by players.
+		// Must not be followed by a walk this tick.
+		if (.l_cnt[.@i] > 0 && .next_talk[.@i] <= .@now) {
+			npcstop .@nm$;
+			if (rand(100) < .own_line_chance)
+				.@say$ = .line$[.l_off[.@i] + rand(.l_cnt[.@i])];
+			else
+				.@say$ = .common$[rand(.common_count)];
+			npctalk .disp$[.@i] + ": " + .@say$, .@nm$;
+
+			.next_talk[.@i]   = .@now + rand(.talk_min, .talk_max);
+			.pause_until[.@i] = .@now + .talk_hold;
+			continue;
+		}
+
+		// --- static NPCs never move --------------------
+		if (.w_cnt[.@i] < 1)
+			continue;
+
+		// --- issue the next target BEFORE arriving -----
+		// unit_walktoxy (unit.cpp:894) checks whether a walk is
+		// already running: if it is, it only updates the
+		// destination and returns, without stopping the unit.
+		// So retargeting a few cells early flows straight into
+		// the next leg -- no idle gap, and no arrival refresh
+		// to make the sprite pop.
+		//
+		// The issued target is sticky: nothing is sent until the
+		// NPC gets within .arrive of it, otherwise the hop
+		// interpolation below would compute a slightly different
+		// point every poll and re-issue constantly.
+		.@need = 0;
+		if (.tgt_x[.@i] < 0)
+			.@need = 1;												// nothing issued yet
+		else if (distance(.@x, .@y, .tgt_x[.@i], .tgt_y[.@i]) <= .arrive)
+			.@need = 1;												// close enough, move on
+		else if (.@x == .last_x[.@i] && .@y == .last_y[.@i])
+			.@need = 1;												// stalled, or just finished talking
+
+		.last_x[.@i] = .@x;
+		.last_y[.@i] = .@y;
+		if (!.@need)
+			continue;
+
+		.@b = .w_off[.@i];
+		.@wpx = .wx[.@b + .idx[.@i]];
+		.@wpy = .wy[.@b + .idx[.@i]];
+
+		// Near the waypoint itself? Take the next one. This cuts
+		// the corner by up to .arrive cells, which reads as a
+		// person rounding a bend rather than stopping on a mark.
+		if (distance(.@x, .@y, .@wpx, .@wpy) <= .arrive) {
+			.idx[.@i] = (.idx[.@i] + 1) % .w_cnt[.@i];
+			.@wpx = .wx[.@b + .idx[.@i]];
+			.@wpy = .wy[.@b + .idx[.@i]];
+		}
+
+		// --- break long legs into hops -----------------
+		// Diagonal moves cost one step, so the step count for a
+		// leg is max(|dx|,|dy|). Anything over .hop is walked
+		// toward an interpolated point instead.
+		.@tx = .@wpx;
+		.@ty = .@wpy;
+		.@dx = .@tx - .@x;
+		.@dy = .@ty - .@y;
+
+		.@adx = .@dx; if (.@adx < 0) .@adx = -.@adx;
+		.@ady = .@dy; if (.@ady < 0) .@ady = -.@ady;
+		.@dist = .@adx; if (.@ady > .@dist) .@dist = .@ady;
+
+		if (.@dist > .hop) {
+			.@tx = .@x + (.@dx * .hop / .@dist);
+			.@ty = .@y + (.@dy * .hop / .@dist);
+		}
+
+		npcwalkto .@tx, .@ty, .@nm$;
+		.tgt_x[.@i] = .@tx;
+		.tgt_y[.@i] = .@ty;
+	}
+
+	// --- group conversations -----------------------------
+	// One line at a time, in order. The speaker stops so its
+	// bubble survives the walk-refresh; the rest of the group
+	// carries on. .conv_gap is deliberately longer than
+	// .talk_hold so a walker gets a step or two between lines.
+	for (.@k = 0; .@k < .g_n; .@k++) {
+		if (.g_next[.@k] > .@now)
+			continue;
+
+		.@li  = .g_off[.@k] + .g_idx[.@k];
+		.@wi  = .g_widx[.@li];
+		.@wn$ = .name$[.@wi];
+
+		npcstop .@wn$;
+		npctalk .disp$[.@wi] + ": " + .g_text$[.@li], .@wn$;
+		.pause_until[.@wi] = .@now + .talk_hold;
+
+		.g_idx[.@k] = .g_idx[.@k] + 1;
+		if (.g_idx[.@k] >= .g_cnt[.@k]) {
+			.g_idx[.@k]  = 0;
+			.g_next[.@k] = .@now + .conv_rest;
+		} else {
+			.g_next[.@k] = .@now + .conv_gap;
+		}
+	}
+
+	setnpctimer 0;
+	end;
+}
+
+//============================================================
+//= Appearance helper
+//= Job sprites spawn bald and undressed, so each wanderer
+//= sets its own look. Runs in the calling NPC's context.
+//=
+//= args: <sex>, <hairstyle>, <haircolor>, <clothcolor>, <speed>
+//=
+//= haircolor and clothcolor are 0 for every wanderer because a
+//= missing palette file CRASHES the client (see header). To add
+//= colour, verify the .pal actually ships in your GRF first --
+//= open data.grf in GRF Editor and look under:
+//= colour, verify the .pal actually ships in your GRF first.
+//= Open data.grf in GRF Editor under \palette\. The folder and
+//= filename parts are Korean; romanised they are:
+//=   palette\[mom]\<job>_[nam|yeo]_<n>.pal            body
+//=   palette\[meori]\[meori]<style>_[nam|yeo]_<n>.pal hair
+//= where [mom]=body, [meori]=head, [nam]=male, [yeo]=female.
+//= Colour indices are NOT uniform across jobs -- one that exists
+//= for one job may be absent for another, so check per job+sex,
+//= and test each change by walking up to that specific NPC.
+//= uniform across jobs -- a colour that exists for one job may
+//= be absent for another, so check per job+sex, and test each
+//= change by walking up to that specific NPC.
+//============================================================
+function	script	F_PronWanderLook	{
+	.@gid = getnpcid(0);
+	setunitdata .@gid, UNPC_SEX,        getarg(0);
+	setunitdata .@gid, UNPC_HAIRSTYLE,  getarg(1);
+	setunitdata .@gid, UNPC_HAIRCOLOR,  getarg(2);
+	setunitdata .@gid, UNPC_CLOTHCOLOR, getarg(3);
+	setunitdata .@gid, UNPC_HEADTOP,    0;
+	npcspeed getarg(4, 190);
+	return;
+}
+
+//============================================================
+//= The wanderers
+//============================================================
+prontera,141,180,4	script	Halden::pw_halden	JOB_MERCHANT,{
+	mes "[Halden]";
+	mes "I do the rounds every day. Chef's stall,";
+	mes "the flower seller, the butcher, the";
+	mes "gift shop. Then back the way I came.";
+	next;
+	mes "[Halden]";
+	mes "You learn a lot about a city from the";
+	mes "people who sell things in it.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_MALE, 4, 0, 0, 180;
+	end;
+}
+
+prontera,158,126,4	script	Mirelle::pw_mirelle	JOB_ACOLYTE,{
+	mes "[Mirelle]";
+	mes "I walk the south road, down one side and";
+	mes "up the other. Twice before noon, usually.";
+	next;
+	mes "[Mirelle]";
+	mes "Walking keeps the mind clear. Sitting behind";
+	mes "a shop counter all day would be the death of me.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_FEMALE, 6, 0, 0, 200;
+	end;
+}
+
+prontera,156,78,4	script	Gustav::pw_gustav	JOB_SWORDMAN,{
+	mes "[Gustav]";
+	mes "Down to the south gate and back.";
+	mes "Twenty times a day, near enough.";
+	next;
+	mes "[Gustav]";
+	mes "They'll take on new guards come spring.";
+	mes "When they do, they'll want someone who";
+	mes "already knows the road. That'll be me.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_MALE, 2, 0, 0, 170;
+	end;
+}
+
+prontera,30,203,4	script	Bryn::pw_bryn	JOB_ARCHER,{
+	mes "[Bryn]";
+	mes "Gate road east, then up the north street,";
+	mes "then back the way I came. Same beat daily.";
+	mes "Range is closed for repairs, so it's this or";
+	mes "stand about losing my edge.";
+	next;
+	mes "[Bryn]";
+	mes "You see who comes and goes, out by the gate.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_FEMALE, 3, 0, 0, 175;
+	end;
+}
+
+prontera,50,342,4	script	Oskar::pw_oskar	JOB_KNIGHT,{
+	mes "[Oskar]";
+	mes "From the chapter house down to the fountain,";
+	mes "once around it, and back again.";
+	next;
+	mes "[Oskar]";
+	mes "The order isn't what it was. But the walk";
+	mes "is the same walk it always was, and someone";
+	mes "ought to still be making it.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_MALE, 5, 0, 0, 165;
+	end;
+}
+
+prontera,252,262,4	script	Renn::pw_renn	JOB_THIEF,{
+	mes "[Renn]";
+	mes "You didn't see me.";
+	mes "And if anyone asks, I've been here";
+	mes "all afternoon. Haven't I.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_MALE, 1, 0, 0, 150;
+	end;
+}
+
+prontera,149,289,4	script	Marta::pw_marta	JOB_BLACKSMITH,{
+	mes "[Marta]";
+	mes "Forge is cooling, so I've got an hour.";
+	mes "I walk down to the smith and back — he keeps";
+	mes "better files than I do, and I keep borrowing them.";
+	next;
+	mes "[Marta]";
+	mes "Bring me decent ore sometime and we'll";
+	mes "talk about what it could become.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_FEMALE, 3, 0, 0, 185;
+	end;
+}
+
+prontera,173,200,4	script	Dorn::pw_dorn	JOB_HUNTER,{
+	mes "[Dorn]";
+	mes "There are tracks by the north road.";
+	mes "Something big came through in the night.";
+	mes "I'd not go alone, if I were you.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_MALE, 3, 0, 0, 170;
+	end;
+}
+
+prontera,156,360,4	script	Ilse::pw_ilse	JOB_ASSASSIN,{
+	mes "[Ilse]";
+	mes "Most people walk right past me.";
+	mes "That's rather the point.";
+	next;
+	mes "[Ilse]";
+	mes "I take the north passage down to the square";
+	mes "and back. You see a great deal, up here,";
+	mes "and nobody sees you doing it.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_FEMALE, 4, 0, 0, 155;
+	end;
+}
+
+//============================================================
+//= The mage circle -- static, standing round 112,243
+//= Facings point each of them at the centre of the ring.
+//=
+//= NOTE: the facing field runs COUNTER-CLOCKWISE, not the
+//= clockwise order you'd expect (see enum directions,
+//= src/map/path.hpp):
+//=   0=N  1=NW  2=W  3=SW  4=S  5=SE  6=E  7=NE
+//= Getting this backwards leaves N and S correct and silently
+//= flips everything else, which is easy to miss.
+//============================================================
+prontera,112,245,4	script	Ariven::pw_ariven	JOB_SAGE,{
+	mes "[Ariven]";
+	mes "We meet out here because the last time we";
+	mes "met indoors, there was no longer an indoors.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_MALE, 2, 0, 0, 200;
+	end;
+}
+
+prontera,115,243,2	script	Lysandra::pw_lysandra	JOB_WIZARD,{
+	mes "[Lysandra]";
+	mes "Ariven is a fine theorist and a menace";
+	mes "with anything that holds a charge.";
+	mes "So we practise on the grass. Grass grows back.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_FEMALE, 5, 0, 0, 200;
+	end;
+}
+
+prontera,112,241,0	script	Orin::pw_orin	JOB_MAGE,{
+	mes "[Orin]";
+	mes "I'm mostly here to take notes.";
+	mes "And to stand slightly further back";
+	mes "than everyone else.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_MALE, 4, 0, 0, 200;
+	end;
+}
+
+prontera,109,243,6	script	Neris::pw_neris	JOB_SAGE,{
+	mes "[Neris]";
+	mes "Someone has to write down what went wrong.";
+	mes "Otherwise they'll all insist it went fine.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_FEMALE, 3, 0, 0, 200;
+	end;
+}
+
+//============================================================
+//= The church walk -- 233,313 to the fountain and back
+//=
+//= This was three NPCs walking together. It didn't work: each
+//= had its own generated route, and routes of different lengths
+//= (185/181/189 steps) drift apart at the same speed. Pausing
+//= to speak made it worse, since only the speaker stops. Kept
+//= as one NPC -- see the note at the top of the file on what
+//= a real group walk would need.
+//============================================================
+prontera,233,313,4	script	Aldous::pw_aldous	JOB_PRIEST,{
+	mes "[Father Aldous]";
+	mes "I walk down to the fountain and back";
+	mes "each day. It is good for the legs and";
+	mes "better for the temper.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_MALE, 6, 0, 0, 190;
+	end;
+}
+
+//============================================================
+//= The picnic -- static, spread around 49,267
+//= Facings point them inward at the blanket.
+//============================================================
+prontera,47,268,5	script	Greta::pw_greta	JOB_MERCHANT,{
+	mes "[Greta]";
+	mes "We do this every week, rain or shine.";
+	mes "Mostly shine. I've learned to check.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_FEMALE, 5, 0, 0, 200;
+	end;
+}
+
+prontera,51,268,3	script	Bo::pw_bo	JOB_SWORDMAN,{
+	mes "[Bo]";
+	mes "Off duty. Still armoured, mind.";
+	mes "Greta says that defeats the point of a";
+	mes "day off. Greta is probably right.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_MALE, 1, 0, 0, 200;
+	end;
+}
+
+prontera,47,266,7	script	Pip::pw_pip	JOB_SUPER_NOVICE,{
+	mes "[Pip]";
+	mes "There were four honey pastries.";
+	mes "Now there is one.";
+	mes "I don't want to talk about it.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_MALE, 2, 0, 0, 200;
+	end;
+}
+
+prontera,51,266,1	script	Odile::pw_odile	JOB_ACOLYTE,{
+	mes "[Odile]";
+	mes "Three generations on one blanket.";
+	mes "Someone always ends up sitting on the cake.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_FEMALE, 6, 0, 0, 200;
+	end;
+}
+
+prontera,49,265,4	script	Tam::pw_tam	JOB_SUPER_NOVICE,{
+	mes "[Tam]";
+	mes "I'm the one they send when the basket";
+	mes "runs empty. All the way across town to";
+	mes "the chef's stall and back again.";
+	next;
+	mes "[Tam]";
+	mes "One day I'll say no.";
+	mes "Today is not that day.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_MALE, 4, 0, 0, 175;
+	end;
+}

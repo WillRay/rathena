@@ -237,6 +237,6 @@ prontera,282,208,2	duplicate(PrtGuide)	East Gate-Guide	105
 
 prontera,29,200,6	duplicate(PrtGuide)	West Gate-Guide	105
 
-prontera,160,29,0	duplicate(PrtGuide)	South Gate-Guide	105
+prontera,160,34,0	duplicate(PrtGuide)	South Gate-Guide	105
 
 prontera,151,330,4	duplicate(PrtGuide)	North Gate-Guide	105

@@ -1,51 +1,262 @@
 //===== rAthena Script =======================================
-//= Stylist
+//= The Looking Glass - Prontera Salon
 //===== By: ==================================================
-//= Euphy
+//= Euphy (original 'Stylist'), reworked for this server
 //===== Current Version: =====================================
-//= 1.1
-//===== Compatible With: =====================================
-//= rAthena Project
+//= 2.0
 //===== Description: =========================================
-//= Changes your hair style, hair color, and cloth color.
+//= Paid stylist. Changes hairstyle, hair color and cloth color,
+//= previewed live on the character before the customer commits.
+//=
+//= Written as a Prontera competitor to Hair Dresser Veronica
+//= (alberta_in,55,142 - npc/pre-re/merchants/hair_style.txt), whose
+//= salon makes you pick a style blind from a catalogue. The live
+//= mirror is the whole selling point, so the dialogue leans on it.
 //===== Additional Comments: =================================
-//= 1.0 Initial script.
+//= 1.0 Initial script. [Euphy]
 //= 1.1 Switched to 'getbattleflag', credits to Saithis. [Euphy]
+//= 2.0 Reworked into a paid Prontera salon: service prices, a
+//=     discounted full makeover, a "leave it to me" random cut,
+//=     headgear handling, and an explicit way to finish. Ranges
+//=     still come from getbattleflag, so conf/battle/client.conf
+//=     remains the single place that bounds them.
 //============================================================
 
-prontera,170,180,1	script	Stylist#custom_stylist	122,{
-	setarray .@Styles[1],
-		getbattleflag("max_cloth_color"),
-		getbattleflag("max_hair_style"),
-		getbattleflag("max_hair_color");
-	setarray .@Look[1],
-		LOOK_CLOTHES_COLOR,
-		LOOK_HAIR,
-		LOOK_HAIR_COLOR;
-	set .@s, select(" ~ Cloth color: ~ Hairstyle: ~ Hair color");
-	set .@Revert, getlook(.@Look[.@s]);
-	set .@Style,1;
-	while(1) {
-		setlook .@Look[.@s], .@Style;
-		message strcharinfo(0),"This is style #"+.@Style+".";
-		set .@menu$, " ~ Next (^0055FF"+((.@Style!=.@Styles[.@s])?.@Style+1:1)+"^000000): ~ Previous (^0055FF"+((.@Style!=1)?.@Style-1:.@Styles[.@s])+"^000000): ~ Jump to...: ~ Revert to original (^0055FF"+.@Revert+"^000000)";
-		switch(select(.@menu$)) {
+prt_in,289,135,1	script	Mirabelle#custom_stylist	122,{
+
+	mes "[Mirabelle]";
+	mes "Welcome to the ^AA5599Looking Glass^000000!";
+	mes "Have a seat, the mirror's warm.";
+	next;
+
+	while (1) {
+		mes "[Mirabelle]";
+		mes "What can I do for you today?";
+		next;
+
+		switch (select(
+			" ~ Cut and style my hair. (^0055FF"+callfunc("F_InsertComma",.Price_Hair)+"z^000000)",
+			" ~ Just a colour, please. (^0055FF"+callfunc("F_InsertComma",.Price_Color)+"z^000000)",
+			" ~ Dye my clothes. (^0055FF"+callfunc("F_InsertComma",.Price_Cloth)+"z^000000)",
+			" ~ The works. (^0055FF"+callfunc("F_InsertComma",.Price_Combo)+"z^000000)",
+			" ~ Surprise me. (^0055FF"+callfunc("F_InsertComma",.Price_Random)+"z^000000)",
+			" ~ Why not Veronica's?",
+			" ~ Nothing today.")) {
+
 		case 1:
-			set .@Style, ((.@Style != .@Styles[.@s]) ? .@Style+1 : 1);
+			setarray .@Queue[0], 1;
+			set .@Cost, .Price_Hair;
 			break;
 		case 2:
-			set .@Style, ((.@Style != 1) ? .@Style-1 : .@Styles[.@s]);
+			setarray .@Queue[0], 2;
+			set .@Cost, .Price_Color;
 			break;
 		case 3:
-			message strcharinfo(0),"Choose a style between 1 - "+.@Styles[.@s]+".";
-			input .@Style,0,.@Styles[.@s];
-			if (!.@Style)
-				set .@Style, rand(1,.@Styles[.@s]);
+			setarray .@Queue[0], 3;
+			set .@Cost, .Price_Cloth;
 			break;
 		case 4:
-			set .@Style, .@Revert;
-			setlook .@Look[.@s], .@Revert;
+			setarray .@Queue[0], 1, 2, 3;
+			set .@Cost, .Price_Combo;
 			break;
+
+		case 5:
+			// Rui Vishop's shtick, done properly: no catalogue, no
+			// preview, cheap because the customer takes the risk.
+			mes "[Mirabelle]";
+			mes "Ohh, a brave one.";
+			mes "No mirror, no take-backs, and";
+			mes "you walk out with whatever I";
+			mes "decide suits you. Half price.";
+			next;
+			if (Zeny < .Price_Random) {
+				mes "[Mirabelle]";
+				mes "...for "+callfunc("F_InsertComma",.Price_Random)+" zeny, which you";
+				mes "don't have. Come back richer.";
+				next;
+				continue;
+			}
+			if (select(" ~ Do your worst.: ~ On second thought...") == 2) {
+				mes "[Mirabelle]";
+				mes "Wise. Boring, but wise.";
+				next;
+				continue;
+			}
+			callsub S_Headgear;
+			set Zeny, Zeny - .Price_Random;
+			setlook LOOK_HAIR, rand(1, getbattleflag("max_hair_style"));
+			setlook LOOK_HAIR_COLOR, rand(1, getbattleflag("max_hair_color"));
+			mes "[Mirabelle]";
+			mes "^333333*snip snip snip*^000000";
+			next;
+			mes "[Mirabelle]";
+			mes "There. Don't look at me like";
+			mes "that, it grows on you.";
+			mes "Usually.";
+			next;
+			continue;
+
+		case 6:
+			mes "[Mirabelle]";
+			mes "Veronica? Lovely woman.";
+			mes "Terrible method.";
+			next;
+			mes "[Mirabelle]";
+			mes "She sits you down, hands you a";
+			mes "catalogue, and asks you to pick";
+			mes "a number. A ^0055FFnumber^000000! Then she";
+			mes "cuts, and *then* you find out";
+			mes "what you agreed to.";
+			next;
+			mes "[Mirabelle]";
+			mes "And that Vishop man loitering";
+			mes "outside her door is worse. He";
+			mes "won't even tell you the number.";
+			mes "He just decides for you.";
+			next;
+			mes "[Mirabelle]";
+			mes "Here, you sit in front of the";
+			mes "glass and you ^AA5599watch^000000. Every";
+			mes "change, on you, before you pay";
+			mes "me a single zeny more.";
+			next;
+			mes "[Mirabelle]";
+			mes "If you hate it, we keep going";
+			mes "until you don't. That's the";
+			mes "whole trick. It isn't a trick.";
+			next;
+			continue;
+
+		case 7:
+			mes "[Mirabelle]";
+			mes "Then shoo. The mirror's for";
+			mes "paying customers.";
+			close;
 		}
+
+		// --- payment, once, up front -----------------------------
+		// setlook applies instantly and can't be un-applied if the
+		// player closes the window mid-preview, so the fee is taken
+		// before any preview begins.
+		if (Zeny < .@Cost) {
+			mes "[Mirabelle]";
+			mes "That's "+callfunc("F_InsertComma",.@Cost)+" zeny, and you're";
+			mes "carrying "+callfunc("F_InsertComma",Zeny)+".";
+			next;
+			mes "[Mirabelle]";
+			mes "I don't do credit. Ask the";
+			mes "Merchants outside, they love";
+			mes "being asked.";
+			next;
+			continue;
+		}
+		// Only hair is hidden by a hat; a clothes dye doesn't care.
+		if (.@Queue[0] != 3)
+			callsub S_Headgear;
+		set Zeny, Zeny - .@Cost;
+		mes "[Mirabelle]";
+		mes "Paid up. Now watch the glass,";
+		mes "and tell me when you're happy.";
+		next;
+
+		// --- preview loop, one pass per booked service ------------
+		for (set .@q, 0; .@q < getarraysize(.@Queue); set .@q, .@q + 1) {
+			set .@s, .@Queue[.@q];
+			set .@Max, getbattleflag(.Flag$[.@s]);
+			set .@Revert, getlook(.Look[.@s]);
+			set .@Style, 1;
+			set .@Done, 0;
+
+			mes "[Mirabelle]";
+			mes "^AA5599"+.Service$[.@s]+"^000000, then.";
+			if (.@Max <= 1) {
+				// Cloth palettes are thin for some jobs; don't pretend
+				// there's a choice when there isn't one.
+				mes "...though your outfit only takes";
+				mes "the one shade. Nothing I can do";
+				mes "about that, sorry.";
+				next;
+				continue;
+			}
+			mes "Say the word and I'll change it.";
+			next;
+
+			while (!.@Done) {
+				setlook .Look[.@s], .@Style;
+				message strcharinfo(0), .Service$[.@s]+" #"+.@Style+" of "+.@Max+".";
+
+				set .@menu$,
+					" ~ Next (^0055FF"+((.@Style != .@Max) ? .@Style+1 : 1)+"^000000)"+
+					": ~ Previous (^0055FF"+((.@Style != 1) ? .@Style-1 : .@Max)+"^000000)"+
+					": ~ Show me number...: ~ Put it back (^0055FF"+.@Revert+"^000000)"+
+					": ~ ^AA5599This one. I love it.^000000";
+
+				switch (select(.@menu$)) {
+				case 1:
+					set .@Style, ((.@Style != .@Max) ? .@Style+1 : 1);
+					break;
+				case 2:
+					set .@Style, ((.@Style != 1) ? .@Style-1 : .@Max);
+					break;
+				case 3:
+					message strcharinfo(0), "Pick 1 - "+.@Max+", or 0 and I'll choose.";
+					input .@Style, 0, .@Max;
+					if (!.@Style)
+						set .@Style, rand(1, .@Max);
+					break;
+				case 4:
+					set .@Style, .@Revert;
+					break;
+				case 5:
+					set .@Done, 1;
+					break;
+				}
+			}
+		}
+
+		mes "[Mirabelle]";
+		mes "Gorgeous. Go on, one more look.";
+		next;
+		mes "[Mirabelle]";
+		mes "And tell them in Alberta where";
+		mes "you had it done.";
+		next;
 	}
+	end;
+
+// Headgear hides the hair, which makes the mirror useless. Veronica's
+// apprentice in Lighthalzen solves this with 'nude'; stripping a customer
+// to their underwear is a bit much, so ask about the hat only.
+S_Headgear:
+	if (getequipid(EQI_HEAD_TOP) < 1)
+		return;
+	mes "[Mirabelle]";
+	mes "The hat, dear. I can't work";
+	mes "around it and you can't see";
+	mes "past it.";
+	next;
+	if (select(" ~ Take it off.: ~ I'd rather keep it on.") == 1) {
+		unequip EQI_HEAD_TOP;
+		mes "[Mirabelle]";
+		mes "Thank you. It's safe on the";
+		mes "hook, I promise.";
+	} else {
+		mes "[Mirabelle]";
+		mes "Suit yourself. Don't complain";
+		mes "that you can't see anything.";
+	}
+	next;
+	return;
+
+OnInit:
+	set .Price_Hair,   10000;
+	set .Price_Color,   5000;
+	set .Price_Cloth,  50000;
+	set .Price_Combo,  55000;	// all three, cheaper than 65,000 separately
+	set .Price_Random,  5000;	// no preview, no refunds
+
+	setarray .Look[1],     LOOK_HAIR,         LOOK_HAIR_COLOR,   LOOK_CLOTHES_COLOR;
+	setarray .Flag$[1],    "max_hair_style",  "max_hair_color",  "max_cloth_color";
+	setarray .Service$[1], "Hairstyle",       "Hair colour",     "Clothing colour";
+	end;
 }

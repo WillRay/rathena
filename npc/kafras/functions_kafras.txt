@@ -616,7 +616,7 @@ function	script	F_KafSet	{
 
 	.@map$ = strnpcinfo(4);
 
-	if (.@map$ == "prontera") {
+	if (.@map$ == "prontera" || .@map$ == "prt_in") {
 		if (ep13_ryu > 8)
 			setarray @wrpD$[0], "Izlude", "Geffen", "Payon", "Morocc", "Orc Dungeon", "Alberta", "Midgard Expedition Camp";
 		else

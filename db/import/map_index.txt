@@ -16,4 +16,6 @@
 //
 //mymap	1250
 //mymap-2
-verdant_pro	1255
+// Verdant Prontera (custom test map). Base map_index.txt uses 1-1295,
+// so start customs at 1300 to avoid overriding an official map.
+verdant_pro	1300
