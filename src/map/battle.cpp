@@ -1296,9 +1296,10 @@ bool battle_status_block_damage(block_list *src, block_list *target, status_chan
 			else
 				damage = -sce->val2;
 		}
-		// Pressure usually won't reach this code in pre-renewal and does consequently not remove Kyrie
-		// But it's still coded to do that - this reflects how it is done officially
-		if ((--sce->val3) <= 0 || (sce->val2 <= 0) || skill_id == AL_HOLYLIGHT || skill_id == PA_PRESSURE)
+		// Crusader rebalance: Judgement (PA_PRESSURE) no longer strips Kyrie Eleison. That was
+		// part of the old "Pressure bypasses everything" design; the reworked skill is an
+		// ordinary hit plus a holy burn, and Kyrie blocks it like anything else.
+		if ((--sce->val3) <= 0 || (sce->val2 <= 0) || skill_id == AL_HOLYLIGHT)
 			status_change_end(target, SC_KYRIE);
 	}
 
@@ -1701,6 +1702,19 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 	switch (skill_id) {
 #ifndef RENEWAL
 		case PA_PRESSURE:
+			// Crusader rebalance: Judgement still bypasses Pneuma, Safety Wall and every other
+			// reduction below, but it no longer ignores siege scaling. The IgnoreGvgReduction /
+			// IgnoreBgReduction flags are cleared in db/import/skill_db.yml so these calls bite.
+			// Its holy burn is reduced the same way, at cast time, in judgement.cpp.
+			if (battle_config.pk_mode == 1 && map_getmapflag(bl->m, MF_PVP) > 0)
+				damage = battle_calc_pk_damage(*src, *bl, damage, skill_id, flag);
+
+			if (map_flag_gvg2(bl->m))
+				damage = battle_calc_gvg_damage(src, bl, damage, skill_id, flag);
+			else if (map_getmapflag(bl->m, MF_BATTLEGROUND))
+				damage = battle_calc_bg_damage(src, bl, damage, skill_id, flag);
+
+			return damage;
 		case HW_GRAVITATION:
 #endif
 		case SP_SOULEXPLOSION:
@@ -9062,6 +9076,7 @@ static const struct _battle_data {
 	{ "mob_unlock_time",                    &battle_config.mob_unlock_time,                 2000,   0,      INT_MAX,        },
 	{ "map_edge_size",                      &battle_config.map_edge_size,                   15,     1,      40,             },
 	{ "randomize_center_cell",              &battle_config.randomize_center_cell,           1,      0,      1,              },
+	{ "mob_leash_radius",                   &battle_config.mob_leash_radius,                15,     1,      512,            },
 
 	{ "feature.stylist",                    &battle_config.feature_stylist,                 1,      0,      1,              },
 	{ "feature.banking_state_enforce",      &battle_config.feature_banking_state_enforce,   0,      0,      1,              },

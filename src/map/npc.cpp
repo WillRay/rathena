@@ -5628,6 +5628,17 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			}
 			break;
 
+		case MF_MOBLEASH: {
+				union u_mapflag_args args = {};
+
+				// The radius is optional; 0 makes map_setmapflag fall back to 'mob_leash_radius'
+				if (!state || w4 == nullptr || sscanf(w4, "%11d", &args.flag_val) != 1)
+					args.flag_val = 0;
+
+				map_setmapflag_sub(m, mapflag, state, &args);
+			}
+			break;
+
 		// All others do not need special treatment
 		default:
 			map_setmapflag(m, mapflag, state);

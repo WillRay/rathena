@@ -1,0 +1,25 @@
+//===== rAthena Script =======================================
+//= hem_fild - Poring test spawn for the 'mobleash' mapflag
+//===== Description: =========================================
+//= Test bed for the mobleash mapflag. Without it, these
+//= porings random-walk 7 cells at a time from wherever they
+//= currently stand and smear across the whole lake within an
+//= hour. With it they stay in the box below.
+//=
+//= Target box is x 180-200, y 1-20, which is open shallow
+//= water at the south end of the lake (gat 3, walkable).
+//= Rows y 0-2 are wall, so the usable floor is y 3-20.
+//=
+//= The roam box is the spawn spread plus the leash radius:
+//=   x: centers 190+/-(6-1) = 185-195, radius max(5,5) = 5
+//=      -> x 180-200
+//=   y: centers  11+/-(5-1) =   7-15,  radius max(5,4) = 5
+//=      -> y 2-20
+//= Both land inside the requested area. The x and y spans of
+//= the request differ in parity (21 vs 20 cells), so ys is 5
+//= rather than 6 to keep the box from overshooting y 20.
+//============================================================
+
+hem_fild,190,11,6,5	monster	Poring	1002,50,5000
+
+hem_fild	mapflag	mobleash	5

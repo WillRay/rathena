@@ -766,6 +766,7 @@ struct Battle_Config
 	int32 mob_unlock_time;
 	int32 map_edge_size;
 	int32 randomize_center_cell;
+	int32 mob_leash_radius;
 
 	int32 feature_stylist;
 	int32 feature_banking_state_enforce;

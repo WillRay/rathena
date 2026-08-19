@@ -1667,6 +1667,58 @@ int32 mob_unlocktarget(mob_data *md, t_tick tick)
 
 	return 0;
 }
+/**
+ * Determine the leash box of a monster on a map with the 'mobleash' mapflag.
+ * The box is centered on the monster's personal spawn cell and is the larger of
+ * its own spawn area and the radius configured on the mapflag, so that a
+ * monster can never be leashed tighter than the area it spawns in.
+ * @param md: Monster to check
+ * @param rx: Returned leash radius on the x axis
+ * @param ry: Returned leash radius on the y axis
+ * @return true if the monster is leashed, false if it may roam the whole map
+ */
+static bool mob_getleash(mob_data *md, int32 *rx, int32 *ry)
+{
+	nullpo_retr(false, md);
+
+	int32 radius = map_getmapflag(md->m, MF_MOBLEASH);
+
+	if (radius <= 0)
+		return false; // Mapflag not set on this map
+
+	// Slaves belong to their master, not to a spawn point
+	if (md->master_id != 0)
+		return false;
+
+	// Map-wide spawn lines (0,0) have no meaningful home cell
+	if (md->spawn != nullptr && (md->spawn->xs == 0 || md->spawn->ys == 0))
+		return false;
+
+	// Neither do monsters summoned at a random position
+	if (md->centerX <= 0 || md->centerY <= 0)
+		return false;
+
+	*rx = radius;
+	*ry = radius;
+
+	// Never leash a monster inside its own spawn area
+	if (md->spawn != nullptr) {
+		*rx = max(*rx, md->spawn->xs - 1);
+		*ry = max(*ry, md->spawn->ys - 1);
+	}
+
+	return true;
+}
+
+/**
+ * Measure how far a cell lies outside a leash box.
+ * @return <= 0 if the cell is inside the box, otherwise the number of cells it overshoots by
+ */
+static int32 mob_leash_overshoot(int32 x, int32 y, int32 cx, int32 cy, int32 rx, int32 ry)
+{
+	return max(abs(x - cx) - rx, abs(y - cy) - ry);
+}
+
 /*==========================================
  * Random walk
  *------------------------------------------*/
@@ -1674,6 +1726,8 @@ int32 mob_randomwalk(mob_data *md,t_tick tick)
 {
 	const int32 d=7;
 	int32 i,r,rdir,dx,dy,max;
+	int32 leash_rx = 0, leash_ry = 0, leash_now = 0;
+	bool leashed;
 
 	nullpo_ret(md);
 
@@ -1693,6 +1747,13 @@ int32 mob_randomwalk(mob_data *md,t_tick tick)
 	md->ud.state.attack_continue = 0;
 	md->ud.target_to = 0;
 
+	// How far the monster currently sits outside its leash box, if it is leashed at all.
+	// A monster dragged out by a chase is not teleported back; it simply only accepts
+	// cells that bring it closer to home until it is inside the box again.
+	leashed = mob_getleash(md, &leash_rx, &leash_ry);
+	if (leashed)
+		leash_now = mob_leash_overshoot(md->x, md->y, md->centerX, md->centerY, leash_rx, leash_ry);
+
 	r=rnd();
 	rdir=rnd()%4; // Randomize direction in which we iterate to prevent monster cluttering up in one corner
 	dx=r%(d*2+1)-d;
@@ -1701,7 +1762,11 @@ int32 mob_randomwalk(mob_data *md,t_tick tick)
 	for(i=0;i<max;i++){	// Search of a movable place
 		int32 x = dx + md->x;
 		int32 y = dy + md->y;
-		if(((x != md->x) || (y != md->y)) && map_getcell(md->m,x,y,CELL_CHKPASS) && unit_walktoxy(md,x,y,0)){
+		// Cells outside the leash box are only accepted while they bring the monster
+		// closer to home, so a leashed monster walks itself back after a chase
+		int32 over = leashed ? mob_leash_overshoot(x,y,md->centerX,md->centerY,leash_rx,leash_ry) : 0;
+		if((over <= 0 || over < leash_now) &&
+		   ((x != md->x) || (y != md->y)) && map_getcell(md->m,x,y,CELL_CHKPASS) && unit_walktoxy(md,x,y,0)){
 			break;
 		}
 		// Could not move to cell, try the 7th cell in direction randomly decided by rdir

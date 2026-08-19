@@ -4920,6 +4920,15 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			} else
 				mapdata->setMapFlag(mapflag, false);
 			break;
+		case MF_MOBLEASH:
+			if (status) {
+				nullpo_retr(false, args);
+
+				// No radius given: fall back to the server default
+				mapdata->setMapFlag(mapflag, ((args->flag_val <= 0) ? battle_config.mob_leash_radius : cap_value(args->flag_val, 1, 512)));
+			} else
+				mapdata->setMapFlag(mapflag, false);
+			break;
 		case MF_BATTLEGROUND:
 			if (status) {
 				nullpo_retr(false, args);
