@@ -1456,6 +1456,7 @@ Body:
       NoAuction: true
 
 # Lava Leather set - mag_dun03 (Nogg Road 3F) drops
+# Tidal set        - iz_dun05 (Undersea Tunnel F6) drops
 #=============================================================
 # Back-ported from db/re/item_db_equip.yml:74851-74910 (armors),
 # :115246-115310 (garments), :121705-121763 (shoes).
@@ -1483,9 +1484,33 @@ Body:
 #
 # ArmorLevel is omitted throughout - it parses but does nothing
 # without RENEWAL.
+#
+# Four of the nine pieces were later moved off mag_dun03 and onto
+# iz_dun05, and renamed to the Tidal set to match the map:
+#
+#    15378  Lava Leather Armor   -> Tidal Armor    (Tidal_Armor)
+#    15379  Lava Leather Suit    -> Tidal Suits    (Tidal_Suits)
+#    20936  Lava Leather Muffler -> Tidal Muffler  (Tidal_Muffler)
+#    20937  Lava Leather Hood    -> Tidal Hood     (Tidal_Hood)
+#
+# Names only. Every stat, script, weight, Defense and refine tier
+# below is exactly what it was as a Lava Leather piece, and the
+# ids are unchanged. They stay in this block rather than move to
+# one of their own because the ids interleave with the five
+# pieces that are still mag_dun03 drops.
+#
+# The AegisName change is safe: nothing outside this file and
+# db/import/mob_db.yml referenced the old names. The remaining
+# hits in db/re/item_combos.yml, db/re/laphine_upgrade.yml and
+# db/re/item_db_equip.yml are renewal-only files this
+# pre-renewal server never loads (src/config/renewal.hpp defines
+# PRERE).
+#
+# Client side: D:\Client\SystemEN\itemInfo_C.lua carries the
+# matching identifiedDisplayName and tooltip for all four.
   - Id: 15378
-    AegisName: Lava_Leather_Armor
-    Name: Lava Leather Armor
+    AegisName: Tidal_Armor
+    Name: Tidal Armor
     Type: Armor
     Buy: 50000
     Weight: 1000
@@ -1502,8 +1527,8 @@ Body:
       if (.@r>=9)
          bonus bDef,1;
   - Id: 15379
-    AegisName: Lava_Leather_Suits
-    Name: Lava Leather Suit
+    AegisName: Tidal_Suits
+    Name: Tidal Suits
     Type: Armor
     Buy: 50000
     Weight: 700
@@ -1558,8 +1583,8 @@ Body:
       if (.@r>=10)
          bonus bDelayrate,-3;
   - Id: 20936
-    AegisName: Lava_Leather_Muffler
-    Name: Lava Leather Muffler
+    AegisName: Tidal_Muffler
+    Name: Tidal Muffler
     Type: Armor
     Buy: 50000
     Weight: 250
@@ -1578,8 +1603,8 @@ Body:
       if (.@r>=10)
          bonus bAtkRate,3;
   - Id: 20937
-    AegisName: Lava_Leather_Hode
-    Name: Lava Leather Hood
+    AegisName: Tidal_Hood
+    Name: Tidal Hood
     Type: Armor
     Buy: 50000
     Weight: 200

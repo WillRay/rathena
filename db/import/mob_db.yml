@@ -368,16 +368,35 @@ Body:
 #    drops use item_rate_equip_boss, which is also 1000 - so those
 #    are 20% each, not 2%.
 #
-#  * Cards: the Firm_* (27346-27353) cards are not created at
-#    all. Each mob drops a shadow card instead, matching the
-#    convention already used by 256 monsters in pre-re/mob_db.yml
-#    - EXCEPT for the two weapon-slot ones. Weapon cards on this
-#    server are regular cards, not shadow cards, so Rigid Kaho
-#    and Rigid Lava Golem drop the plain Kaho_Card (4065) and
-#    Lava_Golem_Card (4184), both of which already exist in
-#    pre-renewal and in the client.
-#    Four shadow cards already existed; 30452, 30455 and 30456
-#    are new.
+#  * Four of the nine Lava Leather pieces have since been moved
+#    off this map and onto iz_dun05, renamed to the Tidal set:
+#    Lava Leather Armor -> Tidal Armor (15378), Lava Leather
+#    Suit -> Tidal Suits (15379), Lava Leather Muffler -> Tidal
+#    Muffler (20936), Lava Leather Hood -> Tidal Hood (20937).
+#    Stats are untouched; see the header in
+#    db/import/item_db.yml. The mobs below lost these drops:
+#    Rigid Blazer (Suits), Rigid Earth Deleter (Armor), Rigid
+#    Kaho (Hood), Rigid Lava Golem (Muffler), and Rigid
+#    Muspellskoll (Suits + Armor, keeping the Robe). Rigid Earth
+#    Deleter is now the one mob on this map with no gear drop -
+#    it still carries its own card, Bradium and Carnium.
+#
+#  * Cards: every Rigid mob drops its OWN card - no Rigid mob
+#    shares a card with the classic monster it is a palette of.
+#    Six of the eight get a new shadow card (30452, 30455-30459
+#    in db/import/item_db_card_shadows.yml), matching the
+#    convention already used by 256 monsters in pre-re/mob_db.yml.
+#    The two weapon-slot ones are the exception: weapon cards on
+#    this server are regular cards, not shadow cards, so Rigid
+#    Kaho and Rigid Lava Golem drop Firm_Kaho_Card (27347) and
+#    Firm_Lava_G_Card (27348) from db/import/item_db_cards.yml,
+#    keeping their renewal ids. Every card carries the effect of
+#    the renewal Firm_* card verbatim.
+#
+#    Previously five of the eight dropped a card that already
+#    belonged to another monster - Nightmare Terror (1379),
+#    Deleter (1384), Deleter_ (1385), Kaho (1072) and Lava Golem
+#    (1366) all still drop those same cards in pre-re/mob_db.yml.
 #
 # Mob IDs are deliberately unchanged - a mob's view id is its mob
 # id, and the client already maps 20372-20419 to the *_mj sprites
@@ -424,9 +443,6 @@ Body:
         Rate: 700
       - Item: Bradium
         Rate: 80
-      - Item: Lava_Leather_Suits
-        Rate: 40
-        RandomOptionGroup: Armor
       - Item: Lava_Leather_Shoes
         Rate: 40
         RandomOptionGroup: Shoes
@@ -479,7 +495,7 @@ Body:
         RandomOptionGroup: Garment
       - Item: Carnium
         Rate: 80
-      - Item: S_Card_4166
+      - Item: S_Card_Firm_Nightmare_T
         Rate: 1
         StealProtected: true
   - Id: 20374
@@ -526,10 +542,7 @@ Body:
         RandomOptionGroup: Armor
       - Item: Carnium
         Rate: 80
-      # Renewal has this mob drop Firm_Deleter2_Card, whose display
-      # name is "Rigid Sky Deleter Card" - the AegisName numbering
-      # is offset but the name matches the mob. Mapped by name.
-      - Item: S_Card_4158
+      - Item: S_Card_Firm_Deleter2
         Rate: 1
         StealProtected: true
   - Id: 20375
@@ -571,12 +584,9 @@ Body:
         Rate: 820
       - Item: Bradium
         Rate: 80
-      - Item: Lava_Leather_Armor
-        Rate: 40
-        RandomOptionGroup: Armor
       - Item: Carnium
         Rate: 80
-      - Item: S_Card_4279
+      - Item: S_Card_Firm_Deleter1
         Rate: 1
         StealProtected: true
   - Id: 20376
@@ -667,14 +677,12 @@ Body:
         Rate: 50
       - Item: Bradium
         Rate: 80
-      - Item: Lava_Leather_Hode
-        Rate: 40
-        RandomOptionGroup: Garment
       # Weapon-slot cards on this server are regular cards, not
       # shadow cards - see db/import/item_db_cards.yml, where the
       # Right_Hand cards keep Type: Card while everything else was
-      # retyped to Shadowgear. Kaho_Card (4065) is the default.
-      - Item: Kaho_Card
+      # retyped to Shadowgear. Firm_Kaho_Card (27347) is
+      # defined at the end of that file.
+      - Item: Firm_Kaho_Card
         Rate: 1
         StealProtected: true
   - Id: 20378
@@ -714,16 +722,13 @@ Body:
         Rate: 625
       - Item: Bradium
         Rate: 80
-      - Item: Lava_Leather_Muffler
-        Rate: 40
-        RandomOptionGroup: Garment
       - Item: Lava_Leather_Boots
         Rate: 40
         RandomOptionGroup: Shoes
       - Item: Carnium
         Rate: 80
       # Weapon slot - regular card, not a shadow card.
-      - Item: Lava_Golem_Card
+      - Item: Firm_Lava_G_Card
         Rate: 1
         StealProtected: true
   - Id: 20419
@@ -782,13 +787,7 @@ Body:
         Rate: 3500
       - Item: Carnium
         Rate: 50
-      - Item: Lava_Leather_Suits
-        Rate: 200
-        RandomOptionGroup: Armor
       - Item: Lava_Leather_Robe
-        Rate: 200
-        RandomOptionGroup: Armor
-      - Item: Lava_Leather_Armor
         Rate: 200
         RandomOptionGroup: Armor
       - Item: S_Card_Firm_Muspell
@@ -846,9 +845,31 @@ Body:
 #    shadow cards at the canonical id + 26000 (30523-30525,
 #    db/import/item_db_card_shadows.yml) so
 #    npc/custom/card_merchant.txt's base-id arithmetic keeps
-#    working. No new equipment is added by this dungeon -
-#    Sedora's Tidal_Shoes is an existing pre-re item and is the
-#    only gear drop, at a raised rate.
+#    working.
+#
+#  * Equipment. This dungeon originally dropped no new gear -
+#    Sedora's Tidal_Shoes was the only piece, an existing pre-re
+#    item at a raised rate. Four pieces of the mag_dun03 Lava
+#    Leather set were then moved here and renamed to match:
+#
+#      Tidal Suits   (15379, Armor)   Sedora        Rate  40
+#      Tidal Hood    (20937, Garment) Sropho        Rate  40
+#      Tidal Muffler (20936, Garment) Pot Dofle     Rate  40
+#      Tidal Armor   (15378, Armor)   King Dramoh   Rate  20
+#      Tidal Suits + Tidal Armor      Kraken        Rate 200
+#
+#    Rate 40 on a field mob is 2% effective after item_rate_equip
+#    (1000, conf/import/battle_conf.txt) - the same rate they had
+#    on mag_dun03. King Dramoh is Class: Boss, so its roll goes
+#    through item_rate_equip_boss (also 1000) and Rate 20 lands
+#    on the same 2%. Kraken's 200 is 20%, matching what Rigid
+#    Muspellskoll gave for the same two armors. Each mob is at
+#    exactly MAX_MOB_DROP (10) now, so nothing more fits without
+#    dropping something.
+#
+#    The pairing is by role: Sropho is the caster and takes the
+#    cast-time garment, Sedora already anchors the Tidal name via
+#    the shoes, and the ATK/DEF armor sits on the boss.
 #
 # 2206 KRAKEN_LEG is defined but never spawned by the script -
 # Kraken summons it via NPC_SUMMONSLAVE, so it has to exist.
@@ -892,13 +913,19 @@ Body:
         Rate: 2500
       - Item: Chinese_Ink
         Rate: 1500
-      # Renewal drops these shoes at Rate 3. This is the only
-      # gear this dungeon drops, so it is raised to 30 - twice
-      # what Ragged Zombie already gives (db/pre-re/mob_db.yml).
-      # The item itself is untouched; it stays a level 55 piece.
+      # Renewal drops these shoes at Rate 3, raised to 30 here -
+      # twice what Ragged Zombie already gives (db/pre-re/mob_db.yml).
+      # The item itself is untouched; it stays a level 55 piece, and
+      # it is what the Tidal set below is named after.
       - Item: Tidal_Shoes
         Rate: 30
         RandomOptionGroup: Shoes
+      # Moved here from mag_dun03 - see the Tidal set note in the
+      # header above. Rate 40 is the rate it carried there, and the
+      # same 2% effective after item_rate_equip (1000).
+      - Item: Tidal_Suits
+        Rate: 40
+        RandomOptionGroup: Armor
       - Item: Carnium
         Rate: 80
       - Item: Crystal_Blue
@@ -964,6 +991,11 @@ Body:
         Rate: 2
       - Item: Electric_Wire
         Rate: 2
+      # Moved here from mag_dun03 (Rigid Kaho). Sropho is this
+      # map's caster, so the cast-time garment sits on it.
+      - Item: Tidal_Hood
+        Rate: 40
+        RandomOptionGroup: Garment
       # Weapon slot - regular card, not a shadow card. 4522 is
       # created in db/import/item_db_cards.yml and carries the
       # Crystallization effect.
@@ -1017,6 +1049,10 @@ Body:
         Rate: 5
       - Item: Gold
         Rate: 1
+      # Moved here from mag_dun03 (Rigid Lava Golem).
+      - Item: Tidal_Muffler
+        Rate: 40
+        RandomOptionGroup: Garment
       - Item: S_Card_4523
         Rate: 1
         StealProtected: true
@@ -1071,6 +1107,13 @@ Body:
         Rate: 25
       - Item: Crystal_Blue
         Rate: 25
+      # Moved here from mag_dun03 (Rigid Earth Deleter). King Dramoh
+      # is Class: Boss, so this rolls against item_rate_equip_boss
+      # (also 1000) - Rate 20 is therefore the same 2% effective the
+      # piece had on a field mob, not half of it.
+      - Item: Tidal_Armor
+        Rate: 20
+        RandomOptionGroup: Armor
       - Item: S_Card_4524
         Rate: 1
         StealProtected: true
@@ -1185,6 +1228,16 @@ Body:
       # Renewal drops Shadowdecon (25729) here at Rate 50.
       - Item: Bradium
         Rate: 80
+      # Moved here from Rigid Muspellskoll, which dropped these two
+      # plus Lava Leather Robe at 200. It keeps the Robe; the other
+      # two come to this map's MVP so the pair stay peers. Rate 200
+      # against item_rate_equip_boss (1000) is 20% each.
+      - Item: Tidal_Suits
+        Rate: 200
+        RandomOptionGroup: Armor
+      - Item: Tidal_Armor
+        Rate: 200
+        RandomOptionGroup: Armor
       - Item: S_Card_4525
         Rate: 1
         StealProtected: true
@@ -2252,3 +2305,422 @@ Body:
 #      - Item: Zombie_Master_Card
 #        Rate: 1
 #        StealProtected: true
+
+# ============================================================
+# Ruined Geffen Act 0 - Geffen Magic Tournament duelists
+# npc/custom/quests/ch1_act0_tournament.txt
+#
+# SPRITES. Monster IDs and NPC sprite IDs share one job-ID space
+# client-side, so a mob whose Id is a sprite ID renders as that
+# sprite with no client edit. Both IDs below are confirmed in
+# D:\Client luafiles514/lua files/datainfo/npcidentity.lub.
+#
+# BUT: rAthena rejects any monster ID outside 1000-3999 or
+# 20020-31999 (MIN_MOB_DB, mob.cpp:61). The 4_GEFFEN_* sprites
+# are 665-682 and CANNOT be monster IDs. Gravity duplicated the
+# same tournament artwork into 2549-2562 as GEFFEN_MAGE_*
+# exactly so it could be used for monsters - use that range.
+#
+# THE ROSTER IS CANON. These are the official Geffen Magic
+# Tournament fighters, taken from db/re/mob_db.yml - which does
+# NOT load on this pre-renewal server, so they have to be copied
+# here to exist at all. Names, sprites and skill kits are
+# Gravity's; the numbers below are not (see TUNING).
+#
+# Ladder order, matching the Marshal's table in the script:
+#   1  2549  Arhi                     the open-heats novice
+#   2  2550  Dio Anemos               academy truant
+#   3  2551/2552/2553  street thug    ONE of the three, at random
+#   4  2554  Faymont                  Prontera's pride
+#   5  2555  Ordre                    caster
+#   6  2556  Blut Hase                the bruiser
+#   7  2561  Elarion                  never dies, walks out
+#
+# TUNING. Per this server's convention: high HP and frequent
+# low-level casts, never raw ATK. The official entries are
+# RENEWAL scale - 100,000 to 1,000,000 HP at levels 90-120 -
+# against an 80-99 pre-renewal solo band, so HP and Level are
+# pulled down hard and ATK is pulled down with them. The official
+# SKILL kits needed no such treatment: they are already Firebolt
+# 5, Firewall 1, Frost Diver 5, Stone Curse 5, Grand Cross 5.
+#
+# Two further departures from the official entries:
+#   - Ai is 21 throughout, not 04, matching Elarion below and the
+#     duelists these replaced.
+#   - Blut Hase is NEUTRAL. Official has him Ghost 2, which cuts
+#     neutral physical damage to a quarter - fine for an optional
+#     renewal boss, not for a mandatory story round that a
+#     Knight has to be able to finish.
+#
+# No drops on any of them - it is a duel, not a hunt.
+# ============================================================
+  - Id: 2549
+    AegisName: GEFFEN_MAGE_1
+    Name: Arhi
+    Level: 80
+    Hp: 20000
+    BaseExp: 1800
+    JobExp: 1350
+    Attack: 240
+    Attack2: 300
+    Defense: 40
+    MagicDefense: 25
+    Str: 50
+    Agi: 50
+    Vit: 50
+    Int: 50
+    Dex: 110
+    Luk: 50
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 864
+    ClientAttackMotion: 672
+    DamageMotion: 480
+    Ai: 21
+  - Id: 2550
+    AegisName: GEFFEN_MAGE_2
+    Name: Dio Anemos
+    Level: 82
+    Hp: 26000
+    BaseExp: 2200
+    JobExp: 1650
+    Attack: 320
+    Attack2: 420
+    Defense: 55
+    MagicDefense: 20
+    Str: 40
+    Agi: 40
+    Vit: 50
+    Int: 80
+    Dex: 120
+    Luk: 60
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 900
+    AttackMotion: 672
+    ClientAttackMotion: 480
+    DamageMotion: 480
+    Ai: 21
+  - Id: 2551
+    AegisName: GEFFEN_MAGE_3_1
+    Name: Geffen Shoplifter
+    Level: 84
+    Hp: 32000
+    BaseExp: 2600
+    JobExp: 1950
+    Attack: 380
+    Attack2: 480
+    Defense: 50
+    MagicDefense: 30
+    Str: 70
+    Agi: 70
+    Vit: 40
+    Int: 40
+    Dex: 130
+    Luk: 60
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 800
+    AttackMotion: 672
+    ClientAttackMotion: 480
+    DamageMotion: 480
+    Ai: 21
+  - Id: 2552
+    AegisName: GEFFEN_MAGE_3_2
+    Name: Geffen Bully
+    Level: 84
+    Hp: 32000
+    BaseExp: 2600
+    JobExp: 1950
+    Attack: 380
+    Attack2: 480
+    Defense: 55
+    MagicDefense: 30
+    Str: 70
+    Agi: 50
+    Vit: 70
+    Int: 40
+    Dex: 130
+    Luk: 40
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 900
+    AttackMotion: 672
+    ClientAttackMotion: 480
+    DamageMotion: 480
+    Ai: 21
+  - Id: 2553
+    AegisName: GEFFEN_MAGE_3_3
+    Name: Geffen Gang Member
+    Level: 84
+    Hp: 32000
+    BaseExp: 2600
+    JobExp: 1950
+    Attack: 380
+    Attack2: 480
+    Defense: 45
+    MagicDefense: 30
+    Str: 60
+    Agi: 80
+    Vit: 30
+    Int: 30
+    Dex: 130
+    Luk: 70
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 950
+    AttackMotion: 864
+    ClientAttackMotion: 672
+    DamageMotion: 480
+    Ai: 21
+  - Id: 2554
+    AegisName: GEFFEN_MAGE_4
+    Name: Faymont
+    Level: 86
+    Hp: 40000
+    BaseExp: 3000
+    JobExp: 2250
+    Attack: 400
+    Attack2: 520
+    Defense: 60
+    MagicDefense: 25
+    Str: 60
+    Agi: 60
+    Vit: 60
+    Int: 60
+    Dex: 130
+    Luk: 60
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 900
+    AttackMotion: 648
+    ClientAttackMotion: 480
+    DamageMotion: 480
+    Ai: 21
+  - Id: 2555
+    AegisName: GEFFEN_MAGE_5
+    Name: Ordre
+    Level: 88
+    Hp: 48000
+    BaseExp: 3400
+    JobExp: 2550
+    Attack: 380
+    Attack2: 500
+    Defense: 35
+    MagicDefense: 50
+    Str: 40
+    Agi: 70
+    Vit: 40
+    Int: 100
+    Dex: 140
+    Luk: 60
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1200
+    AttackMotion: 672
+    ClientAttackMotion: 480
+    DamageMotion: 480
+    Ai: 21
+  - Id: 2556
+    AegisName: GEFFEN_MAGE_6
+    Name: Blut Hase
+    Level: 90
+    Hp: 60000
+    BaseExp: 3800
+    JobExp: 2850
+    Attack: 600
+    Attack2: 800
+    Defense: 70
+    MagicDefense: 30
+    Str: 120
+    Agi: 90
+    Vit: 100
+    Int: 50
+    Dex: 130
+    Luk: 60
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 800
+    AttackMotion: 768
+    ClientAttackMotion: 576
+    DamageMotion: 480
+    DamageTaken: 60
+    Ai: 21
+# -- THE STREET, not the bracket. These three are the qualifying
+#    brawls in festival Geffen before the arena, three to a
+#    fight, and they are meant to be brushed aside - the player
+#    is 80+ and these are people who shake down Kafra clerks.
+#    Official has them level 50 / 10,000 HP with no skills at
+#    all; kept skill-less, nudged to the bottom of this server's
+#    band so they are quick rather than free. Note the official
+#    Attack2 of 22 is LOWER than Attack, which is backwards and
+#    is corrected here.
+  - Id: 2568
+    AegisName: E_GEFFEN_MAGE_3_3
+    Name: Geffen Gang Member
+    Level: 76
+    Hp: 7000
+    BaseExp: 700
+    JobExp: 525
+    Attack: 180
+    Attack2: 240
+    Defense: 40
+    MagicDefense: 10
+    Str: 41
+    Agi: 30
+    Vit: 20
+    Int: 5
+    Dex: 90
+    Luk: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 950
+    AttackMotion: 864
+    ClientAttackMotion: 672
+    DamageMotion: 480
+    Ai: 21
+  - Id: 2567
+    AegisName: E_GEFFEN_MAGE_3_2
+    Name: Geffen Bully
+    Level: 76
+    Hp: 7000
+    BaseExp: 700
+    JobExp: 525
+    Attack: 180
+    Attack2: 240
+    Defense: 45
+    MagicDefense: 10
+    Str: 41
+    Agi: 20
+    Vit: 30
+    Int: 5
+    Dex: 90
+    Luk: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 900
+    AttackMotion: 672
+    ClientAttackMotion: 480
+    DamageMotion: 480
+    Ai: 21
+  - Id: 2914
+    AegisName: E_GEFFEN_MAGE_3_1
+    Name: Geffen Shoplifter
+    Level: 76
+    Hp: 7000
+    BaseExp: 700
+    JobExp: 525
+    Attack: 180
+    Attack2: 240
+    Defense: 35
+    MagicDefense: 10
+    Str: 41
+    Agi: 40
+    Vit: 15
+    Int: 5
+    Dex: 90
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 800
+    AttackMotion: 672
+    ClientAttackMotion: 480
+    DamageMotion: 480
+    Ai: 21
+  - Id: 2561
+    AegisName: ELARION_DUEL
+    Name: Elarion
+    Level: 90
+    Hp: 120000
+    BaseExp: 0
+    JobExp: 0
+    Attack: 400
+    Attack2: 600
+    Defense: 40
+    MagicDefense: 60
+    Str: 50
+    Agi: 90
+    Vit: 70
+    Int: 170
+    Dex: 150
+    Luk: 60
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 14
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 180
+    AttackDelay: 1400
+    AttackMotion: 600
+    ClientAttackMotion: 576
+    DamageMotion: 480
+    Ai: 21

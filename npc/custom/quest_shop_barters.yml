@@ -1,0 +1,868 @@
+###########################################################################
+# Quest Shop barter shops -- GENERATED FILE, DO NOT EDIT BY HAND.
+#
+# Source:    npc/custom/quest_shop.txt  (the Add(...) recipe table)
+# Generator: tools/quest_shop_barter.pl
+#
+# Edit the recipes in quest_shop.txt, then re-run:
+#   perl tools/quest_shop_barter.pl
+#
+# These NPCs have no Map, so they exist only to be opened from script via
+# callshop -- the Rare Hat Merchant does that. Requirements carry Refine: 0
+# wherever the item is refineable, so a player's +7 hat is never eaten as an
+# ingredient.
+###########################################################################
+
+Header:
+  Type: BARTER_DB
+  Version: 2
+
+Body:
+  # Tier 1 Headgear
+  - Name: qshop_t1
+    Items:
+      - Index: 0
+        Item: Gold_Spirit_Chain
+        RequiredItems:
+          - Index: 0
+            Item: Orcish_Cuspid
+            Amount: 25
+      - Index: 1
+        Item: Fur_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Scell
+            Amount: 25
+      - Index: 2
+        Item: Bell_Ribbon
+        RequiredItems:
+          - Index: 0
+            Item: Resin
+            Amount: 25
+      - Index: 3
+        Item: Blue_Fur_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Scell
+            Amount: 25
+      - Index: 4
+        Item: Gray_Fur_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Scell
+            Amount: 25
+      - Index: 5
+        Item: Hat_Of_Cook
+        RequiredItems:
+          - Index: 0
+            Item: Old_Frying_Pan
+            Amount: 25
+      - Index: 6
+        Item: Coronet
+        RequiredItems:
+          - Index: 0
+            Item: Wing_Of_Red_Bat
+            Amount: 25
+      - Index: 7
+        Item: Doctor_Cap
+        RequiredItems:
+          - Index: 0
+            Item: Jubilee
+            Amount: 25
+      - Index: 8
+        Item: Drooping_Bunny
+        RequiredItems:
+          - Index: 0
+            Item: Rotten_Scale
+            Amount: 25
+      - Index: 9
+        Item: Elephant_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Crap_Shell
+            Amount: 25
+      - Index: 10
+        Item: Feather_Bonnet
+        RequiredItems:
+          - Index: 0
+            Item: Limb_Of_Mantis
+            Amount: 25
+      - Index: 11
+        Item: Indian_Headband
+        RequiredItems:
+          - Index: 0
+            Item: Claw_Of_Desert_Wolf
+            Amount: 25
+      - Index: 12
+        Item: Marionette_Doll
+        RequiredItems:
+          - Index: 0
+            Item: Chrysalis
+            Amount: 25
+      - Index: 13
+        Item: Orchid_Hairband
+        RequiredItems:
+          - Index: 0
+            Item: Moth_Dust
+            Amount: 25
+      - Index: 14
+        Item: Party_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Wild_Boar's_Mane
+            Amount: 25
+      - Index: 15
+        Item: Pink_Fur_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Scell
+            Amount: 25
+      - Index: 16
+        Item: Sahkkat
+        RequiredItems:
+          - Index: 0
+            Item: Wooden_Block
+            Amount: 25
+      - Index: 17
+        Item: Sea_Otter_Cap
+        RequiredItems:
+          - Index: 0
+            Item: Conch
+            Amount: 25
+      - Index: 18
+        Item: Straw_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Lizard_Scruff
+            Amount: 25
+      - Index: 19
+        Item: Sombrero
+        RequiredItems:
+          - Index: 0
+            Item: Scale_Of_Snakes
+            Amount: 25
+      - Index: 20
+        Item: Vacation_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Danggie
+            Amount: 25
+
+  # Tier 2 Headgear
+  - Name: qshop_t2
+    Items:
+      - Index: 0
+        Item: Alice_Doll
+        RequiredItems:
+          - Index: 0
+            Item: Indonesian_Bandana
+            Amount: 1
+            Refine: 0
+          - Index: 1
+            Item: Apple
+            Amount: 50
+      - Index: 1
+        Item: Zaha_Doll_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Jubilee
+            Amount: 25
+          - Index: 1
+            Item: Dragon_Scale
+            Amount: 50
+      - Index: 2
+        Item: Bird_Nest
+        RequiredItems:
+          - Index: 0
+            Item: Lizard_Scruff
+            Amount: 25
+          - Index: 1
+            Item: Brigan
+            Amount: 50
+      - Index: 3
+        Item: Bird_Nest_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Rotten_Scale
+            Amount: 25
+          - Index: 1
+            Item: Tough_Scalelike_Stem
+            Amount: 50
+      - Index: 4
+        Item: Black_Bunny_Band
+        RequiredItems:
+          - Index: 0
+            Item: Scale_Of_Snakes
+            Amount: 25
+          - Index: 1
+            Item: Gill
+            Amount: 50
+      - Index: 5
+        Item: Blue_Wizardry_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Star_Sparkling
+            Amount: 1
+            Refine: 0
+          - Index: 1
+            Item: Mould_Powder
+            Amount: 50
+      - Index: 6
+        Item: Gray_Wizardry_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Star_Sparkling
+            Amount: 1
+            Refine: 0
+          - Index: 1
+            Item: Mould_Powder
+            Amount: 50
+      - Index: 7
+        Item: Bunny_Band
+        RequiredItems:
+          - Index: 0
+            Item: Scell
+            Amount: 25
+          - Index: 1
+            Item: Soft_Leaf
+            Amount: 50
+      - Index: 8
+        Item: Cookie_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Rotten_Scale
+            Amount: 25
+          - Index: 1
+            Item: Old_Pick
+            Amount: 50
+      - Index: 9
+        Item: Mistress_Crown
+        RequiredItems:
+          - Index: 0
+            Item: Wing_Of_Red_Bat
+            Amount: 25
+          - Index: 1
+            Item: Solid_Twig
+            Amount: 50
+      - Index: 10
+        Item: Deviruchi_Cap
+        RequiredItems:
+          - Index: 0
+            Item: Chrysalis
+            Amount: 25
+          - Index: 1
+            Item: Horrendous_Mouth
+            Amount: 50
+      - Index: 11
+        Item: Drooping_Nine_Tail
+        RequiredItems:
+          - Index: 0
+            Item: Wooden_Block
+            Amount: 25
+          - Index: 1
+            Item: Dragon_Scale
+            Amount: 50
+      - Index: 12
+        Item: Satanic_Chain_
+        RequiredItems:
+          - Index: 0
+            Item: Satanic_Chain
+            Amount: 1
+            Refine: 0
+          - Index: 1
+            Item: Soft_Leaf
+            Amount: 50
+      - Index: 13
+        Item: Fish_On_Head_
+        RequiredItems:
+          - Index: 0
+            Item: Claw_Of_Desert_Wolf
+            Amount: 25
+          - Index: 1
+            Item: Ice_Heart
+            Amount: 50
+      - Index: 14
+        Item: Flower_Of_Fairy
+        RequiredItems:
+          - Index: 0
+            Item: Moth_Dust
+            Amount: 25
+          - Index: 1
+            Item: Dragon_Canine
+            Amount: 50
+      - Index: 15
+        Item: Angeling_Wanna_Fly
+        RequiredItems:
+          - Index: 0
+            Item: Scell
+            Amount: 25
+          - Index: 1
+            Item: Sharpened_Cuspid
+            Amount: 50
+      - Index: 16
+        Item: Golden_Crown
+        RequiredItems:
+          - Index: 0
+            Item: Jubilee
+            Amount: 25
+          - Index: 1
+            Item: Sacred_Masque
+            Amount: 50
+      - Index: 17
+        Item: Gold_Tiara
+        RequiredItems:
+          - Index: 0
+            Item: Wing_Of_Red_Bat
+            Amount: 25
+          - Index: 1
+            Item: Solid_Twig
+            Amount: 50
+      - Index: 18
+        Item: Gold_Tiara_
+        RequiredItems:
+          - Index: 0
+            Item: Chrysalis
+            Amount: 25
+          - Index: 1
+            Item: Golden_Hair
+            Amount: 50
+      - Index: 19
+        Item: White_Wizardry_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Star_Sparkling
+            Amount: 1
+            Refine: 0
+          - Index: 1
+            Item: Mould_Powder
+            Amount: 50
+      - Index: 20
+        Item: Hibiscus
+        RequiredItems:
+          - Index: 0
+            Item: Old_Frying_Pan
+            Amount: 25
+          - Index: 1
+            Item: Piece_Of_Black_Cloth
+            Amount: 50
+      - Index: 21
+        Item: Mask_Of_Fox
+        RequiredItems:
+          - Index: 0
+            Item: Scale_Of_Snakes
+            Amount: 25
+          - Index: 1
+            Item: Poison_Toad's_Skin
+            Amount: 50
+      - Index: 22
+        Item: Leaf_Cat_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Limb_Of_Mantis
+            Amount: 25
+          - Index: 1
+            Item: Posionous_Canine
+            Amount: 50
+      - Index: 23
+        Item: Wizardry_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Star_Sparkling
+            Amount: 1
+            Refine: 0
+          - Index: 1
+            Item: Mould_Powder
+            Amount: 50
+      - Index: 24
+        Item: Mine_Helm
+        RequiredItems:
+          - Index: 0
+            Item: Old_Frying_Pan
+            Amount: 25
+          - Index: 1
+            Item: Poison_Toad's_Skin
+            Amount: 50
+      - Index: 25
+        Item: Cap_Of_Concentration
+        RequiredItems:
+          - Index: 0
+            Item: Rotten_Scale
+            Amount: 25
+          - Index: 1
+            Item: Poison_Toad's_Skin
+            Amount: 50
+      - Index: 26
+        Item: Red_Wizardry_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Star_Sparkling
+            Amount: 1
+            Refine: 0
+          - Index: 1
+            Item: Mould_Powder
+            Amount: 50
+      - Index: 27
+        Item: Savage_Baby_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Danggie
+            Amount: 25
+          - Index: 1
+            Item: Tough_Vines
+            Amount: 50
+      - Index: 28
+        Item: Side_Cap
+        RequiredItems:
+          - Index: 0
+            Item: Conch
+            Amount: 25
+          - Index: 1
+            Item: Harpy's_Feather
+            Amount: 50
+      - Index: 29
+        Item: Silver_Tiara
+        RequiredItems:
+          - Index: 0
+            Item: Moth_Dust
+            Amount: 25
+          - Index: 1
+            Item: Piece_Of_Black_Cloth
+            Amount: 50
+      - Index: 30
+        Item: Sunflower_Hairpin
+        RequiredItems:
+          - Index: 0
+            Item: Lizard_Scruff
+            Amount: 25
+          - Index: 1
+            Item: Sticky_Poison
+            Amount: 50
+      - Index: 31
+        Item: Time_Keeper_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Jubilee
+            Amount: 25
+          - Index: 1
+            Item: Worn_Out_Page
+            Amount: 50
+      - Index: 32
+        Item: Ulle_Cap_I
+        RequiredItems:
+          - Index: 0
+            Item: Rotten_Scale
+            Amount: 25
+          - Index: 1
+            Item: Piece_Of_Black_Cloth
+            Amount: 50
+      - Index: 33
+        Item: Vane_Hairpin
+        RequiredItems:
+          - Index: 0
+            Item: Limb_Of_Mantis
+            Amount: 25
+          - Index: 1
+            Item: Poison_Toad's_Skin
+            Amount: 50
+      - Index: 34
+        Item: Water_Lily_Crown
+        RequiredItems:
+          - Index: 0
+            Item: Rotten_Scale
+            Amount: 25
+          - Index: 1
+            Item: Worn_Out_Page
+            Amount: 50
+      - Index: 35
+        Item: Wanderer's_Sakkat
+        RequiredItems:
+          - Index: 0
+            Item: Wooden_Block
+            Amount: 25
+          - Index: 1
+            Item: Black_Mask
+            Amount: 50
+      - Index: 36
+        Item: White_Snake_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Rotten_Scale
+            Amount: 25
+          - Index: 1
+            Item: Anolian_Skin
+            Amount: 50
+      - Index: 37
+        Item: Yellow_Wizardry_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Star_Sparkling
+            Amount: 1
+            Refine: 0
+          - Index: 1
+            Item: Mould_Powder
+            Amount: 50
+
+  # Tier 3 Headgear
+  - Name: qshop_t3
+    Items:
+      - Index: 0
+        Item: Bride's_Corolla
+        RequiredItems:
+          - Index: 0
+            Item: Scell
+            Amount: 25
+          - Index: 1
+            Item: Soft_Leaf
+            Amount: 50
+          - Index: 2
+            Item: Dragonball_Blue
+            Amount: 100
+      - Index: 1
+        Item: Black_Musang_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Old_Frying_Pan
+            Amount: 25
+          - Index: 1
+            Item: Piece_Of_Black_Cloth
+            Amount: 50
+          - Index: 2
+            Item: Dragonball_Yellow
+            Amount: 100
+      - Index: 2
+        Item: Bright_Fury
+        RequiredItems:
+          - Index: 0
+            Item: Chrysalis
+            Amount: 25
+          - Index: 1
+            Item: Golden_Hair
+            Amount: 50
+          - Index: 2
+            Item: Bloody_Rune
+            Amount: 100
+      - Index: 3
+        Item: Rabbit_Ear_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Scale_Of_Snakes
+            Amount: 25
+          - Index: 1
+            Item: Gill
+            Amount: 50
+          - Index: 2
+            Item: Bloody_Rune
+            Amount: 100
+      - Index: 4
+        Item: Deviling_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Scell
+            Amount: 25
+          - Index: 1
+            Item: Sharpened_Cuspid
+            Amount: 50
+          - Index: 2
+            Item: Rust_Suriken
+            Amount: 100
+      - Index: 5
+        Item: Dress_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Jubilee
+            Amount: 25
+          - Index: 1
+            Item: Dragon_Scale
+            Amount: 50
+          - Index: 2
+            Item: Old_Manteau
+            Amount: 100
+      - Index: 6
+        Item: Dark_Snake_Lord_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Chrysalis
+            Amount: 25
+          - Index: 1
+            Item: Horrendous_Mouth
+            Amount: 50
+          - Index: 2
+            Item: Dragonball_Red
+            Amount: 100
+      - Index: 7
+        Item: Shark_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Satanic_Chain
+            Amount: 1
+            Refine: 0
+          - Index: 1
+            Item: Soft_Leaf
+            Amount: 50
+          - Index: 2
+            Item: Bloody_Rune
+            Amount: 100
+      - Index: 8
+        Item: Rabbit_Magic_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Claw_Of_Desert_Wolf
+            Amount: 25
+          - Index: 1
+            Item: Ice_Heart
+            Amount: 50
+          - Index: 2
+            Item: Striped_Socks
+            Amount: 100
+      - Index: 9
+        Item: Gemini_Crown
+        RequiredItems:
+          - Index: 0
+            Item: Scale_Of_Snakes
+            Amount: 25
+          - Index: 1
+            Item: Poison_Toad's_Skin
+            Amount: 50
+          - Index: 2
+            Item: Striped_Socks
+            Amount: 100
+      - Index: 10
+        Item: Gemini_Diadem
+        RequiredItems:
+          - Index: 0
+            Item: Lizard_Scruff
+            Amount: 25
+          - Index: 1
+            Item: Brigan
+            Amount: 50
+          - Index: 2
+            Item: Striped_Socks
+            Amount: 100
+      - Index: 11
+        Item: Quati_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Limb_Of_Mantis
+            Amount: 25
+          - Index: 1
+            Item: Posionous_Canine
+            Amount: 50
+          - Index: 2
+            Item: Dragonball_Blue
+            Amount: 100
+      - Index: 12
+        Item: Mini_Propeller_
+        RequiredItems:
+          - Index: 0
+            Item: Mini_Propeller
+            Amount: 1
+            Refine: 0
+          - Index: 1
+            Item: Dragonball_Blue
+            Amount: 100
+      - Index: 13
+        Item: Wild_Rose_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Lizard_Scruff
+            Amount: 25
+          - Index: 1
+            Item: Brigan
+            Amount: 50
+          - Index: 2
+            Item: Bloody_Rune
+            Amount: 100
+      - Index: 14
+        Item: Aries_Crown
+        RequiredItems:
+          - Index: 0
+            Item: Moth_Dust
+            Amount: 25
+          - Index: 1
+            Item: Dragon_Canine
+            Amount: 50
+          - Index: 2
+            Item: Reins
+            Amount: 100
+      - Index: 15
+        Item: Aries_Diadem
+        RequiredItems:
+          - Index: 0
+            Item: Moth_Dust
+            Amount: 25
+          - Index: 1
+            Item: Dragon_Canine
+            Amount: 50
+          - Index: 2
+            Item: Reins
+            Amount: 100
+      - Index: 16
+        Item: Jasper_Crest
+        RequiredItems:
+          - Index: 0
+            Item: Conch
+            Amount: 25
+          - Index: 1
+            Item: Harpy's_Feather
+            Amount: 50
+          - Index: 2
+            Item: Old_Manteau
+            Amount: 100
+      - Index: 17
+        Item: New_Cowboy_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Moth_Dust
+            Amount: 25
+          - Index: 1
+            Item: Piece_Of_Black_Cloth
+            Amount: 50
+          - Index: 2
+            Item: Bloody_Rune
+            Amount: 100
+      - Index: 18
+        Item: Yellow_Bandana
+        RequiredItems:
+          - Index: 0
+            Item: Scell
+            Amount: 25
+          - Index: 1
+            Item: Sharpened_Cuspid
+            Amount: 50
+          - Index: 2
+            Item: Reins
+            Amount: 100
+      - Index: 19
+        Item: Yellow_Ribbon
+        RequiredItems:
+          - Index: 0
+            Item: Scell
+            Amount: 25
+          - Index: 1
+            Item: Sharpened_Cuspid
+            Amount: 50
+          - Index: 2
+            Item: Reins
+            Amount: 100
+      - Index: 20
+        Item: Cancer_Diadem
+        RequiredItems:
+          - Index: 0
+            Item: Moth_Dust
+            Amount: 25
+          - Index: 1
+            Item: Piece_Of_Black_Cloth
+            Amount: 50
+          - Index: 2
+            Item: Bloody_Rune
+            Amount: 100
+      - Index: 21
+        Item: Drooping_White_Kitty
+        RequiredItems:
+          - Index: 0
+            Item: Moth_Dust
+            Amount: 25
+          - Index: 1
+            Item: Piece_Of_Black_Cloth
+            Amount: 50
+          - Index: 2
+            Item: Dragonball_Yellow
+            Amount: 100
+      - Index: 22
+        Item: Lif_Doll_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Star_Sparkling
+            Amount: 1
+            Refine: 0
+          - Index: 1
+            Item: Mould_Powder
+            Amount: 50
+          - Index: 2
+            Item: Rust_Suriken
+            Amount: 100
+      - Index: 23
+        Item: Pisces_Crown
+        RequiredItems:
+          - Index: 0
+            Item: Wing_Of_Red_Bat
+            Amount: 25
+          - Index: 1
+            Item: Solid_Twig
+            Amount: 50
+          - Index: 2
+            Item: Suspicious_Hat
+            Amount: 100
+      - Index: 24
+        Item: Pisces_Diadem
+        RequiredItems:
+          - Index: 0
+            Item: Wing_Of_Red_Bat
+            Amount: 25
+          - Index: 1
+            Item: Solid_Twig
+            Amount: 50
+          - Index: 2
+            Item: Suspicious_Hat
+            Amount: 100
+      - Index: 25
+        Item: Ramen_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Rotten_Scale
+            Amount: 25
+          - Index: 1
+            Item: Anolian_Skin
+            Amount: 50
+          - Index: 2
+            Item: Suspicious_Hat
+            Amount: 100
+      - Index: 26
+        Item: Taurus_Crown
+        RequiredItems:
+          - Index: 0
+            Item: Rotten_Scale
+            Amount: 25
+          - Index: 1
+            Item: Piece_Of_Black_Cloth
+            Amount: 50
+          - Index: 2
+            Item: Bloody_Rune
+            Amount: 100
+      - Index: 27
+        Item: Taurus_Diadem
+        RequiredItems:
+          - Index: 0
+            Item: Rotten_Scale
+            Amount: 25
+          - Index: 1
+            Item: Piece_Of_Black_Cloth
+            Amount: 50
+          - Index: 2
+            Item: Bloody_Rune
+            Amount: 100
+      - Index: 28
+        Item: Laurel_Wreath
+        RequiredItems:
+          - Index: 0
+            Item: Scell
+            Amount: 25
+          - Index: 1
+            Item: Soft_Leaf
+            Amount: 50
+          - Index: 2
+            Item: Bloody_Rune
+            Amount: 100
+      - Index: 29
+        Item: Triple_Poring_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Scell
+            Amount: 25
+          - Index: 1
+            Item: Soft_Leaf
+            Amount: 50
+          - Index: 2
+            Item: Striped_Socks
+            Amount: 100
+

@@ -1,0 +1,9 @@
+//===== rAthena Script =======================================
+//= Prontera Meat Vendor
+//===== Description: =========================================
+//= Food stall on the Prontera south road. Sells meat and
+//= other raw eats at standard shop prices.
+//= Sprite 4_COOK is re-used from the Academy chef.
+//============================================================
+
+prontera,125,65,4	shop	Meat Vendor#prt	4_COOK,517:-1,528:-1,544:-1,580:-1

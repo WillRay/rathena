@@ -1,0 +1,1290 @@
+//===== rAthena Script =======================================
+//= Prontera Sunday Market
+//===== Description: =========================================
+//= The market square bounded by roughly 96,44 / 128,43 /
+//= 128,111 / 103,111. Six working stalls, three people sitting
+//= on the bench avenue, two NPCs moving through it, a notice
+//= board, and low-level content that gives a new player a
+//= reason to walk the square.
+//=
+//= The market is ALWAYS ON. Nothing here is gated on the real
+//= world day, so the square is never found empty.
+//=
+//= Structure:
+//=   - One controller NPC (PronMarket#ctrl) owns all movement
+//=     and chatter state in flat parallel arrays and drives
+//=     each NPC by unique name. This is the same engine as
+//=     npc/custom/prontera_wanderers.txt; read the long header
+//=     on that file for why it is built this way. In short:
+//=     'duplicate' cannot be used, because duplicates SHARE the
+//=     original's NPC variables and every copy would chase the
+//=     same waypoint.
+//=   - A SEPARATE controller from the wanderers one on purpose.
+//=     Both files use flat arrays whose counts must agree; a
+//=     miscount while adding a stall should break the market,
+//=     not the nineteen NPCs already working across town.
+//=   - .w_cnt of 0 makes an NPC static. Every stallholder and
+//=     every bench sitter is static; only the porter and the
+//=     stroller move.
+//=
+//= The Meat Vendor from prontera_meat_vendor.txt also stands
+//= inside this square, at 125,65, and is deliberately NOT in
+//= .name$. The controller can drive an NPC declared in another
+//= file -- npc_event_runall("OnInit") (src/map/npc.cpp:6149)
+//= fires only after every script has loaded, so getnpcid on a
+//= foreign name resolves fine -- but scripts\audit-controller.ps1
+//= checks .name$ against the script blocks in the SAME file and
+//= would report a permanent FAIL. A tool that always says
+//= "1 problem found" cannot tell you when you have caused a new
+//= one, so the vendor stays silent. Folding it in as a seventh
+//= stall in this file would be the way to give it a voice.
+//=
+//= For the same reason the audit emits one WARN, on the Market
+//= Notice Board: it has a script block but no .name$ entry,
+//= because a board does not chatter. That warning is expected
+//= and does not fail the run.
+//=
+//= Coordinates:
+//=   Every stall cell, every sitter cell and every waypoint in
+//=   this file was checked against db/import/map_cache.dat.
+//=   The two walking routes were built with a real pathfinder,
+//=   not interpolated, so no leg cuts through a building. If
+//=   you hand-edit a coordinate, re-run:
+//=     scripts\audit-controller.ps1 -File <this file>
+//=
+//= The benches:
+//=   The avenue at x=113-115, y=52-85 is six I-shaped benches,
+//=   each four rows deep (52-55, 58-61, 64-67, 70-73, 76-79,
+//=   82-85). The '###' bars are the ends; the blocked spine at
+//=   x=114 between them is the seat. Those cells are gat=1 --
+//=   ordinary obstacle, not cliff or water -- so a static NPC
+//=   stands on them fine. Only walking NPCs need walkable ground.
+//=
+//= Shop stock:
+//=   Deliberately ordinary food and flowers. The market does NOT
+//=   sell Sesame Pastry (12122), Honey Pastry (12123) or Rainbow
+//=   Cake (12124), even though their item_db Buy price is 2z.
+//=   Those are +30 HIT / +30 FLEE / +10 ATK+MATK buff foods; an
+//=   unlimited 2z NPC source would be a balance hole. They are
+//=   the stamp card reward instead, where supply is capped at
+//=   one run per week. Witherless Rose (55,000z) and Illusion
+//=   Flower (1,000z) are left out for the same reason -- both
+//=   are farmed drops, and an unlimited counter undercuts that.
+//=
+//= Quests. Two surfaces, and they must be edited together:
+//=   - Server objectives: db/import/quest_db.yml, ids 8574-8591.
+//=   - Client title/description: the QuestInfoList_C table in
+//=     D:\Client\SystemEN\OngoingQuests_C.lub. NOT
+//=     data\questid2display.txt -- that file exists both loose and
+//=     inside en.grf, but this client does not read either for
+//=     quest text. The chain is
+//=     data\luafiles514\lua files\datainfo\questinfo_f.lub, whose
+//=     last lines dofile() SystemEN\OngoingQuests_C.lub and merge
+//=     QuestInfoList_C into QuestInfoList. A quest missing from
+//=     there shows in game as "Unknown Quest - ID: nnnn", which is
+//=     the else branch of GetOngoingQuestInfoByID.
+//=     That file is ASCII with CRLF; keep it that way.
+//=
+//=   8574-8578  Nanna's market errands. No combat, level 1-15.
+//=   8580-8582  Elsa's hives      (Hornet, repeatable, 2h)
+//=   8583-8585  Wren's flowerbeds (Rocker, repeatable, 2h)
+//=   8586-8588  Calder's catch    (Vadon,  repeatable, 2h)
+//=   8590/8591  Market stamp card (weekly)
+//=
+//= Notes carried over from the wanderers engine -- these are
+//= the ones that bite:
+//= - A walking NPC MUST wear a player job sprite. NPC sprites
+//=   have no walk animation and slide instead. The stallholders
+//=   and sitters are static, so they use NPC sprites freely.
+//= - HAIRCOLOR / CLOTHCOLOR MUST STAY 0 on the walkers. A
+//=   non-zero value makes the client load a palette file for
+//=   that exact job+sex+index, and a missing .pal does not fail
+//=   gracefully -- the client dies with an access violation the
+//=   moment the NPC comes into view.
+//= - Walkers are named "Display::unique", NOT "Display#hidden".
+//=   npc_parsename only splits on "::"; '#' hiding is a client
+//=   convention that does not apply to player-type units, and a
+//=   walking NPC is sent as PC_TYPE. A '#' name would show in
+//=   full the whole time it moved.
+//= - Never issue a walk in the same tick as npctalk. The walk
+//=   refresh is a clearunit + spawn and it destroys the chat
+//=   bubble. Stop, talk, hold, then resume. npcstop is safe.
+//============================================================
+
+//============================================================
+//= Controller
+//============================================================
+-	script	PronMarket#ctrl	-1,{
+	end;
+
+OnInit:
+	.map$ = "prontera";
+
+	// Seconds between one NPC's lines (randomised per line).
+	// Tighter than the town-wide wanderers (25/70) -- a market
+	// should sound busier than a back street.
+	.talk_min  = 18;
+	.talk_max  = 50;
+
+	// Seconds an NPC stands still after speaking, so a resuming
+	// walk doesn't wipe its own chat bubble.
+	.talk_hold = 5;
+
+	// Chance in % of using the NPC's own line instead of a
+	// generic one from the shared pool.
+	.own_line_chance = 70;
+
+	// A single walk command is capped at MAX_WALKPATH (32) cells,
+	// so legs longer than this are walked in hops. Leave headroom
+	// under 32 for path detours, which cost extra steps.
+	.hop = 20;
+
+	// How close (in cells) counts as "arrived", which is when the
+	// next target gets issued. Must be larger than the distance
+	// covered between two polls or the NPC stutters at every
+	// waypoint. Speed is ms per cell; at 180 a 500ms poll covers
+	// under 3 cells, and diagonals cost more time, so 4 clears it.
+	.arrive = 4;
+
+	setarray .name$[0],
+		// the six new stalls
+		"mk_elsa",
+		"mk_wren",
+		"mk_sable",
+		"mk_calder",
+		"mk_pim",
+		"mk_torv",
+
+		// the bench avenue, static
+		"mk_nanna",
+		"mk_udo",
+		"mk_kess",
+
+		// moving
+		"mk_porter",
+		"mk_stroller";
+	.n = getarraysize(.name$);
+
+	// How many waypoints each NPC owns, in .name$ order.
+	// Must total the length of .wx / .wy below.
+	// 0 means the NPC is static and never moves.
+	setarray .w_cnt[0],
+		0,0,0,0,0,0,		// stalls - static
+		0,0,0,			// benches - static
+		12,				// Ferris - the stall round
+		6;				// Alina - the bench avenue
+
+	// Waypoints, concatenated in .name$ order. Both routes are
+	// loops: the last waypoint connects back to the first.
+	setarray .wx[0],
+		// Ferris (12) - a full round of the square, taking in
+		// every stall old and new. Pathfinder-built.
+		110,102,106,107,105,119,128,126,122,123,126,114,
+		// Alina (6) - up the east side of the bench avenue and
+		// back down the west side.
+		117,117,117,111,111,111;
+	setarray .wy[0],
+		102, 93, 87, 69, 51, 51, 60, 66, 84, 91, 98, 92,	// Ferris (12)
+		 85, 67, 54, 54, 72, 85;				// Alina (6)
+
+	// How many solo lines each NPC owns, in .name$ order.
+	// Must total the length of .line$ below.
+	setarray .l_cnt[0],
+		3,3,3,3,3,3,		// the six stalls
+		3,3,3,			// the bench sitters
+		4,4;				// Ferris, Alina
+
+	// Lines, concatenated in .name$ order. Keep the "// Name"
+	// comment above every block -- it is the only thing standing
+	// between you and a silent off-by-one after a deletion.
+	setarray .line$[0],
+		// Elsa - pastry stall, 110,101
+		"Fresh out of the oven. Mind your fingers.",
+		"Two for one on the seed cakes. Today only.",
+		"No, you may not have the last honey pastry.",
+
+		// Wren - flower stall, 101,97
+		"Cut this morning, every one of them.",
+		"A flower says what you haven't the nerve to.",
+		"Don't crush the stems, love.",
+
+		// Sable - flower stall, 125,96
+		"Finest blooms in the square. Ask anyone.",
+		"Wren's are nice. Mine are nicer.",
+		"Something for a sweetheart? Or an apology?",
+
+		// Calder - fish stall, 122,89
+		"Off the Byalan boats this morning.",
+		"If it doesn't smell of the sea, don't buy it.",
+		"Weigh it yourself, if you don't believe me.",
+
+		// Pim - pastry stall, 121,50
+		"Bread! Still warm, still cheap!",
+		"South end's quieter. Better prices, too.",
+		"Come back at closing and I'll do you a deal.",
+
+		// Torv - fish stall, 95,62
+		"Corner stall, corner prices.",
+		"Everyone walks past me to get to Calder.",
+		"Fish is fish. His just costs more.",
+
+		// Nanna - bench, 115,83
+		"I have sat on this bench for forty years.",
+		"Sunday is the only day worth coming out for.",
+		"Mind that porter. He'll walk straight through you.",
+
+		// Udo - bench, 113,65
+		"Just resting the legs. Don't mind me.",
+		"You can hear the whole market from here.",
+		"Those two have been bickering since dawn.",
+
+		// Kess - bench, 115,54
+		"Someone has to keep the bench warm.",
+		"I came out for bread an hour ago. Still here.",
+		"Best seat in Prontera, this.",
+
+		// Ferris - porter, walking the stall round
+		"Coming through! Basket, basket, basket.",
+		"Elsa first, then the flowers, then the fish.",
+		"Six stalls and my back has already gone.",
+		"Mind your feet, I'm carrying.",
+
+		// Alina - stroller, walking the bench avenue
+		"Just looking, thank you.",
+		"The benches fill up by noon.",
+		"Up one side, down the other. Twice.",
+		"I never buy anything. That isn't the point.";
+
+	// Shared pool any NPC can pull from.
+	setarray .common$[0],
+		"Sunday market! Everything is out today!",
+		"Busy one, isn't it.",
+		"Mind your purse in this crowd.",
+		"Smells like bread down this end.",
+		"Half the town is here today.",
+		"Watch your step, it's shoulder to shoulder.",
+		"Prices come down after noon. Sometimes.",
+		"Lovely day for the market.";
+	.common_count = getarraysize(.common$);
+
+	//--- conversations --------------------------------------
+	// A group speaks its lines in order, one every .conv_gap
+	// seconds, then goes quiet for .conv_rest before starting
+	// over. Speakers are unique NPC names resolved to .name$
+	// indices at load time.
+	.conv_gap  = 6;
+	.conv_rest = 45;
+
+	setarray .g_cnt[0], 4;
+	.g_n = getarraysize(.g_cnt);
+
+	// group 0 - Sable and Calder, whose pitches are seven cells
+	// apart (125,96 and 122,89), so both bubbles are on screen
+	// together. Neither of them moves, so they cannot drift.
+	setarray .g_who$[0],
+		"mk_sable",
+		"mk_calder",
+		"mk_sable",
+		"mk_calder";
+
+	setarray .g_text$[0],
+		"Calder. Your fish is putting people off my roses.",
+		"Your roses are putting people off my fish, Sable.",
+		"One of us is going to have to move.",
+		"It shan't be me. I've the better pitch.";
+
+	// Derive where each NPC's waypoints and lines start in the
+	// flat arrays, from the per-NPC counts above.
+	//
+	// Also cache the visible part of each name (before the '#' or
+	// '::') so lines can be prefixed "Name: message" -- npctalk
+	// does not prepend the speaker itself -- and stagger the first
+	// line so they don't all speak at once.
+	.@now = gettimetick(2);
+	.@wsum = 0;
+	.@lsum = 0;
+	for (.@i = 0; .@i < .n; .@i++) {
+		.w_off[.@i] = .@wsum;
+		.@wsum += .w_cnt[.@i];
+		.l_off[.@i] = .@lsum;
+		.@lsum += .l_cnt[.@i];
+
+		.disp$[.@i]     = strnpcinfo(1, getnpcid(0, .name$[.@i]));
+		.next_talk[.@i] = .@now + rand(5, .talk_max);
+
+		// -1 means "no target issued yet", so the first poll
+		// starts the NPC walking.
+		.tgt_x[.@i] = -1;
+		.tgt_y[.@i] = -1;
+	}
+
+	// Desynced arrays would silently give someone else's route or
+	// dialogue, so fail loudly instead of guessing.
+	.ready = 1;
+	if (.@wsum != getarraysize(.wx) || .@wsum != getarraysize(.wy)) {
+		debugmes "PronMarket: .w_cnt totals " + .@wsum + " but .wx has " +
+			getarraysize(.wx) + " and .wy has " + getarraysize(.wy) + ". Disabled.";
+		.ready = 0;
+	}
+	if (.@lsum != getarraysize(.line$)) {
+		debugmes "PronMarket: .l_cnt totals " + .@lsum + " but .line$ has " +
+			getarraysize(.line$) + ". Disabled.";
+		.ready = 0;
+	}
+
+	// Same for the conversation groups, plus resolve each speaker
+	// name to its .name$ index once instead of every line.
+	.@gsum = 0;
+	for (.@k = 0; .@k < .g_n; .@k++) {
+		.g_off[.@k]  = .@gsum;
+		.@gsum      += .g_cnt[.@k];
+		.g_idx[.@k]  = 0;
+		.g_next[.@k] = .@now + rand(10, .conv_rest);
+	}
+	if (.@gsum != getarraysize(.g_who$) || .@gsum != getarraysize(.g_text$)) {
+		debugmes "PronMarket: .g_cnt totals " + .@gsum + " but .g_who$ has " +
+			getarraysize(.g_who$) + " and .g_text$ has " +
+			getarraysize(.g_text$) + ". Disabled.";
+		.ready = 0;
+	} else {
+		for (.@k = 0; .@k < .@gsum; .@k++) {
+			.@found = -1;
+			for (.@i = 0; .@i < .n; .@i++) {
+				if (.name$[.@i] == .g_who$[.@k]) {
+					.@found = .@i;
+					break;
+				}
+			}
+			if (.@found < 0) {
+				debugmes "PronMarket: conversation speaker '" + .g_who$[.@k] +
+					"' is not in .name$. Disabled.";
+				.ready = 0;
+			}
+			.g_widx[.@k] = .@found;
+		}
+	}
+
+	if (!.ready)
+		end;
+
+	initnpctimer;
+	end;
+
+OnTimer500:
+	if (getmapusers(.map$) < 1) {
+		setnpctimer 0;
+		end;
+	}
+
+	.@now = gettimetick(2);
+
+	for (.@i = 0; .@i < .n; .@i++) {
+		.@nm$ = .name$[.@i];
+		if (getmapxy(.@m$, .@x, .@y, BL_NPC, .@nm$) != 0)
+			continue;
+
+		// --- standing still so a bubble can be read ----
+		if (.pause_until[.@i] > .@now)
+			continue;
+
+		// --- scheduled chatter -------------------------
+		// Purely on a timer, not triggered by players.
+		// Must not be followed by a walk this tick.
+		if (.l_cnt[.@i] > 0 && .next_talk[.@i] <= .@now) {
+			npcstop .@nm$;
+			if (rand(100) < .own_line_chance)
+				.@say$ = .line$[.l_off[.@i] + rand(.l_cnt[.@i])];
+			else
+				.@say$ = .common$[rand(.common_count)];
+			npctalk .disp$[.@i] + ": " + .@say$, .@nm$;
+
+			.next_talk[.@i]   = .@now + rand(.talk_min, .talk_max);
+			.pause_until[.@i] = .@now + .talk_hold;
+			continue;
+		}
+
+		// --- static NPCs never move --------------------
+		if (.w_cnt[.@i] < 1)
+			continue;
+
+		// --- issue the next target BEFORE arriving -----
+		// unit_walktoxy (unit.cpp:894) checks whether a walk is
+		// already running: if it is, it only updates the
+		// destination and returns, without stopping the unit.
+		// So retargeting a few cells early flows straight into
+		// the next leg -- no idle gap, and no arrival refresh to
+		// make the sprite pop.
+		//
+		// The issued target is sticky: nothing is sent until the
+		// NPC gets within .arrive of it, otherwise the hop
+		// interpolation below would compute a slightly different
+		// point every poll and re-issue constantly.
+		.@need = 0;
+		if (.tgt_x[.@i] < 0)
+			.@need = 1;					// nothing issued yet
+		else if (distance(.@x, .@y, .tgt_x[.@i], .tgt_y[.@i]) <= .arrive)
+			.@need = 1;					// close enough, move on
+		else if (.@x == .last_x[.@i] && .@y == .last_y[.@i])
+			.@need = 1;					// stalled, or just finished talking
+
+		.last_x[.@i] = .@x;
+		.last_y[.@i] = .@y;
+		if (!.@need)
+			continue;
+
+		.@b = .w_off[.@i];
+		.@wpx = .wx[.@b + .idx[.@i]];
+		.@wpy = .wy[.@b + .idx[.@i]];
+
+		// Near the waypoint itself? Take the next one. This cuts
+		// the corner by up to .arrive cells, which reads as a
+		// person rounding a bend rather than stopping on a mark.
+		if (distance(.@x, .@y, .@wpx, .@wpy) <= .arrive) {
+			.idx[.@i] = (.idx[.@i] + 1) % .w_cnt[.@i];
+			.@wpx = .wx[.@b + .idx[.@i]];
+			.@wpy = .wy[.@b + .idx[.@i]];
+		}
+
+		// --- break long legs into hops -----------------
+		// Diagonal moves cost one step, so the step count for a
+		// leg is max(|dx|,|dy|). Anything over .hop is walked
+		// toward an interpolated point instead.
+		.@tx = .@wpx;
+		.@ty = .@wpy;
+		.@dx = .@tx - .@x;
+		.@dy = .@ty - .@y;
+
+		.@adx = .@dx; if (.@adx < 0) .@adx = -.@adx;
+		.@ady = .@dy; if (.@ady < 0) .@ady = -.@ady;
+		.@dist = .@adx; if (.@ady > .@dist) .@dist = .@ady;
+
+		if (.@dist > .hop) {
+			.@tx = .@x + (.@dx * .hop / .@dist);
+			.@ty = .@y + (.@dy * .hop / .@dist);
+		}
+
+		npcwalkto .@tx, .@ty, .@nm$;
+		.tgt_x[.@i] = .@tx;
+		.tgt_y[.@i] = .@ty;
+	}
+
+	// --- group conversations -----------------------------
+	// One line at a time, in order. The speaker stops so its
+	// bubble survives the walk-refresh; the rest of the group
+	// carries on. .conv_gap is deliberately longer than
+	// .talk_hold so a walker gets a step or two between lines.
+	for (.@k = 0; .@k < .g_n; .@k++) {
+		if (.g_next[.@k] > .@now)
+			continue;
+
+		.@li  = .g_off[.@k] + .g_idx[.@k];
+		.@wi  = .g_widx[.@li];
+		.@wn$ = .name$[.@wi];
+
+		npcstop .@wn$;
+		npctalk .disp$[.@wi] + ": " + .g_text$[.@li], .@wn$;
+		.pause_until[.@wi] = .@now + .talk_hold;
+
+		.g_idx[.@k] = .g_idx[.@k] + 1;
+		if (.g_idx[.@k] >= .g_cnt[.@k]) {
+			.g_idx[.@k]  = 0;
+			.g_next[.@k] = .@now + .conv_rest;
+		} else {
+			.g_next[.@k] = .@now + .conv_gap;
+		}
+	}
+
+	setnpctimer 0;
+	end;
+}
+
+//============================================================
+//= Helpers
+//============================================================
+
+//------------------------------------------------------------
+//= F_PrtMarketHunt - one repeatable gathering request
+//=
+//= Same three-quest shape as Lily and Nerin
+//= (npc/custom/quests/mag_dun03_lily.txt):
+//=   N   = the first-time version
+//=   N+1 = a standby timer that gates the repeat
+//=   N+2 = the repeatable version
+//= N+1 and N+2 are derived arithmetically, so the ids must be
+//= contiguous in db/import/quest_db.yml.
+//=
+//= Exp is derived from the mob rather than hand-tuned, so a
+//= change to mob_db carries through. Note the /10*3: getexp is
+//= multiplied by quest_exp_rate, which is 500 on this server
+//= (conf/import/battle_conf.txt:14). Passing 3/10 of the raw
+//= kill exp therefore pays 1.5x it after the rate is applied --
+//= the same ratio Lily's rewards were retuned to.
+//=
+//= args:
+//=   0 first quest id      7 decline line
+//=   1 mob AegisName       8 still-hunting line
+//=   2 kill count          9 turn-in line
+//=   3 speaker name       10 on-cooldown line
+//=   4 first-time preamble    11 reward item id
+//=   5 the request line   12 reward item amount
+//=   6 accept line        13 reward zeny
+//------------------------------------------------------------
+function	script	F_PrtMarketHunt	{
+	.@first = getarg(0);
+	.@mob$  = getarg(1);
+	.@count = getarg(2);
+	.@who$  = getarg(3);
+	.@delay = .@first + 1;
+	.@daily = .@first + 2;
+
+	.@mobname$ = getmonsterinfo(.@mob$, MOB_NAME);
+
+	// Still inside the standby window?
+	switch (checkquest(.@delay, PLAYTIME)) {
+		case 0:
+		case 1:
+			mes "[" + .@who$ + "]";
+			mes getarg(10);
+			close;
+		case 2:
+			erasequest .@delay;
+			break;
+	}
+
+	// First run uses the one-off id, every run after it uses the
+	// repeatable one.
+	if (isbegin_quest(.@first) < 2)
+		.@q = .@first;
+	else
+		.@q = .@daily;
+
+	switch (checkquest(.@q, HUNTING)) {
+	case -1:
+		mes "[" + .@who$ + "]";
+		if (.@q == .@first)
+			mes getarg(4);
+		else
+			mes "Same again, if you've the legs for it.";
+		next;
+		mes "[" + .@who$ + "]";
+		mes getarg(5);
+		mes "^0000FF" + .@count + " " + .@mobname$ + "^000000 should settle it.";
+		next;
+		if (select("I'll do it.", "Not just now.") == 2) {
+			mes "[" + .@who$ + "]";
+			mes getarg(7);
+			close;
+		}
+		mes "[" + .@who$ + "]";
+		mes getarg(6);
+		setquest .@q;
+		close;
+
+	case 0:
+	case 1:
+		mes "[" + .@who$ + "]";
+		mes getarg(8);
+		mes "^0000FF" + .@count + " " + .@mobname$ + "^000000, remember.";
+		close;
+
+	case 2:
+		mes "[" + .@who$ + "]";
+		mes getarg(9);
+		if (.@q == .@first)
+			completequest .@q;
+		else
+			erasequest .@q;
+		setquest .@delay;
+		getexp .@count * getmonsterinfo(.@mob$, MOB_BASEEXP) * 3 / 10,
+			   .@count * getmonsterinfo(.@mob$, MOB_JOBEXP)  * 3 / 10;
+		getitem getarg(11), getarg(12);
+		Zeny += getarg(13);
+		next;
+		mes "[" + .@who$ + "]";
+		mes "Come back in a couple of hours and I'll likely";
+		mes "have the same trouble all over again.";
+		close;
+	}
+	end;
+}
+
+//------------------------------------------------------------
+//= F_PrtMarketStamp - stamp one stall on the market card
+//=
+//= The card is quest 8590; 8591 is the weekly standby that
+//= gates the next one. Progress is a six-bit mask in the
+//= character variable prtmk_stamp, one bit per stall, in the
+//= order the stalls appear in the controller's .name$.
+//=
+//= Only the six new stalls take a stamp. The Meat Vendor is a
+//= plain 'shop' NPC in another file with no script body to hang
+//= this on, and giving it one would mean editing a file this
+//= feature has no other reason to touch.
+//=
+//= args: 0 = bit number (0-5), 1 = stall display name
+//------------------------------------------------------------
+function	script	F_PrtMarketStamp	{
+	.@bit  = getarg(0);
+	.@who$ = getarg(1);
+
+	if (isbegin_quest(8590) != 1) {
+		mes "[" + .@who$ + "]";
+		mes "A stamp card? You'll want the notice board";
+		mes "up by the benches. I only do the stamping.";
+		return;
+	}
+
+	if (prtmk_stamp & (1 << .@bit)) {
+		mes "[" + .@who$ + "]";
+		mes "You've had my stamp already. One each,";
+		mes "that's the whole idea of it.";
+		return;
+	}
+
+	prtmk_stamp = prtmk_stamp | (1 << .@bit);
+
+	mes "[" + .@who$ + "]";
+	mes "There. That's mine done.";
+
+	.@got = 0;
+	for (.@i = 0; .@i < 6; .@i++)
+		if (prtmk_stamp & (1 << .@i))
+			.@got++;
+
+	if (.@got >= 6)
+		mes "That's the lot of them. Back to the board with you.";
+	else
+		mes "^0000FF" + .@got + " of 6^000000 stalls stamped.";
+	return;
+}
+
+//============================================================
+//= The stalls
+//=
+//= Facing runs COUNTER-CLOCKWISE, not the clockwise order you
+//= would expect (enum directions, src/map/path.hpp):
+//=   0=N  1=NW  2=W  3=SW  4=S  5=SE  6=E  7=NE
+//= Getting this backwards leaves N and S correct and silently
+//= flips everything else, which reads in game as "some of them
+//= face the wrong way".
+//=
+//= Each stall is a 'script' NPC rather than a plain 'shop' so it
+//= can talk, carry a quest and stamp a card. The wares live in
+//= the hidden view -1 shops below and are opened with callshop,
+//= the same way card_merchant.txt does it.
+//============================================================
+
+-	shop	mk_shop_elsa	-1,538:-1,539:-1,536:-1,529:-1
+-	shop	mk_shop_wren	-1,712:-1,744:-1
+-	shop	mk_shop_sable	-1,712:-1,744:-1,745:-1
+-	shop	mk_shop_calder	-1,544:-1,579:-1,584:-1
+-	shop	mk_shop_pim	-1,580:-1,558:-1,530:-1,549:-1
+-	shop	mk_shop_torv	-1,544:-1,584:-1,550:-1
+
+//------------------------------------------------------------
+//= Elsa - pastry stall, north end of the square
+//= This is "the chef's stall" that Tam already walks across
+//= town for in prontera_wanderers.txt, and the source of the
+//= honey pastry Pip is still sulking about at the picnic.
+//------------------------------------------------------------
+prontera,110,101,5	script	Elsa::mk_elsa	4_COOK,{
+	// --- Nanna's errand, leg 1 of 5 ---
+	if (isbegin_quest(8574) == 1) {
+		mes "[Elsa]";
+		mes "Nanna sent you? Then she'll want the bread";
+		mes "order, and she'll want it before it's cold.";
+		next;
+		mes "[Elsa]";
+		mes "Take it down to Pim, at the south end.";
+		mes "He bakes the loaves, I do the sweet things.";
+		mes "He'll know what it means.";
+		completequest 8574;
+		setquest 8575;
+		close;
+	}
+
+	mes "[Elsa]";
+	mes "Cakes, cookies, and something cold if the";
+	mes "sun's got to you. What'll it be?";
+	next;
+	switch (select("Let me see the wares", "You look harassed", "Market stamp card", "Just passing")) {
+	case 1:
+		close2;
+		callshop "mk_shop_elsa";
+		end;
+
+	case 2:
+		callfunc "F_PrtMarketHunt", 8580, "HORNET", 20, "Elsa",
+			"Harassed is one word for it. I'm out of honey.",
+			"There's a hive gone up in the fields north of town, and my supplier won't go near it.",
+			"Bless you. Bring me word when it's quiet up there.",
+			"Then I'll be selling plain cake, and everyone will be very disappointed.",
+			"Still buzzing up there, is it?",
+			"That's the way. I'll have honey by the weekend.",
+			"They'll be back before long, but not today. Let me get some baking done first.",
+			12123, 2, 900;
+		end;
+
+	case 3:
+		callfunc "F_PrtMarketStamp", 0, "Elsa";
+		close;
+
+	case 4:
+		mes "[Elsa]";
+		mes "Everyone's just passing until they smell it.";
+		close;
+	}
+	end;
+
+OnInit:
+	// The marker over her head: a request waiting, or one ready
+	// to hand in. Same conditions Lily uses, one chain instead
+	// of four.
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "checkquest(8580,HUNTING) == 2");
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "checkquest(8582,HUNTING) == 2");
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "checkquest(8581,PLAYTIME) == 2");
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8580) == 0 && checkquest(8581,PLAYTIME) == -1");
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8580) == 2 && isbegin_quest(8582) == 0 && checkquest(8581,PLAYTIME) == -1");
+	end;
+}
+
+//------------------------------------------------------------
+//= Wren - flower stall, west side
+//------------------------------------------------------------
+prontera,101,97,5	script	Wren::mk_wren	90,{
+	// --- Nanna's errand, leg 3 of 5 ---
+	if (isbegin_quest(8576) == 1) {
+		mes "[Wren]";
+		mes "A posy for Calder. Of course it is.";
+		mes "He orders one every Sunday and every Sunday";
+		mes "he pretends he's never done it before.";
+		next;
+		mes "[Wren]";
+		mes "There. Don't crush the stems.";
+		mes "His pitch is up the east side, by the fish.";
+		mes "You'll smell it before you see it.";
+		completequest 8576;
+		setquest 8577;
+		close;
+	}
+
+	mes "[Wren]";
+	mes "Cut this morning, every one of them.";
+	mes "You'll not do better in this square,";
+	mes "whatever Sable tells you.";
+	next;
+	switch (select("Let me see the wares", "Something troubling you?", "Market stamp card", "Just passing")) {
+	case 1:
+		close2;
+		callshop "mk_shop_wren";
+		end;
+
+	case 2:
+		callfunc "F_PrtMarketHunt", 8583, "ROCKER", 20, "Wren",
+			"Something's been in my beds again, and it isn't rabbits.",
+			"Rockers. They come up out of the grass at dusk and chew the stems to the root.",
+			"Thank you. Every one you thin out is a bloom I get to sell.",
+			"Then I'll be selling stalks by Sunday next. Mind how you go.",
+			"Still singing away out there, are they?",
+			"Good. That's a season's worth of stems you've saved me.",
+			"They'll breed back soon enough. Let the beds recover a while first.",
+			712, 5, 800;
+		end;
+
+	case 3:
+		callfunc "F_PrtMarketStamp", 1, "Wren";
+		close;
+
+	case 4:
+		mes "[Wren]";
+		mes "Go on then. But you'll be back.";
+		mes "Everyone is, sooner or later. Usually";
+		mes "when they've done something daft.";
+		close;
+	}
+	end;
+
+OnInit:
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "checkquest(8583,HUNTING) == 2");
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "checkquest(8585,HUNTING) == 2");
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "checkquest(8584,PLAYTIME) == 2");
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8583) == 0 && checkquest(8584,PLAYTIME) == -1");
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8583) == 2 && isbegin_quest(8585) == 0 && checkquest(8584,PLAYTIME) == -1");
+	end;
+}
+
+//------------------------------------------------------------
+//= Sable - flower stall, east side. Wren's rival, and half of
+//= the running argument in the controller's group 0.
+//------------------------------------------------------------
+prontera,125,96,3	script	Sable::mk_sable	96,{
+	mes "[Sable]";
+	mes "Finest blooms in the square, and I'll say it";
+	mes "in front of anyone. Including Wren.";
+	next;
+	switch (select("Let me see the wares", "Market stamp card", "Just passing")) {
+	case 1:
+		close2;
+		callshop "mk_shop_sable";
+		end;
+
+	case 2:
+		callfunc "F_PrtMarketStamp", 2, "Sable";
+		close;
+
+	case 3:
+		mes "[Sable]";
+		mes "If you're going down to the fish, tell Calder";
+		mes "his pitch is three feet over the line.";
+		mes "He knows. He's known for six years.";
+		close;
+	}
+	end;
+}
+
+//------------------------------------------------------------
+//= Calder - fish stall, east side
+//------------------------------------------------------------
+prontera,122,89,3	script	Calder::mk_calder	87,{
+	// --- Nanna's errand, leg 4 of 5 ---
+	if (isbegin_quest(8577) == 1) {
+		mes "[Calder]";
+		mes "...that's from Wren, is it.";
+		mes "I never ordered it. She just sends them.";
+		next;
+		mes "[Calder]";
+		mes "Right. Well. Since you're on your feet --";
+		mes "go and tell Torv the Byalan boats came in";
+		mes "heavy. He's on the west corner, and he'll";
+		mes "hear it from me an hour too late otherwise.";
+		completequest 8577;
+		setquest 8578;
+		close;
+	}
+
+	mes "[Calder]";
+	mes "Off the Byalan boats this morning.";
+	mes "If it doesn't smell of the sea, don't buy it.";
+	next;
+	switch (select("Let me see the wares", "Short of stock?", "Market stamp card", "Just passing")) {
+	case 1:
+		close2;
+		callshop "mk_shop_calder";
+		end;
+
+	case 2:
+		callfunc "F_PrtMarketHunt", 8586, "VADON", 15, "Calder",
+			"Short of shell, more like. The crab beds down at Byalan are picked over.",
+			"Vadon, on the first floor of the island dungeon. Bring me some and I'll have soup on by evening.",
+			"Good lad. Mind the water, it comes up quick down there.",
+			"Suit yourself. The beds will still be empty tomorrow.",
+			"Been down to the island yet?",
+			"That'll do me nicely. Sable can complain about the smell all she likes.",
+			"Let the beds settle a couple of hours. Even I don't fish them dry.",
+			584, 3, 1500;
+		end;
+
+	case 3:
+		callfunc "F_PrtMarketStamp", 3, "Calder";
+		close;
+
+	case 4:
+		mes "[Calder]";
+		mes "Aye. Everyone's just passing.";
+		mes "Except the flower woman, who is just staring.";
+		close;
+	}
+	end;
+
+OnInit:
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "checkquest(8586,HUNTING) == 2");
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "checkquest(8588,HUNTING) == 2");
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "checkquest(8587,PLAYTIME) == 2");
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8586) == 0 && checkquest(8587,PLAYTIME) == -1");
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8586) == 2 && isbegin_quest(8588) == 0 && checkquest(8587,PLAYTIME) == -1");
+	end;
+}
+
+//------------------------------------------------------------
+//= Pim - pastry stall, south end of the square
+//------------------------------------------------------------
+prontera,121,50,2	script	Pim::mk_pim	4_F_01,{
+	// --- Nanna's errand, leg 2 of 5 ---
+	if (isbegin_quest(8575) == 1) {
+		mes "[Pim]";
+		mes "Elsa's order. She could have walked it down";
+		mes "herself, but then she'd have to look at me.";
+		next;
+		mes "[Pim]";
+		mes "One more, since you're being useful.";
+		mes "Wren has a posy waiting on the west side.";
+		mes "Fetch it and I'll say something kind about you";
+		mes "to Nanna, which she will not believe.";
+		completequest 8575;
+		setquest 8576;
+		close;
+	}
+
+	mes "[Pim]";
+	mes "Bread! Still warm, still cheap!";
+	mes "South end's quieter. Better prices, too.";
+	next;
+	switch (select("Let me see the wares", "Market stamp card", "Just passing")) {
+	case 1:
+		close2;
+		callshop "mk_shop_pim";
+		end;
+
+	case 2:
+		callfunc "F_PrtMarketStamp", 4, "Pim";
+		close;
+
+	case 3:
+		mes "[Pim]";
+		mes "Down this end everyone's just passing.";
+		mes "That's rather the trouble with this end.";
+		close;
+	}
+	end;
+}
+
+//------------------------------------------------------------
+//= Torv - fish stall, west corner. Last leg of the errand.
+//------------------------------------------------------------
+prontera,95,62,4	script	Torv::mk_torv	85,{
+	// --- Nanna's errand, leg 5 of 5 ---
+	if (isbegin_quest(8578) == 1) {
+		mes "[Torv]";
+		mes "Boats came in heavy? And Calder sent you";
+		mes "all the way over here to tell me, rather than";
+		mes "walk thirty feet himself.";
+		next;
+		mes "[Torv]";
+		mes "That's the whole square, that is. Elsa to Pim,";
+		mes "Pim to Wren, Wren to Calder, Calder to me.";
+		mes "And every one of us sat within shouting";
+		mes "distance of the others.";
+		next;
+		mes "[Torv]";
+		mes "Go on back to Nanna. She'll be waiting to hear";
+		mes "you say it out loud.";
+		completequest 8578;
+		close;
+	}
+
+	mes "[Torv]";
+	mes "Corner stall, corner prices.";
+	mes "Fish is fish. His just costs more.";
+	next;
+	switch (select("Let me see the wares", "Market stamp card", "Just passing")) {
+	case 1:
+		close2;
+		callshop "mk_shop_torv";
+		end;
+
+	case 2:
+		callfunc "F_PrtMarketStamp", 5, "Torv";
+		close;
+
+	case 3:
+		mes "[Torv]";
+		mes "You'll be off to Calder, then.";
+		mes "They all are. Never mind me.";
+		close;
+	}
+	end;
+}
+
+//============================================================
+//= The bench avenue
+//=
+//= These sit on the open cells immediately beside the bench
+//= spine, not on the spine itself. Placing them on the blocked
+//= x=114 cells works as far as the server is concerned -- those
+//= are gat=1, the bench footprint, and a static NPC needs no
+//= walkable ground -- but it did not read right in game, so they
+//= were moved out one cell to 115,83 / 113,65 / 115,54.
+//= If you move them again, keep one per bench and keep them
+//= spread down the run rather than bunched, so the avenue reads
+//= as occupied from either end.
+//=
+//= Facings: the bench runs north-south with open ground at
+//= x=113 and x=115, so a sitter faces east (6) or west (2).
+//= Alternating gives the avenue some life instead of a row of
+//= people all looking the same way.
+//============================================================
+
+//------------------------------------------------------------
+//= Nanna - top bench. Gives and pays out the errand chain.
+//------------------------------------------------------------
+prontera,115,83,6	script	Nanna::mk_nanna	4_F_SITDOWN,{
+	// --- chain finished, and not yet paid ---
+	if (isbegin_quest(8578) == 2 && prtmk_errand_done == 0) {
+		mes "[Nanna]";
+		mes "All the way round, and back to me.";
+		mes "Now. What did you learn?";
+		next;
+		mes "[Nanna]";
+		mes "That not one of them will speak to another";
+		mes "directly. Six stalls in one square and they";
+		mes "send a stranger between them.";
+		next;
+		mes "[Nanna]";
+		mes "That's the market, love. It runs on people";
+		mes "too proud to walk thirty feet.";
+		mes "And on people like you, who will.";
+		prtmk_errand_done = 1;
+		getexp 200, 150;
+		getitem 12123, 3;
+		Zeny += 1000;
+		next;
+		mes "[Nanna]";
+		mes "Elsa's honey pastries. Don't let the boy at";
+		mes "the picnic see them, he'll never forgive you.";
+		close;
+	}
+
+	// --- chain in progress ---
+	if (isbegin_quest(8574) == 1) {
+		mes "[Nanna]";
+		mes "Elsa's stall, north end. Off you go.";
+		close;
+	}
+	if (isbegin_quest(8575) == 1 || isbegin_quest(8576) == 1 ||
+		isbegin_quest(8577) == 1 || isbegin_quest(8578) == 1) {
+		mes "[Nanna]";
+		mes "Still going round, are you?";
+		mes "They'll each send you on to the next one.";
+		mes "That's rather the point of it.";
+		close;
+	}
+
+	// --- already done ---
+	if (prtmk_errand_done) {
+		mes "[Nanna]";
+		mes "You've done my round once. I shan't make you";
+		mes "do it twice. Sit a while, if you like.";
+		mes "The bench doesn't mind.";
+		close;
+	}
+
+	// --- offer ---
+	mes "[Nanna]";
+	mes "Forty years I've sat on this bench,";
+	mes "and the market has never once come to me.";
+	next;
+	mes "[Nanna]";
+	mes "My legs have gone. The stalls haven't.";
+	mes "Would you walk a round for an old woman?";
+	next;
+	if (select("I'll walk it.", "Another time.") == 2) {
+		mes "[Nanna]";
+		mes "Of course. I'm not going anywhere.";
+		close;
+	}
+	mes "[Nanna]";
+	mes "Start with Elsa, north end, the sweet stall.";
+	mes "She'll send you on. They all will.";
+	setquest 8574;
+	close;
+
+OnInit:
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "BaseLevel < 30 && isbegin_quest(8574) == 0 && prtmk_errand_done == 0");
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8578) == 2 && prtmk_errand_done == 0");
+	end;
+}
+
+//------------------------------------------------------------
+//= Udo - middle bench
+//------------------------------------------------------------
+prontera,113,65,2	script	Udo::mk_udo	4_M_SITDOWN,{
+	mes "[Udo]";
+	mes "Sit if you like. Plenty of bench.";
+	next;
+	mes "[Udo]";
+	mes "I come out Sundays and I don't buy a thing.";
+	mes "You can hear the whole square from this seat --";
+	mes "the flower woman and the fish man going at it,";
+	mes "the porter swearing at his own basket.";
+	next;
+	mes "[Udo]";
+	mes "Costs nothing, and it's better than most plays.";
+	close;
+}
+
+//------------------------------------------------------------
+//= Kess - bottom bench, nearest Pim's end
+//------------------------------------------------------------
+prontera,115,54,6	script	Kess::mk_kess	4_M_SIT_NOVICE,{
+	mes "[Kess]";
+	mes "I came out for a loaf an hour ago.";
+	next;
+	mes "[Kess]";
+	mes "Then I sat down. And now the loaf seems";
+	mes "like an awful lot of standing up.";
+	close;
+}
+
+//============================================================
+//= The two who move
+//=
+//= Job sprites, not NPC sprites: the client has no walk
+//= animation for NPC_EVT_TYPE units, so an NPC sprite would
+//= slide across the square instead of walking. With a job
+//= sprite the server respawns the unit as PC_TYPE while it
+//= moves and the animation plays.
+//=
+//= Named "Display::unique" for the same reason -- a walking NPC
+//= is sent as PC_TYPE, and the client's '#' name hiding does
+//= not apply to player-type units.
+//=
+//= Appearance comes from F_PronWanderLook, the helper already
+//= defined in npc/custom/prontera_wanderers.txt. Its haircolor
+//= and clothcolor arguments are 0 here and must stay 0: a
+//= non-zero value makes the client load a palette file for that
+//= exact job+sex+index, and a missing .pal kills the client with
+//= an access violation as the NPC comes into view.
+//=
+//= Both spawn on their own waypoint 0, or they would walk there
+//= from wherever they were placed when the server started.
+//============================================================
+
+prontera,110,102,4	script	Ferris::mk_porter	JOB_MERCHANT,{
+	mes "[Ferris]";
+	mes "Can't stop. Six stalls before the bell and";
+	mes "I'm two behind already.";
+	next;
+	mes "[Ferris]";
+	mes "Elsa's boxes, Wren's stems, Calder's ice,";
+	mes "Pim's flour, Torv's crates, and whatever the";
+	mes "butcher's decided he needs this week.";
+	next;
+	mes "[Ferris]";
+	mes "Round and round. You'd think one of them";
+	mes "would think to carry their own.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_MALE, 2, 0, 0, 180;
+	end;
+}
+
+prontera,117,85,4	script	Alina::mk_stroller	JOB_ACOLYTE,{
+	mes "[Alina]";
+	mes "Oh -- no, I'm not buying. I never buy.";
+	next;
+	mes "[Alina]";
+	mes "I walk down the benches and back up again,";
+	mes "twice, and then I go home. Sundays only.";
+	next;
+	mes "[Alina]";
+	mes "It's the noise, I think. The temple is very";
+	mes "quiet six days a week.";
+	close;
+OnInit:
+	callfunc "F_PronWanderLook", SEX_FEMALE, 6, 0, 0, 200;
+	end;
+}
+
+//============================================================
+//= Market Notice Board - the stamp card
+//=
+//= 8590 is the active card, 8591 the weekly standby that gates
+//= the next one. Progress is a six-bit mask in prtmk_stamp, set
+//= by F_PrtMarketStamp from each stall's dialogue.
+//=
+//= The reward is the only source in the market for Sesame
+//= Pastry / Honey Pastry / Rainbow Cake. They are +30 HIT,
+//= +30 FLEE and +10 ATK+MATK respectively, which is why they
+//= are behind a once-a-week walk of the whole square rather
+//= than on a shop shelf at their 2z item_db price.
+//============================================================
+prontera,117,92,4	script	Market Notice Board::mk_board	857,{
+	// --- inside the weekly standby? ---
+	switch (checkquest(8591, PLAYTIME)) {
+		case 0:
+		case 1:
+			mes "[Market Notice Board]";
+			mes "^777777One card per household per week.^000000";
+			mes "^777777Signed, the Market Warden.^000000";
+			next;
+			mes "Someone has added, in a different hand:";
+			mes "^777777'and we DO check'^000000";
+			close;
+		case 2:
+			erasequest 8591;
+			break;
+	}
+
+	// --- no card yet ---
+	if (isbegin_quest(8590) == 0) {
+		mes "[Market Notice Board]";
+		mes "^0000FFSUNDAY MARKET STAMP CARD^000000";
+		mes "Take a card. Get a stamp from all six of the";
+		mes "market stalls. Bring it back here.";
+		next;
+		mes "[Market Notice Board]";
+		mes "Elsa and Pim for the baking, Wren and Sable";
+		mes "for the flowers, Calder and Torv for the fish.";
+		next;
+		if (select("Take a card.", "Not today.") == 2) {
+			mes "[Market Notice Board]";
+			mes "The cards are not going anywhere.";
+			close;
+		}
+		setquest 8590;
+		prtmk_stamp = 0;
+		mes "[Market Notice Board]";
+		mes "Card taken. Six stalls, six stamps.";
+		mes "Ask each of them for the market stamp card.";
+		close;
+	}
+
+	// --- card in hand: count it ---
+	setarray .@stall$[0], "Elsa", "Wren", "Sable", "Calder", "Pim", "Torv";
+	.@got = 0;
+	.@missing$ = "";
+	for (.@i = 0; .@i < 6; .@i++) {
+		if (prtmk_stamp & (1 << .@i))
+			.@got++;
+		else {
+			if (.@missing$ != "")
+				.@missing$ += ", ";
+			.@missing$ += .@stall$[.@i];
+		}
+	}
+
+	if (.@got < 6) {
+		mes "[Market Notice Board]";
+		mes "Your card shows ^0000FF" + .@got + " of 6^000000 stamps.";
+		next;
+		mes "[Market Notice Board]";
+		mes "Still wanting: ^777777" + .@missing$ + "^000000.";
+		close;
+	}
+
+	// --- full card ---
+	mes "[Market Notice Board]";
+	mes "^0000FFSix of six.^000000";
+	mes "A full card. The Warden's box is under the";
+	mes "board, and the Warden is, as ever, at lunch.";
+	next;
+	mes "[Market Notice Board]";
+	mes "You help yourself to what the stalls put in.";
+	erasequest 8590;
+	setquest 8591;
+	prtmk_stamp = 0;
+	getexp 400, 300;
+	getitem 12123, 3;	// Honey Pastry  - Elsa
+	getitem 12122, 3;	// Sesame Pastry - Pim
+	getitem 12124, 2;	// Rainbow Cake  - both of them, grudgingly
+	Zeny += 5000;
+	next;
+	mes "[Market Notice Board]";
+	mes "^777777New cards next Sunday.^000000";
+	close;
+
+OnInit:
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8590) == 0 && checkquest(8591,PLAYTIME) == -1");
+	questinfo(QTYPE_QUEST, QMARK_YELLOW, "checkquest(8591,PLAYTIME) == 2");
+	end;
+}

@@ -426,6 +426,8 @@ struct Battle_Config
 	int32 max_def, over_def_bonus; //added by [Skotlex]
 
 	int32 zeny_from_mobs; // [Valaris]
+	int32 zeny_rate; // rate of zeny gained from normal mobs
+	int32 mvp_zeny_per_lv; // zeny gained from an MVP, per mob level
 	int32 mobs_level_up; // [Valaris]
 	int32 mobs_level_up_exp_rate; // [Valaris]
 	int32 pk_min_level; // [celest]

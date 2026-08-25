@@ -3,129 +3,230 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.1 
+//= 1.2
 //===== Compatible With: =====================================
-//= rAthena SVN
+//= rAthena Master
 //===== Description: =========================================
-//= Exchange cards for points.
+//= Exchange cards for points, and spend those points in a
+//= point shop.
+//=
+//= v1.2 - Buying moved to a native 'pointshop', which shows the
+//=        point balance in the shop window and refuses purchases
+//=        the player cannot afford or cannot carry.
+//=      - Added a bulk "trade in every card in my bag" option.
+//=      - Menus loop instead of closing after every action.
+//=      - MVP card list rebuilt from mob_db (44 cards).
+//=      - Removed the .Level filter: it queried `LV` and
+//=        `DropCardid`, columns that no longer exist in the SQL
+//=        mob_db, so it rejected every card. Use .Blacklist.
 //============================================================
 
 -	script	Card Trader#basic::CardMerchant	-1,{
-	mes "[Card Merchant]";
-	mes "Hi, "+strcharinfo(0)+"!";
-	mes "What can I do for you?";
-	next;
-	switch(select("Point shop (^0055FF"+getd(.Points$)+"^000000):Sell cards:You buy cards?:Leave")) {
-	case 1:
+	while (1) {
 		mes "[Card Merchant]";
-		mes "You have ^0055FF"+getd(.Points$)+"^000000 Point"+((getd(.Points$) == 1)?".":"s.");
-		callshop "card_shop",1;
-		npcshopattach "card_shop";
-		end;
-	case 2:
-		mes "[Card Merchant]";
-		mes "Select the cards you want to trade in.";
-		if (.Level) {
-			mes " ";
-			mes "They must be dropped by monsters of level" + .Level + " and above.";
-		}
-		deletearray @sold_nameid[0],getarraysize(@sold_nameid);
-		callshop "card_shop",2;
-		npcshopattach "card_shop";
-		end;
-	case 3:
-		mes "[Card Merchant]";
-		mes "Do you find that you've got useless cards lying around? I'll be glad to take them off your hands!";
+		mes "Hi, " + strcharinfo(0) + "!";
+		mes "You have ^0055FF" + getd(.Points$) + "^000000 Point" + ((getd(.Points$) == 1) ? "." : "s.");
+		mes "What can I do for you?";
 		next;
-		mes "[Card Merchant]";
-		mes "I'll give you ^0055FF"+.Points[0]+" Point"+((.Points[0] == 1)?"":"s")+"^ 00000 for each card you give me, and ^0055FF"+.Points[1]+" Points^000000 for MVP cards. You can trade those points for items later on. How does that sound?";
-		close;
-	case 4:
-		mes "[Card Merchant]";
-		mes "*yawn*";
-		mes "See you later!";
-		close;		
-	}
-
-OnSellItem:
-	mes "Cards to sell:";
-	mes "-----------------------------------";
-	for(set .@i,0; .@i<getarraysize(@sold_nameid); set .@i,.@i+1)
-		if ((@sold_nameid[.@i] > 4000 && @sold_nameid[.@i] < 4700) || (@sold_nameid[.@i] > 30000 && @sold_nameid[.@i] < 31000)) {
-			set .@base_id, (@sold_nameid[.@i] > 30000) ? @sold_nameid[.@i]-26000 : @sold_nameid[.@i];
-			if (.Level) {
-				query_sql("SELECT `LV` FROM `mob_db` WHERE `DropCardid` = "+.@base_id,.@lv);
-				if (.@lv < .Level) {
-					dispbottom getitemname(@sold_nameid[.@i])+" is under the minimum level.";
+		switch (select(
+			"Point shop (^0055FF" + getd(.Points$) + "^000000)",
+			"Trade in cards...",
+			"Trade in ALL cards in my bag",
+			"What can I buy?",
+			"You buy cards?",
+			"Leave")) {
+		case 1:
+			mes "[Card Merchant]";
+			mes "Spend them well.";
+			close2;
+			callshop "card_pointshop";
+			end;
+		case 2:
+			mes "[Card Merchant]";
+			mes "Select the cards you want to trade in.";
+			close2;
+			deletearray @sold_nameid[0], getarraysize(@sold_nameid);
+			deletearray @sold_quantity[0], getarraysize(@sold_quantity);
+			callshop "card_shop", 2;
+			npcshopattach "card_shop";
+			end;
+		case 3:
+			deletearray @sold_nameid[0], getarraysize(@sold_nameid);
+			deletearray @sold_quantity[0], getarraysize(@sold_quantity);
+			getinventorylist;
+			.@n = 0;
+			for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+				.@id = @inventorylist_id[.@i];
+				if (!((.@id > 4000 && .@id < 4700) || (.@id > 30000 && .@id < 31000)))
+					continue;
+				if (!@inventorylist_tradable[.@i]) {
+					dispbottom getitemname(.@id) + " is bound to you - skipped.";
 					continue;
 				}
+				@sold_nameid[.@n] = .@id;
+				@sold_quantity[.@n] = @inventorylist_amount[.@i];
+				.@n++;
 			}
-			set .@card_id[getarraysize(.@card_id)], @sold_nameid[.@i];
-			set .@card_amt[getarraysize(.@card_amt)], @sold_quantity[.@i];
-			set .@mvp, compare(.MVP$,""+.@base_id);
-			mes ((.@mvp)?"  ^FF0000":"  ^777777")+@sold_quantity[.@i]+"x "+getitemname(@sold_nameid[.@i])+"^000000";
-			set .@card_total, .@card_total+(@sold_quantity[.@i]*((.@mvp)?.Points[1]:.Points[0]));
+			if (!.@n) {
+				mes "[Card Merchant]";
+				mes "You aren't carrying a single card.";
+				next;
+				break;
+			}
+			callsub S_Trade;
+			end;
+		case 4:
+			mes "[Card Merchant]";
+			mes "Here's my stock:";
+			mes "-----------------------------------";
+			for (.@i = 0; .@i < getarraysize(.Shop); .@i += 2)
+				mes "  ^0055FF" + .Shop[.@i+1] + " pt^000000 - " + getitemname(.Shop[.@i]);
+			mes "-----------------------------------";
+			mes "You have ^0055FF" + getd(.Points$) + "^000000 Point" + ((getd(.Points$) == 1) ? "." : "s.");
+			next;
+			break;
+		case 5:
+			mes "[Card Merchant]";
+			mes "Do you find that you've got useless cards lying around? I'll be glad to take them off your hands!";
+			next;
+			mes "[Card Merchant]";
+			mes "I'll give you ^0055FF" + .Points[0] + " Point" + ((.Points[0] == 1) ? "" : "s") + "^000000 for each card you give me, and ^0055FF" + .Points[1] + " Points^000000 for MVP cards.";
+			mes " ";
+			mes "You can trade those points for items in my point shop. How does that sound?";
+			next;
+			break;
+		case 6:
+			mes "[Card Merchant]";
+			mes "*yawn*";
+			mes "See you later!";
+			close;
 		}
+	}
+	end;
+
+// Trade-in handler, shared by the sell window and the bulk option.
+// Reads @sold_nameid[] / @sold_quantity[] and consumes them.
+S_Trade:
+	mes "[Card Merchant]";
+	mes "Cards to trade in:";
+	mes "-----------------------------------";
+	for (.@i = 0; .@i < getarraysize(@sold_nameid); .@i++) {
+		.@id = @sold_nameid[.@i];
+		if (!((.@id > 4000 && .@id < 4700) || (.@id > 30000 && .@id < 31000))) {
+			if (.@id)
+				dispbottom getitemname(.@id) + " is not a card - skipped.";
+			continue;
+		}
+		.@base_id = (.@id > 30000) ? .@id - 26000 : .@id;
+		if (inarray(.Blacklist[0], .@base_id) > -1) {
+			dispbottom getitemname(.@id) + " is not accepted here.";
+			continue;
+		}
+		.@card_id[.@n] = .@id;
+		.@card_amt[.@n] = @sold_quantity[.@i];
+		.@n++;
+		.@mvp = (inarray(.MVP[0], .@base_id) > -1);
+		.@card_total += @sold_quantity[.@i] * ((.@mvp) ? .Points[1] : .Points[0]);
+		.@card_count += @sold_quantity[.@i];
+		if (.@shown < .LineCap) {
+			mes ((.@mvp) ? "  ^FF0000" : "  ^777777") + @sold_quantity[.@i] + "x " + getitemname(.@id) + "^000000";
+			.@shown++;
+		} else
+			.@hidden++;
+	}
 	deletearray @sold_nameid[0], getarraysize(@sold_nameid);
 	deletearray @sold_quantity[0], getarraysize(@sold_quantity);
-	if (!.@card_id) {
+	if (!.@n) {
 		mes "  ^777777(none)^000000";
+		mes " ";
+		mes "Bring me some cards and we'll talk.";
 		close;
 	}
+	if (.@hidden)
+		mes "  ^777777...and " + .@hidden + " more card type" + ((.@hidden == 1) ? "" : "s") + "^000000";
 	mes " ";
-	mes "---------- Total: ^0055FF"+.@card_total+" pt.^000000 -------";
+	mes "---------- Total: ^0055FF" + .@card_total + " pt.^000000 -------";
+	mes "Balance: ^0055FF" + getd(.Points$) + "^000000 -> ^0055FF" + (getd(.Points$) + .@card_total) + "^000000";
 	next;
-	if(select(" > ^0055FFComplete trade...^000000: > ^777777Cancel^000000") == 2) {
+	if (select(" > ^0055FFComplete trade...^000000", " > ^777777Cancel^000000") == 2) {
 		mes "[Card Merchant]";
 		mes "Oh, okay...";
 		close;
 	}
-	for(set .@i,0; .@i<getarraysize(.@card_id); set .@i,.@i+1)
-		delitem .@card_id[.@i],.@card_amt[.@i];
-	setd .Points$, getd(.Points$)+.@card_total;
+	for (.@i = 0; .@i < .@n; .@i++)
+		delitem .@card_id[.@i], .@card_amt[.@i];
+	setd .Points$, getd(.Points$) + .@card_total;
 	mes "[Card Merchant]";
-	mes "All done!";
+	mes "All done! " + .@card_count + " card" + ((.@card_count == 1) ? "" : "s") + " for ^0055FF" + .@card_total + "^000000 point" + ((.@card_total == 1) ? "" : "s") + ".";
+	mes "You now have ^0055FF" + getd(.Points$) + "^000000 Point" + ((getd(.Points$) == 1) ? "." : "s.");
+	next;
+	switch (select("Trade in more cards...", "Point shop (^0055FF" + getd(.Points$) + "^000000)", "Done")) {
+	case 1:
+		mes "[Card Merchant]";
+		mes "Select the cards you want to trade in.";
+		close2;
+		deletearray @sold_nameid[0], getarraysize(@sold_nameid);
+		deletearray @sold_quantity[0], getarraysize(@sold_quantity);
+		callshop "card_shop", 2;
+		npcshopattach "card_shop";
+		end;
+	case 2:
+		mes "[Card Merchant]";
+		mes "Spend them well.";
+		close2;
+		callshop "card_pointshop";
+		end;
+	}
+	mes "[Card Merchant]";
+	mes "See you later!";
 	close;
 
+OnSellItem:
+	callsub S_Trade;
+	end;
+
 OnBuyItem:
-	for(set .@i,0; .@i<getarraysize(@bought_nameid); set .@i,.@i+1)
-		for(set .@j,0; .@j<getarraysize(.Shop); set .@j,.@j+2)
-			if (@bought_nameid[.@i] == .Shop[.@j]) {
-				set .@cost, .@cost+(.Shop[.@j+1]*@bought_quantity[.@i]);
-				break;
-			}
-	if (.@cost > getd(.Points$)) {
-		mes "[Card Merchant]";
-		mes "You don't have enough Points.";
-	}
-	else {
-		for(set .@i,0; .@i<getarraysize(@bought_nameid); set .@i,.@i+1) {
-			getitem @bought_nameid[.@i], @bought_quantity[.@i];
-		}
-		setd .Points$, getd(.Points$)-.@cost;
-	}
+	// Purchases go through 'card_pointshop', which pays out natively.
+	// This only fires if someone reaches the plain card_shop buy window.
 	deletearray @bought_nameid[0], getarraysize(@bought_nameid);
 	deletearray @bought_quantity[0], getarraysize(@bought_quantity);
+	mes "[Card Merchant]";
+	mes "That's not what I'm selling - have a look at my point shop instead.";
 	close;
 
 OnInit:
-	set .Level,0;   		// Minimum monster level to trade corresponding cards.
-	set .Points$,"#Card_Points";	// Variable to store points.
+	// Variable used to store points. If you change this, you MUST also
+	// change it in the 'card_pointshop' definition at the bottom of this file.
+	.Points$ = "#Card_Points";
+	.LineCap = 20;			// Max card lines itemised in a trade-in list.
+	setarray .Points[0], 1, 100;	// Points per <normal card>,<MVP card>
 	setarray .Shop[0],		// Card Shop items: <ID>,<point cost>
 	  7619,1,7620,1,14211,1,12997,1,12998,1,7776,2,5445,1,5596,5,5594,5,5220,5,5403,5,5361,5,5419,5,5362,5,5004,5,5305,5,5548,5,5536,5,5462,5,5574,5,5463,7,18666,10;
-	setarray .Points[0],1,100;	// Points per <normal card>,<MVP card>
-	set .MVP$,			// List of MVP cards.
-	  "4121,4123,4128,4131,4132,4134,4135,4137,4142,4143,4144,4145,4146,4147,4148,4168,4236,"+
-	  "4241,4263,4276,4302,4305,4318,4324,4330,4342,4357,4359,4361,4363,4365,4399,4403,4407";
-	
-	npcshopdelitem "card_shop",909;
-	for(set .@i,0; .@i<getarraysize(.Shop); set .@i,.@i+2) {
-		npcshopdelitem "card_shop",.Shop[.@i];
-		npcshopadditem "card_shop",.Shop[.@i],.Shop[.@i+1];
+
+	// Cards the merchant refuses outright. Uncomment and list card IDs.
+	//setarray .Blacklist[0], 4302, 4147;
+
+	// MVP cards: every mob in mob_db with MvpExp that drops a card.
+	// 4005 (Santa Poring Card) is deliberately excluded - the trivial mob
+	// 1062 drops it too, so paying the MVP rate would be farmable.
+	setarray .MVP[0],
+	  4121,4123,4128,4131,4132,4134,4135,4137,4142,4143,4144,4145,4146,4147,4148,4168,
+	  4236,4263,4276,4302,4305,4318,4324,4330,4342,4352,4357,4359,4361,4363,4365,4367,
+	  4372,4374,4376,4386,4399,4403,4407,4408,4419,4425,4430,4441;
+
+	npcshopdelitem "card_pointshop", 909;
+	for (.@i = 0; .@i < getarraysize(.Shop); .@i += 2) {
+		npcshopdelitem "card_pointshop", .Shop[.@i];
+		npcshopadditem "card_pointshop", .Shop[.@i], .Shop[.@i+1];
 	}
 	end;
 }
+
+// Sell window only - the trade-in list is intercepted by OnSellItem.
 -	shop	card_shop	-1,909:-1
+
+// Buy window - pays with #Card_Points, stocked at OnInit.
+-	pointshop	card_pointshop	-1,#Card_Points,909:1
 
 prt_in,168,140,4	duplicate(CardMerchant)	Card Merchant#pront	90
 izlude_in,72,110,4	duplicate(CardMerchant)	Card Merchant#izlude	90

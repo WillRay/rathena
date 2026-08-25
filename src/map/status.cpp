@@ -5748,6 +5748,12 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 					}
 					break;
 
+				case SC_CRYSTALIZE:
+					if( bl.type != BL_MOB ){
+						restriction = true;
+					}
+					break;
+
 				default:
 					return false;
 			}
@@ -9700,6 +9706,8 @@ static int32 status_get_sc_interval(enum sc_type type)
 			return 500;
 		case SC_LANDMINE_BLEED:
 			return 1500; // Single delayed burst 1.5s after the hit (interval == duration -> one tick).
+		case SC_JUDGEMENT_BURN:
+			return 1000; // 5 ticks across the 5000ms duration.
 		case SC_HELLS_PLANT:
 			return 333;
 		case SC_SHIELDSPELL_HP:
@@ -11287,6 +11295,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 		case SC_WINKCHARM:
 		case SC_VOICEOFSIREN:
 		case SC_LANDMINE_BLEED:
+		case SC_JUDGEMENT_BURN:
 			tick_time = status_get_sc_interval(type);
 			val4 = tick - tick_time; // Remaining time
 			break;
@@ -14482,6 +14491,26 @@ TIMER_FUNC(status_change_timer){
 
 			freeLock.lock();
 			clif_specialeffect(bl, EF_CRITICALWOUND, AREA); // Show the wound tearing open on the target.
+			clif_damage(*bl, *bl, tick, 0, 1, damage, 1, DMG_NORMAL, 0, false);
+			status_fix_damage(caster, bl, damage, 1, 0);
+		}
+		break;
+
+	case SC_JUDGEMENT_BURN:
+		// Judgement's holy burn. val1 is the FINAL per-tick damage - the Holy attribute
+		// table, the caster's missing-HP bonus and any siege reduction were all applied
+		// once at cast time in judgement.cpp, so nothing is recomputed here. Fires exactly
+		// 5 times (duration 5000 / interval 1000). The caster (val2 GID) is credited for
+		// the kill; if they are gone, the target self-sources so the tick still lands.
+		if (sce->val4 >= 0 && sce->val1 > 0) {
+			int64 damage = sce->val1;
+			block_list* caster = map_id2bl(sce->val2);
+
+			if (caster == nullptr)
+				caster = bl;
+
+			freeLock.lock();
+			clif_specialeffect(bl, EF_LEXDIVINA, AREA); // Holy flash on each tick.
 			clif_damage(*bl, *bl, tick, 0, 1, damage, 1, DMG_NORMAL, 0, false);
 			status_fix_damage(caster, bl, damage, 1, 0);
 		}

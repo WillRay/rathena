@@ -1476,6 +1476,9 @@ enum sc_type : int16 {
 	// Sniper rebalance: Hunting Party active falcon-swarm stance (SN_FALCONASSAULT)
 	SC_HUNTINGPARTY, // Active self-buff from SN_FALCONASSAULT ("Hunting Party"). val1 = SN_FALCONASSAULT skill level. val2/val3 = mob ids of the two cosmetic falcon companions spawned on cast, despawned in status_change_end (see falconassault.cpp). Duration 12s + 2s per level (20s at Lv5). While active: (1) plain auto attacks have a flat 30% chance to trigger a single-target Blitz Beat "Ranger falcon" strike (see skill_additional_effect, case 0), and (2) whenever the falcon-assist Blitz Beat fires off a Hunted mark, a Windhawk "echo" strike lands 500ms later for the same damage, shown with the Hawk Rush visual (see skill_additional_effect, falcon-assist block). No stat calc flags - this SC only gates procs.
 
+	// Crusader rebalance: Judgement holy burn
+	SC_JUDGEMENT_BURN, // Holy damage-over-time from Judgement (PA_PRESSURE). val1 = final damage per tick - the Holy attribute table, the caster's missing-HP bonus and any siege reduction are all baked in at cast time (see judgement.cpp), so the tick is a plain status_fix_damage. val2 = caster GID for kill credit. 5 ticks / 1000ms / 5s. See status_change_timer.
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 

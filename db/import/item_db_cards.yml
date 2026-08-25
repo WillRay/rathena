@@ -5861,3 +5861,41 @@ Body:
   Name: LUK+3
   Type: Card
 
+# mag_dun03 (Nogg Road 3F) - see db/import/mob_db.yml
+#
+# Rigid Kaho and Rigid Lava Golem drop these. Both renewal
+# originals (db/re/item_db_etc.yml:41821-41845) are Right_Hand,
+# and weapon cards on this server are regular cards, not shadow
+# cards - so unlike their six siblings these are NOT in
+# db/import/item_db_card_shadows.yml, and they keep their renewal
+# ids and AegisNames.
+#
+# Before this existed the two mobs dropped Kaho_Card (4065) and
+# Lava_Golem_Card (4184), which already belong to the classic
+# Kaho (1072) and Lava Golem (1366) in db/pre-re/mob_db.yml.
+#
+# npc/custom/card_merchant.txt only accepts 4000-4700 and
+# 30000-31000, so these two cannot be sold there.
+- Id: 27347
+  AegisName: Firm_Kaho_Card
+  Name: Rigid Kaho Card
+  Type: Card
+  Weight: 10
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: RED_PILLAR
+  Script: |
+    bonus2 bMagicAddEle,Ele_Earth,10;
+- Id: 27348
+  AegisName: Firm_Lava_G_Card
+  Name: Rigid Lava Golem Card
+  Type: Card
+  Weight: 10
+  Locations:
+    Right_Hand: true
+  Flags:
+    DropEffect: RED_PILLAR
+  Script: |
+    .@r = getrefine();
+    bonus2 bMagicAddEle,Ele_Neutral,3+((.@r>=7)*5)+((.@r>=9)*7);

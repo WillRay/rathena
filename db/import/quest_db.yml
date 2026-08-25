@@ -194,6 +194,99 @@ Body:
     Targets:
       - Mob: KING_DRAMOH
         Count: 10
+#=============================================================
+# Prontera Sunday Market (npc/custom/prontera_market.txt)
+#=============================================================
+# 8574-8591. The range is free everywhere it matters: nothing
+# between 8574 and 8699 exists in db/pre-re/quest_db.yml, the
+# block above this one stops at 8573, and the client's
+# questid2display.txt has no 857x/858x/859x entries either.
+#
+# Display text for all of these lives in
+# D:\Client\data\questid2display.txt. Without it the quest
+# window shows a blank row, so the two files must be edited
+# together.
+#
+# -- Nanna's market errands, 8574-8578.
+# A five-leg walk of the square with no combat in it, aimed at
+# levels 1-15. Each leg is completed by the stallholder it
+# points at, who sets the next one; Torv closes 8578 and sends
+# the player back to Nanna for the payout. No Targets and no
+# TimeLimit - these are pure "talk to the next person" markers.
+  - Id: 8574
+    Title: Market Errands - Elsa's Stall
+  - Id: 8575
+    Title: Market Errands - Pim's Loaves
+  - Id: 8576
+    Title: Market Errands - Wren's Posy
+  - Id: 8577
+    Title: Market Errands - Calder's Delivery
+  - Id: 8578
+    Title: Market Errands - Word to Torv
+#
+# -- Stallholder gathering requests, 8580-8588.
+# Three chains on the same shape as Lily's and Nerin's above:
+#   N   = the first-time version
+#   N+1 = a standby timer that gates the repeat
+#   N+2 = the repeatable version
+# F_PrtMarketHunt in npc/custom/prontera_market.txt derives N+1
+# and N+2 arithmetically from N, so the ordering here matters.
+#
+# The standby is 2h rather than Lily's 4h. These target Hornet
+# (lv 8), Rocker (lv 9) and Vadon (lv 19) for players in the
+# 10-30 band, where a four hour lockout is most of a play
+# session; the exp involved is small enough that a shorter
+# window is not worth farming.
+  - Id: 8580
+    Title: Smoke Out the Hives
+    Targets:
+      - Mob: HORNET
+        Count: 20
+  - Id: 8581
+    Title: Smoke Out the Hives (Standby)
+    TimeLimit: 2h
+  - Id: 8582
+    Title: The Hives Again
+    Targets:
+      - Mob: HORNET
+        Count: 20
+  - Id: 8583
+    Title: Something in the Flowerbeds
+    Targets:
+      - Mob: ROCKER
+        Count: 20
+  - Id: 8584
+    Title: Something in the Flowerbeds (Standby)
+    TimeLimit: 2h
+  - Id: 8585
+    Title: The Flowerbeds Again
+    Targets:
+      - Mob: ROCKER
+        Count: 20
+  - Id: 8586
+    Title: The Picked-Over Crab Beds
+    Targets:
+      - Mob: VADON
+        Count: 15
+  - Id: 8587
+    Title: The Picked-Over Crab Beds (Standby)
+    TimeLimit: 2h
+  - Id: 8588
+    Title: The Crab Beds Again
+    Targets:
+      - Mob: VADON
+        Count: 15
+#
+# -- Market stamp card, 8590/8591.
+# 8590 is the card in hand; which stalls have stamped it is a
+# six-bit mask in the character variable prtmk_stamp, not a
+# quest objective, because "talk to this NPC" is not something
+# Targets can express. 8591 is the weekly lockout.
+  - Id: 8590
+    Title: Sunday Market Stamp Card
+  - Id: 8591
+    Title: Sunday Market Stamp Card (Standby)
+    TimeLimit: +168h
   - Id: 60429
     Title: Nightmare Hunting 100 Kills
     Targets:

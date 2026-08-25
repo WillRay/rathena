@@ -149,7 +149,7 @@ Body:
             Chances:
               - Type: Normal
                 Rate: 2000
-                Price: 10000
+                Price: 100000
                 Material: Carnium
               - Type: HD
                 Rate: 4000
@@ -160,7 +160,7 @@ Body:
             Chances:
               - Type: Normal
                 Rate: 2000
-                Price: 10000
+                Price: 100000
                 Material: Carnium
               - Type: HD
                 Rate: 4000
@@ -543,7 +543,7 @@ Body:
             Chances:
               - Type: Normal
                 Rate: 2000
-                Price: 40000
+                Price: 200000
                 Material: Bradium
               - Type: HD
                 Rate: 4000
@@ -554,7 +554,7 @@ Body:
             Chances:
               - Type: Normal
                 Rate: 2000
-                Price: 40000
+                Price: 200000
                 Material: Bradium
               - Type: HD
                 Rate: 4000
@@ -565,7 +565,7 @@ Body:
             Chances:
               - Type: Normal
                 Rate: 2000
-                Price: 40000
+                Price: 200000
                 Material: Bradium
               - Type: HD
                 Rate: 4000
@@ -576,7 +576,7 @@ Body:
             Chances:
               - Type: Normal
                 Rate: 2000
-                Price: 40000
+                Price: 200000
                 Material: Bradium
               - Type: HD
                 Rate: 4000
@@ -587,7 +587,7 @@ Body:
             Chances:
               - Type: Normal
                 Rate: 2000
-                Price: 40000
+                Price: 200000
                 Material: Bradium
               - Type: HD
                 Rate: 4000

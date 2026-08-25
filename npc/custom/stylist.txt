@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy (original 'Stylist'), reworked for this server
 //===== Current Version: =====================================
-//= 2.0
+//= 2.1
 //===== Description: =========================================
 //= Paid stylist. Changes hairstyle, hair color and cloth color,
 //= previewed live on the character before the customer commits.
@@ -20,6 +20,13 @@
 //=     headgear handling, and an explicit way to finish. Ranges
 //=     still come from getbattleflag, so conf/battle/client.conf
 //=     remains the single place that bounds them.
+//= 2.1 Seat the customer. Mirabelle works behind the counter, so
+//=     anyone who walks up to her is turned away from the camera
+//=     and spends the preview looking at the back of their own
+//=     head. The salon now walks them onto a chair cell clear of
+//=     her, approached from the north, so the last step of the
+//=     walk leaves them facing south - into the glass, and into
+//=     the default camera. Chair coordinates live in OnInit.
 //============================================================
 
 prt_in,289,135,1	script	Mirabelle#custom_stylist	122,{
@@ -28,6 +35,7 @@ prt_in,289,135,1	script	Mirabelle#custom_stylist	122,{
 	mes "Welcome to the ^AA5599Looking Glass^000000!";
 	mes "Have a seat, the mirror's warm.";
 	next;
+	callsub S_Seat;
 
 	while (1) {
 		mes "[Mirabelle]";
@@ -224,6 +232,43 @@ prt_in,289,135,1	script	Mirabelle#custom_stylist	122,{
 	}
 	end;
 
+// The chair. Mirabelle works from behind the counter, so a customer who
+// walks up to her ends up facing north - back to the camera - and spends
+// the whole preview looking at the back of their own head.
+//
+// A player's facing can't be set from script (setunitdata has no UPC_ table
+// at all, and unit_setdir isn't exposed), but a walk leaves the unit facing
+// the direction of its last step. So: walk them to a staging cell one north
+// of the chair, then one step south onto the chair. Whatever direction they
+// came from, that final step is always southward, which with the default
+// camera is straight out of the glass.
+//
+// The stage leg has to be confirmed before the second one is issued -
+// unitwalk sets force_walk and refuses a new order until the first lands.
+S_Seat:
+	getmapxy(.@sm$, .@sx, .@sy, BL_PC);
+	if (.@sm$ != .Salon$)
+		return;					// duplicated onto another map; leave them be
+
+	if (.@sx != .Stage_X || .@sy != .Stage_Y) {
+		if (!unitwalk(getcharid(3), .Stage_X, .Stage_Y))
+			return;				// no path; not worth shoving them around
+		// Poll instead of guessing a duration - they can be anywhere inside
+		// talking range when they click her.
+		for (set .@i, 0; .@i < 60; set .@i, .@i + 1) {
+			sleep2 100;
+			getmapxy(.@sm$, .@sx, .@sy, BL_PC);
+			if (.@sx == .Stage_X && .@sy == .Stage_Y)
+				break;
+		}
+		if (.@sx != .Stage_X || .@sy != .Stage_Y)
+			return;				// interrupted; don't fight the player
+	}
+
+	unitwalk(getcharid(3), .Seat_X, .Seat_Y);
+	sleep2 600;
+	return;
+
 // Headgear hides the hair, which makes the mirror useless. Veronica's
 // apprentice in Lighthalzen solves this with 'nude'; stripping a customer
 // to their underwear is a bit much, so ask about the hat only.
@@ -254,6 +299,18 @@ OnInit:
 	set .Price_Cloth,  50000;
 	set .Price_Combo,  55000;	// all three, cheaper than 65,000 separately
 	set .Price_Random,  5000;	// no preview, no refunds
+
+	// The chair, and the cell it is approached from. Stage must sit due
+	// north of Seat (same X, Y+1) and be walkable, or the customer won't
+	// end the walk facing the camera. Seat is west of Mirabelle and clear
+	// of her sprite, which otherwise stands in front of the hair the
+	// customer is paying to look at.
+	//
+	// 285,137 is the natural-looking chair but 285,138 is wall, so there's
+	// no cell to approach it from; 285,136 is the nearest spot that has one.
+	set .Salon$,  "prt_in";
+	set .Seat_X,  285;	set .Seat_Y,  136;
+	set .Stage_X, 285;	set .Stage_Y, 137;
 
 	setarray .Look[1],     LOOK_HAIR,         LOOK_HAIR_COLOR,   LOOK_CLOTHES_COLOR;
 	setarray .Flag$[1],    "max_hair_style",  "max_hair_color",  "max_cloth_color";

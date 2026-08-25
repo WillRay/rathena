@@ -8745,6 +8745,8 @@ static const struct _battle_data {
 	{ "vcast_stat_scale",                   &battle_config.vcast_stat_scale,                530,    1,      INT_MAX,        },
 	{ "area_size",                          &battle_config.area_size,                       14,     0,      INT_MAX,        },
 	{ "zeny_from_mobs",                     &battle_config.zeny_from_mobs,                  0,      0,      1,              },
+	{ "zeny_rate",                          &battle_config.zeny_rate,                       100,    0,      INT_MAX,        },
+	{ "mvp_zeny_per_lv",                    &battle_config.mvp_zeny_per_lv,                 150,    0,      INT_MAX,        },
 	{ "mobs_level_up",                      &battle_config.mobs_level_up,                   0,      0,      1,              },
 	{ "mobs_level_up_exp_rate",             &battle_config.mobs_level_up_exp_rate,          1,      1,      INT_MAX,        },
 	{ "pk_min_level",                       &battle_config.pk_min_level,                    55,     1,      INT_MAX,        },

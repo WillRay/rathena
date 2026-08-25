@@ -3263,10 +3263,14 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 				per *= battle_config.pet_attack_exp_rate/100.;
 
 			if(battle_config.zeny_from_mobs && md->level) {
-				 // zeny calculation moblv + random moblv [Valaris]
-				zeny=(int32) ((md->level+rnd()%md->level)*per*bonus/100.);
 				if( md->get_bosstype() == BOSSTYPE_MVP )
-					zeny=200000;
+					// MVP zeny scales with the mob's level and your damage share
+					zeny=(int32) (md->level*battle_config.mvp_zeny_per_lv*per*bonus/100.);
+				else {
+					 // zeny calculation moblv + random moblv [Valaris]
+					zeny=(int32) ((md->level+rnd()%md->level)*per*bonus/100.);
+					zeny=(int32) (zeny*battle_config.zeny_rate/100.);
+				}
 			}
 
 			if (map_getmapflag(m, MF_NOBASEEXP) || !md->db->base_exp)

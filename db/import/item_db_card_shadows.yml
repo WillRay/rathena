@@ -2868,31 +2868,41 @@ Body:
       bonus bMatk,100;
 # mag_dun03 (Nogg Road 3F) - see db/import/mob_db.yml
 #
-# Five of the eight Rigid mobs had no shadow card in this catalog.
-# These carry the effects of their renewal Firm_* cards verbatim
-# (db/re/item_db_etc.yml:41805-41911); the renewal Left_Hand slot
-# maps to Shadow_Shield.
+# None of the eight Rigid mobs had a shadow card in this catalog.
+# The six below carry the effects of their renewal Firm_* cards
+# verbatim (db/re/item_db_etc.yml:41805-41911).
 #
-# The Firm_* items (27346-27353) are deliberately NOT created -
-# these replace them, matching how db/pre-re/mob_db.yml already
-# substitutes shadow cards for the classic 4xxx card on 256 mobs.
+# The Firm_* items (27346-27353) are deliberately NOT created as
+# shadow cards - these replace them, matching how
+# db/pre-re/mob_db.yml already substitutes shadow cards for the
+# classic 4xxx card on 256 mobs.
 #
-# Only three of the five survive. The two that were Shadow_Weapon
-# (30453 Firm_Kaho, 30454 Firm_Lava_G) were removed: weapon cards
-# on this server are regular cards, not shadow cards. Rigid Kaho
-# and Rigid Lava Golem drop Kaho_Card (4065) and Lava_Golem_Card
-# (4184) instead.
+# Slot mapping from the renewal originals:
+#   Left_Hand -> Shadow_Shield
+#   Shoes     -> Shadow_Shoes
+#   Head_*    -> Shadow_Shield  (no shadow headgear position)
 #
-# The other three mobs drop cards that already exist above:
-#   20373 Rigid Nightmare Terror -> 30166 S_Card_4166
-#   20374 Rigid Sky Deleter      -> 30158 S_Card_4158
-#   20375 Rigid Earth Deleter    -> 30279 S_Card_4279
+# The two that were Right_Hand (27347 Firm_Kaho, 27348
+# Firm_Lava_G) are NOT here: weapon cards on this server are
+# regular cards, not shadow cards, so they live in
+# db/import/item_db_cards.yml under their renewal ids.
 #
-# 20376 Rigid Explosion was originally mapped to 30267 S_Card_4267
-# (Shadow Explosion Card), which is the *classic* Explosion mob's
-# card and carries an entirely different effect - a -20% Dragon
-# resist penalty traded for Dragon exp. It gets its own card below
-# instead, carrying Firm_Explosion_Card's real effect.
+# Every Rigid mob drops its OWN card. 20373/20374/20375 used to
+# drop 30166/30158/30279, but those are the *classic* Nightmare
+# Terror (1379), Deleter (1384) and Deleter_ (1385) cards - the
+# same three mobs still drop them in db/pre-re/mob_db.yml, so the
+# Rigid mobs were handing out a card that already belonged to
+# something else, with the wrong effect and the wrong name. Same
+# reason 20376 was moved off 30267 (Shadow Explosion Card, the
+# classic Explosion mob's card, which trades a -20% Dragon resist
+# penalty for Dragon exp).
+#
+# Ids 30452-30459 do not follow this file's shadow = classic +
+# 26000 rule, because the Firm_* originals are 27xxx and would
+# land outside the 30000-31000 band. npc/custom/card_merchant.txt
+# only applies its nameid-26000 lookup when its .Level setting is
+# non-zero, and it is 0, so nothing breaks - but do not raise
+# .Level without revisiting this.
   - Id: 30452
     AegisName: S_Card_Firm_Blazzer
     Name: Shadow Rigid Blazer Card
@@ -2907,9 +2917,9 @@ Body:
   # 30453 S_Card_Firm_Kaho and 30454 S_Card_Firm_Lava_G were here.
   # Both were Shadow_Weapon, and weapon cards on this server are
   # regular cards, not shadow cards. Rigid Kaho and Rigid Lava
-  # Golem now drop Kaho_Card (4065) and Lava_Golem_Card (4184)
-  # instead - see db/import/mob_db.yml. Nothing dropped these two,
-  # so they are removed rather than left orphaned.
+  # Golem drop Firm_Kaho_Card (27347) and Firm_Lava_G_Card (27348)
+  # from db/import/item_db_cards.yml instead - see
+  # db/import/mob_db.yml. The two ids stay unused.
   - Id: 30455
     AegisName: S_Card_Firm_Muspell
     Name: Shadow Rigid Muspellskoll Card
@@ -2934,6 +2944,37 @@ Body:
     Script: |
       bonus2 bSubRace,RC_Dragon,15;
       bonus2 bSubEle,Ele_Fire,15;
+  - Id: 30457
+    AegisName: S_Card_Firm_Nightmare_T
+    Name: Shadow Rigid Nightmare Terror Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxSPrate,5;
+  - Id: 30458
+    AegisName: S_Card_Firm_Deleter2
+    Name: Shadow Rigid Sky Deleter Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      bonus bMaxHPrate,5;
+  - Id: 30459
+    AegisName: S_Card_Firm_Deleter1
+    Name: Shadow Rigid Earth Deleter Card
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Flags:
+      DropEffect: RED_PILLAR
+    Script: |
+      .@r = getrefine();
+      bonus bMaxSPrate,2+(.@r/2);
 # iz_dun05 (Undersea Tunnel F6) - see db/import/mob_db.yml
 #
 # None of the five iz_dun05 mobs had a shadow card in this
