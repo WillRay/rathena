@@ -66,16 +66,16 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 		mes "begin an entirely new life.";
 		mes "Honor to the warriors!";
 		next;
-		if (Weight > 0 || Zeny > 0 || checkcart() != 0 || checkfalcon() != 0 || checkriding() != 0) {
+		if (checkcart() != 0 || checkfalcon() != 0 || checkriding() != 0) {
 			mes "[Valkyrie]";
-			mes "There are a few things you must";
-			mes "do before we start. You must";
-			mes "first empty your mind and body.";
-			mes "Honor comes when you abandon";
-			mes "all your selfish desires...";
+			mes "There is one thing you must";
+			mes "do before we start. No beast";
+			mes "nor burden may follow you";
+			mes "across the threshold into";
+			mes "your next life...";
 			next;
 			mes "[Valkyrie]";
-			mes "You cannot take anything with you to the next life. Your items, zeny, pets and Pushcart all have to be left behind.";
+			mes "Your belongings and your coin may cross with you. Only the creatures bound to your old calling cannot - send away your Pushcart, your Falcon and your PecoPeco.";
 			next;
 			mes "[Valkyrie]";
 			mes "When you are ready";

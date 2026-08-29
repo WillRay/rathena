@@ -256,6 +256,7 @@ function	script	Func_Socket	{
 				.@refine = (.@idx != -1) ? @inventorylist_refine[.@idx] : 0;
 				.@attribute = (.@idx != -1) ? @inventorylist_attribute[.@idx] : 0;
 				.@grade = (.@idx != -1) ? @inventorylist_enchantgrade[.@idx] : 0;
+				.@bound = (.@idx != -1) ? @inventorylist_bound[.@idx] : 0; // preserve soulbinding across the socketing
 				setarray .@card[0], (.@idx != -1) ? @inventorylist_card1[.@idx] : 0, (.@idx != -1) ? @inventorylist_card2[.@idx] : 0, (.@idx != -1) ? @inventorylist_card3[.@idx] : 0, (.@idx != -1) ? @inventorylist_card4[.@idx] : 0;
 				setarray .@opt_id[0], (.@idx != -1) ? @inventorylist_option_id1[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_id2[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_id3[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_id4[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_id5[.@idx] : 0;
 				setarray .@opt_val[0], (.@idx != -1) ? @inventorylist_option_value1[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_value2[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_value3[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_value4[.@idx] : 0, (.@idx != -1) ? @inventorylist_option_value5[.@idx] : 0;
@@ -273,7 +274,7 @@ function	script	Func_Socket	{
 					if (.@item_req[1] != 0 && .@req_amount[1] != 0)
 						delitem .@item_req[1],.@req_amount[1];
 					Zeny = Zeny - .@zeny_req *1000;
-					getitem4 getarg(1),1,.@identify,.@refine,.@attribute,.@card[0],.@card[1],.@card[2],.@card[3],.@grade,.@opt_id,.@opt_val,.@opt_param;
+					getitembound4 getarg(1),1,.@identify,.@refine,.@attribute,.@card[0],.@card[1],.@card[2],.@card[3],.@bound,.@grade,.@opt_id,.@opt_val,.@opt_param;
 					next;
 					mes "[Seiyablem]";
 					mes "See you again, buddy!";

@@ -1,181 +1,439 @@
+//===== rAthena Script =======================================
+//= Engraver (Aino) - Random Option engraving
+//===== Description: =========================================
+//= Improves the random options ("powers") on equipment.
+//=
+//= Dawn Essence   : always succeeds. The gain is variable and
+//=                  decelerates, up to a soft cap of 75% of
+//=                  the ceiling. Never fails, never reduces.
+//= Hazy Starlight : above the soft cap, a 25% roll to break
+//=                  the limit. On success the option jumps
+//=                  straight to its full ceiling.
+//=
+//= Engraving binds the item to the character (BOUND_CHAR).
+//= Aino can release an item, which destroys its powers but
+//= makes it tradeable again.
+//============================================================
+
 -	script	EngraverNPC#dummy::Engraver	-1,{
 
 	mes "[Aino]";
-	mes "Ho there! I can improve the power of your equipment beyond normal refinement. Bring me items ^FF0000already showing enhanced power^000000^000000, and I can enhance them further.";
+	mes "Ho there! I can improve the power of your equipment beyond normal refinement.";
+	mes " ";
+	mes "Be warned though - once I engrave a piece, it answers to ^0000FFyou alone^000000.";
 	next;
 
-	.@selection = select("I want improve my equipment.:'Improve beyond normal'?:Cancel");
-	switch (.@selection) {
-		case 3:
-			end;
-		case 2:
-			mes "[Aino]";
-			mes "Equipment has chance to drop with one or more empowered options. I can improve these options even further, pushing them to their maximum. However, I cannot add new empowerment options.";
-			end;
-		case 1:
-			break;
+	switch (select("Improve a power:Add a new power:Release an engraving:Exchange essences:How does this work?:Cancel")) {
+		case 1: goto L_Improve;
+		case 2: goto L_AddPower;
+		case 3: goto L_Release;
+		case 4: goto L_Exchange;
+		case 5: goto L_Explain;
+		case 6: close;
 	}
+	end;
 
-	if (countitem(7836) < 1) { // Dawn_Essence
+L_Explain:
+	mes "[Aino]";
+	mes "Equipment often drops already showing empowered options, and a lucky find can be as strong as anything ever gets. Most are not so lucky - that is where I come in.";
+	next;
+	mes "[Aino]";
+	mes "^0000FFDawn Essence^000000 closes the gap. ^0000FFOne^000000 to strengthen a power you already have, ^0000FFthree^000000 to coax out a new one. It always works, though how far it carries a power varies, and it grows stubborn as the power nears its natural limit.";
+	next;
+	mes "[Aino]";
+	mes "It will never fail you, and never weaken what you already have.";
+	next;
+	mes "[Aino]";
+	mes "Past the point where essence stalls, only ^FF0000Hazy Starlight^000000 will do. It breaks the limit outright - but only about one time in four. When it takes, the power leaps to its absolute maximum in a single stroke.";
+	next;
+	mes "[Aino]";
+	mes "The moment I touch a piece it becomes ^0000FFyours^000000. It cannot be traded, stored or sold after that. If you tire of it I can release it - but the powers burn away when I do.";
+	close;
+
+// ------------------------------------------------------------
+L_Improve:
+	callsub S_LoadEquip;
+
+	if (@eng_tiers < 1) {
 		mes "[Aino]";
-		mes "I require at least one ^0000FFDawn Essence^000000^000000 to complete my work.";
-		end;
+		mes "This piece has no powers for me to work on. Perhaps I should try to add one instead?";
+		close;
 	}
 
 	mes "[Aino]";
-	mes "Select the item you wish to enhance:";
+	mes "Which power shall I work on?";
 	next;
-	
-	for(.@i = 0; .@i <= getarraysize(.equipOptions) - 1; .@i++) {
-		.@menu$ = .@menu$ + ((getequipisequiped(.equipOptions[.@i])) ? getequipname(.equipOptions[.@i]) : "") + ":";
+
+	.@pmenu$ = "";
+	for (.@i = 0; .@i < 3; .@i++) {
+		if (@eng_optId[.@i] > 0) {
+			.@cap = callfunc("GetMaxOptValue", @eng_optId[.@i], @eng_itemType, @eng_weaponLevel, @eng_itemSubtype);
+			.@pmenu$ = .@pmenu$ + callfunc("GetRandomOptName", @eng_optId[.@i]) + "   " + @eng_optVal[.@i] + " / " + .@cap + ":";
+		} else {
+			.@pmenu$ = .@pmenu$ + ":";
+		}
 	}
 
+	.@slot = select(.@pmenu$) - 1;
 
-	.@selection = select(.@menu$)-1;
+	.@ceiling = callfunc("GetMaxOptValue", @eng_optId[.@slot], @eng_itemType, @eng_weaponLevel, @eng_itemSubtype);
+	.@optName$ = callfunc("GetRandomOptName", @eng_optId[.@slot]);
+	.@softcap = .@ceiling * 75 / 100;
+	// A 75% cap collapses when the ceiling is only 2: the cap lands on 1, so the
+	// very first step would demand starlight. Let essence cover those outright.
+	if (.@softcap < 2) .@softcap = .@ceiling;
+	.@cur = @eng_optVal[.@slot];
 
-	.@equipIndex = .equipOptions[.@selection];
-
-	// BEGIN Get Selected Equip Data -------------------
-
-	.@itemId = getequipid(.@equipIndex);
-	.@refine = getequiprefinerycnt(.@equipIndex);
-	.@itemType = .equipOptions[.@selection];
-	.itemSubtype = getiteminfo(.@itemId, ITEMINFO_SUBTYPE);
-	.weaponLevel = getequipweaponlv(.@equipIndex);
-
-	setarray .@cards[0], getequipcardid(.@equipIndex,0), getequipcardid(.@equipIndex,1), getequipcardid(.@equipIndex,2), getequipcardid(.@equipIndex,3);
-	setarray .@optId[0], getequiprandomoption(.@equipIndex,0,ROA_ID), getequiprandomoption(.@equipIndex,1,ROA_ID), getequiprandomoption(.@equipIndex,2,ROA_ID), getequiprandomoption(.@equipIndex,3,ROA_ID), getequiprandomoption(.@equipIndex,4,ROA_ID);
-	setarray .@optVal[0], getequiprandomoption(.@equipIndex,0,ROA_VALUE), getequiprandomoption(.@equipIndex,1,ROA_VALUE), getequiprandomoption(.@equipIndex,2,ROA_VALUE), getequiprandomoption(.@equipIndex,3,ROA_VALUE), getequiprandomoption(.@equipIndex,4,ROA_VALUE);
-	setarray .@optParam[0], 0, 0, 0, 0, 0;
-
-	set @numTiers, 0;
-	if (.@optId[0] > 0) {
-		@numTiers++;
-	}
-	if (.@optId[1] > 0) {
-		@numTiers++;
-	}
-	if (.@optId[2] > 0) {
-		@numTiers++;
-	}
-	// END Set Selected Equip Data -------------------
-
-	if (@numTiers < 3) {
+	// Covers a maxed power, and an option this equip type has no ceiling for
+	if (.@cur >= .@ceiling) {
 		mes "[Aino]";
-		mes "Would you like to increase the existing powers, or try to add a new one?";
-		.@selection = select("Improve existing powers.:Try to add a new power.");
-		next;
-	}
-	else {
-		.@selection = 0;
+		mes "^0000FF" + .@optName$ + "^000000 is already as strong as it will ever be at " + .@ceiling + ". I can do nothing more with it.";
+		close;
 	}
 
-	if (.@selection == 1 && @numTiers == 0) {
-		mes "[Aino]";
-		mes "This item has no powers to enhance.";
-		end;	
-	}
-
-	if (.@selection == 2) {
-		.@newOptId = callfunc("GetRandomOptId", .@itemType, .weaponLevel, .itemSubtype);
-
-		if (.@newOptId == 0) {
-			switch (@numTiers + 1) {
-				case 1: specialeffect2 EF_BEGINSPELL_N2; break;
-				case 2: specialeffect2 EF_BEGINSPELL_N5; break;
-				case 3: specialeffect2 EF_BEGINSPELL_N7; break;
-			}
-			progressbar "ffff00",2;
-			specialeffect2 EF_TEMP_FAIL;
-			delitem 7836, 1; // Dawn_Essence
+	if (.@cur < .@softcap) {
+		// ---- Dawn Essence: always succeeds, variable gain, clamped to the soft cap ----
+		if (countitem(7836) < 1) { // Dawn_Essence
 			mes "[Aino]";
-			mes "I'm sorry,  I was unable to add a new power.";
-			end;
+			mes "I require a ^0000FFDawn Essence^000000 for this work.";
+			close;
 		}
-		else {
-			.@optId[@numTiers] = .@newOptId;
-			.@optVal[@numTiers] = 0;
-			@numTiers++;
-		}
-	}
 
-	// BEGIN Set Tier Enchants -------------------
-	@initalOptValsTotal = .@optVal[0] + .@optVal[1] + .@optVal[2];
+		.@span = (.@softcap - .@cur + 1) / 2;
+		if (.@span < 1) .@span = 1;
+		// rand() errors when min == max. A ternary will NOT do here - rAthena
+		// evaluates both branches of ?: eagerly, so the rand would still run.
+		.@gain = 1;
+		if (.@span > 1)
+			.@gain = rand(1, .@span);
+		.@new = .@cur + .@gain;
+		if (.@new > .@softcap) .@new = .@softcap;
 
-	// No break statements - it's intended to fall through here.
-	switch (@numTiers) {
-		case 3:
-			set @maxValue, callfunc("GetMaxOptValue", .@optId[2], .@itemType, .weaponLevel, .itemSubtype);
-			if (@maxValue - .@optVal[2] > 1)	
-				set .@optVal[2], rand(.@optVal[2], @maxValue);
-			else
-				set .@optVal[2], @maxValue;
-		case 2:
-			set @maxValue, callfunc("GetMaxOptValue", .@optId[1], .@itemType, .weaponLevel, .itemSubtype);
-			if (@maxValue - .@optVal[1] > 1)	
-				set .@optVal[1], rand(.@optVal[1], @maxValue);
-			else
-				set .@optVal[1], @maxValue;
-		case 1:
-			set @maxValue, callfunc("GetMaxOptValue", .@optId[0], .@itemType, .weaponLevel, .itemSubtype);
-			if (@maxValue - .@optVal[0] > 1)	
-				set .@optVal[0], rand(.@optVal[0], @maxValue);
-			else
-				set .@optVal[0], @maxValue;
-	}
+		delitem 7836, 1; // Dawn_Essence
 
-	@initalOptValsTotal = @initalOptValsTotal - .@optVal[0] - .@optVal[1] - .@optVal[2];
+		specialeffect2 EF_BEGINSPELL_N5;
+		progressbar "ffff00", 2;
+		specialeffect2 EF_DETECT4;
 
-	if (@initalOptValsTotal == 0) {
+		@eng_optVal[.@slot] = .@new;
+		.@gained = .@new - .@cur;
+
 		mes "[Aino]";
-		mes "This equipment has been upgraded to it's maximum potential. I can upgrade it no further.";
-		end;
+		if (.@new >= .@ceiling)
+			mes "^0000FF" + .@optName$ + "^000000 rose by ^0000FF" + .@gained + "^000000 to " + .@new + " - its absolute maximum. You will not better that.";
+		else if (.@new >= .@softcap)
+			mes "^0000FF" + .@optName$ + "^000000 rose by ^0000FF" + .@gained + "^000000 to " + .@new + ". That is as far as Dawn Essence will carry it; beyond this only Hazy Starlight will break it open.";
+		else
+			mes "^0000FF" + .@optName$ + "^000000 rose by ^0000FF" + .@gained + "^000000. It now stands at " + .@new + " of " + .@ceiling + ".";
+	} else {
+		// ---- Hazy Starlight: 25% to break the limit, jumping to the ceiling ----
+		if (countitem(7838) < 1) { // Hazy_Starlight
+			mes "[Aino]";
+			mes "^0000FF" + .@optName$ + "^000000 has gone as far as essence alone can take it. To break its limit I need ^FF0000Hazy Starlight^000000.";
+			close;
+		}
+
+		delitem 7838, 1; // Hazy_Starlight
+
+		specialeffect2 EF_BEGINSPELL_N7;
+		progressbar "ffff00", 2;
+
+		if (rand(1, 100) <= 50) {
+			specialeffect2 EF_DETECT4;
+			@eng_optVal[.@slot] = .@ceiling;
+			mes "[Aino]";
+			mes "It gave way! ^0000FF" + .@optName$ + "^000000 has leapt to its absolute maximum - ^0000FF" + .@ceiling + "^000000. You will not better that.";
+		} else {
+			specialeffect2 EF_TEMP_FAIL;
+			mes "[Aino]";
+			mes "The starlight scattered. ^0000FF" + .@optName$ + "^000000 holds at " + .@cur + " - but nothing was taken from it either.";
+			close;
+		}
 	}
 
-	delitem 7836, 1; // Dawn_Essence
+	// Never write a value below what the item already had
+	if (@eng_optVal[.@slot] < .@cur) @eng_optVal[.@slot] = .@cur;
 
-	switch (@numTiers) {
+	callsub S_RebuildBound;
+	close;
+
+// ------------------------------------------------------------
+L_AddPower:
+	callsub S_LoadEquip;
+
+	if (@eng_tiers >= 3) {
+		mes "[Aino]";
+		mes "Three powers is all any piece will hold. I can add no more.";
+		close;
+	}
+
+	// Adding a power costs 3 Dawn Essence; improving one costs 1
+	if (countitem(7836) < 3) { // Dawn_Essence
+		mes "[Aino]";
+		mes "Coaxing an entirely new power out of a piece takes ^0000FF3 Dawn Essence^000000. You have " + countitem(7836) + ".";
+		close;
+	}
+
+	// Roll before charging - a power the piece cannot take costs nothing
+	.@newOptId = callfunc("GetRandomOptId", @eng_itemType, @eng_weaponLevel, @eng_itemSubtype, @eng_optId, @eng_tiers);
+
+	if (.@newOptId == 0) {
+		mes "[Aino]";
+		mes "I can find no new power this piece will accept. Keep your materials.";
+		close;
+	}
+
+	delitem 7836, 3; // Dawn_Essence
+
+	switch (@eng_tiers + 1) {
 		case 1: specialeffect2 EF_BEGINSPELL_N2; break;
 		case 2: specialeffect2 EF_BEGINSPELL_N5; break;
 		case 3: specialeffect2 EF_BEGINSPELL_N7; break;
 	}
-
-	// END Set Tier Enchants -------------------
-
-	progressbar "ffff00",2;
+	progressbar "ffff00", 2;
 	specialeffect2 EF_DETECT4;
-	//soundeffect "complete.wav",0;
-	delequip .@equipIndex;
-	getitem3 .@itemId,1,1,.@refine,0,.@cards[0],.@cards[1],.@cards[2],.@cards[3],.@optId,.@optVal,.@optParam;
+
+	.@ceiling = callfunc("GetMaxOptValue", .@newOptId, @eng_itemType, @eng_weaponLevel, @eng_itemSubtype);
+	.@start = .@ceiling / 10;
+	if (.@start < 1) .@start = 1;
+
+	.@newSlot = @eng_tiers;
+	@eng_optId[.@newSlot] = .@newOptId;
+	@eng_optVal[.@newSlot] = .@start;
+
+	mes "[Aino]";
+	mes "A new power stirs in it - ^0000FF" + callfunc("GetRandomOptName", .@newOptId) + "^000000, starting at " + .@start + " of " + .@ceiling + ". Bring me essence and I will nurture it.";
+
+	callsub S_RebuildBound;
 	close;
+
+// ------------------------------------------------------------
+L_Release:
+	callsub S_LoadEquip;
+
+	if (@eng_tiers < 1) {
+		mes "[Aino]";
+		mes "There is no engraving on this piece to release.";
+		close;
+	}
+
+	mes "[Aino]";
+	mes "I can release this piece back into the world. It will be yours to trade or store again...";
+	next;
+	mes "[Aino]";
+	mes "...but every power on it will ^FF0000burn away^000000. The refinement and the cards will survive. The powers will not.";
+	next;
+
+	if (select("Do it.:Leave it be.") == 2) {
+		mes "[Aino]";
+		mes "Wise. Come back when you are certain.";
+		close;
+	}
+
+	if (!checkweight(@eng_itemId, 1)) {
+		mes "[Aino]";
+		mes "You are carrying far too much for me to work safely. Set something down first.";
+		close;
+	}
+
+	setarray @eng_optId[0], 0, 0, 0, 0, 0;
+	setarray @eng_optVal[0], 0, 0, 0, 0, 0;
+	setarray @eng_optParam[0], 0, 0, 0, 0, 0;
+
+	specialeffect2 EF_BEGINSPELL_N2;
+	progressbar "ffff00", 2;
+	specialeffect2 EF_TEMP_FAIL;
+
+	delequip @eng_equipIndex;
+	getitem3 @eng_itemId, 1, 1, @eng_refine, 0, @eng_cards[0], @eng_cards[1], @eng_cards[2], @eng_cards[3], @eng_optId, @eng_optVal, @eng_optParam;
+
+	mes "[Aino]";
+	mes "It is done. The piece is plain again, and free to change hands.";
+	close;
+
+// ------------------------------------------------------------
+L_Exchange:
+	mes "[Aino]";
+	mes "Starlight cannot be farmed the way essence can. But essence can be ^0000FFcondensed^000000 into it, if you have enough to spare.";
+	mes " ";
+	mes "^0000FF20 Dawn Essence^000000   ->   ^FF00001 Hazy Starlight^000000";
+	next;
+
+	if (countitem(7836) < 20) {
+		mes "[Aino]";
+		mes "You are carrying ^0000FF" + countitem(7836) + "^000000. Not nearly enough - come back with twenty.";
+		close;
+	}
+
+	.@max = countitem(7836) / 20;
+	mes "[Aino]";
+	mes "You are carrying ^0000FF" + countitem(7836) + "^000000 Dawn Essence - enough for ^FF0000" + .@max + "^000000. How many shall I condense?";
+	next;
+
+	input .@amount, 0, .@max;
+	if (.@amount < 1) {
+		mes "[Aino]";
+		mes "As you like.";
+		close;
+	}
+
+	if (!checkweight(7838, .@amount)) {
+		mes "[Aino]";
+		mes "You could not carry it. Set something down first.";
+		close;
+	}
+
+	delitem 7836, .@amount * 20; // Dawn_Essence
+	getitem 7838, .@amount;      // Hazy_Starlight
+
+	specialeffect2 EF_BEGINSPELL_N7;
+	progressbar "ffff00", 2;
+	specialeffect2 EF_DETECT4;
+
+	mes "[Aino]";
+	mes "There - ^FF0000" + .@amount + " Hazy Starlight^000000. Spend it where it matters.";
+	close;
+
+// ------------------------------------------------------------
+// Prompts for an equipped piece and loads its data into @eng_* .
+// Character-temp vars are used so the data survives the callsub.
+S_LoadEquip:
+	mes "[Aino]";
+	mes "Which piece shall I look at?";
+	next;
+
+	.@menu$ = "";
+	for (.@i = 0; .@i <= getarraysize(.equipOptions) - 1; .@i++) {
+		.@menu$ = .@menu$ + ((getequipisequiped(.equipOptions[.@i])) ? getequipname(.equipOptions[.@i]) : "") + ":";
+	}
+
+	@eng_equipIndex = .equipOptions[select(.@menu$) - 1];
+
+	if (!getequipisequiped(@eng_equipIndex)) {
+		mes "[Aino]";
+		mes "You are not wearing anything there.";
+		close;
+	}
+
+	@eng_itemId      = getequipid(@eng_equipIndex);
+	@eng_refine      = getequiprefinerycnt(@eng_equipIndex);
+	@eng_itemType    = @eng_equipIndex;
+	@eng_itemSubtype = getiteminfo(@eng_itemId, ITEMINFO_SUBTYPE);
+	@eng_weaponLevel = getequipweaponlv(@eng_equipIndex);
+
+	setarray @eng_cards[0], getequipcardid(@eng_equipIndex,0), getequipcardid(@eng_equipIndex,1), getequipcardid(@eng_equipIndex,2), getequipcardid(@eng_equipIndex,3);
+	setarray @eng_optId[0], getequiprandomoption(@eng_equipIndex,0,ROA_ID), getequiprandomoption(@eng_equipIndex,1,ROA_ID), getequiprandomoption(@eng_equipIndex,2,ROA_ID), getequiprandomoption(@eng_equipIndex,3,ROA_ID), getequiprandomoption(@eng_equipIndex,4,ROA_ID);
+	setarray @eng_optVal[0], getequiprandomoption(@eng_equipIndex,0,ROA_VALUE), getequiprandomoption(@eng_equipIndex,1,ROA_VALUE), getequiprandomoption(@eng_equipIndex,2,ROA_VALUE), getequiprandomoption(@eng_equipIndex,3,ROA_VALUE), getequiprandomoption(@eng_equipIndex,4,ROA_VALUE);
+	setarray @eng_optParam[0], 0, 0, 0, 0, 0;
+
+	@eng_tiers = 0;
+	if (@eng_optId[0] > 0) @eng_tiers++;
+	if (@eng_optId[1] > 0) @eng_tiers++;
+	if (@eng_optId[2] > 0) @eng_tiers++;
+
+	return;
+
+// Rebuilds the equipped piece with its new options, bound to this character.
+S_RebuildBound:
+	if (!checkweight(@eng_itemId, 1)) {
+		mes "[Aino]";
+		mes "You are carrying far too much for me to work safely. Set something down first.";
+		close;
+	}
+
+	delequip @eng_equipIndex;
+	getitembound3 @eng_itemId, 1, 1, @eng_refine, 0, @eng_cards[0], @eng_cards[1], @eng_cards[2], @eng_cards[3], BOUND_CHAR, @eng_optId, @eng_optVal, @eng_optParam;
+
+	mes " ";
+	mes "^0000FFThis piece is now bound to you.^000000";
+	return;
 
 OnInit:
 	setarray .equipOptions[0], EQI_ACC_L, EQI_ACC_R, EQI_ARMOR, EQI_GARMENT, EQI_SHOES, EQI_HAND_L, EQI_HAND_R; //, EQI_HEAD_TOP EQI_HEAD_LOW, EQI_HEAD_MID
 }
 
-function	script	GetRandomOptId	{
-	@itemType = getarg(0);
-	@weaponLevel = getarg(1);
-	@itemSubtype = getarg(2);
+// Returns the bound type of the item equipped in <equip index>, or 0.
+// There is no getequipbound, so the inventory list is walked instead.
+function	script	GetEquipBound	{
+	.@eqi = getarg(0);
 
-	if (@weaponLevel > 0) {
-		switch(@itemSubtype) {
+	if (.@eqi < 0 || .@eqi > 9)
+		return 0;
+
+	setarray .@eqp[0], EQP_ACC_L, EQP_ACC_R, EQP_SHOES, EQP_GARMENT, EQP_HEAD_LOW, EQP_HEAD_MID, EQP_HEAD_TOP, EQP_ARMOR, EQP_HAND_L, EQP_HAND_R;
+	.@mask = .@eqp[.@eqi];
+
+	getinventorylist;
+	for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+		if (@inventorylist_equip[.@i] & .@mask)
+			return @inventorylist_bound[.@i];
+	}
+
+	return 0;
+}
+
+// Returns the bound type of the first inventory entry matching <item id> at
+// <refine>, or 0. Used where the piece is not equipped.
+function	script	GetItemBoundByRefine	{
+	.@id = getarg(0);
+	.@refine = getarg(1);
+
+	getinventorylist;
+	for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+		if (@inventorylist_id[.@i] == .@id && @inventorylist_refine[.@i] == .@refine)
+			return @inventorylist_bound[.@i];
+	}
+
+	return 0;
+}
+
+// Picks a random option valid for this equip type that is NOT already on the
+// item. getarg(3) is the existing option id array, getarg(4) how many are set.
+function	script	GetRandomOptId	{
+	.@itemType = getarg(0);
+	.@weaponLevel = getarg(1);
+	.@itemSubtype = getarg(2);
+	.@have = getarg(4);
+
+	for (.@try = 0; .@try < 60; .@try++) {
+		.@id = callfunc("RollRandomOptId", .@itemType, .@weaponLevel, .@itemSubtype);
+
+		if (.@id == 0)
+			continue;
+
+		.@dup = 0;
+		for (.@k = 0; .@k < .@have; .@k++) {
+			if (getelementofarray(getarg(3), .@k) == .@id) {
+				.@dup = 1;
+				break;
+			}
+		}
+
+		if (!.@dup)
+			return .@id;
+	}
+
+	return 0;
+}
+
+function	script	RollRandomOptId	{
+	.@itemType = getarg(0);
+	.@weaponLevel = getarg(1);
+	.@itemSubtype = getarg(2);
+
+	if (.@weaponLevel > 0) {
+		switch(.@itemSubtype) {
 			case W_BOW:
 			case W_MUSICAL:
 			case W_WHIP:
 				if (callfunc("IsRandomChanceOf", 50)) {
-					setarray @optIds[0], RDMOPT_VAR_ATTPOWER, RDMOPT_VAR_CRITICALSUCCESSVALUE;
-					if (getarraysize(@optIds) > 1)
-						return @optIds[rand(0,getarraysize(@optIds)-1)];
-					return @optIds[0];
+					setarray .@optIds[0], RDMOPT_VAR_ATTPOWER, RDMOPT_VAR_CRITICALSUCCESSVALUE;
+					return .@optIds[rand(0, getarraysize(.@optIds) - 1)];
 				}
 
-
 				if (callfunc("IsRandomChanceOf", 30)) {
-					setarray @optIds[0], RDMOPT_RANGE_ATTACK_DAMAGE_TARGET, RDMOPT_VAR_ATKPERCENT;
-					if (getarraysize(@optIds) > 1)
-						return @optIds[rand(0,getarraysize(@optIds)-1)];
-					return @optIds[0];
+					setarray .@optIds[0], RDMOPT_RANGE_ATTACK_DAMAGE_TARGET, RDMOPT_VAR_ATKPERCENT;
+					return .@optIds[rand(0, getarraysize(.@optIds) - 1)];
 				}
 
 				if (callfunc("IsRandomChanceOf", 20)) {
@@ -185,17 +443,13 @@ function	script	GetRandomOptId	{
 			case W_2HSTAFF:
 			case W_BOOK:
 				if (callfunc("IsRandomChanceOf", 50)) {
-					setarray @optIds[0], RDMOPT_HEAL_MODIFY_PERCENT, RDMOPT_ADDSKILLMDAMAGE_ALL, RDMOPT_VAR_ATTMPOWER;
-					if (getarraysize(@optIds) > 1)
-						return @optIds[rand(0,getarraysize(@optIds)-1)];
-					return @optIds[0];
+					setarray .@optIds[0], RDMOPT_HEAL_MODIFY_PERCENT, RDMOPT_ADDSKILLMDAMAGE_ALL, RDMOPT_VAR_ATTMPOWER;
+					return .@optIds[rand(0, getarraysize(.@optIds) - 1)];
 				}
-				
+
 				if (callfunc("IsRandomChanceOf", 30)) {
-					setarray @optIds[0], RDMOPT_VAR_MAGICATKPERCENT, RDMOPT_CLASS_MDAMAGE_NORMAL;
-					if (getarraysize(@optIds) > 1)
-						return @optIds[rand(0,getarraysize(@optIds)-1)];
-					return @optIds[0];
+					setarray .@optIds[0], RDMOPT_VAR_MAGICATKPERCENT, RDMOPT_CLASS_MDAMAGE_NORMAL;
+					return .@optIds[rand(0, getarraysize(.@optIds) - 1)];
 				}
 
 				if (callfunc("IsRandomChanceOf", 20)) {
@@ -204,16 +458,13 @@ function	script	GetRandomOptId	{
 				return 0;
 			default:
 				if (callfunc("IsRandomChanceOf", 50)) {
-					setarray @optIds[0], RDMOPT_VAR_ATTPOWER, RDMOPT_VAR_CRITICALSUCCESSVALUE;
-					if (getarraysize(@optIds) > 1)
-						return @optIds[rand(0,getarraysize(@optIds)-1)];
-					return @optIds[0];
+					setarray .@optIds[0], RDMOPT_VAR_ATTPOWER, RDMOPT_VAR_CRITICALSUCCESSVALUE;
+					return .@optIds[rand(0, getarraysize(.@optIds) - 1)];
 				}
 
 				if (callfunc("IsRandomChanceOf", 30)) {
-					setarray @optIds[0], RDMOPT_MELEE_ATTACK_DAMAGE_TARGET, RDMOPT_VAR_ATKPERCENT;
-					// return @optIds[(getarraysize(@optIds) > 1 ? rand(0,getarraysize(@optIds)-1) : 0)];
-					return RDMOPT_MELEE_ATTACK_DAMAGE_TARGET;
+					setarray .@optIds[0], RDMOPT_MELEE_ATTACK_DAMAGE_TARGET, RDMOPT_VAR_ATKPERCENT;
+					return .@optIds[rand(0, getarraysize(.@optIds) - 1)];
 				}
 
 				if (callfunc("IsRandomChanceOf", 20)) {
@@ -223,90 +474,66 @@ function	script	GetRandomOptId	{
 		}
 	}
 
-	if (@itemType == EQI_ARMOR) {
+	if (.@itemType == EQI_ARMOR) {
 		if (callfunc("IsRandomChanceOf", 50)) {
-			setarray @optIds[0], RDMOPT_VAR_MAXHPAMOUNT, RDMOPT_VAR_MAXSPAMOUNT, RDMOPT_VAR_AVOIDSUCCESSVALUE, RDMOPT_VAR_PLUSAVOIDSUCCESSVALUE;
-			if (getarraysize(@optIds) > 1)
-				return @optIds[rand(0,getarraysize(@optIds)-1)];
-			return @optIds[0];
+			setarray .@optIds[0], RDMOPT_VAR_MAXHPAMOUNT, RDMOPT_VAR_MAXSPAMOUNT, RDMOPT_VAR_AVOIDSUCCESSVALUE, RDMOPT_VAR_PLUSAVOIDSUCCESSVALUE;
+			return .@optIds[rand(0, getarraysize(.@optIds) - 1)];
 		}
 
 		if (callfunc("IsRandomChanceOf", 30)) {
-			setarray @optIds[0], RDMOPT_VAR_ITEMDEFPOWER, RDMOPT_VAR_MDEFPOWER, RDMOPT_VAR_MAXHPPERCENT, RDMOPT_VAR_MAXSPPERCENT;
-			if (getarraysize(@optIds) > 1)
-				return @optIds[rand(0,getarraysize(@optIds)-1)];
-			return @optIds[0];
+			setarray .@optIds[0], RDMOPT_VAR_ITEMDEFPOWER, RDMOPT_VAR_MDEFPOWER, RDMOPT_VAR_MAXHPPERCENT, RDMOPT_VAR_MAXSPPERCENT;
+			return .@optIds[rand(0, getarraysize(.@optIds) - 1)];
 		}
 	}
 
-	if (@itemType == EQI_SHOES) {
+	if (.@itemType == EQI_SHOES) {
 		if (callfunc("IsRandomChanceOf", 50)) {
-			setarray @optIds[0], RDMOPT_VAR_HPACCELERATION, RDMOPT_VAR_SPACCELERATION, RDMOPT_VAR_ITEMDEFPOWER, RDMOPT_DEC_SP_CONSUMPTION;
-			if (getarraysize(@optIds) > 1)
-				return @optIds[rand(0,getarraysize(@optIds)-1)];
-			return @optIds[0];
+			setarray .@optIds[0], RDMOPT_VAR_HPACCELERATION, RDMOPT_VAR_SPACCELERATION, RDMOPT_VAR_ITEMDEFPOWER, RDMOPT_DEC_SP_CONSUMPTION;
+			return .@optIds[rand(0, getarraysize(.@optIds) - 1)];
 		}
 
 		if (callfunc("IsRandomChanceOf", 20)) {
-			setarray @optIds[0], RDMOPT_VAR_PLUSASPD, RDMOPT_DEC_SPELL_CAST_TIME;
-			if (getarraysize(@optIds) > 1)
-				return @optIds[rand(0,getarraysize(@optIds)-1)];
-			return @optIds[0];
+			return RDMOPT_DEC_SPELL_CAST_TIME;
 		}
 	}
 
-	if (@itemType == EQI_GARMENT) {
+	if (.@itemType == EQI_GARMENT) {
 		if (callfunc("IsRandomChanceOf", 50)) {
-			setarray @optIds[0], RDMOPT_VAR_AVOIDSUCCESSVALUE, RDMOPT_VAR_HPACCELERATION, RDMOPT_DEC_SP_CONSUMPTION;
-			if (getarraysize(@optIds) > 1)
-				return @optIds[rand(0,getarraysize(@optIds)-1)];
-			return @optIds[0];
+			setarray .@optIds[0], RDMOPT_VAR_AVOIDSUCCESSVALUE, RDMOPT_VAR_HPACCELERATION, RDMOPT_DEC_SP_CONSUMPTION;
+			return .@optIds[rand(0, getarraysize(.@optIds) - 1)];
 		}
 
 		if (callfunc("IsRandomChanceOf", 30)) {
-			setarray @optIds[0], RDMOPT_VAR_MAXHPAMOUNT, RDMOPT_VAR_MAXSPAMOUNT, RDMOPT_DEC_SPELL_CAST_TIME, RDMOPT_DEC_SPELL_DELAY_TIME;
-			if (getarraysize(@optIds) > 1)
-				return @optIds[rand(0,getarraysize(@optIds)-1)];
-			return @optIds[0];
+			setarray .@optIds[0], RDMOPT_VAR_MAXHPAMOUNT, RDMOPT_VAR_MAXSPAMOUNT, RDMOPT_DEC_SPELL_CAST_TIME, RDMOPT_DEC_SPELL_DELAY_TIME;
+			return .@optIds[rand(0, getarraysize(.@optIds) - 1)];
 		}
 	}
 
-	if (@itemType == EQI_HAND_L) {
+	if (.@itemType == EQI_HAND_L) {
 		if (callfunc("IsRandomChanceOf", 50)) {
-			setarray @optIds[0], RDMOPT_VAR_ITEMDEFPOWER, RDMOPT_VAR_MDEFPOWER, RDMOPT_VAR_HPACCELERATION, RDMOPT_VAR_SPACCELERATION;
-			if (getarraysize(@optIds) > 1)
-				return @optIds[rand(0,getarraysize(@optIds)-1)];
-			return @optIds[0];
+			setarray .@optIds[0], RDMOPT_VAR_ITEMDEFPOWER, RDMOPT_VAR_MDEFPOWER, RDMOPT_VAR_HPACCELERATION, RDMOPT_VAR_SPACCELERATION;
+			return .@optIds[rand(0, getarraysize(.@optIds) - 1)];
 		}
 
 		if (callfunc("IsRandomChanceOf", 30)) {
-			setarray @optIds[0], RDMOPT_VAR_AVOIDSUCCESSVALUE, RDMOPT_VAR_PLUSAVOIDSUCCESSVALUE, RDMOPT_DEC_SPELL_CAST_TIME;
-			if (getarraysize(@optIds) > 1)
-				return @optIds[rand(0,getarraysize(@optIds)-1)];
-			return @optIds[0];
+			setarray .@optIds[0], RDMOPT_VAR_AVOIDSUCCESSVALUE, RDMOPT_VAR_PLUSAVOIDSUCCESSVALUE, RDMOPT_DEC_SPELL_CAST_TIME;
+			return .@optIds[rand(0, getarraysize(.@optIds) - 1)];
 		}
 	}
 
-	if (@itemType == EQI_ACC_L || @itemType == EQI_ACC_R) {
+	if (.@itemType == EQI_ACC_L || .@itemType == EQI_ACC_R) {
 		if (callfunc("IsRandomChanceOf", 50)) {
-			setarray @optIds[0], RDMOPT_VAR_CRITICALSUCCESSVALUE;
-			if (getarraysize(@optIds) > 1)
-				return @optIds[rand(0,getarraysize(@optIds)-1)];
-			return @optIds[0];
+			return RDMOPT_VAR_CRITICALSUCCESSVALUE;
 		}
 
 		if (callfunc("IsRandomChanceOf", 30)) {
-			setarray @optIds[0], RDMOPT_VAR_ATTPOWER, RDMOPT_VAR_ATTMPOWER;
-			if (getarraysize(@optIds) > 1)
-				return @optIds[rand(0,getarraysize(@optIds)-1)];
-			return @optIds[0];
+			setarray .@optIds[0], RDMOPT_VAR_ATTPOWER, RDMOPT_VAR_ATTMPOWER;
+			return .@optIds[rand(0, getarraysize(.@optIds) - 1)];
 		}
 
 		if (callfunc("IsRandomChanceOf", 20)) {
-			setarray @optIds[0], RDMOPT_ADDEXPPERCENT_KILLRACE_ALL, RDMOPT_MELEE_ATTACK_DAMAGE_TARGET, RDMOPT_RANGE_ATTACK_DAMAGE_TARGET;
-			if (getarraysize(@optIds) > 1)
-				return @optIds[rand(0,getarraysize(@optIds)-1)];
-			return @optIds[0];
+			setarray .@optIds[0], RDMOPT_ADDEXPPERCENT_KILLRACE_ALL, RDMOPT_MELEE_ATTACK_DAMAGE_TARGET, RDMOPT_RANGE_ATTACK_DAMAGE_TARGET;
+			return .@optIds[rand(0, getarraysize(.@optIds) - 1)];
 		}
 	}
 
@@ -314,85 +541,120 @@ function	script	GetRandomOptId	{
 }
 
 function	script	IsRandomChanceOf	{
-	@percentage = getarg(0);
-	@random = rand(1,100);
+	.@percentage = getarg(0);
 
-	if (@random < @percentage + 1) {
+	if (rand(1, 100) <= .@percentage)
 		return 1;
-	}
 
 	return 0;
 }
 
-function	script	GetMaxOptValue	{
-	@optId = getarg(0);
-	@itemType = getarg(1);
-	@weaponLevel = getarg(2);
-	@itemSubtype = getarg(3);
-	itemClass$ = "";
+// The engraving ceiling for an option on a given equip type. Drops roll well
+// below these - see db/import/item_randomopt_group.yml.
+// Display name for a random option. The server stores only the constant and its
+// bonus script - option names live client side - so they are mapped here.
+// Names must not contain a colon, which is the menu separator.
+function	script	GetRandomOptName	{
+	switch (getarg(0)) {
+		case RDMOPT_VAR_ATTPOWER:				return "ATK";
+		case RDMOPT_VAR_ATKPERCENT:				return "ATK %";
+		case RDMOPT_VAR_ATTMPOWER:				return "MATK";
+		case RDMOPT_VAR_MAGICATKPERCENT:		return "MATK %";
+		case RDMOPT_VAR_CRITICALSUCCESSVALUE:	return "Critical";
+		case RDMOPT_VAR_PLUSASPD:				return "ASPD";
+		case RDMOPT_MELEE_ATTACK_DAMAGE_TARGET:	return "Melee Damage %";
+		case RDMOPT_RANGE_ATTACK_DAMAGE_TARGET:	return "Ranged Damage %";
+		case RDMOPT_ADDSKILLMDAMAGE_ALL:		return "Magic Damage %";
+		case RDMOPT_CLASS_MDAMAGE_NORMAL:		return "Magic Damage vs Normal %";
+		case RDMOPT_HEAL_MODIFY_PERCENT:		return "Healing Received %";
+		case RDMOPT_VAR_ITEMDEFPOWER:			return "DEF";
+		case RDMOPT_VAR_MDEFPOWER:				return "MDEF";
+		case RDMOPT_VAR_AVOIDSUCCESSVALUE:		return "Flee";
+		case RDMOPT_VAR_PLUSAVOIDSUCCESSVALUE:	return "Perfect Dodge";
+		case RDMOPT_VAR_MAXHPAMOUNT:			return "Max HP";
+		case RDMOPT_VAR_MAXSPAMOUNT:			return "Max SP";
+		case RDMOPT_VAR_MAXHPPERCENT:			return "Max HP %";
+		case RDMOPT_VAR_MAXSPPERCENT:			return "Max SP %";
+		case RDMOPT_VAR_HPACCELERATION:			return "HP Recovery %";
+		case RDMOPT_VAR_SPACCELERATION:			return "SP Recovery %";
+		case RDMOPT_DEC_SP_CONSUMPTION:			return "SP Cost Reduction %";
+		case RDMOPT_DEC_SPELL_CAST_TIME:		return "Cast Time Reduction %";
+		case RDMOPT_DEC_SPELL_DELAY_TIME:		return "Skill Delay Reduction %";
+		case RDMOPT_ADDEXPPERCENT_KILLRACE_ALL:	return "EXP Gain %";
+	}
 
-	if (@weaponLevel > 0) {
-		switch(@itemSubtype) {
+	return "Unknown Power";
+}
+
+function	script	GetMaxOptValue	{
+	.@optId = getarg(0);
+	.@itemType = getarg(1);
+	.@weaponLevel = getarg(2);
+	.@itemSubtype = getarg(3);
+	.@itemClass$ = "";
+
+	if (.@weaponLevel > 0) {
+		switch(.@itemSubtype) {
 			case W_BOW:
 			case W_MUSICAL:
 			case W_WHIP:
-				itemClass$ = "Ranged";
+				.@itemClass$ = "Ranged";
 				break;
 			case W_STAFF:
 			case W_2HSTAFF:
 			case W_BOOK:
-				itemClass$ = "Magic";
+				.@itemClass$ = "Magic";
 				break;
 			default:
-				itemClass$ = "Melee";
+				.@itemClass$ = "Melee";
 				break;
 		}
 	}
 
-	if (itemClass$ == "Ranged") {
-		switch(@optId) {
+	if (.@itemClass$ == "Ranged") {
+		switch(.@optId) {
 			case RDMOPT_VAR_ATTPOWER:
-				return @weaponlevel * 5 + 5;
+				return .@weaponLevel * 5 + 5;
 			case RDMOPT_VAR_CRITICALSUCCESSVALUE:
-				return @weaponLevel * 3 + 3;
+				return .@weaponLevel * 3 + 3;
 			case RDMOPT_VAR_ATKPERCENT:
 			case RDMOPT_RANGE_ATTACK_DAMAGE_TARGET:
-				return @weaponLevel + 1;
+				return .@weaponLevel + 1;
 			case RDMOPT_VAR_PLUSASPD:
-				return (@weaponLevel == 3 || @weaponlevel == 4) ? 2 : 1;
+				return (.@weaponLevel == 4) ? 3 : ((.@weaponLevel == 3) ? 2 : 1);
 		}
 	}
 
-	if (itemClass$ == "Magic") {
-		switch(@optId) {
+	if (.@itemClass$ == "Magic") {
+		switch(.@optId) {
 			case RDMOPT_HEAL_MODIFY_PERCENT:
 			case RDMOPT_VAR_ATTMPOWER:
-				return @weaponlevel * 5 + 5;
+				return .@weaponLevel * 5 + 5;
 			case RDMOPT_ADDSKILLMDAMAGE_ALL:
-				return @weaponLevel * 3 + 3;
+				return .@weaponLevel * 3 + 3;
 			case RDMOPT_VAR_MAGICATKPERCENT:
 			case RDMOPT_DEC_SPELL_CAST_TIME:
 			case RDMOPT_CLASS_MDAMAGE_NORMAL:
-				return @weaponLevel + 1;
+				return .@weaponLevel + 1;
 		}
 	}
 
-	if (itemClass$ == "Melee") {
-		switch(@optId) {
+	if (.@itemClass$ == "Melee") {
+		switch(.@optId) {
 			case RDMOPT_VAR_ATTPOWER:
-				return @weaponlevel * 5 + 5;
+				return .@weaponLevel * 5 + 5;
 			case RDMOPT_VAR_CRITICALSUCCESSVALUE:
-				return @weaponLevel * 3 + 3;
+				return .@weaponLevel * 3 + 3;
 			case RDMOPT_VAR_ATKPERCENT:
 			case RDMOPT_MELEE_ATTACK_DAMAGE_TARGET:
-				return @weaponLevel + 1;
+				return .@weaponLevel + 1;
 			case RDMOPT_VAR_PLUSASPD:
-				return (@weaponLevel == 3 || @weaponlevel == 4) ? 2 : 1;
+				return (.@weaponLevel == 4) ? 3 : ((.@weaponLevel == 3) ? 2 : 1);
 		}
 	}
 
-	if (@itemType == EQI_ARMOR) {
-		switch(@optId) {
+	if (.@itemType == EQI_ARMOR) {
+		switch(.@optId) {
 			case RDMOPT_VAR_ITEMDEFPOWER:
 				return 3;
 			case RDMOPT_VAR_MDEFPOWER:
@@ -404,12 +666,12 @@ function	script	GetMaxOptValue	{
 			case RDMOPT_VAR_MAXHPAMOUNT:
 				return 300;
 			case RDMOPT_VAR_MAXSPAMOUNT:
-				return 300;
+				return 100;
 		}
 	}
 
-	if (@itemType == EQI_SHOES) {
-		switch(@optId) {
+	if (.@itemType == EQI_SHOES) {
+		switch(.@optId) {
 			case RDMOPT_VAR_ITEMDEFPOWER:
 				return 3;
 			case RDMOPT_VAR_HPACCELERATION:
@@ -418,13 +680,11 @@ function	script	GetMaxOptValue	{
 			case RDMOPT_DEC_SP_CONSUMPTION:
 			case RDMOPT_DEC_SPELL_CAST_TIME:
 				return 5;
-			case RDMOPT_VAR_PLUSASPD:
-				return 2;
 		}
 	}
 
-	if (@itemType == EQI_GARMENT) {
-		switch(@optId) {
+	if (.@itemType == EQI_GARMENT) {
+		switch(.@optId) {
 			case RDMOPT_VAR_MAXHPAMOUNT:
 				return 300;
 			case RDMOPT_VAR_MAXSPAMOUNT:
@@ -439,8 +699,8 @@ function	script	GetMaxOptValue	{
 		}
 	}
 
-	if (@itemType == EQI_HAND_L) {
-		switch(@optId) {
+	if (.@itemType == EQI_HAND_L) {
+		switch(.@optId) {
 			case RDMOPT_VAR_ITEMDEFPOWER:
 				return 3;
 			case RDMOPT_VAR_MDEFPOWER:
@@ -453,8 +713,8 @@ function	script	GetMaxOptValue	{
 		}
 	}
 
-	if (@itemType == EQI_ACC_L || @itemType == EQI_ACC_R) {
-		switch(@optId) {
+	if (.@itemType == EQI_ACC_L || .@itemType == EQI_ACC_R) {
+		switch(.@optId) {
 			case RDMOPT_VAR_CRITICALSUCCESSVALUE:
 			case RDMOPT_VAR_ATTPOWER:
 			case RDMOPT_VAR_ATTMPOWER:
@@ -462,11 +722,12 @@ function	script	GetMaxOptValue	{
 			case RDMOPT_MELEE_ATTACK_DAMAGE_TARGET:
 			case RDMOPT_RANGE_ATTACK_DAMAGE_TARGET:
 				return 5;
-		}	
+		}
 	}
 
-	return 1;
+	// No ceiling defined for this option on this equip type - un-improvable
+	return 0;
 }
 
-//prt_in,59,55,2	duplicate(Engraver)	Aino#pront	813
+prt_in,59,55,2	duplicate(Engraver)	Aino#pront	813
 izlude,94,126,4	duplicate(Engraver)	Aino#izlude	402
