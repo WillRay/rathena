@@ -75,7 +75,7 @@ function	script	Promotional_Staff	{
 		mes "[Promotional Staff]";
 		mes "Anyway, I'm supposed to inform many adventurers about it.";
 		mes "There's no time to waste!";
-		navigateto "prt_castle",83,67,1,1;
+		navigateto "prt_cas",207,165,1,1;
 		close;
 	case 2:
 		mes "[Promotional Staff]";

@@ -146,7 +146,7 @@ prontera,153,353,4	script	Messenger#prince1	105,{
 	}
 }
 
-prt_castle,117,163,5	script	Inspector#prince	755,{
+prt_cas,112,240,5	script	Inspector#prince	755,{
 	if (checkquest(10004) == 0 || checkquest(10004) == 1) {
 		mes "[Inspector]";
 		mes "Judge!";
@@ -3496,9 +3496,9 @@ prt_castle,225,338,0	warp	#room11	1,1,prt_castle,275,283
 prt_castle,273,284,0	warp	#room21	1,1,prt_castle,221,338
 prt_castle,225,318,0	warp	#room12	1,1,prt_castle,276,263
 prt_castle,273,264,0	warp	#room22	1,1,prt_castle,221,318
-prt_castle,221,308,0	warp	#princeout	1,1,prt_castle,176,167
+prt_castle,221,308,0	warp	#princeout	1,1,prt_cas,176,100
 
-prt_castle,176,170,5	script	Guard#princein	105,{
+prt_cas,176,103,5	script	Guard#princein	105,{
 	if (nk_prince > 4) {
 		mes "[Guard of a strange place]";
 		mes "You can go to the room where princes gather, through the hidden door. For security reasons, it is totally guarded and hidden.";
@@ -3516,7 +3516,7 @@ prt_castle,176,170,5	script	Guard#princein	105,{
 	}
 }
 
-prt_castle,121,168,0	script	#arm	111,4,4,{
+prt_cas,108,245,0	script	#arm	111,4,4,{
 OnTouch:
 	if (nk_prince == 8) {
 		mes "[" + strcharinfo(0) + "]";

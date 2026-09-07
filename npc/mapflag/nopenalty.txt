@@ -60,6 +60,9 @@ prontera	mapflag	nopenalty
 prt_are_in	mapflag	nopenalty
 prt_are01	mapflag	nopenalty
 prt_castle	mapflag	nopenalty
+prt_cas	mapflag	nopenalty
+prt_cas_q	mapflag	nopenalty
+prt_pri00	mapflag	nopenalty
 prt_church	mapflag	nopenalty
 prt_in	mapflag	nopenalty
 umbala	mapflag	nopenalty

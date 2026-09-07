@@ -2,6 +2,30 @@ Header:
   Type: ITEM_DB
   Version: 3
 Body:
+  - Id: 24504
+    AegisName: S_Arrowvulcan_Pendant
+    Name: Arrow Vulcan Shadow Pendant
+    Type: ShadowGear
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      skill "GC_POISONSMOKE",4;
+      skill "SHC_SAVAGE_IMPACT", 10;
+      skill "SHC_SHADOW_STAB",1;
+      skill "SO_POISON_BUSTER", 5;
+      skill "GC_POISONINGWEAPON", 3;
+      skill "WL_COMET", 5;
+      skill "WL_CRIMSONROCK", 5;
+  - Id: 12718
+    AegisName: Poison_Leech
+    Name: Leech End
+    Type: Usable
+    Buy: 2
+    Weight: 20
+    Flags:
+      BuyingStore: true
   - Id: 30001
     AegisName: S_Card_4001
     Name: Shadow Poring Card

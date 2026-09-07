@@ -44,6 +44,9 @@ payon_in01	mapflag	noteleport
 payon_in02	mapflag	noteleport
 payon_in03	mapflag	noteleport
 prt_castle	mapflag	noteleport
+prt_cas	mapflag	noteleport
+prt_cas_q	mapflag	noteleport
+prt_pri00	mapflag	noteleport
 prt_church	mapflag	noteleport
 prt_in	mapflag	noteleport
 um_in	mapflag	noteleport

@@ -7,7 +7,7 @@
 //= 1.0 Renewal script update for ep16.1 [Capuche]
 //============================================================
 
-prt_castle,80,52,0	script	Personnel Record#book1	HIDDEN_NPC,{
+prt_cas,372,74,0	script	Personnel Record#book1	HIDDEN_NPC,{
 	if ($God2 < $@god_check1) {
 		mes "[Librarian]";
 		mes "What are you doing?";
@@ -75,7 +75,7 @@ prt_castle,80,52,0	script	Personnel Record#book1	HIDDEN_NPC,{
 			mes "out of here!";
 			set god_brising,30;
 			close2;
-			warp "prt_castle",94,37;
+			warp "prt_cas",349,68;
 			end;
 		}
 		else {
@@ -86,7 +86,7 @@ prt_castle,80,52,0	script	Personnel Record#book1	HIDDEN_NPC,{
 			mes "Get the hell";
 			mes "out of here!";
 			close2;
-			warp "prt_castle",94,37;
+			warp "prt_cas",349,68;
 			end;
 		}
 	}
@@ -160,7 +160,7 @@ prt_castle,80,52,0	script	Personnel Record#book1	HIDDEN_NPC,{
 			mes "out of here!";
 			set god_brising,30;
 			close2;
-			warp "prt_castle",94,37;
+			warp "prt_cas",349,68;
 			end;
 		}
 		else {
@@ -177,7 +177,7 @@ prt_castle,80,52,0	script	Personnel Record#book1	HIDDEN_NPC,{
 			mes "I didn't get";
 			mes "to finish reading!)";
 			close2;
-			warp "prt_castle",94,37;
+			warp "prt_cas",349,68;
 			end;
 		}
 	}
@@ -190,5 +190,5 @@ prt_castle,80,52,0	script	Personnel Record#book1	HIDDEN_NPC,{
 }
 
 //-----------librarian----------------------------------------------------------
-prt_castle,84,51,5	duplicate(Librarian#2_)	Librarian#2	8W_SOLDIER
+prt_cas,373,75,3	duplicate(Librarian#2_)	Librarian#2	8W_SOLDIER
 

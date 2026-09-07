@@ -53,6 +53,9 @@ payon_in01	mapflag	nomemo
 payon_in02	mapflag	nomemo
 payon_in03	mapflag	nomemo
 prt_castle	mapflag	nomemo
+prt_cas	mapflag	nomemo
+prt_cas_q	mapflag	nomemo
+prt_pri00	mapflag	nomemo
 prt_church	mapflag	nomemo
 prt_in	mapflag	nomemo
 um_in	mapflag	nomemo

@@ -68,6 +68,9 @@ payon_in01	mapflag	nobranch
 payon_in02	mapflag	nobranch
 payon_in03	mapflag	nobranch
 prt_castle	mapflag	nobranch
+prt_cas	mapflag	nobranch
+prt_cas_q	mapflag	nobranch
+prt_pri00	mapflag	nobranch
 prt_church	mapflag	nobranch
 prt_in	mapflag	nobranch
 um_in	mapflag	nobranch

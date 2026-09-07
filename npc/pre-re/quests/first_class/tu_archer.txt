@@ -18,8 +18,8 @@ mjolnir_11,27,223,3	duplicate(Acolyte_Tu)	Acolyte#tu	95
 
 // Minister
 //============================================================
-prt_castle,76,165,6	duplicate(Minister#tu_)	Minister#tu	1_M_JOBTESTER
+prt_cas,97,289,3	duplicate(Minister#tu_)	Minister#tu	1_M_JOBTESTER
 
 // Range NPC
 //============================================================
-prt_castle,94,150,4	duplicate(#sound_tu_)	#sound_tu	HIDDEN_WARP_NPC,6,6
+prt_cas,94,270,5	duplicate(#sound_tu_)	#sound_tu	HIDDEN_WARP_NPC,6,6

@@ -98,6 +98,9 @@ pay_arche	mapflag	pvp	off
 prt_are_in	mapflag	pvp	off
 prt_are01	mapflag	pvp	off
 prt_castle	mapflag	pvp	off
+prt_cas	mapflag	pvp	off
+prt_cas_q	mapflag	pvp	off
+prt_pri00	mapflag	pvp	off
 prt_church	mapflag	pvp	off
 prt_in	mapflag	pvp	off
 prontera	mapflag	pvp	off

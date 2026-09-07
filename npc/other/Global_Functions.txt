@@ -717,10 +717,6 @@ function	script	F_GetPlatinumSkills	{
 	case Job_Hunter:
 		skill "HT_PHANTASMIC",1,SKILL_PERM;
 		break;
-	case Job_Assassin:
-		skill "AS_SONICACCEL",1,SKILL_PERM;
-		skill "AS_VENOMKNIFE",1,SKILL_PERM;
-		break;
 	case Job_Crusader:
 		skill "CR_SHRINK",1,SKILL_PERM;
 		break;

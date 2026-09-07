@@ -7,4 +7,4 @@
 //============================================================
 
 // Prontera Castle Map
-prt_gld,159,25,0	warp	prtg02_Castle	1,1,prt_castle,102,178
+prt_gld,159,24,0	warp	prtg02_Castle	1,1,prt_cas,82,171
