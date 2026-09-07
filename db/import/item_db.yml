@@ -185,7 +185,7 @@ Body:
     Weight: 5
     Script: |
       skilleffect "AL_BLESSING",0;
-      sc_start SC_BLESSING,1800000,10;
+      sc_start SC_BLESSING,1800000,10,10000,SCSTART_NOAVOID|SCSTART_NOTICKDEF;
   - Id: 12216
     AegisName: Inc_Agi_10_Scroll
     Buy: 2000
@@ -193,7 +193,7 @@ Body:
     Script: |
       if (Hp>15) {
          skilleffect "AL_INCAGI",0;
-         sc_start SC_INCREASEAGI,1800000,10;
+         sc_start SC_INCREASEAGI,1800000,10,10000,SCSTART_NOAVOID|SCSTART_NOTICKDEF;
          heal -15,0;
       }
   - Id: 12217
@@ -202,7 +202,7 @@ Body:
     Weight: 5
     Script: |
         skilleffect "PR_ASPERSIO",0;
-        sc_start SC_ASPERSIO,1800000,5;
+        sc_start SC_ASPERSIO,1800000,5,10000,SCSTART_NOAVOID|SCSTART_NOTICKDEF;
   - Id: 1478
     AegisName: Ahlspiess
     Script: |
@@ -1601,7 +1601,7 @@ Body:
       if (.@r>=9)
          bonus bCritAtkRate,5;
       if (.@r>=10)
-         bonus bAtkRate,3;
+         bonus bBaseAtk,15;
   - Id: 20937
     AegisName: Tidal_Hood
     Name: Tidal Hood
@@ -1635,7 +1635,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bAtkRate,2;
+      bonus bBaseAtk,10;
       if (.@r>=7)
          bonus bBaseAtk,10;
       if (.@r>=9)
@@ -1676,6 +1676,14 @@ Body:
          bonus bInt,2;
       if (.@r>=9)
          bonus bMatkRate,3;
+  - Id: 480361
+    AegisName: C_Evil_Double_Edged
+    Name: Costume Twin Blades of Evil Soul
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 191
 Footer:
   Imports:
   - Path: db/import/item_db_cards.yml
@@ -1686,7 +1694,8 @@ Footer:
     Mode: Prerenewal
   - Path: db/import/item_db_weapon_slots.yml
     Mode: Prerenewal
-
+  # - Path: db/re/item_db_equip.yml
+  #   Mode: Prerenewal
 #Body:
 # THQ Quest Items
 #=============================================================

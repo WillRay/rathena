@@ -3390,9 +3390,6 @@
     <ClInclude Include="skills/swordman/giantgrowth.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
-    <ClInclude Include="skills/swordman/gloriadomini.hpp">
-      <Filter>Header Files\Skills\Swordman</Filter>
-    </ClInclude>
     <ClInclude Include="skills/swordman/grandcross.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
@@ -3421,6 +3418,9 @@
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/imperialpressure.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/judgement.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/judgementcross.hpp">
@@ -4089,7 +4089,10 @@
     <ClInclude Include="skills/thief/sonicblow.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
-    <ClInclude Include="skills/thief/souldestroyer.hpp">
+    <ClInclude Include="skills/thief/sonicimpact.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/shadowstrike.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/steal.hpp">
@@ -7130,9 +7133,6 @@
     <ClCompile Include="skills/swordman/giantgrowth.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
-    <ClCompile Include="skills/swordman/gloriadomini.cpp">
-      <Filter>Source Files\Skills\Swordman</Filter>
-    </ClCompile>
     <ClCompile Include="skills/swordman/grandcross.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
@@ -7161,6 +7161,9 @@
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/imperialpressure.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/judgement.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/judgementcross.cpp">
@@ -7826,10 +7829,13 @@
     <ClCompile Include="skills/thief/snatch.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
+    <ClCompile Include="skills/thief/sonicimpact.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
     <ClCompile Include="skills/thief/sonicblow.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
-    <ClCompile Include="skills/thief/souldestroyer.cpp">
+    <ClCompile Include="skills/thief/shadowstrike.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/steal.cpp">

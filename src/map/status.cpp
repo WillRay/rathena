@@ -3693,7 +3693,7 @@ static uint32 status_calc_maxap_pc( map_session_data& sd ){
  */
 bool status_calc_weight(map_session_data *sd, enum e_status_calc_weight_opt flag)
 {
-	int32 b_weight, b_max_weight, skill, i;
+	int32 b_weight, b_max_weight, skill, i, weight_per_level;
 	status_change *sc;
 
 	nullpo_retr(false, sd);
@@ -3701,7 +3701,11 @@ bool status_calc_weight(map_session_data *sd, enum e_status_calc_weight_opt flag
 	sc = &sd->sc;
 	b_max_weight = sd->max_weight; // Store max weight for later comparison
 	b_weight = sd->weight; // Store current weight for later comparison
-	sd->max_weight = job_db.get_maxWeight(pc_mapid2jobid(sd->class_, sd->status.sex)) + sd->status.str * 300; // Recalculate max weight
+	// Transcendent (rebirth) classes gain more capacity per base level
+	weight_per_level = (sd->class_&JOBL_UPPER) ? battle_config.weight_per_baselevel_trans : battle_config.weight_per_baselevel;
+	sd->max_weight = job_db.get_maxWeight(pc_mapid2jobid(sd->class_, sd->status.sex))
+		+ sd->status.str * battle_config.weight_per_str
+		+ sd->status.base_level * weight_per_level; // Recalculate max weight
 
 	if (flag&CALCWT_ITEM) {
 		sd->weight = 0; // Reset current weight
@@ -12993,6 +12997,10 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			val4 = tick / 300;
 			tick_time = 300;
 			break;
+		case SC_VENOMKNIFE:
+			val4 = tick / 500;
+			tick_time = 500;
+			break;
 		case SC_POTENT_VENOM:
 			val2 = 2 * val1;// Res Pierce Percentage
 			break;
@@ -15384,6 +15392,14 @@ TIMER_FUNC(status_change_timer){
 		if (--(sce->val4) >= 0) {
 			skill_castend_nodamage_id(bl, bl, SHC_DANCING_KNIFE, sce->val1, tick, 1);
 			sc_timer_next(300 + tick);
+			return 0;
+		}
+		break;
+
+	case SC_VENOMKNIFE:
+		if (--(sce->val4) >= 0) {
+			skill_castend_nodamage_id(bl, bl, AS_VENOMKNIFE, sce->val1, tick, 1);
+			sc_timer_next(500 + tick);
 			return 0;
 		}
 		break;

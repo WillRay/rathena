@@ -31,7 +31,6 @@
 #include "fightingspirit.cpp"
 #include "forceofvanguard.cpp"
 #include "giantgrowth.cpp"
-#include "gloriadomini.cpp"
 #include "grandcross.cpp"
 #include "grandjudgement.cpp"
 #include "guardianshield.cpp"
@@ -42,6 +41,7 @@
 #include "ignitionbreak.cpp"
 #include "imperialcross.cpp"
 #include "imperialpressure.cpp"
+#include "judgement.cpp"
 #include "judgementcross.cpp"
 #include "kingsgrace.cpp"
 #include "luxanima.cpp"
@@ -248,7 +248,7 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 		case PA_GOSPEL:
 			return std::make_unique<SkillBattleChant>();
 		case PA_PRESSURE:
-			return std::make_unique<SkillGloriaDomini>();
+			return std::make_unique<SkillJudgement>();
 		case PA_SACRIFICE:
 			return std::make_unique<SkillMartyrsReckoning>();
 		case PA_SHIELDCHAIN:

@@ -856,7 +856,7 @@ Body:
       Crusader = 1002: Shrink
       Priest = 1014: Redemptio
       Monk = 1015: Ki Translation, 1016: Ki Explosio
-      Assassin = 1003: Sonic Acceleration, 1004: Throw Venom Knife
+      Assassin = 1003: Sonic Acceleration, 1004: Whirling Knives
       Rogue = 1005: Close Confine
       Blacksmith = 1012: Unfair Trick, 1013: Greed
       Alchemist = 238: Basis of Life
@@ -1086,7 +1086,7 @@ Body:
       Crusader = 1002: Shrink
       Priest = 1014: Redemptio
       Monk = 1015: Ki Translation, 1016: Ki Explosio
-      Assassin = 1003: Sonic Acceleration, 1004: Throw Venom Knife
+      Assassin = 1003: Sonic Acceleration, 1004: Whirling Knives
       Rogue = 1005: Close Confine
       Blacksmith = 1012: Unfair Trick, 1013: Greed
       Alchemist = 238: Basis of Life

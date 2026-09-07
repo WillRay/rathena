@@ -103,9 +103,14 @@ L_Improve:
 		if (.@span < 1) .@span = 1;
 		// rand() errors when min == max. A ternary will NOT do here - rAthena
 		// evaluates both branches of ?: eagerly, so the rand would still run.
+		// Best-of-two skews the roll toward the high end of the span, so early
+		// essence (large span) tends to land a strong gain instead of a coin-flip.
 		.@gain = 1;
-		if (.@span > 1)
-			.@gain = rand(1, .@span);
+		if (.@span > 1) {
+			.@r1 = rand(1, .@span);
+			.@r2 = rand(1, .@span);
+			.@gain = (.@r1 > .@r2) ? .@r1 : .@r2;
+		}
 		.@new = .@cur + .@gain;
 		if (.@new > .@softcap) .@new = .@softcap;
 

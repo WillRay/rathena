@@ -81,10 +81,11 @@
 #include "scribble.cpp"
 #include "shadowform.cpp"
 #include "shadowstab.cpp"
+#include "shadowstrike.cpp"
 #include "sightlessmind.cpp"
 #include "snatch.cpp"
 #include "sonicblow.cpp"
-#include "souldestroyer.cpp"
+#include "sonicimpact.cpp"
 #include "steal.cpp"
 #include "stealth.cpp"
 #include "stonefling.cpp"
@@ -135,7 +136,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 		case ABC_UNLUCKY_RUSH:
 			return std::make_unique<SkillUnluckyRush>();
 		case ASC_BREAKER:
-			return std::make_unique<SkillSoulDestroyer>();
+			return std::make_unique<SkillShadowStrike>();
 		case ASC_CDP:
 			return std::make_unique<SkillCreateDeadlyPoison>();
 		case ASC_EDP:
@@ -150,6 +151,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<SkillGrimtooth>();
 		case AS_POISONREACT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case AS_SONICACCEL:
+			return std::make_unique<SkillSonicImpact>();
 		case AS_SONICBLOW:
 			return std::make_unique<SkillSonicBlow>();
 		case AS_SPLASHER:

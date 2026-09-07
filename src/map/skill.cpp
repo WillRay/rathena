@@ -1427,16 +1427,20 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		}
 
 		// These statuses would be applied anyway even if the damage was blocked by some skills. [Inkfish]
-		if( skill_id != WS_CARTTERMINATION && skill_id != AM_DEMONSTRATION && skill_id != CR_REFLECTSHIELD && skill_id != MS_REFLECTSHIELD && skill_id != GN_HELLS_PLANT_ATK
-#ifndef RENEWAL
-		&& skill_id != ASC_BREAKER
-#endif
-		) {
+		if( skill_id != WS_CARTTERMINATION && skill_id != AM_DEMONSTRATION && skill_id != CR_REFLECTSHIELD && skill_id != MS_REFLECTSHIELD && skill_id != GN_HELLS_PLANT_ATK ) {
 			// Trigger status effects
 			for (const auto &it : sd->addeff) {
 				int32 rate = it.rate;
 				if( attack_type&BF_LONG ) // Any ranged physical attack takes status arrows into account (Grimtooth...) [DracoRPG]
 					rate += it.arrow_rate;
+
+				// Whirling Knives (AS_VENOMKNIFE) spins the caster's own dagger, so on-hit card effects fire from
+				// every volley - but a single 10s stance lands up to 20 volleys per target,
+				// which would compound a 5% Savage Bebe into a ~64% stun. Quartering the rate
+				// keeps the per-stance odds in line with what one ordinary skill cast gives.
+				if (skill_id == AS_VENOMKNIFE)
+					rate /= 4;
+
 				if( !rate )
 					continue;
 
@@ -8550,6 +8554,16 @@ static bool skill_check_condition_sc_required( map_session_data& sd, uint16 skil
 	// src/map/skills/thief/grimtooth.cpp.
 	if (skill_id == AS_GRIMTOOTH) {
 		if (sc->getSCE(SC_HIDING) || sc->getSCE(SC_OPPORTUNIST))
+			return true;
+		clif_skill_fail( sd, skill_id, USESKILL_FAIL_LEVEL );
+		return false;
+	}
+
+	// Payon Stories rebalance: Shadow Strike is an opener, not a rotation
+	// filler. It may only be started from Hiding or Cloaking; casting it in
+	// the open fails outright rather than firing a weakened version.
+	if (skill_id == ASC_BREAKER) {
+		if (sc->getSCE(SC_HIDING) || sc->getSCE(SC_CLOAKING))
 			return true;
 		clif_skill_fail( sd, skill_id, USESKILL_FAIL_LEVEL );
 		return false;

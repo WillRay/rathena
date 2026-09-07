@@ -299,6 +299,9 @@ struct Battle_Config
 	int32 max_lv, aura_lv;
 	int32 max_parameter, max_baby_parameter;
 	int32 max_cart_weight;
+	int32 weight_per_str;
+	int32 weight_per_baselevel;
+	int32 weight_per_baselevel_trans;
 	int32 skill_log;
 	int32 battle_log;
 	int32 etc_log;

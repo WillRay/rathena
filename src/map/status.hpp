@@ -1479,6 +1479,9 @@ enum sc_type : int16 {
 	// Crusader rebalance: Judgement holy burn
 	SC_JUDGEMENT_BURN, // Holy damage-over-time from Judgement (PA_PRESSURE). val1 = final damage per tick - the Holy attribute table, the caster's missing-HP bonus and any siege reduction are all baked in at cast time (see judgement.cpp), so the tick is a plain status_fix_damage. val2 = caster GID for kill credit. 5 ticks / 1000ms / 5s. See status_change_timer.
 
+	// Assassin Cross rebalance: Whirling Knives dagger stance
+	SC_VENOMKNIFE, // Dancing-Knife-style dagger orbit buff (AS_VENOMKNIFE, "Whirling Knives"). val1 = skill level. val4 = remaining volleys. 500ms ticks. See status_change_start/status_change_timer.
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 

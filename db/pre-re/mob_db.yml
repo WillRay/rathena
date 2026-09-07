@@ -1610,6 +1610,8 @@ Body:
       - Item: Osiris_Card
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1039
     AegisName: BAPHOMET
     Name: Baphomet
@@ -1670,6 +1672,8 @@ Body:
       - Item: Baphomet_Card
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1040
     AegisName: GOLEM
     Name: Golem
@@ -1970,6 +1974,8 @@ Body:
       - Item: Doppelganger_Card
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1047
     AegisName: PECOPECO_EGG
     Name: Peco Peco Egg
@@ -2601,6 +2607,8 @@ Body:
       - Item: S_Card_4132
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1060
     AegisName: BIGFOOT
     Name: Bigfoot
@@ -3847,6 +3855,8 @@ Body:
       - Item: S_Card_4128
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1087
     AegisName: ORK_HERO
     Name: Orc Hero
@@ -3909,6 +3919,8 @@ Body:
       - Item: S_Card_4143
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1088
     AegisName: VOCAL
     Name: Vocal
@@ -5133,6 +5145,8 @@ Body:
       - Item: Drake_Card
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1113
     AegisName: DROPS
     Name: Drops
@@ -5287,6 +5301,8 @@ Body:
       - Item: S_Card_4123
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1116
     AegisName: EGGYRA
     Name: Eggyra
@@ -6748,6 +6764,8 @@ Body:
       - Item: S_Card_4146
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1148
     AegisName: MEDUSA
     Name: Medusa
@@ -6915,6 +6933,8 @@ Body:
       - Item: S_Card_4131
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1151
     AegisName: MYST
     Name: Myst
@@ -7256,6 +7276,8 @@ Body:
       - Item: S_Card_4148
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1158
     AegisName: PHEN
     Name: Phen
@@ -7361,6 +7383,8 @@ Body:
       - Item: Phreeoni_Card
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1160
     AegisName: PIERE
     Name: Piere
@@ -8542,6 +8566,8 @@ Body:
       - Item: S_Card_4135
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1191
     AegisName: MIMIC
     Name: Mimic
@@ -10982,6 +11008,8 @@ Body:
       - Item: Knight_Windstorm_Card
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1252
     AegisName: GARM
     Name: Hatii
@@ -11043,6 +11071,8 @@ Body:
       - Item: S_Card_4324
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1253
     AegisName: GARGOYLE
     Name: Gargoyle
@@ -12017,6 +12047,8 @@ Body:
       - Item: S_Card_4168
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1273
     AegisName: ORC_LADY
     Name: Orc Lady
@@ -13918,6 +13950,8 @@ Body:
       - Item: Turtle_General_Card
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1313
     AegisName: MOBSTER
     Name: Mobster
@@ -16585,6 +16619,8 @@ Body:
       - Item: Lord_Of_Death_Card
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1374
     AegisName: INCUBUS
     Name: Incubus
@@ -17335,6 +17371,8 @@ Body:
       - Item: Dracula_Card
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1390
     AegisName: VIOLY
     Name: Violy
@@ -17756,6 +17794,8 @@ Body:
       - Item: Magestic_Goat
         Rate: 1550
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1400
     AegisName: KARAKASA
     Name: Karakasa
@@ -18555,6 +18595,8 @@ Body:
       - Item: S_Card_4330
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1419
     AegisName: G_FARMILIAR
     Name: Familiar
@@ -20627,6 +20669,8 @@ Body:
       - Item: Incant_Samurai_Card
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1493
     AegisName: DRYAD
     Name: Dryad
@@ -21026,6 +21070,8 @@ Body:
         Rate: 4500
         StealProtected: true
         RandomOptionGroup: Shield
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1503
     AegisName: GIBBET
     Name: Gibbet
@@ -21481,6 +21527,8 @@ Body:
       - Item: S_Card_4236
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1512
     AegisName: HYEGUN
     Name: Yao Jun
@@ -23681,6 +23729,8 @@ Body:
       - Item: S_Card_4302
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1584
     AegisName: TAMRUAN
     Name: Tamruan
@@ -25195,6 +25245,8 @@ Body:
       - Item: S_Card_4342
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1624
     AegisName: G_WASTE_STOVE
     Name: Old Stove
@@ -25481,6 +25533,8 @@ Body:
       - Item: S_Card_4372
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1631
     AegisName: CHUNG_E_
     Name: Green Maiden
@@ -26257,6 +26311,8 @@ Body:
       - Item: S_Card_4357
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1647
     AegisName: B_EREMES
     Name: Assassin Cross Eremes
@@ -26323,6 +26379,8 @@ Body:
       - Item: S_Card_4359
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1648
     AegisName: B_HARWORD
     Name: Whitesmith Howard
@@ -26390,6 +26448,8 @@ Body:
       - Item: B_Harword_Card
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1649
     AegisName: B_MAGALETA
     Name: High Priest Margaretha
@@ -26456,6 +26516,8 @@ Body:
       - Item: S_Card_4363
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1650
     AegisName: B_SHECIL
     Name: Sniper Cecil
@@ -26521,6 +26583,8 @@ Body:
       - Item: B_Shecil_Card
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1651
     AegisName: B_KATRINN
     Name: High Wizard Kathryne
@@ -26587,6 +26651,8 @@ Body:
       - Item: S_Card_4365
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1652
     AegisName: YGNIZEM
     Name: Egnigem Cenia
@@ -26977,6 +27043,8 @@ Body:
       - Item: S_Card_4352
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1659
     AegisName: G_WHIKEBAIN
     Name: Wickebine Tres
@@ -28115,6 +28183,8 @@ Body:
       - Item: S_Card_4374
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1686
     AegisName: ORC_BABY
     Name: Orc Baby
@@ -28267,6 +28337,8 @@ Body:
       - Item: S_Card_4376
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1689
     AegisName: G_BACSOJIN
     Name: White Lady
@@ -29227,6 +29299,8 @@ Body:
       - Item: Thanatos_Card
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1709
     AegisName: G_THA_ODIUM
     Name: Odium of Thanatos
@@ -29733,6 +29807,8 @@ Body:
       - Item: S_Card_4386
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1720
     AegisName: HYDRO
     Name: Hydrolancer
@@ -30242,6 +30318,8 @@ Body:
       - Item: S_Card_4403
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1735
     AegisName: ALICEL
     Name: Alicel
@@ -30862,6 +30940,8 @@ Body:
       - Item: Randgris_Card
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1752
     AegisName: SKOGUL
     Name: Skogul
@@ -31524,6 +31604,8 @@ Body:
       - Item: S_Card_4408
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1769
     AegisName: AGAV
     Name: Agav
@@ -32057,6 +32139,8 @@ Body:
       - Item: S_Card_4419
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1780
     AegisName: MUSCIPULAR
     Name: Muscipular
@@ -32340,6 +32424,8 @@ Body:
       - Item: Atroce_Card
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1786
     AegisName: G_AGAV
     Name: Agav
@@ -34081,6 +34167,8 @@ Body:
       - Item: Ifrit_Card
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1833
     AegisName: KASA
     Name: Kasa
@@ -35742,6 +35830,8 @@ Body:
       - Item: S_Card_4441
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1872
     AegisName: BEELZEBUB_FLY
     Name: Hell Fly
@@ -35863,6 +35953,8 @@ Body:
       - Item: Berzebub_Card
         Rate: 1
         StealProtected: true
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1875
     AegisName: TRISTAN_3RD
     Name: Dead King
@@ -36313,6 +36405,8 @@ Body:
         Rate: 5000
       - Item: Loard_Circlet
         Rate: 1
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1886
     AegisName: G_MAVKA
     Name: Mavka
@@ -37198,6 +37292,8 @@ Body:
         Rate: 9000
       - Item: Dark_Debris
         Rate: 9000
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1918
     AegisName: MOROCC_1
     Name: Incarnation of Morocc
@@ -39567,6 +39663,8 @@ Body:
         Rate: 3
       - Item: Red_Herb
         Rate: 1800
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 1981
     AegisName: I_HIGH_ORC
     Name: Safeguard Chief
@@ -40903,6 +41001,8 @@ Body:
       - Item: Piece_Of_Angent_Skin
         Rate: 2000
         RandomOptionGroup: Garment
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 2023
     AegisName: DARK_SHADOW
     Name: Dark Shadow
@@ -41469,6 +41569,8 @@ Body:
       - Item: Hell_Fire
         Rate: 100
         RandomOptionGroup: Melee_Level_4
+      - Item: Hazy_Starlight
+        Rate: 2000
   - Id: 2069
     AegisName: IARA
     Name: Iara

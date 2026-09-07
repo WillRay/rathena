@@ -2007,6 +2007,7 @@
 	export_constant(SC_WIND_CHARM_POWER);
 	export_constant(SC_GROUND_CHARM_POWER);
 	export_constant(SC_OPPORTUNIST);
+	export_constant(SC_VENOMKNIFE);
 	export_constant(SC_PICK_STONE);
 	export_constant(SC_HUNTED);
 	export_constant(SC_LANDMINE_BLEED);

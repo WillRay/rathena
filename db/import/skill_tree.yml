@@ -106,6 +106,27 @@ Body:
         Requires:
           - Name: AS_KATAR
             Level: 0
+      # Payon Stories rebalance: AS_VENOMKNIFE (now "Whirling Knives") is no
+      # longer a base Assassin quest skill - it's reworked into an Assassin
+      # Cross-only dagger stance (see the Assassin_Cross block below). MaxLevel
+      # 0 erases it here, and the removal propagates to Baby_Assassin and
+      # Assassin_Cross through inheritance.
+      - Name: AS_VENOMKNIFE
+        MaxLevel: 0
+  # Payon Stories rebalance: Whirling Knives' (AS_VENOMKNIFE) Assassin
+  # Cross-only rework. 5 levels, gated behind Sonic Blow 10 and Left Hand
+  # Mastery 5 so it sits on the dagger side of the trans tree, alongside the
+  # Sonic Blow -> Opportunist -> Grimtooth loop rather than competing with the
+  # base-tree quest skill it replaces.
+  - Job: Assassin_Cross
+    Tree:
+      - Name: AS_VENOMKNIFE
+        MaxLevel: 5
+        Requires:
+          - Name: AS_SONICBLOW
+            Level: 10
+          - Name: AS_LEFT
+            Level: 5
   # Payon Stories rebalance: Charge Arrow is no longer a quest skill (the IsQuest
   # flag is cleared in db/import/skill_db.yml). It is now a 5-level skill-point
   # skill gated behind Arrow Shower 5, sitting directly under Arrow Shower in the
@@ -369,6 +390,17 @@ Body:
         Requires:
           - Name: AL_DP
             Level: 0
+      # Judgement (PA_PRESSURE, formerly Pressure) moves down from the Paladin
+      # tree and re-hangs off Grand Cross Rank 5, as the payoff at the end of
+      # that line. Client-side it moves from JT_CRUSADER_H[17] to
+      # JT_CRUSADER[22] in skilltreeview.lub - directly beneath Grand Cross at
+      # [15] in the 7-wide grid. Crusader2, Baby_Crusader and Baby_Crusader2
+      # declare no PA_PRESSURE of their own, so they inherit this entry.
+      - Name: PA_PRESSURE
+        MaxLevel: 5
+        Requires:
+          - Name: CR_GRANDCROSS
+            Level: 5
   - Job: Paladin
     Tree:
       - Name: PA_GOSPEL
@@ -378,3 +410,21 @@ Body:
             Level: 0
           - Name: AL_DEMONBANE
             Level: 0
+      # Paladin declares its own PA_PRESSURE in db/pre-re/skill_tree.yml, and
+      # loadingFinished skips inheriting any skill the child already has - so
+      # the Crusader entry above does NOT reach Paladin and this block has to
+      # repeat it. MaxLevel: 0 is not usable here either: the max_lv == 0 sweep
+      # runs after inheritance, so it would delete Judgement from Paladin
+      # outright. Requires merges rather than replaces, hence the three
+      # Level: 0 erasures of the old Endure 5 / Faith 5 / Shield Charge 2 gate.
+      - Name: PA_PRESSURE
+        MaxLevel: 5
+        Requires:
+          - Name: SM_ENDURE
+            Level: 0
+          - Name: CR_TRUST
+            Level: 0
+          - Name: CR_SHIELDCHARGE
+            Level: 0
+          - Name: CR_GRANDCROSS
+            Level: 5

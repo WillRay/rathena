@@ -179,3 +179,51 @@ Body:
       NoWarning: true
       BlEffect: true
       DisplayPc: true
+
+  # Crusader rebalance: Judgement's Holy burn. Applied to the primary target of
+  # Judgement (PA_PRESSURE) and ticks 5 times over 5 seconds, carrying the bulk
+  # of the skill's damage. All behaviour lives in status.cpp
+  # (SC_JUDGEMENT_BURN): val1 is the already-final per-tick damage - the Holy
+  # attribute table, the caster's missing-HP bonus and any siege reduction are
+  # applied ONCE at cast time in judgement.cpp, so the tick itself is a plain
+  # status_fix_damage - and val2 is the caster GID so kills credit the Crusader.
+  # Exactly 5 ticks because Duration1 (5000ms, db/import/skill_db.yml) divides
+  # by the 1000ms interval in status_get_sc_interval. Deliberately not a Debuff
+  # and no BossResist: the 5 second window is part of the damage budget, so
+  # status resistance must not be able to shorten it. NoSave so a pending burn
+  # does not survive relog. EFST_HANDICAPSTATE_HOLYFLAME is the client's holy
+  # flame handicap icon (efstids.lub 1216, bitmap in stateiconimginfo.lub) and
+  # nothing else on this server uses it.
+  - Status: Judgement_Burn
+    Icon: EFST_HANDICAPSTATE_HOLYFLAME
+    Flags:
+      NoSave: true
+
+  # Ported from db/re/status.yml: SHC_DANCING_KNIFE's buff state. 4th job
+  # statuses are absent from the pre-re status database, so the skill cast
+  # but status_change_start rejected id 815 as invalid. DurationLookup
+  # resolves against the SHC_DANCING_KNIFE entry in db/import/skill_db.yml,
+  # which is safe because do_init_skill() runs before do_init_status().
+  - Status: Dancing_Knife
+    Icon: EFST_DANCING_KNIFE
+    DurationLookup: SHC_DANCING_KNIFE
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      RequireWeapon: true
+
+  # Assassin Cross rebalance: Whirling Knives' (AS_VENOMKNIFE) buff state. RequireWeapon +
+  # DurationLookup together are what make the skill cancel on weapon swap -
+  # pc_checkallowskill resolves skill_get_weapontype() off DurationLookup's
+  # skill id and ends the status when the equipped weapon no longer matches.
+  # A RequireWeapon status with no DurationLookup silently self-cancels.
+  # Reuses the Dancing Knife icon (EFST_DANCING_KNIFE) since the two skills
+  # are mechanically identical; if SHC_DANCING_KNIFE.tga is missing from the
+  # client GRF the icon renders blank but the buff still functions.
+  - Status: Venomknife
+    Icon: EFST_DANCING_KNIFE
+    DurationLookup: AS_VENOMKNIFE
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      RequireWeapon: true

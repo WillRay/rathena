@@ -1370,6 +1370,13 @@ primarily AGI's job again and giving damage rolls their randomness back.
   floor, a small accuracy bump and a kinder SP curve give Spear- and
   Sword-Crusaders a single-target option that is worth the cast.*
 
+- **Holy Cross:** Is now non-targeted — it auto-fires on the player's current
+  target instead of requiring a fresh target click (`TargetType: Self` +
+  `Flags.NoTargetSelf`). It also gains a 2 second cooldown (`Cooldown: 2000`).
+  *Developer Comments: Holy Cross is a fast single-target poke; auto-targeting
+  keeps it flowing as a spam button, and the cooldown keeps that spam in
+  check.*
+
 - **Shield Charge:** Damage raised from `100% + 20% per level` to
   `200% + 20% per level`. *Developer Comments: The skill is built around stun
   and knockback utility, but the damage was so low that it felt like a
@@ -1404,6 +1411,61 @@ primarily AGI's job again and giving damage rolls their randomness back.
   twenty-point tax. Providence and Guardian Gospel had their Divine Protection
   and Demon Bane prerequisites erased at the same time so neither becomes
   unreachable.*
+
+- **Judgement (formerly Pressure):** Moved out of the Paladin tree and into the
+  Crusader tree, where it now requires only `Grand Cross Rank 5` (the old
+  `Endure 5`, `Faith 5` and `Shield Charge 2` gates are gone) and sits directly
+  beneath Grand Cross in the skill window. The instant hit is unchanged at
+  `500 fixed damage + 300 per level` ignoring `DEF` and `FLEE`, but the target
+  now also burns with `Holy` power for `5 seconds`, taking a further
+  `(ATK + MATK) x 100% per skill level` spread over five one-second ticks — the
+  burn, not the hit, is where most of the damage lives. That burn scales with
+  how hurt the caster is, gaining `+1% damage per 2% of MaxHP missing` (about
+  `+50%` at 1 HP). On cast, Undead-element, Undead-race and Demon-race enemies
+  within `5x5` cells *around* the target — not the target itself — are struck
+  with `Fear` for 3 seconds. The enemy `SP` drain is removed entirely, as is
+  the skill's ability to strip `Kyrie Eleison`, and it no longer ignores WoE and
+  Battleground damage reduction. Range is now `5 cells` (down from 9), cast time
+  is a flat `1 second` (down from 2–4 seconds by level), the after-cast delay is
+  removed outright (was 2–4 seconds by level), and the skill has a
+  `15 second cooldown`. `SP` cost is unchanged at `30 SP + 5 per level`.
+  *Developer Comments: Pressure was a Paladin capstone that fired one flat
+  number and then froze you for four seconds, with nothing connecting it to the
+  rest of the kit. Rebuilding it as a Grand Cross follow-up gives Crusaders a
+  real payoff at the end of that line: the same guaranteed hit now plants a
+  large Holy burn, paid for with a long cooldown and rewarded for fighting at
+  low HP — which is exactly the state Grand Cross leaves you in, since it
+  damages its own caster. The low-HP scaling is deliberately a nudge rather than
+  the main lever; it should encourage the Grand Cross into Judgement sequence,
+  not demand that you play at death's door. Restricting the Fear to Undead and
+  Demon, and to the enemies around the target rather than the one taking the
+  hit, keeps the crowd control thematic and stops it doubling as a universal
+  single-target disable.*
+  - `src/map/skills/swordman/judgement.cpp` / `.hpp` — renamed from
+    `gloriadomini.{cpp,hpp}`, class `SkillGloriaDomini` renamed to
+    `SkillJudgement`. Holds the Holy burn, the missing-HP scaling and the Fear
+    sweep; the old pre-renewal `SP` drain is deleted.
+  - `src/map/skills/swordman/skill_factory_swordman.cpp`,
+    `src/map/map-server.vcxproj`, `src/map/map-server.vcxproj.filters` — unity
+    include, factory case and project entries follow the rename.
+  - `src/map/status.hpp`, `src/map/status.cpp`, `src/map/script_constants.hpp` —
+    new `SC_JUDGEMENT_BURN`: enum, script constant, tick interval, tick arming
+    and the `status_change_timer` damage body.
+  - `src/map/battle.cpp` — Judgement no longer force-ends `SC_KYRIE`, and its
+    damage-bypass case now applies GvG and Battleground reduction before
+    returning.
+  - `db/import/status.yml` — `Judgement_Burn` status entry
+    (`EFST_HANDICAPSTATE_HOLYFLAME`).
+  - `db/import/skill_db.yml` — range, splash, cast time, after-cast delay,
+    cooldown, both burn/Fear durations, and the cleared siege-immunity flags.
+  - `db/import/skill_tree.yml` — added to the Crusader tree behind
+    `Grand Cross 5`; the Paladin copy re-gated to match, since Paladin declares
+    its own entry and so does not inherit the Crusader one.
+  - `skilltreeview.lub`, `skillinfolist.lub`, `skilldescript.lub`,
+    `skilldelaylist.lub`, `data/skillnametable.txt`, `data/skilltreeview.txt`,
+    `data/skilldesctable.txt` — renamed to "Judgement", moved to the Crusader
+    grid at index 22 (directly beneath Grand Cross), and the tooltip, range,
+    prerequisite and cast/delay data rewritten.
 
 ### Archer Skill Changes
 
@@ -1947,6 +2009,31 @@ primarily AGI's job again and giving damage rolls their randomness back.
     `div_ > 1` guard keeps it inert on the renewal path, where the skill is a
     splash attack rather than a 4-hit single-target strike.
 
+- **Wind Walk (duration rebalance):** Duration is now `150 seconds + 15 seconds per
+  skill level` — `165 seconds` at level 1 up to `5 minutes` at level 10, replacing the
+  old `130`-to-`400 second` curve. SP cost is unchanged at `46 + 6 per level` (100 SP
+  at level 10). *Developer Comments: a 6:40 party buff at max rank was long enough that
+  Wind Walk stopped being something you thought about and just became permanent
+  background state, while the steep old curve meant anything below level 10 was barely
+  worth the cast. Flattening it to a 15-second step caps the maxed buff at a clean 5
+  minutes and buys the low ranks back — levels 1 through 3 are all longer than they
+  used to be — so a Sniper can put a few points in it without feeling obliged to max it.*
+
+- **True Sight (duration and SP rebalance):** Duration is now `30 seconds + 15 seconds
+  per skill level` — `45 seconds` at level 1 up to `3 minutes` at level 10, replacing the
+  flat `30 seconds` it had at every rank. SP cost is now `20 + 4 per skill level`
+  (`24 SP` at level 1, `60 SP` at level 10), replacing the old paired
+  `20/20/25/25/30/30/35/35/40/40` curve. The buff itself is untouched: `+5` to all stats,
+  `+3 HIT`, `+1 CRIT` and `+2% damage` per skill level. *Developer Comments: a flat
+  30-second window on a skill with a 10-level investment meant True Sight was re-cast
+  every other mob pull and never once as a setup buff — the duration didn't reward
+  levelling it at all. Scaling to 3 minutes makes maxing it a real decision, and the
+  higher SP curve is the price for it: at 60 SP the maxed cast is a deliberate opener
+  rather than something spammed on cooldown. Every rank is still longer than the old
+  flat 30 seconds, so no existing build is worse off on duration.*
+  - `lua files/skillinfoz/skillinfolist.lub` — `SpAmount` synced so the hotbar hover
+    matches the new SP curve.
+
 ### Thief Skill Changes
 
 - **Double Attack:** Activation chance raised from `5% per skill level` to
@@ -2202,14 +2289,186 @@ primarily AGI's job again and giving damage rolls their randomness back.
   a separate damage table to balance. Note: this removes the old poison-attack
   block, so Poison React is now purely offensive reactive pressure.*
 
-- **Venom Knife:** No longer consumes a thrown `Dagger`; instead it is gated
-  by a short `2 second cooldown`. In pre-renewal it now deals direct
-  `150% + 30% per level` ranged damage (`180% ATK` at its single level)
-  instead of a flat `100% ATK`, and keeps its high poison chance.
-  *Developer Comments: Venom Knife was a flavour poke that cost a real Dagger
-  every throw for almost no damage. Turning the ammo cost into a cooldown and
-  giving it a genuine direct-damage ratio makes it a usable ranged venom
-  opener for dagger-venom Assassins without the inventory drain.*
+- **Whirling Knives** (formerly Venom Knife, `AS_VENOMKNIFE`): Completely
+  reworked from a Lv1 base-tree quest skill into
+  an `Assassin Cross`-only, `5-level` dagger stance, mirroring the 4th-job
+  skill Dancing Knife. It is now a `Self`-target, instant-cast (`0` cast time)
+  buff, requiring a `Dagger` in the main hand and cancelling immediately on
+  weapon swap. While active, knives orbit the caster and strike everything in
+  a `5x5` area every `0.5s` for `10 seconds` (`20 volleys`) at
+  `50% / 70% / 90% / 110% / 130%` ATK per volley per target. Cooldown is a
+  flat `30 seconds` (~33% uptime). SP cost is `25 / 30 / 35 / 40 / 45`. It no
+  longer applies Poison — Venom Dust already owns that role. Casting it while
+  holding a banked `Opportunist` charge (from a landed Sonic Blow) consumes
+  the charge to extend the stance to `15 seconds` / `30 volleys` (~50%
+  uptime) instead of raising damage. The old `IgnoreAtkCard` flag is dropped,
+  so the knives now carry the equipped dagger's element and every damage card
+  in full — on-hit status cards (Savage Bebe, Marina, etc.) also fire, but at
+  a quartered rate to keep a full stance from compounding into a near-certain
+  proc. It is gated behind `Sonic Blow 10` and `Left Hand Mastery 5`, so only
+  dagger-side Assassin Crosses can learn it; the base-tree quest skill and its
+  Killtin delivery quest, the `AS_VENOMKNIFE` grant on job change, and the
+  Throwable Dagger ammo gate on equipping the item (previously locked behind
+  this same skill) are all retired. The Sepulchral Merchant and other vendors
+  that stocked the now-orphaned Throwable Dagger no longer carry it.
+  *Developer Comments: Venom Knife (its old name) sat on the base Assassin tree doing a
+  serviceable-but-forgettable ranged poke that didn't interact with anything
+  else in the kit. Turning it into the dagger Assassin Cross's answer to
+  Meteor Assault gives that side of the tree a real AoE identity, and tying
+  its duration bonus to Opportunist folds it into the existing Sonic Blow ->
+  Opportunist -> Grimtooth loop instead of sitting outside it. The 0.5s tick
+  (rather than Dancing Knife's native 0.3s) is deliberate: pre-renewal DEF is
+  subtractive per hit, so spreading the same total ratio across fewer, larger
+  hits means less of it is eaten for free by armor, and it's lighter on
+  packet traffic in crowds. At Lv5 it averages roughly 87%/sec ATK over its
+  full cooldown cycle, meaningfully below Sonic Blow's ~385%/sec single-target
+  output in this build — it trades single-target burst for AoE, not raw DPS.*
+
+- **Sonic Blow — Cooldown Tuning:** Sonic Blow is now gated by a flat `5 second
+  cooldown`, and both its `after-cast act delay` and `after-cast walk delay`
+  are removed, so the Assassin can move and act immediately once the strike
+  animation finishes. Damage, SP cost, and every other property are unchanged.
+  *Developer Comments: The old 2 second after-cast lock froze the Assassin in
+  place well past the point of usefulness for a skill that already gates on
+  its own cooldown — it just tacked dead time onto a burst opener. Moving the
+  pacing entirely onto the cooldown keeps Sonic Blow from being spammable
+  while letting the Assassin actually use the window it opens (reposition,
+  follow up with Grimtooth, or just walk) instead of standing still.*
+
+- **Sonic Blow — Opportunist Rate:** The `Opportunist` proc on a successful
+  Sonic Blow hit (PvE only) is doubled from `25%` to `50% chance`. Everything
+  else about the proc — the `8 second` charge, the SP-halving effect, and the
+  full disable in PvP/WoE — is unchanged.
+  *Developer Comments: With Sonic Blow's after-cast lock gone, the skill fires
+  more often per minute, but the old 25% rate meant Opportunist was still a
+  coin-flip-of-a-coin-flip that rarely lined up with the Grimtooth follow-up.
+  Doubling it to 50% makes the Sonic Blow -> Opportunist -> Grimtooth rotation
+  something a dagger Assassin can actually plan around instead of hope for.*
+
+- **Sonic Impact (formerly Sonic Acceleration):** Repurposed from a Lv1
+  quest-granted Sonic Blow passive (`+50%` Hit, `+10%` Damage) into
+  **Sonic Impact**, a `5-level`, `Assassin Cross`-only, `Katar`-only burst
+  modelled on Guillotine Cross's Cross Impact. It is a `Self`-target,
+  non-targeted skill (`TargetType: Self` + `NoTargetSelf`) that auto-fires on
+  the caster's current target: on cast, the Assassin Cross blinks to the tile
+  behind the target and lands `7` weapon hits for `400% ATK` at level 1,
+  `+200%` per level (`1200%` at level 5), playing Cross Impact's animation
+  while still announcing "Sonic Impact !!" as the skill name. It can land a
+  critical hit at half the caster's normal crit rate — pre-renewal, a crit
+  guarantees the hit and pierces DEF entirely rather than adding a damage
+  multiplier. SP cost is `20 / 25 / 30 / 35 / 40`, cooldown is a flat
+  `15 seconds`, and it is gated behind `Sonic Blow 10` and `Advanced Katar
+  Mastery 5` on the Assassin Cross tree, bought with skill points like any
+  other skill — the old quest (Esmille, `in_moc_16`) no longer grants
+  anything and is kept purely as lore.
+  *Developer Comments: Sonic Acceleration was a single-level passive that
+  fired invisibly and ate a full skill id and skill-window slot for an effect
+  the player never saw. Its old bonuses are folded unconditionally into Sonic
+  Blow's base (see the follow-up entry below) so removing the passive check is
+  invisible to every existing Assassin — nothing gets weaker. The crit is
+  deliberately not a damage multiplier: pre-renewal has no such thing, so a
+  crit's payoff here is the same guaranteed-hit/DEF-pierce every other crit
+  gets, just offered at half rate as a bonus on top of the skill's own burst
+  rather than as its main lever.*
+  - `db/pre-re/skill_db.yml` / `db/re/skill_db.yml` — full `AS_SONICACCEL`
+    (`Id: 1003`) entry replaced in both files (an import override cannot clear
+    `Flags.IsQuest`): `MaxLevel: 5`, `TargetType: Self`,
+    `DamageFlags.Critical: true`, `Flags.NoTargetSelf: true`, `Range: 3`,
+    `Hit: Multi_Hit`, `HitCount: -7`, `Element: Weapon`,
+    `AfterCastActDelay: 1000`, `Cooldown: 15000`,
+    `CastDelayFlags.IgnoreStatus: true`, `Requires.SpCost` `20/25/30/35/40`,
+    `Requires.Weapon.Katar: true`, `Requires.State: Move_Enable`.
+  - `db/pre-re/skill_tree.yml` / `db/re/skill_tree.yml` — removed from the
+    `Assassin` job tree; added to `Assassin_Cross` requiring `AS_SONICBLOW`
+    level `10` and `ASC_KATAR` level `5`.
+  - `src/map/skills/thief/sonicimpact.cpp` /
+    `src/map/skills/thief/sonicimpact.hpp` — new `SkillSonicImpact`
+    (`WeaponSkillImpl`). `calculateSkillRatio` adds `100 + 200 * skill_lv`.
+    `castendDamageId` ports `GC_CROSSIMPACT`'s blink
+    (`skill_check_unit_movepos` to the tile behind the target, then
+    `clif_blown`), plays Cross Impact's animation via a `DMGVAL_IGNORE`
+    `clif_skill_damage` call (`GC_CROSSIMPACT` id), announces the real name
+    with `clif_skill_nodamage` (`AS_SONICACCEL` id), then runs the base
+    `WeaponSkillImpl::castendDamageId` for the real 7-hit damage. Falls back
+    to `clif_skill_fail` on a blocked movepos.
+  - `src/map/skills/thief/skill_factory_thief.cpp` — `AS_SONICACCEL` now maps
+    to `SkillSonicImpact` instead of the default no-op passive handling.
+  - `src/map/skill.cpp` — `AS_SONICACCEL` added to the `KN_ONEHAND` group in
+    the `clif_damage` whitelist, so its 7 hits render as plain weapon swings
+    instead of the id's stale passive-skill animation.
+  - `src/map/battle.cpp` — `AS_SONICACCEL` added to the `GC_CROSSIMPACT`
+    `BF_SHORT` melee-range-class group (3-cell cast range, but the caster
+    jumps to the target so it counts as melee), and to the `GC_CROSSIMPACT`
+    `cri /= 2` group (half crit rate).
+  - `src/map/map-server.vcxproj` / `.vcxproj.filters` — added the new
+    `sonicimpact.cpp`/`.hpp` source pair alongside the other Thief skill
+    files.
+  - `npc/quests/skills/assassin_skills.txt` — the three
+    `skill "AS_SONICACCEL",1,SKILL_PERM;` grants removed; the rebirth
+    re-teach gate on `getskilllv("AS_SONICACCEL") == 0` (permanently true with
+    nothing granting the skill anymore) replaced with a plain lore dialogue
+    branch that no longer checks skill level.
+  - `npc/other/Global_Functions.txt` — the `Job_Assassin` arm of the
+    rebirth quest-skill restore helper (`skill "AS_SONICACCEL",1,SKILL_PERM;`)
+    removed.
+  - `lua files/skillinfoz/skillinfolist.lub` — `SkillName` changed to "Sonic
+    Impact", `MaxLv: 5`, `SpAmount` `20/25/30/35/40`, `AttackRange: 3` at every
+    level, `Type: "Quest"` dropped, `_NeedSkillList` set to Sonic Blow level
+    10 and Advanced Katar Mastery level 5.
+  - `lua files/skillinfoz/skilldescript.lub` — tooltip rewritten: title "Sonic
+    Impact", Sonic Blow 10 / Advanced Katar Mastery 5 requirement,
+    Active/Current Target, and a description covering the 7-hit/400%+200%-per-
+    level formula, the half-rate crit, SP cost and cooldown.
+  - `lua files/skillinfoz/skilltreeview.lub` — grid slot `[13]` removed from
+    `JT_ASSASSIN`; added to `JT_ASSASSIN_H` at the same free `[13]` slot.
+  - `lua files/skillinfoz/skilldelaylist.lub` — new entry mirroring
+    `GC_CROSSIMPACT`'s shape: `SkillGlobalPostDelay: 1000` (after-cast act
+    delay) and `SkillSinglePostDelay: 15000` (cooldown) at every level.
+- **Sonic Blow (follow-up):** The `+10%` damage and (pre-renewal) `+50%` /
+  (renewal) `+90%` hit-rate bonuses that used to require learning Sonic
+  Acceleration are now unconditional, so every Assassin gets them regardless
+  of whether they ever picked up the old passive.
+  *Developer Comments: Sonic Acceleration became Sonic Impact, a standalone
+  active skill that no longer has anything to do with Sonic Blow's own
+  numbers. Folding its old bonuses into Sonic Blow's base unconditionally is
+  what keeps this change invisible to existing Assassins instead of a stealth
+  nerf.*
+  - `src/map/skills/thief/sonicblow.cpp` — `calculateSkillRatio`'s
+    pre-renewal branch and `battle.cpp`'s renewal-only `AS_SONICBLOW`
+    `ATK_ADDRATE` block both drop their `pc_checkskill(sd, AS_SONICACCEL)`
+    guard; `modifyHitRate` drops the same guard around its `#ifdef RENEWAL`
+    90%/50% split.
+
+- **Shadow Strike (was Soul Destroyer):** Reworked from a single-hit
+  ranged attack with a spliced-in `INT`-based misc-damage half into a pure
+  physical, defense-ignoring gap-closer, for player casters only. The
+  Assassin Cross dashes to the target (`5` cell range, doubling as the
+  dash distance) and lands `3` hits, each dealing `46% ATK` per skill
+  level (`460%` per hit at level 10, `1380%` total) and ignoring the
+  target's `DEF`. `Katars` now have a high chance to inflict `Bleeding`
+  on hit; `Daggers` have a high chance to inflict `Blind` instead — the
+  weapons no longer change the ratio or hit count. It can only be cast
+  while `Hiding` or `Cloaking` — attempting it in the open fails outright
+  with no SP or cooldown spent. Cast time is dropped to `0` (was `700ms`),
+  after-cast delay is a flat `1 second` (was a `1s -> 2.8s` ladder), and a
+  new `20 second cooldown` replaces the old cooldown-free spam. SP cost is
+  trimmed to `20` at level 1 rising to `45` at level 10 (was `30 -> 60`).
+  On-hit status cards can now proc off it, since the old `IgnoreAtkCard`
+  flag and the addeff-suppression that used to protect the INT half are
+  both removed. Monster casters (Eremes Guile, Naght Sieger, Gang Member)
+  are untouched by any of this — they still fire the old single-hit
+  `ATK + INT` hybrid that respects `DEF` on its weapon half, just under
+  the new "Shadow Strike" name.
+  *Developer Comments: Soul Destroyer's INT/ATK hybrid didn't fit the
+  Assassin Cross class fantasy and pushed toward INT-stacking builds that
+  had nothing to do with poison or crit Assassins. Turning it into a
+  committed stealth opener — dash in, land a big multi-hit strike, then
+  wait 20 seconds — gives the capstone a real identity as "the skill you
+  open a fight with." Trading the dagger/katar ratio split for status
+  procs (Bleeding vs. Blind) gives both weapons their own follow-up
+  pressure instead of just a bigger number, and keeping the old formula
+  on monster casters means existing mob balance (and drop/fight tuning
+  around Eremes Guile and Naght Sieger) doesn't shift under this rework.*
 
 ### Rogue Skill Changes
 
@@ -2360,8 +2619,12 @@ the system.
   which the import loader cannot express and therefore live in
   `db/pre-re/skill_db.yml` (each marked with a `Payon Stories rebalance`
   comment): Venom Dust's `NoDamage` flag (cleared so the cloud can deal direct
-  ticks) and Venom Knife's `Ammo` requirement (the thrown Dagger cost). These
-  match the precedent already set by Stone Fling's item-requirement removal.
+  ticks). This matches the precedent already set by Stone Fling's
+  item-requirement removal. Whirling Knives' full rework (`AS_VENOMKNIFE`,
+  id 1004) also lives directly in `db/pre-re/skill_db.yml` and
+  `db/re/skill_db.yml` rather than as an import override, since the change
+  removes fields (`CopyFlags`, `Range`, `Flags.IsQuest`, `Hit: Multi_Hit`,
+  `DamageFlags.IgnoreAtkCard`) that the import loader cannot clear.
 - The Bowling Bash configuration in `conf/battle/skill.conf` now defaults to
   `bowling_bash_area: 2` (area around caster). Restoring the legacy gutter-line
   behavior is still possible by setting it back to `0`.

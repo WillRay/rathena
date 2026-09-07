@@ -4656,6 +4656,21 @@ void s_random_opt_group::apply( struct item& item ){
 		item_option.param = option->param;
 	};
 
+	// Check whether an option is already present in a slot other than the one being filled
+	auto already_applied = []( const struct item& it, uint16 id, size_t skip ){
+		for( size_t k = 0; k < MAX_ITEM_RDM_OPT; k++ ){
+			if( k == skip ){
+				continue;
+			}
+
+			if( it.option[k].id == static_cast<int16>( id ) ){
+				return true;
+			}
+		}
+
+		return false;
+	};
+
 	// (Re)initialize all the options
 	for( size_t i = 0; i < MAX_ITEM_RDM_OPT; i++ ){
 		item.option[i].id = 0;
@@ -4669,6 +4684,11 @@ void s_random_opt_group::apply( struct item& item ){
 		for( size_t j = 0, max = this->slots[static_cast<uint16>(i)].size() * 3; j < max; j++ ){
 			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->slots[static_cast<uint16>(i)] );
 
+			// Never apply the same option twice on one item
+			if( already_applied( item, option->id, i ) ){
+				continue;
+			}
+
 			if ( rnd_chance<uint16>(option->chance, 10000) ) {
 				apply_sub( item.option[i], option );
 				break;
@@ -4677,7 +4697,22 @@ void s_random_opt_group::apply( struct item& item ){
 
 		// If no entry was applied, assign one
 		if( item.option[i].id == 0 ){
-			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->slots[static_cast<uint16>(i)] );
+			std::shared_ptr<s_random_opt_group_entry> option = nullptr;
+
+			// Prefer an entry that is not already on the item
+			for( size_t j = 0, max = this->slots[static_cast<uint16>(i)].size() * 3; j < max; j++ ){
+				std::shared_ptr<s_random_opt_group_entry> candidate = util::vector_random( this->slots[static_cast<uint16>(i)] );
+
+				if( !already_applied( item, candidate->id, i ) ){
+					option = candidate;
+					break;
+				}
+			}
+
+			// Every entry is already on the item, this slot is guaranteed so fall back to any
+			if( option == nullptr ){
+				option = util::vector_random( this->slots[static_cast<uint16>(i)] );
+			}
 
 			// Apply an entry without checking the chance
 			apply_sub( item.option[i], option );
@@ -4692,10 +4727,21 @@ void s_random_opt_group::apply( struct item& item ){
 				continue;
 			}
 
-			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->random_options );
+			// Draw until a candidate is found that is not already on the item. Only duplicates
+			// cause a redraw - the chance roll is still made exactly once, so the number of
+			// options an item ends up with is unchanged.
+			for( size_t j = 0, max = this->random_options.size() * 3; j < max; j++ ){
+				std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->random_options );
 
-			if ( rnd_chance<uint16>(option->chance, 10000) ){
-				apply_sub( item.option[i], option );
+				if( already_applied( item, option->id, i ) ){
+					continue;
+				}
+
+				if ( rnd_chance<uint16>(option->chance, 10000) ){
+					apply_sub( item.option[i], option );
+				}
+
+				break;
 			}
 		}
 	}

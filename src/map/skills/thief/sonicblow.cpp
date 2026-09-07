@@ -19,11 +19,11 @@ void SkillSonicBlow::calculateSkillRatio(const Damage *wd, const block_list *src
 	if (tstatus->hp < (tstatus->max_hp / 2))
 		base_skillratio += base_skillratio / 2;
 #else
-	const map_session_data* sd = BL_CAST( BL_PC, src );
-
+	// Sonic Acceleration became Sonic Impact (a standalone active skill), so its
+	// +10% damage bonus is now unconditional - it is no longer contingent on
+	// pc_checkskill(sd, AS_SONICACCEL).
 	base_skillratio += 200 + 50 * skill_lv;
-	if (sd && pc_checkskill(sd, AS_SONICACCEL) > 0)
-		base_skillratio += base_skillratio / 10;
+	base_skillratio += base_skillratio / 10;
 #endif
 }
 
@@ -37,25 +37,25 @@ void SkillSonicBlow::applyAdditionalEffects(block_list *src, block_list *target,
 
 #ifndef RENEWAL
 	// Thief passive rebalance: Sonic Blow feeds the Opportunist loop. A
-	// successful hit in PvE has a 25% chance to grant the caster SC_OPPORTUNIST
+	// successful hit in PvE has a 50% chance to grant the caster SC_OPPORTUNIST
 	// (the same opening earned from Improve Dodge or leaving Hiding), which
 	// halves the SP cost of the next damaging skill and lets Grimtooth be cast
 	// out of Hiding as a single-target burst. Fully disabled in PvP and WoE,
 	// matching the flee-dodge and Hiding proc sites.
 	map_session_data* sd = BL_CAST(BL_PC, src);
 
-	if (sd != nullptr && !map_flag_vs(src->m) && rnd() % 100 < 25)
+	if (sd != nullptr && !map_flag_vs(src->m) && rnd() % 100 < 50)
 		sc_start(src, src, SC_OPPORTUNIST, 100, 1, 8000);
 #endif
 }
 
 void SkillSonicBlow::modifyHitRate(int16& hit_rate, const block_list* src, const block_list* target, uint16 skill_lv) const {
-	const map_session_data* sd = BL_CAST( BL_PC, src );
-
-	if(sd && pc_checkskill(sd,AS_SONICACCEL) > 0)
+	// Sonic Acceleration became Sonic Impact (a standalone active skill), so its
+	// hit rate bonus is now unconditional - it is no longer contingent on
+	// pc_checkskill(sd, AS_SONICACCEL).
 #ifdef RENEWAL
-		hit_rate += hit_rate * 90 / 100;
+	hit_rate += hit_rate * 90 / 100;
 #else
-		hit_rate += hit_rate * 50 / 100;
+	hit_rate += hit_rate * 50 / 100;
 #endif
 }

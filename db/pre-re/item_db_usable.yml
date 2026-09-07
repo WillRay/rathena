@@ -4886,7 +4886,7 @@ Body:
       NoAuction: true
     Script: |
       skilleffect "AL_BLESSING",0;
-      sc_start SC_BLESSING,240000,10;
+      sc_start SC_BLESSING,240000,10,10000,SCSTART_NOAVOID|SCSTART_NOTICKDEF;
   - Id: 12216
     AegisName: Inc_Agi_10_Scroll
     Name: LV10 Agil Scroll

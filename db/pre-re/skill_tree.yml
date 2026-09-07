@@ -762,8 +762,6 @@ Body:
             Level: 5
           - Name: AS_VENOMDUST
             Level: 5
-      - Name: AS_SONICACCEL
-        MaxLevel: 1
       - Name: AS_VENOMKNIFE
         MaxLevel: 1
   - Job: Knight2
@@ -2267,6 +2265,13 @@ Body:
           - Name: TF_DETOXIFY
             Level: 1
           - Name: AS_ENCHANTPOISON
+            Level: 5
+      - Name: AS_SONICACCEL
+        MaxLevel: 5
+        Requires:
+          - Name: AS_SONICBLOW
+            Level: 10
+          - Name: ASC_KATAR
             Level: 5
   - Job: Lord_Knight2
     Inherit:

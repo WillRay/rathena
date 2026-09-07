@@ -4524,8 +4524,10 @@ Body:
          bonus2 bIgnoreDefRaceRate,RC_DemiHuman,5;
          bonus2 bIgnoreDefRaceRate,RC_Player_Human,5;
       }
+      // +9: 3s ASPD-cap burst on a 17s internal cooldown (~15% uptime).
+      // Shares @gj_cd with Krieger_Katar2 so swapping katars can't reset it.
       if (getrefine()>8)
-         autobonus "{ bonus bAspdRate,100; }",70,3000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }";
+         autobonus "{ }",70,3000,BF_WEAPON,"{ if (@gj_cd <= gettimetick(2)) { @gj_cd = gettimetick(2)+17; bonus_script \"{ bonus bAspdRate,100; }\",3,9,1,EFST_ATTHASTE_INFINITY; specialeffect2 EF_POTION_BERSERK; } }";
   - Id: 1282
     AegisName: Krieger_Katar2
     Name: Glorious Jamadhar
@@ -4561,8 +4563,12 @@ Body:
          bonus2 bCriticalAddRace,RC_DemiHuman,5;
          bonus2 bCriticalAddRace,RC_Player_Human,5;
       }
+      // +9: 3s ASPD-cap burst on a 17s internal cooldown (~15% uptime).
+      // ICD lives in the trigger script (runs once per proc, not on stat recalc).
+      // Payload is a bonus_script so it expires on its own timer -- an autobonus
+      // bonus can be refreshed by the attacks its own ASPD gain generates.
       if (getrefine()>8)
-         autobonus "{ bonus bAspdRate,100; }",70,3000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }";
+         autobonus "{ }",70,3000,BF_WEAPON,"{ if (@gj_cd <= gettimetick(2)) { @gj_cd = gettimetick(2)+17; bonus_script \"{ bonus bAspdRate,100; }\",3,9,1,EFST_ATTHASTE_INFINITY; specialeffect2 EF_POTION_BERSERK; } }";
   - Id: 1283
     AegisName: Katar_Of_Speed
     Name: Katar Of Speed

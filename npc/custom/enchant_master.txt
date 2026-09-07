@@ -35,6 +35,7 @@
 	}
 	.@itemid = getequipid(.@part);
 	.@refine = getequiprefinerycnt(.@part);
+	.@bound = callfunc("GetEquipBound", .@part); // preserve soulbinding across the enchant
 	setarray .@card[1], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 	setarray .@OptID[0], getequiprandomoption(.@part,0,ROA_ID), getequiprandomoption(.@part,1,ROA_ID), getequiprandomoption(.@part,2,ROA_ID), getequiprandomoption(.@part,3,ROA_ID), getequiprandomoption(.@part,4,ROA_ID);
 	setarray .@OptVal[0], getequiprandomoption(.@part,0,ROA_VALUE), getequiprandomoption(.@part,1,ROA_VALUE), getequiprandomoption(.@part,2,ROA_VALUE), getequiprandomoption(.@part,3,ROA_VALUE), getequiprandomoption(.@part,4,ROA_VALUE);
@@ -126,7 +127,7 @@
 		else {
 			specialeffect2 EF_BASH3D6;
 			delequip .@part;
-			getitem3 .@itemid,1,1,.@refine,0,.@card[1],.@card[2],.@card[3],.@card[4],.@OptID,.@OptVal,.@OptParam;
+			getitembound3 .@itemid,1,1,.@refine,0,.@card[1],.@card[2],.@card[3],.@card[4],.@bound,.@OptID,.@OptVal,.@OptParam;
 		}
 		close;
 	}
@@ -198,7 +199,7 @@
 		else {
 			specialeffect2 EF_BASH3D6;
 			delequip .@part;
-			getitem3 .@itemid,1,1,.@refine,0,.@card[1],.@card[2],.@card[3],.@card[4],.@OptID,.@OptVal,.@OptParam;
+			getitembound3 .@itemid,1,1,.@refine,0,.@card[1],.@card[2],.@card[3],.@card[4],.@bound,.@OptID,.@OptVal,.@OptParam;
 		}
 		close;
 	}

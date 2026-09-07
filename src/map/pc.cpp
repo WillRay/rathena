@@ -1902,10 +1902,6 @@ uint8 pc_isequip( const map_session_data* sd, int32 n )
 					return ITEM_EQUIP_ACK_FAIL;
 				}
 				break;
-			case AMMO_DAGGER:
-				if (!pc_checkskill(sd, AS_VENOMKNIFE))
-					return ITEM_EQUIP_ACK_FAIL;
-				break;
 			case AMMO_BULLET:
 			case AMMO_SHELL:
 				if (battle_config.ammo_check_weapon && sd->status.weapon != W_REVOLVER && sd->status.weapon != W_RIFLE && sd->status.weapon != W_GATLING && sd->status.weapon != W_SHOTGUN

@@ -1245,7 +1245,6 @@
     <ClInclude Include="skills/swordman/fightingspirit.hpp" />
     <ClInclude Include="skills/swordman/forceofvanguard.hpp" />
     <ClInclude Include="skills/swordman/giantgrowth.hpp" />
-    <ClInclude Include="skills/swordman/gloriadomini.hpp" />
     <ClInclude Include="skills/swordman/grandcross.hpp" />
     <ClInclude Include="skills/swordman/grandjudgement.hpp" />
     <ClInclude Include="skills/swordman/guardianshield.hpp" />
@@ -1256,6 +1255,7 @@
     <ClInclude Include="skills/swordman/ignitionbreak.hpp" />
     <ClInclude Include="skills/swordman/imperialcross.hpp" />
     <ClInclude Include="skills/swordman/imperialpressure.hpp" />
+    <ClInclude Include="skills/swordman/judgement.hpp" />
     <ClInclude Include="skills/swordman/judgementcross.hpp" />
     <ClInclude Include="skills/swordman/kingsgrace.hpp" />
     <ClInclude Include="skills/swordman/luxanima.hpp" />
@@ -1478,7 +1478,8 @@
     <ClInclude Include="skills/thief/skill_factory_thief.hpp" />
     <ClInclude Include="skills/thief/snatch.hpp" />
     <ClInclude Include="skills/thief/sonicblow.hpp" />
-    <ClInclude Include="skills/thief/souldestroyer.hpp" />
+    <ClInclude Include="skills/thief/sonicimpact.hpp" />
+    <ClInclude Include="skills/thief/shadowstrike.hpp" />
     <ClInclude Include="skills/thief/steal.hpp" />
     <ClInclude Include="skills/thief/stealth.hpp" />
     <ClInclude Include="skills/thief/stonefling.hpp" />
@@ -4539,9 +4540,6 @@
     <ClCompile Include="skills/swordman/giantgrowth.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/swordman/gloriadomini.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="skills/swordman/grandcross.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -4570,6 +4568,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/imperialpressure.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/judgement.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/judgementcross.cpp">
@@ -5238,7 +5239,10 @@
     <ClCompile Include="skills/thief/sonicblow.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/thief/souldestroyer.cpp">
+    <ClCompile Include="skills/thief/sonicimpact.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/shadowstrike.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/steal.cpp">

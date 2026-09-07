@@ -1606,9 +1606,9 @@ bool battle_status_block_damage(block_list *src, block_list *target, status_chan
 
 	if ((sce = sc->getSCE(SC_KAUPE)) && (skill_id != NPC_EARTHQUAKE || (skill_id == NPC_EARTHQUAKE && flag & NPC_EARTHQUAKE_FLAG)) && rnd() % 100 < sce->val2) { //Kaupe blocks damage (skill or otherwise) from players, mobs, homuns, mercenaries.
 		clif_specialeffect(target, EF_STORMKICK4, AREA);
-		//Shouldn't end until Breaker's non-weapon part connects.
+		//Shouldn't end until a mob-cast Soul Destroyer's non-weapon part connects.
 #ifndef RENEWAL
-		if (skill_id != ASC_BREAKER || !(flag&BF_WEAPON))
+		if (skill_id != ASC_BREAKER || src->type == BL_PC || !(flag&BF_WEAPON))
 #endif
 			if (--sce->val3 <= 0) //We make it work like Safety Wall, even though it only blocks 1 time.
 				status_change_end(target, SC_KAUPE);
@@ -1759,9 +1759,9 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 				damage *= 2; // Lex Aeterna only doubles damage of regular attacks from mercenaries
 
 #ifndef RENEWAL
-			if( skill_id != ASC_BREAKER || !(flag&BF_WEAPON) )
+			if( skill_id != ASC_BREAKER || src->type == BL_PC || !(flag&BF_WEAPON) )
 #endif
-				status_change_end(bl, SC_AETERNA); //Shouldn't end until Breaker's non-weapon part connects.
+				status_change_end(bl, SC_AETERNA); //Shouldn't end until a mob-cast Soul Destroyer's non-weapon part connects.
 		}
 
 #ifdef RENEWAL
@@ -2756,6 +2756,7 @@ static int32 battle_range_type(const block_list* src, const block_list* target, 
 			return BF_LONG;
 		case NJ_KIRIKAGE: // Cast range mimics NJ_SHADOWJUMP but damage is considered melee
 		case GC_CROSSIMPACT: // Cast range is 7 cells and player jumps to target but skill is considered melee
+		case AS_SONICACCEL: // Cast range is 3 cells and player jumps to target but skill is considered melee
 		case DK_SERVANT_W_PHANTOM: // 9 cell cast range.
 		case SHC_SAVAGE_IMPACT: // 7 cell cast range.
 		case SHC_FATAL_SHADOW_CROW: // 9 cell cast range.
@@ -3164,6 +3165,7 @@ static bool is_attack_critical(struct Damage* wd, block_list *src, const block_l
 			case ASC_BREAKER:
 #endif
 			case GC_CROSSIMPACT:
+			case AS_SONICACCEL: // Sonic Impact: can crit, but at half the player's crit rate
 			case SHC_SAVAGE_IMPACT:
 			case SHC_ETERNAL_SLASH:
 			case SHC_CROSS_SLASH:
@@ -3451,6 +3453,15 @@ static bool attack_ignores_def(Damage* wd, block_list *src, const block_list *ta
 				return true;
 		}
 	}
+
+#ifndef RENEWAL
+	// Old Soul Destroyer's weapon part respected DEF - only its INT-based misc
+	// half (see battle_calc_misc_attack) ignored it. Shadow Strike's new
+	// IgnoreDefense flag is meant for player casters only, so NPC/mob casters
+	// fall back to the old DEF-respecting weapon part here.
+	if (skill_id == ASC_BREAKER && src->type != BL_PC)
+		return false;
+#endif
 
 	return nk[NK_IGNOREDEFENSE] != 0;
 }
@@ -5035,8 +5046,10 @@ static void battle_calc_attack_post_defense(struct Damage* wd, block_list *src,b
 #ifdef RENEWAL
 	switch (skill_id) {
 		case AS_SONICBLOW:
-			if(sd && pc_checkskill(sd,AS_SONICACCEL)>0)
-				ATK_ADDRATE(wd->damage, wd->damage2, 90);
+			// Sonic Acceleration became Sonic Impact (a standalone active skill),
+			// so this bonus is now unconditional - it is no longer contingent on
+			// pc_checkskill(sd, AS_SONICACCEL).
+			ATK_ADDRATE(wd->damage, wd->damage2, 90);
 			break;
 	}
 #endif
@@ -5369,7 +5382,11 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, block_list
 	}
 
 #ifndef RENEWAL
-	if (skill_id == ASC_BREAKER) { //Breaker's int-based damage (a misc attack?)
+	// NPC/mob casters (Eremes Guile, Naght Sieger, Gang Member, ...) keep the
+	// old Soul Destroyer hybrid: this INT-based misc half is spliced onto the
+	// weapon part below. Player casters get the reworked Shadow Strike
+	// instead (see shadowstrike.cpp), so this is skipped for them.
+	if (skill_id == ASC_BREAKER && src->type != BL_PC) {
 		struct Damage md = battle_calc_misc_attack(src, target, skill_id, skill_lv, wd->miscflag);
 
 		wd->damage += md.damage;
@@ -6588,7 +6605,7 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 			md.damage = skill_calc_heal(src,target,skill_id,skill_lv,false);
 			break;
 #ifndef RENEWAL
-		case ASC_BREAKER:
+		case ASC_BREAKER: // Old Soul Destroyer misc-damage half - NPC/mob casters only (see the splice above).
 			md.damage = 500 + rnd()%500 + 5 * skill_lv * sstatus->int_;
 			nk.set(NK_IGNOREFLEE);
 			nk.set(NK_IGNOREELEMENT); //These two are not properties of the weapon based part.
@@ -8601,6 +8618,9 @@ static const struct _battle_data {
 	{ "max_hp",                             &battle_config.max_hp,                        1100000,  100,    1000000000,     },
 	{ "max_sp",                             &battle_config.max_sp,                          32500,  100,    1000000000,     },
 	{ "max_cart_weight",                    &battle_config.max_cart_weight,                 8000,   100,    1000000,        },
+	{ "weight_per_str",                     &battle_config.weight_per_str,                  10,     0,      10000,          },
+	{ "weight_per_baselevel",               &battle_config.weight_per_baselevel,            20,     0,      10000,          },
+	{ "weight_per_baselevel_trans",         &battle_config.weight_per_baselevel_trans,      25,     0,      10000,          },
 	{ "max_parameter",                      &battle_config.max_parameter,                   99,     10,     SHRT_MAX,       },
 	{ "max_baby_parameter",                 &battle_config.max_baby_parameter,              80,     10,     SHRT_MAX,       },
 	{ "max_def",                            &battle_config.max_def,                         99,     0,      INT_MAX,        },
@@ -9165,6 +9185,9 @@ void battle_adjust_conf()
 	battle_config.max_extended_aspd = (AMOTION_ZERO_ASPD - battle_config.max_extended_aspd * AMOTION_INTERVAL) * AMOTION_DIVIDER_PC;
 	battle_config.max_walk_speed = 100 * DEFAULT_WALK_SPEED / battle_config.max_walk_speed;
 	battle_config.max_cart_weight *= 10;
+	battle_config.weight_per_str *= 10;
+	battle_config.weight_per_baselevel *= 10;
+	battle_config.weight_per_baselevel_trans *= 10;
 
 	if (battle_config.max_def > 100 && !battle_config.weapon_defense_type) // added by [Skotlex]
 		battle_config.max_def = 100;
